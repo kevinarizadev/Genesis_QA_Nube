@@ -1,0 +1,335 @@
+<div class="white newdesing collapsible-new">
+    <style>
+        .negro{
+            color: black;
+        }
+
+        .collapsible li.disabled .collapsible-body {
+        display: none !important; /*or using id of the app to avoid the use of !important*/
+        }
+
+        .collapsible li.disabled .collapsible-header {
+        background: rgb(221,221,221);
+        }
+
+        .etiquetaVerde{
+            background-color: #4CAF50;
+        }
+
+        .etiquetaRojo{
+            background-color: #b12016;
+        }
+    </style> 
+    <div class="row section-header margin" >
+        <ul class="left mailbox-custom-search list-inline w-100 d-flex justify-content-between align-items-center">
+            <li id="inicio">
+                <h5> <i class="icon-box"></i> ADMINISTRADOR DE CORRESPONDENCIA</h5>
+            </li>
+            <li>
+                <ul class="tabs transparent">
+                    <li class="tab col w-auto">
+                        <a ng-click="seleccionar(1)" 
+                            href="javascript:void(0)">Responsables <i class="icon-doc-text-1"></i></a>
+                    </li>
+                    <li class="tab col w-auto">
+                        <a ng-click="seleccionar(2);" 
+                            href="javascript:void(0)">Areas <i class="icon-lock-open-6"></i></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+            
+<div class="row dashboard-wrapper content-container" ng-show="TabsSeleccionar == 1">
+     <div class="row">
+         <blockquote><strong> <h5>REGIONALES</h5></strong></blockquote>
+         <div class="col results-lupa-modal right">
+            <a href><i title="AGREGAR" ng-click="nuevaArea_resp()" class="icon-doc-add" style="color: rgb(24, 24, 117);"></i></a>
+         </div>
+     </div>
+
+     <div class="col s12" style="padding-bottom: 30px;" >
+         <ul class="collapsible">
+             <li ng-repeat="seccional in listadoSeccional" class="contenedor">
+               <div class="collapsible-header" ng-click="buscarAreas(seccional)"><i class="icon-location-2" style="color: rgb(24, 24, 117);"></i>
+                <b> REGIONAL: </b>{{seccional.NOMBRE}}</div>
+                <div class="collapsible-body scrclass">
+                    <div class="border-bottom col margin-bottom-10 s12" ng-repeat="area in AreasResponsable">
+                        <div class="col s5 label-new">
+                            <label class="negro"><i class="icon-vcard-1"></i> AREA</label><strong> {{area.NOMBRE_AREA}}</strong>
+                        </div>
+                        <div class="col s2">
+                           <p><strong>RESPONSABLE 1:</strong> {{formatResponsable(area.RESPONSABLE1)}}</p>
+                        </div>
+                        <div class="col s2">
+                            <p><strong>RESPONSABLE 2:</strong> {{formatResponsable(area.RESPONSABLE2)}}</p>
+                         </div>
+                         <div class="col s2">
+                            <p><strong>RESPONSABLE 3:</strong> {{formatResponsable(area.RESPONSABLE3)}}</p>
+                         </div>
+                         <div class="col s1">
+                            <a href><i title="EDITAR" ng-click="editarSeccional(area, seccional)" class="icon-edit-1" style="color: rgb(24, 24, 117);"></i></a>
+                         </div>
+                    </div>
+                        <hr>
+                        <div class="s12" ng-show="AreasResponsable.length == 0" style="text-align: center;">
+                            <p><strong>NO HAY RESULTADOS</strong></p>
+                        </div>
+               </div>
+             </li>
+         </ul>
+     </div>
+
+     <!-- MODAL EDITAR REGIONALES -->
+     <div id="modalEditar" class="modal" style="max-height: 100%;width: 69%; margin-top: 10%;">
+        <div class="col s12 m12 l12 card margin no-padding">
+          <div class="ngdialog-close" style="font-size: 42px;position: absolute;z-index: 106;right: 0.5em; top:-4px; color: white;"
+            ng-click="closeModal()">
+          </div>
+          <div class="card-content default-linear-gradient border-radius-none white-text" style="padding: 11px;">
+            <h5><span class="margin" style="font-size: 1.64rem;"><i class="icon-edit-2"></i> Editar Regional</span>
+            </h5>
+          </div>
+          <div class="card-action" id="card-action"
+            style="overflow: auto;display: inline-block;width: 100%;height: 100%;padding-bottom: 0;">
+            <!-- ELEGIR -->
+            <div class="col s12">
+              <div class="default-color">
+                    <div class="col label-new s5">
+                        <label class="black-text"><i class="negro icon-location"></i>REGIONAL</label>
+                        <input class="margin border-none input-date-new w-100" style="color: darkblue;" id="nombreSeccionalModal" ng-model="nombreSeccionalEditar" disabled>
+                    </div>
+                    <div class="col s5 label-new">
+                        <select ng-model="EditarArea" class="select-default-new input-out-new m-l">
+                            <option value="" disabled>Seleccionar</option>
+                            <option value="{{x.CODIGO}}" ng-repeat="x in areas" ng-selected="x.CODIGO == EditarArea">{{x.NOMBRE}}</option>
+                        </select>
+                        <label class="black-text"><i class="negro icon-vcard-1"></i> AREA <span style="color: red;">*</span></label>
+                    </div>
+
+                    <div class="col s12" style="margin-bottom: 15px;">
+                            <div class="col label-new no-padding s4">
+                                <form ng-submit="buscarFuncionario(editarResponsable1)">
+                                    <strong>RESPONSABLE 1: <span style="color: red;">*</span></strong>
+                                    <input type="text" class="margin border-none no-padding input-text-new gray-input w-100 m-l" autocomplete="off" 
+                                            ng-model="editarResponsable1" ng-submit="buscarFuncionario(editarResponsable1)" list ="listaFuncionario"/>
+                                    <datalist id="listaFuncionario" open="open">
+                                        <option ng-repeat="ela in listaFuncionario">{{ela.DOCUMENTO}} - {{ela.NOMBRE_FUNCIONARIO}}</option>
+                                    </datalist>
+                                </form>
+                                <i class="icon-search cursor-pointer default-color" ng-click="buscarFuncionario(Responsable2)" style="margin-left: -1.45em;" title="Buscar"></i> 
+                            </div>
+                             
+                            <div class="col s4 label-new">
+                                <form ng-submit="buscarFuncionario(editarResponsable2)">
+                                    <strong>RESPONSABLE 2:</strong>
+                                    <input type="text" class="margin no-padding border-none input-text-new gray-input w-100 m-l" autocomplete="off" 
+                                            ng-model="editarResponsable2" ng-submit="buscarFuncionario(editarResponsable2)" list ="listaFuncionario"/>
+                                        <datalist id="listaFuncionario" open="open">
+                                            <option value="{{ela.DOCUMENTO}}" ng-repeat="ela in listaFuncionario">{{ela.DOCUMENTO}} - {{ela.NOMBRE_FUNCIONARIO}}</option>
+                                        </datalist>
+                                </form>
+                                <i class="icon-search cursor-pointer default-color" ng-click="buscarFuncionario(Responsable2)" style="margin-left: -1.45em;" title="Buscar"></i> 
+                            </div> 
+  
+                            <div class="col s4 label-new">
+                                <form ng-submit="buscarFuncionario(editarResponsable3)">
+                                    <strong>RESPONSABLE 3:</strong>
+                                    <input type="text" class="margin border-none input-text-new gray-input w-100 m-l" autocomplete="off" 
+                                            ng-model="editarResponsable3" ng-submit="buscarFuncionario(editarResponsable3)" list ="listaFuncionario"/>
+                                        <datalist id="listaFuncionario" open="open">
+                                            <option ng-repeat="ela in listaFuncionario">{{ela.DOCUMENTO}} - {{ela.NOMBRE_FUNCIONARIO}}</option>
+                                        </datalist>
+                                </form>
+                                <i class="icon-search cursor-pointer default-color" ng-click="buscarFuncionario(Responsable3)" style="margin-left: -1.45em;" title="Buscar"></i> 
+                            </div> 
+                     </div>
+            
+                    <div class="col s12">
+                        <div class="col s12" style="margin-top: 25px; text-align: center;">
+                            <input class="btn red white-text" style="border-radius: 11px;" type="button" value="Limpiar" 
+                            ng-click="limpiarCampos()">
+                          <input class="btn white-text default-linear-gradient" type="button" value="Editar" 
+                          ng-click="updateSeccional()">
+                        </div>
+                    </div>
+              </div>
+            </div>
+            <!-- //-// -->
+          </div>
+        </div>
+    </div>
+
+     <!-- MODAL AGREGAR SECCIONAL -->
+     <div id="modalAgregar" class="modal" style="max-height: 100%;width: 77%; margin-top: 10%;">
+        <div class="col s12 m12 l12 card margin no-padding">
+          <div class="ngdialog-close" style="font-size: 42px;position: absolute;z-index: 106;right: 0.5em; top:-4px; color: white;"
+            ng-click="closeModal()">
+          </div>
+          <div class="card-content default-linear-gradient border-radius-none white-text" style="padding: 11px;">
+            <h5><span class="margin" style="font-size: 1.64rem;"><i class="icon-plus-outline"></i> Agregar Area en Regionales</span>
+            </h5>
+          </div>
+          <div class="card-action" id="card-action"
+            style="overflow: auto;display: inline-block;width: 100%;height: 100%;padding-bottom: 0;">
+            <!-- ELEGIR -->
+            <div class="col s12">
+              <div  class="default-color">
+                <div class="col s5">
+                    <strong><i class="negro icon-location"></i> REGIONAL <span style="color: red;">*</span></strong>
+                    <select ng-model="seccionalNuevo" class="select-default-new input-out-new m-l">
+                        <option value="" disabled>Seleccionar</option>
+                        <option value="{{x.CODIGO}}" ng-repeat="x in listadoSeccional">{{x.NOMBRE}}</option>
+                    </select>
+                </div>
+
+                    <div class="col s5">
+                        <strong><i class="negro icon-vcard-1"></i> AREA <span style="color: red;">*</span></strong>
+                        <select ng-model="areaNuevo" class="select-default-new input-out-new m-l">
+                            <option value="" disabled>Seleccionar</option>
+                            <option value="{{x.CODIGO}}" ng-repeat="x in areas">{{x.NOMBRE}}</option>
+                        </select>
+                    </div>               
+
+                    <div class="col s12" style="margin-bottom: 15px;">
+                        <div class="col label-new no-padding s4">
+                            <form ng-submit="buscarFuncionario(Responsable1)">
+                                <strong>RESPONSABLE 1: <span style="color: red;">*</span></strong>
+                                <input type="text" class="margin border-none no-padding input-text-new gray-input w-100 m-l" autocomplete="off" 
+                                        ng-model="Responsable1" ng-submit="buscarFuncionario(Responsable1)" list ="listaFuncionario"/>
+                                <datalist id="listaFuncionario" open="open">
+                                    <option ng-repeat="ela in listaFuncionario">{{ela.DOCUMENTO}} - {{ela.NOMBRE_FUNCIONARIO}}</option>
+                                </datalist>
+                            </form>
+                            <i class="icon-search cursor-pointer default-color" ng-click="buscarFuncionario(Responsable2)" style="margin-left: -1.45em;" title="Buscar"></i> 
+                        </div>
+                             
+                      <div class="col s3 label-new">
+                        <form ng-submit="buscarFuncionario(Responsable2)">
+                            <strong>RESPONSABLE 2:</strong>
+                            <input type="text" class="margin border-none no-padding input-text-new gray-input w-100 m-l" autocomplete="off" 
+                                    ng-model="Responsable2" ng-submit="buscarFuncionario(Responsable2)" list ="listaFuncionario"/>
+                                <datalist id="listaFuncionario" open="open">
+                                    <option value="{{ela.DOCUMENTO}}" ng-repeat="ela in listaFuncionario">{{ela.DOCUMENTO}} - {{ela.NOMBRE_FUNCIONARIO}}</option>
+                                </datalist>
+                        </form>
+                        <i class="icon-search cursor-pointer default-color" ng-click="buscarFuncionario(Responsable2)" style="margin-left: -1.45em;" title="Buscar"></i> 
+                      </div> 
+  
+                      <div class="col s4 label-new">
+                        <form ng-submit="buscarFuncionario(Responsable3)">
+                            <strong>RESPONSABLE 3:</strong>
+                            <input type="text" class="margin border-none input-text-new gray-input w-100 m-l" autocomplete="off" 
+                                    ng-model="Responsable3" ng-submit="buscarFuncionario(Responsable3)" list ="listaFuncionario"/>
+                                <datalist id="listaFuncionario" open="open">
+                                    <option ng-repeat="ela in listaFuncionario">{{ela.DOCUMENTO}} - {{ela.NOMBRE_FUNCIONARIO}}</option>
+                                </datalist>
+                        </form>
+                          <i class="icon-search cursor-pointer default-color" ng-click="buscarFuncionario(Responsable3)" style="margin-left: -1.45em;" title="Buscar"></i> 
+                      </div> 
+                    </div>
+            
+                    <div class="col s12">
+                        <div class="col s12" style="margin-top: 25px; text-align: center;">
+                          <input class="btn white-text default-linear-gradient" type="button" value="Agregar" 
+                                ng-click="agregarNuevo()">
+                        </div>
+                    </div>
+              </div>
+            </div>
+            <!-- //-// -->
+          </div>
+        </div>
+    </div>
+
+    
+     </div>
+
+    <div class="row dashboard-wrapper content-container" ng-show="TabsSeleccionar == 2">
+        <div class="row" style="margin-top: 15px;">
+            <div class="col s12" style="padding-bottom: 30px;">
+                
+                <div class="row part2 bg-white white">
+                    <div class="col s12 m4 l4 part2_1">
+                        <div class="s6 m2 l2">
+                            <ul class="left mailbox-custom-search md-whiteframe-9dp">
+                                    <li  class="navbar-custom-search">
+                                        <input type="search" ng-model="searchKeyword" placeholder="Buscar">
+                                        <i class="material-icons">search</i>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                        <div class="m8 s12 l8">
+                                <div style="justify-content: space-around; display: flex" ng-hide="hiden">          
+                                        <h5><i class="icon-folder-1" style="color: rgb(24, 24, 117);"></i> GESTION AREA </h5>
+                    
+                                </div>
+                    </div>
+                </div>
+                <div class="row allMails bg-white white">
+                <div class="col l4 m4 mailsParts md-whiteframe-6dp s12 scrclass tabInbox_3_1">
+                    <ul class="collection" ng-click="filtrocheck_option.DOCUMENTO = 'EDITAR';">
+                        <li  ng-repeat ="area in areas | filter: searchKeyword" class="collection-item avatar waves-effect waves-pink" data-group="first"
+                        ng-click="filtroAreas('E', area);filtrocheck_option.DOCUMENTO = 'EDITAR';">
+                            <div id ="f{{chatd.NUMERO}}{{chatd.UBICACION}}" alt="avatar" class="circle" style="border-radius: 0% !important"></div>
+                            <span class="title"><strong >{{area.NOMBRE}}</strong></span>
+                            <p> <label>ESTADO:</label>
+                                <span class="status white-text fw700 pad5 {{ObtenerEstadoColorTipo(area.ESTADO)}}">
+                                    {{area.ESTADO == 'A' ? 'ACTIVO' : 'INACTIVO'}}
+                                </span>
+                            </p>
+                            
+                        </li>
+                    </ul>
+                </div>
+        
+        
+                <div id="mensajes" class="col l8 m8 s12">
+                    <div class="col s12" style="border-bottom: 2px solid;">
+                        <li style="display: initial;font-size: larger;">
+                            <button
+                                class="border-none default-background white-text {{filtrocheck_option.DOCUMENTO != 'CREAR' ? 'blue' : ''}}"
+                                type="button" ng-click="filtrocheck_option.DOCUMENTO = 'CREAR';filtroAreas('C')"
+                                style="zoom:100% default-background;border-top-left-radius: 10px 10px;border-top-right-radius: 10px 10px;"
+                                id="capa2">CREAR</button>
+                        </li>         
+                    </div>
+                    <div class="col l9 label-new s6" ng-show="crear == true" style="margin-top: 57px;">
+                            <input class="margin border-none input-text-new gray-input w-100 m-l" autocomplete="off"
+                            id="nombre_area" ng-model="nombre_area">
+                        <label id="nombre_area_Label">NOMBRE AREA*</label>
+                    </div>
+    
+                <div class="col l9 label-new s6" ng-show="editar == true" style="margin-top: 57px;">
+    
+                    <div class="col s7 no-padding">
+                        <label id="nombre_area_Label">NOMBRE AREA*</label>   
+                        <input class="margin border-none input-text-new gray-input w-100 m-l" autocomplete="off"
+                        id="nombre_area" ng-model="Editarnombre_area">
+                    </div>
+                   
+                    <div class="col s3">
+                        <label id="nombre_area_Label">ESTADO*</label>   
+                        <select ng-model="Estado" class="browser-default select-new-style">
+                            <option value="" ng-selected>Seleccionar</option>
+                            <option value="A">ACTIVO</option>
+                            <option value="I">INACTIVO</option>
+                        </select>
+                    </div>
+                   
+                </div>
+    
+                    <div class="col right-align s6" style="margin-top: 34px;">
+                         <button class="btn" style="border-radius: 5px;background-color: rgb(24, 24, 117);" ng-click="insertarAreas()">{{titulo}}</button>
+                    </div>
+                        
+                </div>
+                <div class="col s12 m8 l8 messageBox first_3_2 scrclass" >
+        
+            </div>
+                </div>
+            </div>
+        </div>
+
+ </div>

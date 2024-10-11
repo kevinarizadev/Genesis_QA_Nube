@@ -1,0 +1,316 @@
+<div id="pantalla" class="white newdesing" style="position:relative">
+    <!-- Contenido  -->
+    <div class="row dashboard-wrapper content-container white" style="padding-bottom: 20px;margin-bottom: 0;">
+        <div class="col l12 m12 s12" style="position:relative">
+            <!-- /////////////////////////////////////////////// -->
+            <div class="row">
+                <div class="col s4">
+                    <i class="material-icons left" style="margin-top: 14px;">thumbs_up_down</i>
+                    <h5>Calificar las Solicitudes</h5>
+                </div>
+            </div>
+            <!-- /////////////////////////////////////////////// -->
+            <div ng-if="Listado.Acas.length == ''">
+                   <h1 style="text-align: center;">No hay mesas de ayuda para calificar</h1>
+                   <div class="row">
+                            <a class="btn white-text blue" href="#/acas"
+                            style="background:linear-gradient(to bottom left,#5870ae,#1a2e63,#5870ae);width: 100%;"
+                                type="button">Regresar a Generar una mesa de ayuda nueva</a>
+                        </div>
+            </div>
+            <div class="row margin" ng-show="Listado.Acas.length != 0" style="position: relative;">
+                <div class="col s7 no-padding label-new">
+                    <div> Un resultado de <strong> {{Listado.Acas.length}} Mesa de Ayuda, por el filtro
+                            Anterior</strong>
+                    </div>
+                </div>
+                <div class="input-field col s3 right">
+                    <input id="buscarpro" type="text" ng-model="Listado.Filtro">
+                    <label for="buscarpro">Buscar:</label>
+                </div>
+                <div class="col s12">
+                    <div class="scroll_x"
+                        style="position: absolute;width: calc(100% - 10px);z-index: 10;overflow: hidden;">
+                        <table id="tablaClone" class="striped table-bordered white" style="position: relative;">
+                        </table>
+                    </div>
+                    <div id="tabla_scroll" class="scroll_x" style="overflow: auto;height: calc(85vh - 10px);">
+                        <table id="tablaByCN" class="striped table-bordered white" style="position: relative;">
+                            <thead class="default-linear-gradient">
+                                <tr>
+                                    <th data-field="Ticket" class="border-none">MESA DE AYUDA</th>
+                                    <th data-field="Asusnto" class="border-none">ASUNTO</th>
+                                    <th data-field="Fecha Ingreso" class="border-none">FECHA RADICACION</th>
+                                    <th data-field="Fecha Cierre" class="border-none">FECHA CIERRE</th>
+                                    <th data-field="Ciudad" class="border-none">UBICACION</th>
+                                    <th data-field="Autoriza" class="border-none">REMITENTE</th>
+                                    <th data-field="Nombre" class="border-none">RESPONSABLE</th>
+                                    <th data-field="Cargo" class="border-none">ESTADO</th>
+                                    <th data-field="Dias" class="border-none center-align">DIAS</th>
+                                    <th data-field="Adjunto" class="border-none">CALIFICAR</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    ng-repeat="acas in Listado.Acas | filter:Listado.Filtro | startFrom:currentPage*pageSize | limitTo:pageSize">
+                                    <!-- <td class="center-align">{{$index + 1}}</td> -->
+                                    <td>{{acas.Numero}}</td>
+                                    <td>{{acas.Asunto}}</td>
+                                    <td>{{acas.Fecha_ingreso}}</td>
+                                    <td>{{acas.Fecha_cierre}}</td>
+                                    <td>{{acas.Ubicacion}}</td>
+                                    <td>{{acas.Nombre}}</td>
+                                    <td>{{acas.Nombre_autoriza}}</td>
+                                        <td class="center">
+                                            <div ng-if="acas.Estado =='A'">
+                                                <span style="padding:2px" style="background-color:rgb(251, 93, 1) !important;">Activa</span>
+                                            </div>
+                                            <div ng-if="acas.Estado =='P'">
+                                                <span style="padding:2px" style="background-color:rgb(6, 152, 20)!important">Procesada</span>
+                                            </div>
+                                        </td>
+                                    <td class="center-align">{{acas.Dias}}</td>
+                                    <td>
+                                        <center>
+                                          <div class="tooltip" >
+                                            <a ng-click="Abrir_Modal_Calificacion(acas)"><i class="material-icons" style="cursor:pointer">query_builder</i></a>
+                                            <span class="tooltiptext">Calificar La Mesa de Ayuda</span>
+                                          </div>
+                                        </center>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="10" class="border-none no-padding" style="user-select: none">
+                                        <div class="black-text title-panel d-flex justify-content-between align-items-center"
+                                            style="margin-top: 15px;">
+                                            <select id="pageSize" ng-model="pageSize"
+                                                class="gray-input select-default-new border-none"
+                                                ng-change="currentPage=0" style="width: auto;max-width: 100px;">
+                                                <option value="15">15</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                                <option value="200">200</option>
+                                                <option value="500">500</option>
+                                            </select>
+                                            <div style="margin-left: auto;">
+                                                <button class="btn btn-small border-radius-none no-padding"
+                                                    ng-disabled="currentPage == 0"
+                                                    ng-click="btns_paginacion(currentPage-1)" style="box-shadow: none;">
+                                                    <i class="icon-left-small"></i>
+                                                </button>
+                                                <small
+                                                    style="min-width: 90px;display: inline-block;text-align: center;padding: 0 1rem;">
+                                                    Página {{currentPage+1}} de {{numberOfPages()}}
+                                                </small>
+                                                <button class="btn btn-small border-radius-none no-padding"
+                                                    ng-disabled="currentPage >= getData().length/pageSize - 1"
+                                                    ng-click="btns_paginacion(currentPage+1)" style="box-shadow: none;">
+                                                    <i class="icon-right-small"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /////////////// -->
+
+        <div id="Modal_Calificacion" class="modal" style="overflow: hidden;width: 70%;">
+            <div class="modal-content" style="padding: 0px !important;">
+                <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+                    <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+                        <div class="col s12 m12 l12 card margin" style="padding-right: 0px; padding-left: 0px;">
+                            <div class="foot4 divcardcustom default-linear-gradient" style="border-radius: 0px;">
+                                <div class="text-al divcardcustom2">
+                                    <strong class="switch" style="font-weight:600">Calificacion Mesas de Ayuda</strong>
+                                    <div class="tooltip" style="margin-left: 70%;">
+                                        <i style="cursor:pointer;" ng-click="closeModal()"
+                                            class="material-icons white-text">close</i>
+                                        <span class="tooltiptext"
+                                            style="font-size: 12px;width: 60px;margin-left: -30px;">Cerrar</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col l6 m6 s6">
+                                    <label style="padding-left: 25%;" id="tipodocumento1"><h6><strong>¿Su solicitud se ha procesado de formas satisfactoria?</strong></h6></label>
+                                    <div ng-init="satisfaccionmesadeayuda='SI'">
+                                      <select ng-model="satisfaccionmesadeayuda" 
+                                          style="display: flex;border: 1px solid #dee2e6; border-radius: 0.25rem;">
+                                          <option value="" ng-disabled="true">SELECCIONAR</option>
+                                          <option value="SI" selected>SI</option>
+                                          <option value="NO">NO</option>
+                                      </select>
+                                      </div>
+                                  </div>
+                                  <div ng-show="satisfaccionmesadeayuda=='NO'" class="col l6 m6 s6">
+                                    <label style="padding-left: 25%;" id="tipodocumento1"><h6><strong>* Esto Por?</strong></h6></label>
+                                      <select ng-model="tipoinsatisfaccion" 
+                                          style="display: flex;border: 1px solid #dee2e6; border-radius: 0.25rem;">
+                                                <option value="" ng-disabled="true">SELECCIONAR</option>
+                                                <option value="4">No Solucionado</option>
+                                                <option value="3">No oportuna la atención</option>
+                                                <option value="2">Demasiado Tiempo en la solución</option>
+                                                <option value="1">Funcionario TIC descortés</option>
+                                      </select>
+                                  </div>
+                                <div ng-show="satisfaccionmesadeayuda=='SI'" class="col l6 m6 s6">
+                                    <label style="padding-left: 25%;" id="tipodocumento1"><h6><strong>* Califica la atención  a su solicitud como:</strong></h6></label>
+                                    <div ng-init="calificacionacas='3'">
+                                      <select ng-model="calificacionacas" 
+                                          style="display: flex;border: 1px solid #dee2e6; border-radius: 0.25rem;">
+                                                <option value="" ng-disabled="true">SELECCIONAR</option>
+                                                <option value="3">Excelente</option>
+                                                <option value="2">Bueno</option>
+                                                <option value="1">Puede ser mejor</option>
+                                      </select>
+                                  </div>
+                                  </div>
+                            </div>
+                            <div class="row">
+                                  <div class="col l12 m12 s12" style="padding-left: 15%;">
+                                    <label style="padding-left: 34%;" id="tipodocumento1"><h6><strong></strong>Observaciones</strong></h6></label>
+                                    <textarea id="chat_textarea"  placeholder="Comentar..." ng-model="Comentario_Observacion"></textarea>
+                                  </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col s12">
+                                        <button class="btn white-text blue"
+                                        style="background:linear-gradient(to bottom left,#5870ae,#1a2e63,#5870ae);width: 100%;margin-top: 26px;"
+                                           ng-click="calificaracas()" >Calificar</button>
+                                    </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- /////////////// -->
+    </div>
+    <style>
+        .yellow {background-color: #b7a60f !important;}
+
+        .list-group-item:last-child {
+            margin-bottom: 0;
+            border-bottom-right-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+        .list-group-item:first-child {
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        .list-group-item:hover {
+            color: #1a2e63;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .list-group-item {
+            position: relative;
+            display: block;
+            padding: 10px 15px;
+            margin-bottom: -1px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .list-group {
+            font-size: .8rem;
+        }
+
+        input.input-text-new {
+            background-color: #f1f3f4 !important;
+        }
+
+        .gray-input {
+            background-color: #f1f3f4 !important;
+        }
+
+        .tooltip_ab {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip_ab .tooltiptext_ab::after {
+            content: "";
+            position: absolute;
+            top: -37%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #00000000 #00000000 #555 #00000000;
+        }
+
+        .tooltip_ab:hover .tooltiptext_ab {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .tooltip_ab .tooltiptext_ab {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            border-radius: 6px;
+            position: absolute;
+            z-index: 1;
+            bottom: -150%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .dropdown-content li {
+            min-height: 23px;
+        }
+
+        .select_maxheigth ul {
+            max-height: 125px;
+        }
+
+        #toast-container .toast {
+            border-radius: 25px !important;
+            font-weight: 600;
+            text-align: center !important;
+            word-break: keep-all;
+            padding: 10px 25px;
+            width: auto;
+        }
+
+        .dropdown-content li {
+            min-height: 23px;
+        }
+
+        .dropdown-content li>span {
+            line-height: 32px;
+            padding: 0px 16px;
+        }
+        #chat_textarea {
+      resize: none;
+      border: none;
+      display: block;
+      width: 80%;
+      height: 80px;
+      border-radius: 3px;
+      padding: 20px;
+      font-size: 13px;
+      background-color: #e4e4e4b7;
+      color: rgb(27, 27, 27);
+    }
+    </style>
+</div>

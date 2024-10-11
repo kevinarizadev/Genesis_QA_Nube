@@ -1,0 +1,263 @@
+<div id="inicioempresas">
+    <div class="row dashboard-wrapper content-container white">
+        <div class="col s12">
+            <div class="center-align white box">
+                <h2 class="margin">Bienvenido</h2>
+                <p class="left-align">Consulta tu Información básica <a href="#/informacionempresa">aquí</a>, o accede
+                    a los demás módulos en la barra izquierda.
+                    <br>
+                    <br>
+                    Para más información contacta nuestras líneas de atención.
+                </p>
+            </div>
+        </div>
+    </div>
+        <div class="row">
+        <div class="col s12">
+            <div class="slideshow-container" style="width: 100%;position: relative;margin: auto;">
+                <div class="mySlides fade">
+                    <div class="img-style" style="background-image: url(images/slider/banner-movilidad.jpg);">
+                    </div>
+                </div>
+                <div class="mySlides fade">
+                    <div class="img-style" style="background-image: url(images/slider/empresas/prestaciones.jpg);zoom: 0.8;">
+                    </div>
+                </div>
+                <!-- <div class="mySlides fade">
+                    <div class="img-style" style="background-image: url(images/slider/BANNER-GENESIS-IPS-CUPS-min.png);">
+                    </div>
+                </div>
+            	<div class="mySlides fade">
+                    <div class="img-style" style="background-image: url(images/slider/BANNER-GENESIS-NACIMIENTOS-min.jpg);">
+                    </div>
+                </div>
+                <div class="mySlides fade">
+                    <div class="img-style" style="background-image: url(images/slider/BANNER-rafel.png);">
+                    </div>
+                </div>
+                <div class="mySlides fade">
+                    <div class="img-style" style="background-image: url(images/slider/BANNER--RIPS-GENESIS.png);">
+                    </div>
+                </div> -->
+                <a class="prev" ng-click="plusSlides(-1)">&#10094;</a>
+                <a class="next" ng-click="plusSlides(1)">&#10095;</a>
+            </div>
+            <br>
+
+            <div style="text-align:center">
+                <span class="dot" ng-click="currentSlide(1)"></span>
+                <span class="dot" ng-click="currentSlide(2)"></span>
+                <!-- <span class="dot" ng-click="currentSlide(3)"></span>
+                <span class="dot" ng-click="currentSlide(4)"></span>
+                <span class="dot" ng-click="currentSlide(5)"></span>
+                <span class="dot" ng-click="currentSlide(6)"></span> -->
+            </div>
+        </div>
+    </div>
+    <div class="center-align white box">
+        <h5 class="margin">Instructivos</h5>
+    </div>
+    <div class="row">
+        <!-- <div class="col s3">
+            <div ng-click="verdocumento('Actualizacion_de_Datos')" style="cursor: pointer;" class="how-it-single text-center">
+                <div class="single-icon">
+                    <img src='assets/fonts/icons/rips.png' alt="Actualizacion de Dato">
+                </div>
+                <h5>Actualizacion de Datos</h5>
+            </div>
+        </div> -->
+        <div class="col s12">
+            <div ng-click="verdocumento('Radicacion_de_Prestaciones')" style="cursor: pointer;" class="how-it-single text-center">
+                <div class="single-icon">
+                    <img width="150" src="assets/fonts/icons/empresasradicacion.png" alt="Radicacion de Prestaciones">
+                </div>
+                <h6>Radicacion de Prestaciones</h6>
+            </div>
+        </div>
+        <!-- <div class="col s4">
+            <div ng-click="verdocumento('Registro_e_Ingreso_a_Genesis')" style="cursor: pointer;" class="how-it-single text-center">
+                <div class="single-icon">
+                    <img width="150" src="assets/fonts/icons/empresasradicacion.png" alt="Registro e Ingreso a Genesis">
+                </div>
+                <h6>Registro e Ingreso a Genesis</h6>
+            </div>
+        </div> -->
+        <!-- <div class="col s4">
+            <div ng-click="verdocumento('Novedades_y_Registros')" style="cursor: pointer;" class="how-it-single text-center">
+                <div class="single-icon">
+                    <img width="150" src="assets/fonts/icons/empresasradicacion.png" alt="Novedades y Registros">
+                </div>
+                <h6>Novedades y Registros</h6>
+            </div>
+        </div> -->
+    </div>
+    <div class="center-align white box">
+        <h5 class="margin">Tutoriales</h5>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            <a href="https://youtu.be/v4QhGpJv3IA" target="_blank" style="cursor: pointer;" class="how-it-single text-center">
+                <div class="single-icon">
+                    <img width="150" src="assets/fonts/icons/turorialesempresas.png" alt="Solicitud Mesas de Ayuda">
+                </div>
+                <h6>Solicitud Mesas de Ayuda</h6>
+            </a>
+        </div>
+        <div class="col s6">
+            <a href="https://youtu.be/hrtLWbmVUIc " target="_blank" style="cursor: pointer;" class="how-it-single text-center">
+                <div class="single-icon">
+                    <img width="150" src="assets/fonts/icons/turorialesempresas.png" alt="Solicitud Mesas de Ayuda">
+                </div>
+                <h6>Certificado de Prestaciones</h6>
+            </a>
+        </div>
+    </div>
+    <style>
+        .how-it-single {
+            padding: 40px;
+            -webkit-transition-duration: 800ms;
+            -o-transition-duration: 800ms;
+            transition-duration: 800ms;
+        }
+
+        .how-it-single:hover {
+            -webkit-box-shadow: 0 10px 90px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 90px rgba(0, 0, 0, 0.08);
+        }
+
+        .btplay .video-play-btn {
+            display: none;
+        }
+
+        .btplay:hover .video-play-btn {
+            display: block;
+        }
+
+        .mySlides {
+            display: none
+        }
+
+        .slideshow-container {
+            /* max-width: 1000px; */
+            position: relative;
+            margin: auto;
+        }
+
+
+        /* Slideshow container */
+        .img-style {
+            z-index: 1;
+            background-position: center center;
+            background-size: cover;
+            height: 550px;
+            -webkit-box-shadow: 0 10px 50px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Next & previous buttons */
+        .prev,
+        .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        /* The dots/bullets/indicators */
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        #inicioempresas .active,
+        .dot:hover {
+            background-color: #717171;
+        }
+
+        /* Fading animation */
+        .fade {
+            -webkit-animation-name: fade;
+            -webkit-animation-duration: 1.5s;
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @-webkit-keyframes fade {
+            from {
+                opacity: .4
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes fade {
+            from {
+                opacity: .4
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        /* On smaller screens, decrease text size */
+        @media only screen and (max-width: 300px) {
+
+            .prev,
+            .next,
+            .text {
+                font-size: 11px
+            }
+        }
+
+        /* Responsive PQR */
+        @media only screen and (max-width: 991px) and (min-width: 600px) {
+            #inicioempresas .row .col.s4 {
+                width: 50% !important;
+            }
+
+            h2 {
+                font-size: 3rem;
+            }
+
+        }
+
+        @media only screen and (max-width: 599px) and (min-width: 350px) {
+            #inicioempresas .row .col.s4 {
+                width: 100% !important;
+            }
+
+            h2 {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</div>

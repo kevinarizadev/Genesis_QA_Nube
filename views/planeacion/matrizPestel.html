@@ -1,0 +1,1468 @@
+<div class="white newdesing" id="pantalla" style="zoom: 72%;">
+    <style>
+        .newdesing .content-container {
+            min-height: 10px;
+        }
+        .selected {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #Form > div > div > div.col.s12 > div.col.s8 > ul > li > div.collapsible-header{
+            background-color: rgb(14, 32, 110);
+            color: #fff;
+        }
+
+        .radioButton{
+            padding-right: 16px;
+        }
+
+               /* Agrega estilos según sea necesario */
+        .collapsible li.disabled .collapsible-body {
+        display: none !important; /*or using id of the app to avoid the use of !important*/
+        }
+
+        .collapsible li.disabled .collapsible-header {
+        background: rgb(221,221,221);
+        }
+
+        /* #Pestel{
+          color: #020254;
+          background-color: azure;
+        } */
+    </style>
+    <div class="row section-header margin">
+      <ul class="left mailbox-custom-search list-inline w-100 d-flex justify-content-between align-items-center">
+        <li id="inicio">
+          <h5 class="cursor-pointer"
+            style="font-family: 'Product Sans',Arial,sans-serif;font-size: 22px;line-height: 22px;opacity: .54;margin: 9px 0"
+            onclick="location.reload();">
+            <spam>
+                <h5 class="icon-article">MATRIZ PESTEL
+                </h5>
+            </spam>
+          </h5>
+        </li>
+          <li ng-if="cedula == 1069712551 || cedula == 72001276 || cedula == 1001821339">
+            <ul class="tabs transparent" style="overflow:hidden;">
+              <li class="tab col w-auto">       
+                  <a href title="Descargar Excel"><i style="font-size: 24px;" class="icon-download" ng-click="descargarExcel()"></i></a>
+              </li>
+            </ul>
+          </li>
+      </ul>
+    </div>
+    <div class="row dashboard-wrapper content-container white">
+      <div id="Form" class="card-content clearfix card"style="width: 95%;border-radius: 15px;">
+              <div class="hoja">
+                  <div class="card-content clearfix" style="padding-bottom: 0px; padding-left: 20px;">
+                    <div class="col s12">
+                        <i class="material-icons" style="color: rgb(133, 40, 17);margin: 10px;padding: 10px;">report_problem</i><strong style="color: red;">CALIFICACION DEL 1 AL 5, DONDE 1 ES MUY NEGATIVO Y 5 MUY POSITIVO.</strong>
+                        
+                    </div>
+                  <div class="col s12" style="padding-bottom: 30px;">
+                   <div class="col s8">
+                    <ul class="collapsible">
+                      <li>
+                        <div class="collapsible-header" 
+                            title="¿Cómo pueden afectar el gobierno y otros factores políticos a nuestra organización?" ><i class="icon-users" ></i>POLITICO
+                        </div style="line-height: 3rem;padding: 0;min-height: 0;border-bottom: 0;background-color: #fff;width: 40%;">
+                        <div id="Pestel" class="collapsible-body">
+                          <div class="row">
+                            <div class="col s12" style="padding-top: 15px;">
+                                  <div class="col s7">
+                                      <i class="icon-check"></i>
+                                      <label for="contactChoice1">Gobierno Actual</label>
+                                      <strong style="color: red; display: none; padding-left: 90px;">Por favor seleccioné el campo</strong>
+                                  </div>
+                              <div class="col s5">
+                                  <input type="radio" id="item1" name="contact2"  ng-model="politico.GobiernoActual" value="1"/>
+                                  <label class="radioButton" for="item1">1</label>
+      
+                                  <input type="radio" id="item2" name="contact2"  ng-model="politico.GobiernoActual" value="2"/>
+                                  <label class="radioButton" for="item2">2</label>
+      
+                                  <input type="radio" id="item3" name="contact2" ng-model="politico.GobiernoActual" value="3"/>
+                                  <label class="radioButton" for="item3">3</label>
+      
+                                  <input type="radio" id="item4" name="contact2"  ng-model="politico.GobiernoActual" value="4"/>
+                                  <label class="radioButton" for="item4">4</label>
+      
+                                  <input type="radio" id="item5" name="contact2" ng-model="politico.GobiernoActual" value="5"/>
+                                  <label class="radioButton" for="item5">5</label>
+      
+                              </div>
+                                  <hr>
+                              </div>
+                              <div class="col s12">
+                                <div class="col s7">
+                                    <i class="icon-check"></i>
+                                <label for="contactChoice2">Elecciones Territoriales 2023</label>
+                                <strong style="color: red; display: none; padding-left: 90px;">Por favor seleccioné el campo</strong>
+                                </div>
+                                <div class="col s5">
+                                    <input type="radio" id="item6" name="contact1" ng-model="politico.EleccionesTerritoriales" value="1"/>
+                                    <label class="radioButton" for="item6">1</label>
+        
+                                    <input type="radio" id="item7" name="contact1" ng-model="politico.EleccionesTerritoriales" value="2"/>
+                                    <label class="radioButton" for="item7">2</label>
+        
+                                    <input type="radio" id="item8" name="contact1" ng-model="politico.EleccionesTerritoriales" value="3"/>
+                                    <label class="radioButton" for="item8">3</label>
+        
+                                    <input type="radio" id="item9" name="contact1" ng-model="politico.EleccionesTerritoriales" value="4"/>
+                                    <label class="radioButton" for="item9">4</label>
+        
+                                    <input type="radio" id="item10" name="contact1" ng-model="politico.EleccionesTerritoriales" value="5"/>
+                                    <label class="radioButton" for="item10">5</label>
+                                </div>
+                                <hr>
+                            </div>
+        
+                            
+                            <div class="col s12" ng-show="contador >= 1" id="nuevo1">
+                                    <div class="col s7">     
+                                        <i class="icon-check"></i>
+                                        <label for="contactChoice3">{{NuevoPolitico1[0]}}</label>
+                                        <strong style="color: red; display: none; padding-left: 90px;">Por favor seleccioné el campo</strong>
+                                    </div>
+                                 <div class="col s5">
+                                     <input type="radio" id="item17" name="politico1" ng-model="politico.nuevo1" value="1"/>
+                                     <label class="radioButton" for="item17">1</label>
+         
+                                     <input type="radio" id="item18" name="politico1" ng-model="politico.nuevo1" value="2"/>
+                                     <label class="radioButton" for="item18">2</label>
+         
+                                     <input type="radio" id="item19" name="politico1" ng-model="politico.nuevo1" value="3"/>
+                                     <label class="radioButton" for="item19">3</label>
+         
+                                     <input type="radio" id="item20" name="politico1" ng-model="politico.nuevo1" value="4"/>
+                                     <label class="radioButton" for="item20">4</label>
+         
+                                     <input type="radio" id="item21" name="politico1" ng-model="politico.nuevo1" value="5"/>
+                                     <label class="radioButton" for="item21">5</label>
+                                     <a href>
+                                         <i class="icon-cancel-circled" style="color: red; zoom: 130%;" ng-click="eliminar('P',NuevoPolitico1[0], '1')" href></i>
+                                     </a>
+
+                                 </div>
+                              
+
+                                <hr>
+                             </div>
+        
+                             <div class="col s12" ng-show="contador >= 2">
+                                <div class="col s7">     
+                                    <i class="icon-check"></i>
+                                    <label for="contactChoice3">{{NuevoPolitico1[1]}}</label>
+                                <strong style="color: red; display: none; padding-left: 90px;">Por favor seleccioné el campo</strong>
+                                </div>
+                             <div class="col s5">
+                                 <input type="radio" id="item22" name="politico2" ng-model="politico.nuevo2" value="1"/>
+                                 <label class="radioButton" for="item22">1</label>
+        
+                                 <input type="radio" id="item23" name="politico2" ng-model="politico.nuevo2" value="2"/>
+                                 <label class="radioButton" for="item23">2</label>
+        
+                                 <input type="radio" id="item24" name="politico2" ng-model="politico.nuevo2" value="3"/>
+                                 <label class="radioButton" for="item24">3</label>
+        
+                                 <input type="radio" id="item25" name="politico2" ng-model="politico.nuevo2" value="4"/>
+                                 <label class="radioButton" for="item25">4</label>
+        
+                                 <input type="radio" id="item26" name="politico2" ng-model="politico.nuevo2" value="5"/>
+                                 <label class="radioButton" for="item26">5</label>
+                                 <a  href>
+                                     <i class="icon-cancel-circled" style="color: red; zoom: 130%;" title="Eliminar" ng-click="eliminar('P',NuevoPolitico1[1],'2')"></i>
+                                 </a>
+
+                             </div>
+                            <hr>
+                             </div>
+        
+                            <div class="col s12" style="padding-top: 20px; padding-bottom: 20px;">
+                                <div class="col s4">     
+                                    <input type="checkbox" id="checkbox2" ng-model="otroPolitico"/>
+                                    <label for="checkbox2" >Otro</label>
+                                </div>
+                                <div class="col s4" ng-show="otroPolitico == true">     
+                                    <input type="text" id="politico" ng-model="PoliticoInput"/>
+                                    <label for="politico">Nuevo Factor</label>
+                                </div>
+                                <div class="input-field col s1" ng-show="otroPolitico == true">
+                                    <button ng-click="NuevoFactor()"
+                                    style="padding-left: 20px;background-color: #fff; border: none;">
+                                    <i class=" icon-plus-circle" style="color: rgb(38, 22, 107); zoom: 190%; " title="AGREGAR"></i></button>
+                                </div>
+        
+                            </div>
+
+                          </div>
+                        </div>
+                      </li>
+                      <li id="EconomicoLi" class="disabled" ng-click="validarFormulario('P')">
+                        <div class="collapsible-header"
+                         title="¿Qué tendencias económicas podrían tener un impacto en nuestra organización?"><i class="icon-money"></i>ECONOMICO</div>
+                        <div class="collapsible-body">
+                          <div class="row">
+                            <div class="col s12" style="padding-top: 15px;">
+                              <div class="col s7">
+                                  <i class="icon-check"></i>
+                                  <label for="contactChoice1">Cumplimiento de condiciones financieras</label>
+                              </div>
+                          <div class="col s5">
+                              <input type="radio" id="eco1" name="economico1"  ng-model="economico.CumplimientoCondicionesfinancieras" value="1"/>
+                              <label class="radioButton" for="eco1">1</label>
+  
+                              <input type="radio" id="eco2" name="economico1"  ng-model="economico.CumplimientoCondicionesfinancieras" value="2"/>
+                              <label class="radioButton" for="eco2">2</label>
+  
+                              <input type="radio" id="eco3" name="economico1" ng-model="economico.CumplimientoCondicionesfinancieras" value="3"/>
+                              <label class="radioButton" for="eco3">3</label>
+  
+                              <input type="radio" id="eco4" name="economico1"  ng-model="economico.CumplimientoCondicionesfinancieras" value="4"/>
+                              <label class="radioButton" for="eco4">4</label>
+  
+                              <input type="radio" id="eco5" name="economico1" ng-model="economico.CumplimientoCondicionesfinancieras" value="5"/>
+                              <label class="radioButton" for="eco5">5</label>
+  
+                          </div>
+                              <hr>
+                          </div>
+  
+  
+                      <div class="col s12">
+                          <div class="col s7">
+                              <i class="icon-check"></i>
+                          <label for="contactChoice2">Desabastecimiento de medicamentos</label>
+                          </div>
+                          <div class="col s5">
+                              <input type="radio" id="eco6" name="economico2" ng-model="economico.Desabastecimientodemedicamentos" value="1"/>
+                              <label class="radioButton" for="eco6">1</label>
+  
+                              <input type="radio" id="eco7" name="economico2" ng-model="economico.Desabastecimientodemedicamentos" value="2"/>
+                              <label class="radioButton" for="eco7">2</label>
+  
+                              <input type="radio" id="eco8" name="economico2" ng-model="economico.Desabastecimientodemedicamentos" value="3"/>
+                              <label class="radioButton" for="eco8">3</label>
+  
+                              <input type="radio" id="eco9" name="economico2" ng-model="economico.Desabastecimientodemedicamentos" value="4"/>
+                              <label class="radioButton" for="eco9">4</label>
+  
+                              <input type="radio" id="eco10" name="economico2" ng-model="economico.Desabastecimientodemedicamentos" value="5"/>
+                              <label class="radioButton" for="eco10">5</label>
+                          </div>
+                          <hr>
+                      </div>
+
+                      <div class="col s12">
+                        <div class="col s7">
+                            <i class="icon-check"></i>
+                        <label for="contactChoice2">Decrecimiento del PIB</label>
+                        </div>
+                        <div class="col s5">
+                            <input type="radio" id="eco112" name="economico3" ng-model="economico.DecrecimientodelPIB" value="1"/>
+                              <label class="radioButton" for="eco112">1</label>
+  
+                              <input type="radio" id="eco12" name="economico3" ng-model="economico.DecrecimientodelPIB" value="2"/>
+                              <label class="radioButton" for="eco12">2</label>
+  
+                              <input type="radio" id="eco13" name="economico3" ng-model="economico.DecrecimientodelPIB" value="3"/>
+                              <label class="radioButton" for="eco13">3</label>
+  
+                              <input type="radio" id="eco14" name="economico3" ng-model="economico.DecrecimientodelPIB" value="4"/>
+                              <label class="radioButton" for="eco14">4</label>
+  
+                              <input type="radio" id="eco150" name="economico3" ng-model="economico.DecrecimientodelPIB" value="5"/>
+                              <label class="radioButton" for="eco150">5</label>
+                        </div>
+                        <hr>
+                    </div>
+  
+                      
+                    <div class="col s12">
+                          <div class="col s7">     
+                              <i class="icon-check"></i>
+                              <label for="contactChoice3">IPC</label>
+                          </div>
+  
+                          <div class="col s5">
+                              <input type="radio" id="eco16" name="economico4" ng-model="economico.IPC" value="1"/>
+                              <label class="radioButton" for="eco16">1</label>
+  
+                              <input type="radio" id="eco17" name="economico4" ng-model="economico.IPC" value="2"/>
+                              <label class="radioButton" for="eco17">2</label>
+  
+                              <input type="radio" id="eco18" name="economico4" ng-model="economico.IPC" value="3"/>
+                              <label class="radioButton" for="eco18">3</label>
+  
+                              <input type="radio" id="eco19" name="economico4" ng-model="economico.IPC" value="4"/>
+                              <label class="radioButton" for="eco19">4</label>
+  
+                              <input type="radio" id="eco20" name="economico4" ng-model="economico.IPC" value="5"/>
+                              <label class="radioButton" for="eco20">5</label>
+                          </div>
+                          <hr>
+                      </div>
+
+                    <div class="col s12">
+                        <div class="col s7">     
+                            <i class="icon-check"></i>
+                            <label for="contactChoice3">Dólar</label>
+                        </div>
+
+                        <div class="col s5">
+                            <input type="radio" id="eco21" name="economico5" ng-model="economico.Dolar" value="1"/>
+                            <label class="radioButton" for="eco21">1</label>
+
+                            <input type="radio" id="eco22" name="economico5" ng-model="economico.Dolar" value="2"/>
+                            <label class="radioButton" for="eco22">2</label>
+
+                            <input type="radio" id="eco23" name="economico5" ng-model="economico.Dolar" value="3"/>
+                            <label class="radioButton" for="eco23">3</label>
+
+                            <input type="radio" id="eco24" name="economico5" ng-model="economico.Dolar" value="4"/>
+                            <label class="radioButton" for="eco24">4</label>
+
+                            <input type="radio" id="eco25" name="economico5" ng-model="economico.Dolar" value="5"/>
+                            <label class="radioButton" for="eco25">5</label>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="col s12">
+                        <div class="col s7">     
+                            <i class="icon-check"></i>
+                            <label for="contactChoice3">Perspectiva de la economia del País</label>
+                        </div>
+
+                        <div class="col s5">
+                            <input type="radio" id="eco26" name="economico6" ng-model="economico.PerspectivadelaeconomiadelPais" value="1"/>
+                            <label class="radioButton" for="eco26">1</label>
+
+                            <input type="radio" id="eco27" name="economico6" ng-model="economico.PerspectivadelaeconomiadelPais" value="2"/>
+                            <label class="radioButton" for="eco27">2</label>
+
+                            <input type="radio" id="eco28" name="economico6" ng-model="economico.PerspectivadelaeconomiadelPais" value="3"/>
+                            <label class="radioButton" for="eco28">3</label>
+
+                            <input type="radio" id="eco29" name="economico6" ng-model="economico.PerspectivadelaeconomiadelPais" value="4"/>
+                            <label class="radioButton" for="eco29">4</label>
+
+                            <input type="radio" id="eco30" name="economico6" ng-model="economico.PerspectivadelaeconomiadelPais" value="5"/>
+                            <label class="radioButton" for="eco30">5</label>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="col s12">
+                        <div class="col s7">     
+                            <i class="icon-check"></i>
+                            <label for="contactChoice3">Cierre de EPS desde 2022</label>
+                        </div>
+
+                        <div class="col s5">
+                            <input type="radio" id="eco31" name="economico7" ng-model="economico.CierredeEPSdesde2022" value="1"/>
+                            <label class="radioButton" for="eco31">1</label>
+
+                            <input type="radio" id="eco32" name="economico7" ng-model="economico.CierredeEPSdesde2022" value="2"/>
+                            <label class="radioButton" for="eco32">2</label>
+
+                            <input type="radio" id="eco33" name="economico7" ng-model="economico.CierredeEPSdesde2022" value="3"/>
+                            <label class="radioButton" for="eco33">3</label>
+
+                            <input type="radio" id="eco34" name="economico7" ng-model="economico.CierredeEPSdesde2022" value="4"/>
+                            <label class="radioButton" for="eco34">4</label>
+
+                            <input type="radio" id="eco35" name="economico7" ng-model="economico.CierredeEPSdesde2022" value="5"/>
+                            <label class="radioButton" for="eco35">5</label>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="col s12">
+                        <div class="col s7">     
+                            <i class="icon-check"></i>
+                            <label for="contactChoice3">Identificación Fallos de la Competencia, Monopolios, Oligopolios</label>
+                        </div>
+
+                        <div class="col s5">
+                            <input type="radio" id="eco36" name="economico8" ng-model="economico.IdentificacionFallosCompetencia" value="1"/>
+                            <label class="radioButton" for="eco36">1</label>
+
+                            <input type="radio" id="eco37" name="economico8" ng-model="economico.IdentificacionFallosCompetencia" value="2"/>
+                            <label class="radioButton" for="eco37">2</label>
+
+                            <input type="radio" id="eco38" name="economico8" ng-model="economico.IdentificacionFallosCompetencia" value="3"/>
+                            <label class="radioButton" for="eco38">3</label>
+
+                            <input type="radio" id="eco39" name="economico8" ng-model="economico.IdentificacionFallosCompetencia" value="4"/>
+                            <label class="radioButton" for="eco39">4</label>
+
+                            <input type="radio" id="eco40" name="economico8" ng-model="economico.IdentificacionFallosCompetencia" value="5"/>
+                            <label class="radioButton" for="eco40">5</label>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="col s12">
+                        <div class="col s7">     
+                            <i class="icon-check"></i>
+                            <label for="contactChoice3">Incremento en la demanda del servicio de salud</label>
+                        </div>
+
+                        <div class="col s5">
+                            <input type="radio" id="eco41" name="economico9" ng-model="economico.IncrementoDemandadsalud" value="1"/>
+                            <label class="radioButton" for="eco41">1</label>
+
+                            <input type="radio" id="eco42" name="economico9" ng-model="economico.IncrementoDemandadsalud" value="2"/>
+                            <label class="radioButton" for="eco42">2</label>
+
+                            <input type="radio" id="eco43" name="economico9" ng-model="economico.IncrementoDemandadsalud" value="3"/>
+                            <label class="radioButton" for="eco43">3</label>
+
+                            <input type="radio" id="eco44" name="economico9" ng-model="economico.IncrementoDemandadsalud" value="4"/>
+                            <label class="radioButton" for="eco44">4</label>
+
+                            <input type="radio" id="eco45" name="economico9" ng-model="economico.IncrementoDemandadsalud" value="5"/>
+                            <label class="radioButton" for="eco45">5</label>
+                        </div>
+                        <hr>
+                    </div>
+  
+                      <div class="col s12" ng-show="contadorEconomico >= 1">
+                              <div class="col s7">     
+                                  <i class="icon-check"></i>
+                                  <label for="contactChoice3">{{NuevoEconomico1[0]}}</label>
+                              </div>
+                           <div class="col s5">
+                               <input type="radio" id="eco46" name="economico10" ng-model="economico.nuevoE1" value="1"/>
+                               <label class="radioButton" for="eco46">1</label>
+   
+                               <input type="radio" id="eco47" name="economico10" ng-model="economico.nuevoE1" value="2"/>
+                               <label class="radioButton" for="eco47">2</label>
+   
+                               <input type="radio" id="eco48" name="economico10" ng-model="economico.nuevoE1" value="3"/>
+                               <label class="radioButton" for="eco48">3</label>
+   
+                               <input type="radio" id="eco49" name="economico10" ng-model="economico.nuevoE1" value="4"/>
+                               <label class="radioButton" for="eco49">4</label>
+   
+                               <input type="radio" id="eco50" name="economico10" ng-model="economico.nuevoE1" value="5"/>
+                               <label class="radioButton" for="eco50">5</label>
+
+                               <a  href>
+                                   <i class="icon-cancel-circled" style="color: red; zoom: 130%;" title="Eliminar" ng-click="eliminar('E',NuevoEconomico1[0],'1')" href></i>
+                               </a>
+                               
+                           </div>
+                          <hr>
+                       </div>
+  
+                       <div class="col s12" ng-show="contadorEconomico >= 2">
+                          <div class="col s7">     
+                              <i class="icon-check"></i>
+                              <label for="contactChoice3">{{NuevoEconomico1[1]}}</label>
+                          </div>
+                       <div class="col s5">
+                           <input type="radio" id="eco51" name="economico11" ng-model="economico.nuevoE2" value="1"/>
+                           <label class="radioButton" for="eco51">1</label>
+  
+                           <input type="radio" id="eco52" name="economico11" ng-model="economico.nuevoE2" value="2"/>
+                           <label class="radioButton" for="eco52">2</label>
+  
+                           <input type="radio" id="eco53" name="economico11" ng-model="economico.nuevoE2" value="3"/>
+                           <label class="radioButton" for="eco53">3</label>
+  
+                           <input type="radio" id="eco54" name="economico11" ng-model="economico.nuevoE2" value="4"/>
+                           <label class="radioButton" for="eco54">4</label>
+  
+                           <input type="radio" id="eco55" name="economico11" ng-model="economico.nuevoE2" value="5"/>
+                           <label class="radioButton" for="eco55">5</label>
+                           <a  href>
+                               <i class="icon-cancel-circled" style="color: red; zoom: 130%;" title="Eliminar" ng-click="eliminar('E',NuevoEconomico1[0],'2')"></i>
+                           </a>
+                       </div>
+                      <hr>
+                        </div>
+  
+                      <div class="col s12" style="padding-top: 20px; padding-bottom: 20px;">
+                          <div class="col s4">     
+                              <input type="checkbox" id="otroEconomico"  ng-model="otroEconomico"/>
+                              <label for="otroEconomico" >Otro</label>
+                          </div>
+                          <div class="col s4" ng-show="otroEconomico == true">     
+                              <input type="text" id="Economico" ng-model="EconomicoInput"/>
+                              <label for="Economico" ng-click="">Nuevo Factor</label>
+                          </div>
+                          <div class="input-field col s1" ng-show="otroEconomico == true">
+                              <button ng-click="NuevoFactorEconomico()"
+                              style="padding-left: 20px;background-color: #fff; border: none;">
+                              <i class=" icon-plus-circle" style="color: rgb(38, 22, 107); zoom: 190%; " title="AGREGAR"></i></button>
+                          </div>
+  
+                      </div>
+                          </div>
+                        </div>
+                      </li>
+                      <li id="SocioC_li" class="disabled" ng-click="validarFormulario('E')">
+                        <div class="collapsible-header"
+                         title="¿Cuál es la tendencia social-demográfica? "><i class="icon-school"></i>SOCIO-CULTURAL</div>
+                        <div class="collapsible-body">
+                          <div class="row">
+                            <div class="col s12" style="padding-top: 15px;">
+                              <div class="col s7">
+                                  <i class="icon-check"></i>
+                                  <label for="contactChoice1">Inconformidad de la población afiliada</label>
+                              </div>
+                          <div class="col s5">
+                              <input type="radio" id="socio1" name="socioCultura1"  ng-model="socio_cultural.InconformidadPoblacionafiliada" value="1"/>
+                              <label class="radioButton" for="socio1">1</label>
+    
+                              <input type="radio" id="socio2" name="socioCultura1"  ng-model="socio_cultural.InconformidadPoblacionafiliada" value="2"/>
+                              <label class="radioButton" for="socio2">2</label>
+    
+                              <input type="radio" id="socio3" name="socioCultura1" ng-model="socio_cultural.InconformidadPoblacionafiliada" value="3"/>
+                              <label class="radioButton" for="socio3">3</label>
+    
+                              <input type="radio" id="socio4" name="socioCultura1" ng-model="socio_cultural.InconformidadPoblacionafiliada" value="4" />
+                              <label class="radioButton" for="socio4">4</label>
+    
+                              <input type="radio" id="socio5" name="socioCultura1" ng-model="socio_cultural.InconformidadPoblacionafiliada" value="5"/>
+                              <label class="radioButton" for="socio5">5</label>
+    
+                              </div>
+                              <hr>
+                          </div>
+    
+    
+                      <div class="col s12">
+                          <div class="col s7">
+                              <i class="icon-check"></i>
+                          <label for="contactChoice2">Indice de dispersión poblacional</label>
+                          </div>
+                          <div class="col s5">
+                              <input type="radio" id="socio6" name="socioCultura2" ng-model="socio_cultural.IndiceDispersionpoblacional" value="1"/>
+                              <label class="radioButton" for="socio6">1</label>
+    
+                              <input type="radio" id="socio7" name="socioCultura2" ng-model="socio_cultural.IndiceDispersionpoblacional" value="2"/>
+                              <label class="radioButton" for="socio7">2</label>
+    
+                              <input type="radio" id="socio8" name="socioCultura2" ng-model="socio_cultural.IndiceDispersionpoblacional" value="3"/>
+                              <label class="radioButton" for="socio8">3</label>
+    
+                              <input type="radio" id="socio9" name="socioCultura2" ng-model="socio_cultural.IndiceDispersionpoblacional" value="4"/>
+                              <label class="radioButton" for="socio9">4</label>
+    
+                              <input type="radio" id="socio10" name="socioCultura2" ng-model="socio_cultural.IndiceDispersionpoblacional" value="5"/>
+                              <label class="radioButton" for="socio10">5</label>
+                          </div>
+                          <hr>
+                      </div>
+    
+                      
+                      <div class="col s12">
+                          <div class="col s7">     
+                              <i class="icon-check"></i>
+                              <label for="contactChoice3">Participación del mercado Eps(ranking)</label>
+                          </div>
+    
+                          <div class="col s5">
+                              <input type="radio" id="socio11" name="socioCultura3" ng-model="socio_cultural.ParticipacionMercadoEps" value="1"/>
+                              <label class="radioButton" for="socio11">1</label>
+    
+                              <input type="radio" id="socio12" name="socioCultura3" ng-model="socio_cultural.ParticipacionMercadoEps" value="2"/>
+                              <label class="radioButton" for="socio12">2</label>
+    
+                              <input type="radio" id="socio13" name="socioCultura3" ng-model="socio_cultural.ParticipacionMercadoEps" value="3"/>
+                              <label class="radioButton" for="socio13">3</label>
+    
+                              <input type="radio" id="socio14" name="socioCultura3" ng-model="socio_cultural.ParticipacionMercadoEps" value="4"/>
+                              <label class="radioButton" for="socio14">4</label>
+    
+                              <input type="radio" id="socio15" name="socioCultura3" ng-model="socio_cultural.ParticipacionMercadoEps" value="5"/>
+                              <label class="radioButton" for="socio15">5</label>
+                          </div>
+                          <hr>
+                      </div>
+
+                      <div class="col s12">
+                        <div class="col s7">     
+                            <i class="icon-check"></i>
+                            <label for="contactChoice3">Retención de afiliados</label>
+                        </div>
+  
+                        <div class="col s5">
+                            <input type="radio" id="socio16" name="socioCultura4" ng-model="socio_cultural.RetencionAfiliados" value="1"/>
+                            <label class="radioButton" for="socio16">1</label>
+  
+                            <input type="radio" id="socio17" name="socioCultura4" ng-model="socio_cultural.RetencionAfiliados" value="2"/>
+                            <label class="radioButton" for="socio17">2</label>
+  
+                            <input type="radio" id="socio18" name="socioCultura4" ng-model="socio_cultural.RetencionAfiliados" value="3"/>
+                            <label class="radioButton" for="socio18">3</label>
+  
+                            <input type="radio" id="socio19" name="socioCultura4" ng-model="socio_cultural.RetencionAfiliados" value="4"/>
+                            <label class="radioButton" for="socio19">4</label>
+  
+                            <input type="radio" id="socio20" name="socioCultura4" ng-model="socio_cultural.RetencionAfiliados" value="5"/>
+                            <label class="radioButton" for="socio20">5</label>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="col s12">
+                        <div class="col s7">     
+                            <i class="icon-check"></i>
+                            <label for="contactChoice3">Caracterización poblacional</label>
+                        </div>
+  
+                        <div class="col s5">
+                            <input type="radio" id="socio21" name="socioCultura5" ng-model="socio_cultural.Caracterizacionpoblacional" value="1"/>
+                            <label class="radioButton" for="socio21">1</label>
+  
+                            <input type="radio" id="socio22" name="socioCultura5" ng-model="socio_cultural.Caracterizacionpoblacional" value="2"/>
+                            <label class="radioButton" for="socio22">2</label>
+  
+                            <input type="radio" id="socio23" name="socioCultura5" ng-model="socio_cultural.Caracterizacionpoblacional" value="3"/>
+                            <label class="radioButton" for="socio23">3</label>
+  
+                            <input type="radio" id="socio24" name="socioCultura5" ng-model="socio_cultural.Caracterizacionpoblacional" value="4"/>
+                            <label class="radioButton" for="socio24">4</label>
+  
+                            <input type="radio" id="socio25" name="socioCultura5" ng-model="socio_cultural.Caracterizacionpoblacional" value="5"/>
+                            <label class="radioButton" for="socio25">5</label>
+                        </div>
+                        <hr>
+                    </div>
+    
+                      <div class="col s12" ng-show="contadorSocioCult >= 1">
+                              <div class="col s7">     
+                                  <i class="icon-check"></i>
+                                  <label for="contactChoice3">{{NuevoSocio_cultu1[0]}}</label>
+                              </div>
+                           <div class="col s5">
+                               <input type="radio" id="socio26" name="socioCultura6" ng-model="socio_cultural.nuevoS1" value="1"/>
+                               <label class="radioButton" for="socio26">1</label>
+    
+                               <input type="radio" id="socio27" name="socioCultura6" ng-model="socio_cultural.nuevoS1" value="2"/>
+                               <label class="radioButton" for="socio27">2</label>
+    
+                               <input type="radio" id="socio28" name="socioCultura6" ng-model="socio_cultural.nuevoS1" value="3"/>
+                               <label class="radioButton" for="socio28">3</label>
+    
+                               <input type="radio" id="socio29" name="socioCultura6" ng-model="socio_cultural.nuevoS1" value="4"/>
+                               <label class="radioButton" for="socio29">4</label>
+    
+                               <input type="radio" id="socio30" name="socioCultura6" ng-model="socio_cultural.nuevoS1" value="5"/>
+                               <label class="radioButton" for="socio30">5</label>
+                           
+                             <a  href>
+                               <i class="icon-cancel-circled" style="color: red; zoom: 130%;" title="Eliminar" ng-click="eliminar('S',NuevoSocio_cultu1[0],'1')"></i>
+                             </a>
+                           </div>
+                          <hr>
+                       </div>
+    
+                       <div class="col s12" ng-show="contadorSocioCult >= 2">
+                          <div class="col s7">     
+                              <i class="icon-check"></i>
+                              <label for="contactChoice3">{{NuevoSocio_cultu1[1]}}</label>
+                          </div>
+                       <div class="col s5">
+                           <input type="radio" id="socio31" name="socioCultura7" ng-model="socio_cultural.nuevoS2" value="1"/>
+                           <label class="radioButton" for="socio31">1</label>
+    
+                           <input type="radio" id="socio32" name="socioCultura7" ng-model="socio_cultural.nuevoS2" value="2"/>
+                           <label class="radioButton" for="socio32">2</label>
+    
+                           <input type="radio" id="socio33" name="socioCultura7" ng-model="socio_cultural.nuevoS2" value="3"/>
+                           <label class="radioButton" for="socio33">3</label>
+    
+                           <input type="radio" id="socio34" name="socioCultura7" ng-model="socio_cultural.nuevoS2" value="4"/>
+                           <label class="radioButton" for="socio34">4</label>
+    
+                           <input type="radio" id="socio35" name="socioCultura7" ng-model="socio_cultural.nuevoS2" value="5"/>
+                           <label class="radioButton" for="socio35">5</label>
+                           <a  href>
+                               <i class="icon-cancel-circled" style="color: red; zoom: 130%;" title="Eliminar" ng-click="eliminar('S',NuevoSocio_cultu1[1],'2')"></i>
+                           </a>
+                       </div>
+                      <hr>
+                   </div>
+    
+                      <div class="col s12" style="padding-top: 20px; padding-bottom: 20px;">
+                          <div class="col s4">     
+                              <input type="checkbox" id="otroSocioCultural"  ng-model="otroSocioCultural"/>
+                              <label for="otroSocioCultural" >Otro</label>
+                          </div>
+                          <div class="col s4" ng-show="otroSocioCultural == true">     
+                              <input type="text" id="SocioCultural" ng-model="Socio_culturalInput"/>
+                              <label for="SocioCultural" ng-click="">Nuevo Factor</label>
+                          </div>
+                          <div class="input-field col s1" ng-show="otroSocioCultural == true">
+                              <button ng-click="NuevoFactorSocio()"
+                              style="padding-left: 20px;background-color: #fff; border: none;">
+                              <i class=" icon-plus-circle" style="color: rgb(38, 22, 107); zoom: 190%; " title="AGREGAR"></i></button>
+                          </div>
+    
+                      </div>
+                          </div>
+                        </div>
+                </li>
+                 <li id="Tecno_li" class="disabled" ng-click="validarFormulario('S')">
+                  <div class="collapsible-header"
+                   title="¿Qué avances tecnológicos podrían impactar nuestra organización?"><i class="icon-desktop"></i>TECNOLOGICO</div>
+                    <div class="collapsible-body">
+                      <div class="row">
+                        <div class="col s12" style="padding-top: 15px;">
+                          <div class="col s7">
+                              <i class="icon-check"></i>
+                              <label for="contactChoice1">Inversión I+D</label>
+                          </div>
+                        <div class="col s5">
+                            <input type="radio" id="tec1" name="tecnologico2" ng-model="tecnologico.InversionID" value="1"/>
+                            <label class="radioButton" for="tec1">1</label>
+
+                            <input type="radio" id="tec2" name="tecnologico2" ng-model="tecnologico.InversionID" value="2"/>
+                            <label class="radioButton" for="tec2">2</label>
+
+                            <input type="radio" id="tec3" name="tecnologico2" ng-model="tecnologico.InversionID" value="3"/>
+                            <label class="radioButton" for="tec3">3</label>
+
+                            <input type="radio" id="tec4" name="tecnologico2" ng-model="tecnologico.InversionID" value="4"/>
+                            <label class="radioButton" for="tec4">4</label>
+
+                            <input type="radio" id="tec5" name="tecnologico2" ng-model="tecnologico.InversionID" value="5"/>
+                            <label class="radioButton" for="tec5">5</label>
+                        </div>
+                          <hr>
+                      </div>
+
+
+                      <div class="col s12">
+                          <div class="col s7">
+                              <i class="icon-check"></i>
+                          <label for="contactChoice2">Canales de Comunicación</label>
+                          </div>
+                          <div class="col s5">
+                              <input type="radio" id="tec6" name="tecnologico3" ng-model="tecnologico.canalesdeComunicacion" value="1"/>
+                              <label class="radioButton" for="tec6">1</label>
+    
+                              <input type="radio" id="tec7" name="tecnologico3" ng-model="tecnologico.canalesdeComunicacion" value="2"/>
+                              <label class="radioButton" for="tec7">2</label>
+    
+                              <input type="radio" id="tec8" name="tecnologico3" ng-model="tecnologico.canalesdeComunicacion" value="3"/>
+                              <label class="radioButton" for="tec8">3</label>
+    
+                              <input type="radio" id="tec9" name="tecnologico3" ng-model="tecnologico.canalesdeComunicacion" value="4"/>
+                              <label class="radioButton" for="tec9">4</label>
+    
+                              <input type="radio" id="tec10" name="tecnologico3" ng-model="tecnologico.canalesdeComunicacion" value="5"/>
+                              <label class="radioButton" for="tec10">5</label>
+                          </div>
+                          <hr>
+                      </div>
+
+                
+                      <div class="col s12">
+                          <div class="col s7">     
+                              <i class="icon-check"></i>
+                              <label for="contactChoice3">Presencia en el mercado Digital</label>
+                          </div>
+    
+                          <div class="col s5">
+                              <input type="radio" id="tec11" name="tecnologico4" ng-model="tecnologico.PresenciaenelmercadoDigital" value="1"/>
+                              <label class="radioButton" for="tec11">1</label>
+    
+                              <input type="radio" id="tec12" name="tecnologico4" ng-model="tecnologico.PresenciaenelmercadoDigital" value="2"/>
+                              <label class="radioButton" for="tec12">2</label>
+    
+                              <input type="radio" id="tec13" name="tecnologico4" ng-model="tecnologico.PresenciaenelmercadoDigital" value="3"/>
+                              <label class="radioButton" for="tec13">3</label>
+    
+                              <input type="radio" id="tec14" name="tecnologico4" ng-model="tecnologico.PresenciaenelmercadoDigital" value="4"/>
+                              <label class="radioButton" for="tec14">4</label>
+    
+                              <input type="radio" id="tec15" name="tecnologico4" ng-model="tecnologico.PresenciaenelmercadoDigital" value="5"/>
+                              <label class="radioButton" for="tec15">5</label>
+                          </div>
+                          <hr>
+                      </div>
+
+                      <div class="col s12">
+                        <div class="col s7">     
+                            <i class="icon-check"></i>
+                            <label for="contactChoice3">Aprovechamiento de las Redes</label>
+                        </div>
+  
+                        <div class="col s5">
+                            <input type="radio" id="tec16" name="tecnologico5" ng-model="tecnologico.AprovechamientodelasRedes" value="1"/>
+                            <label class="radioButton" for="tec16">1</label>
+  
+                            <input type="radio" id="tec17" name="tecnologico5" ng-model="tecnologico.AprovechamientodelasRedes" value="2"/>
+                            <label class="radioButton" for="tec17">2</label>
+  
+                            <input type="radio" id="tec18" name="tecnologico5" ng-model="tecnologico.AprovechamientodelasRedes" value="3"/>
+                            <label class="radioButton" for="tec18">3</label>
+  
+                            <input type="radio" id="tec19" name="tecnologico5" ng-model="tecnologico.AprovechamientodelasRedes" value="4"/>
+                            <label class="radioButton" for="tec19">4</label>
+  
+                            <input type="radio" id="tec20" name="tecnologico5" ng-model="tecnologico.AprovechamientodelasRedes" value="5"/>
+                            <label class="radioButton" for="tec20">5</label>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="col s12">
+                        <div class="col s7">     
+                            <i class="icon-check"></i>
+                            <label for="contactChoice3">Sitio Web</label>
+                        </div>
+  
+                        <div class="col s5">
+                            <input type="radio" id="tec21" name="tecnologico6" ng-model="tecnologico.SitioWeb" value="1"/>
+                            <label class="radioButton" for="tec21">1</label>
+  
+                            <input type="radio" id="tec22" name="tecnologico6" ng-model="tecnologico.SitioWeb" value="2"/>
+                            <label class="radioButton" for="tec22">2</label>
+  
+                            <input type="radio" id="tec23" name="tecnologico6" ng-model="tecnologico.SitioWeb" value="3"/>
+                            <label class="radioButton" for="tec23">3</label>
+  
+                            <input type="radio" id="tec24" name="tecnologico6" ng-model="tecnologico.SitioWeb" value="4"/>
+                            <label class="radioButton" for="tec24">4</label>
+  
+                            <input type="radio" id="tec25" name="tecnologico6" ng-model="tecnologico.SitioWeb" value="5"/>
+                            <label class="radioButton" for="tec25">5</label>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="col s12">
+                        <div class="col s7">     
+                            <i class="icon-check"></i>
+                            <label for="contactChoice3">Aplicaciones móviles</label>
+                        </div>
+  
+                        <div class="col s5">
+                            <input type="radio" id="tec26" name="tecnologico7" ng-model="tecnologico.Aplicacionesmoviles" value="1"/>
+                            <label class="radioButton" for="tec26">1</label>
+  
+                            <input type="radio" id="tec27" name="tecnologico7" ng-model="tecnologico.Aplicacionesmoviles" value="2"/>
+                            <label class="radioButton" for="tec27">2</label>
+  
+                            <input type="radio" id="tec28" name="tecnologico7" ng-model="tecnologico.Aplicacionesmoviles" value="3"/>
+                            <label class="radioButton" for="tec28">3</label>
+  
+                            <input type="radio" id="tec29" name="tecnologico7" ng-model="tecnologico.Aplicacionesmoviles" value="4"/>
+                            <label class="radioButton" for="tec29">4</label>
+  
+                            <input type="radio" id="tec30" name="tecnologico7" ng-model="tecnologico.Aplicacionesmoviles" value="5"/>
+                            <label class="radioButton" for="tec30">5</label>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="col s12">
+                        <div class="col s7">     
+                            <i class="icon-check"></i>
+                            <label for="contactChoice3">Implementación de nuevos modulos</label>
+                        </div>
+  
+                        <div class="col s5">
+                            <input type="radio" id="tec31" name="tecnologico8" ng-model="tecnologico.implementacionNuevosmodulos" value="1"/>
+                            <label class="radioButton" for="tec31">1</label>
+  
+                            <input type="radio" id="tec32" name="tecnologico8" ng-model="tecnologico.implementacionNuevosmodulos" value="2"/>
+                            <label class="radioButton" for="tec32">2</label>
+  
+                            <input type="radio" id="tec33" name="tecnologico8" ng-model="tecnologico.implementacionNuevosmodulos" value="3"/>
+                            <label class="radioButton" for="tec33">3</label>
+  
+                            <input type="radio" id="tec34" name="tecnologico8" ng-model="tecnologico.implementacionNuevosmodulos" value="4"/>
+                            <label class="radioButton" for="tec34">4</label>
+  
+                            <input type="radio" id="tec35" name="tecnologico8" ng-model="tecnologico.implementacionNuevosmodulos" value="5"/>
+                            <label class="radioButton" for="tec35">5</label>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="col s12">
+                        <div class="col s7">     
+                            <i class="icon-check"></i>
+                            <label for="contactChoice3">Estrategias de Marketing digital Efectivas</label>
+                        </div>
+  
+                        <div class="col s5">
+                            <input type="radio" id="tec36" name="tecnologico9" ng-model="tecnologico.EstrategiasMarketingdigital" value="1"/>
+                            <label class="radioButton" for="tec36">1</label>
+  
+                            <input type="radio" id="tec37" name="tecnologico9" ng-model="tecnologico.EstrategiasMarketingdigital" value="2"/>
+                            <label class="radioButton" for="tec37">2</label>
+  
+                            <input type="radio" id="tec38" name="tecnologico9" ng-model="tecnologico.EstrategiasMarketingdigital" value="3"/>
+                            <label class="radioButton" for="tec38">3</label>
+  
+                            <input type="radio" id="tec39" name="tecnologico9" ng-model="tecnologico.EstrategiasMarketingdigital" value="4"/>
+                            <label class="radioButton" for="tec39">4</label>
+  
+                            <input type="radio" id="tec40" name="tecnologico9" ng-model="tecnologico.EstrategiasMarketingdigital" value="5"/>
+                            <label class="radioButton" for="tec40">5</label>
+                        </div>
+                        <hr>
+                    </div>
+
+                      <div class="col s12" ng-show="contadorTecn >= 1">
+                              <div class="col s7">     
+                                  <i class="icon-check"></i>
+                                  <label for="contactChoice3">{{NuevoTecnologico[0]}}</label>
+                              </div>
+                          <div class="col s5">
+                              <input type="radio" id="tec366" name="tecnologico99" ng-model="tecnologico.nuevoT1" value="1"/>
+                              <label class="radioButton" for="tec366">1</label>
+    
+                              <input type="radio" id="tec377" name="tecnologico99" ng-model="tecnologico.nuevoT1" value="2"/>
+                              <label class="radioButton" for="tec377">2</label>
+    
+                              <input type="radio" id="tec388" name="tecnologico99" ng-model="tecnologico.nuevoT1" value="3"/>
+                              <label class="radioButton" for="tec388">3</label>
+    
+                              <input type="radio" id="tec399" name="tecnologico99" ng-model="tecnologico.nuevoT1" value="4"/>
+                              <label class="radioButton" for="tec399">4</label>
+    
+                              <input type="radio" id="tec400" name="tecnologico99" ng-model="tecnologico.nuevoT1" value="5"/>
+                              <label class="radioButton" for="tec400">5</label>
+                           <a  href>
+                               <i class="icon-cancel-circled" style="color: red; zoom: 130%;" title="Eliminar" ng-click="eliminar('T',NuevoTecnologico[0],'1')"></i>
+                           </a>
+
+                          </div>
+                          <hr>
+                      </div>
+
+                      <div class="col s12" ng-show="contadorTecn >= 2">
+                          <div class="col s7">     
+                              <i class="icon-check"></i>
+                              <label for="contactChoice3">{{NuevoTecnologico[1]}}</label>
+                          </div>
+                      <div class="col s5">
+                          <input type="radio" id="tec41" name="tecnologico10" ng-model="tecnologico.nuevoT2" value="1"/>
+                          <label class="radioButton" for="tec41">1</label>
+    
+                          <input type="radio" id="tec42" name="tecnologico10" ng-model="tecnologico.nuevoT2" value="2"/>
+                          <label class="radioButton" for="tec42">2</label>
+    
+                          <input type="radio" id="tec43" name="tecnologico10" ng-model="tecnologico.nuevoT2" value="3"/>
+                          <label class="radioButton" for="tec43">3</label>
+    
+                          <input type="radio" id="tec44" name="tecnologico10" ng-model="tecnologico.nuevoT2" value="4"/>
+                          <label class="radioButton" for="tec44">4</label>
+    
+                          <input type="radio" id="tec45" name="tecnologico10" ng-model="tecnologico.nuevoT2" value="5"/>
+                          <label class="radioButton" for="tec45">5</label>
+                          <a  href>
+                              <i class="icon-cancel-circled" style="color: red; zoom: 130%;" title="Eliminar" ng-click="eliminar('T',NuevoTecnologico[1],'2')"></i>
+                          </a>
+                      </div>
+                      <hr>
+                     </div>
+
+                <div class="col s12" style="padding-top: 20px; padding-bottom: 20px;">
+                    <div class="col s4">     
+                        <input type="checkbox" id="otroTecnologico"  ng-model="otroTecnologico"/>
+                        <label for="otroTecnologico" >Otro</label>
+                    </div>
+                    <div class="col s4" ng-show="otroTecnologico == true">     
+                        <input type="text" id="Tecnologico" ng-model="TecnologicoInput"/>
+                        <label for="Tecnologico" ng-click="">Nuevo Factor</label>
+                    </div>
+                    <div class="input-field col s1" ng-show="otroTecnologico == true">
+                        <button ng-click="NuevoFactorTecn()"
+                        style="padding-left: 20px;background-color: #fff; border: none;">
+                        <i class=" icon-plus-circle" style="color: rgb(38, 22, 107); zoom: 190%; " title="AGREGAR"></i></button>
+                    </div>
+
+                </div>
+                      </div>
+                      </div>
+                         
+                     </li>
+                    <li id="Ecolo_li" class="disabled" ng-click="validarFormulario('T')">
+                        <div class="collapsible-header"
+                         title="¿Cómo afectan las cuestiones ambientales a nuestra organización?"><i class="icon-tree"></i>ECOLOGICOS</div>
+                        <div class="collapsible-body">
+                          <div class="row">
+                            <div class="col s12" style="padding-top: 15px;">
+                                <div class="col s7">
+                                    <i class="icon-check"></i>
+                                    <label for="contactChoice1">Aprovechamiento de residuos</label>
+                                </div>
+                            <div class="col s5">
+                                <input type="radio" id="ecologicos1" name="ecologicos1"  ng-model="ecologico.AprovechamientodeResiduos" value="1"/>
+                                <label class="radioButton" for="ecologicos1">1</label>
+      
+                                <input type="radio" id="ecologicos2" name="ecologicos1"  ng-model="ecologico.AprovechamientodeResiduos" value="2"/>
+                                <label class="radioButton" for="ecologicos2">2</label>
+      
+                                <input type="radio" id="ecologicos3" name="ecologicos1" ng-model="ecologico.AprovechamientodeResiduos" value="3"/>
+                                <label class="radioButton" for="ecologicos3">3</label>
+      
+                                <input type="radio" id="ecologicos4" name="ecologicos1"  ng-model="ecologico.AprovechamientodeResiduos" value="4"/>
+                                <label class="radioButton" for="ecologicos4">4</label>
+      
+                                <input type="radio" id="ecologicos5" name="ecologicos1" ng-model="ecologico.AprovechamientodeResiduos" value="5"/>
+                                <label class="radioButton" for="ecologicos5">5</label>
+      
+                                </div>
+                                <hr>
+                            </div>
+
+                            <div class="col s12">
+                                <div class="col s7">
+                                    <i class="icon-check"></i>
+                                <label for="contactChoice2">Implementación de Politicas (Cero Papel,Reciclaje..)</label>
+                                </div>
+                                <div class="col s5">
+                                    <input type="radio" id="ecologicos6" name="ecologicos2" ng-model="ecologico.ImplementaciondePoliticas" value="1"/>
+                                    <label class="radioButton" for="ecologicos6">1</label>
+          
+                                    <input type="radio" id="ecologicos7" name="ecologicos2" ng-model="ecologico.ImplementaciondePoliticas" value="2"/>
+                                    <label class="radioButton" for="ecologicos7">2</label>
+          
+                                    <input type="radio" id="ecologicos8" name="ecologicos2" ng-model="ecologico.ImplementaciondePoliticas" value="3"/>
+                                    <label class="radioButton" for="ecologicos8">3</label>
+          
+                                    <input type="radio" id="ecologicos9" name="ecologicos2" ng-model="ecologico.ImplementaciondePoliticas" value="4"/>
+                                    <label class="radioButton" for="ecologicos9">4</label>
+          
+                                    <input type="radio" id="ecologicos10" name="ecologicos2" ng-model="ecologico.ImplementaciondePoliticas" value="5"/>
+                                    <label class="radioButton" for="ecologicos10">5</label>
+                                </div>
+                                <hr>
+                            </div>
+          
+                            
+                            <div class="col s12">
+                                <div class="col s7">     
+                                    <i class="icon-check"></i>
+                                    <label for="contactChoice3">Programas enfocado a los usuarios sobre focos contaminantes</label>
+                                </div>
+          
+                                <div class="col s5">
+                                    <input type="radio" id="ecologicos11" name="ecologicos3" ng-model="ecologico.ProgramasEnfocadoContaminantes" value="1"/>
+                                    <label class="radioButton" for="ecologicos11">1</label>
+          
+                                    <input type="radio" id="ecologicos12" name="ecologicos3" ng-model="ecologico.ProgramasEnfocadoContaminantes" value="2"/>
+                                    <label class="radioButton" for="ecologicos12">2</label>
+          
+                                    <input type="radio" id="ecologicos13" name="ecologicos3" ng-model="ecologico.ProgramasEnfocadoContaminantes" value="3"/>
+                                    <label class="radioButton" for="ecologicos13">3</label>
+          
+                                    <input type="radio" id="ecologicos14" name="ecologicos3" ng-model="ecologico.ProgramasEnfocadoContaminantes" value="4"/>
+                                    <label class="radioButton" for="ecologicos14">4</label>
+          
+                                    <input type="radio" id="ecologicos15" name="ecologicos3" ng-model="ecologico.ProgramasEnfocadoContaminantes" value="5"/>
+                                    <label class="radioButton" for="ecologicos15">5</label>
+                                </div>
+                                <hr>
+                            </div>
+
+                            <div class="col s12">
+                                <div class="col s7">     
+                                    <i class="icon-check"></i>
+                                    <label for="contactChoice3">Programa Socio Ambiental</label>
+                                </div>
+          
+                                <div class="col s5">
+                                    <input type="radio" id="ecologicos16" name="ecologicos4" ng-model="ecologico.ProgramaSocioAmbiental" value="1"/>
+                                    <label class="radioButton" for="ecologicos16">1</label>
+          
+                                    <input type="radio" id="ecologicos17" name="ecologicos4" ng-model="ecologico.ProgramaSocioAmbiental" value="2"/>
+                                    <label class="radioButton" for="ecologicos17">2</label>
+          
+                                    <input type="radio" id="ecologicos18" name="ecologicos4" ng-model="ecologico.ProgramaSocioAmbiental" value="3"/>
+                                    <label class="radioButton" for="ecologicos18">3</label>
+          
+                                    <input type="radio" id="ecologicos19" name="ecologicos4" ng-model="ecologico.ProgramaSocioAmbiental" value="4"/>
+                                    <label class="radioButton" for="ecologicos19">4</label>
+          
+                                    <input type="radio" id="ecologicos20" name="ecologicos4" ng-model="ecologico.ProgramaSocioAmbiental" value="5"/>
+                                    <label class="radioButton" for="ecologicos20">5</label>
+                                </div>
+                                <hr>
+                            </div>
+          
+                            <div class="col s12" ng-show="contadorEcologico >= 1">
+                                    <div class="col s7">     
+                                        <i class="icon-check"></i>
+                                        <label for="contactChoice3">{{NuevoEcologico[0]}}</label>
+                                    </div>
+                                <div class="col s5">
+                                    <input type="radio" id="ecologicos21" name="ecologicos5" ng-model="ecologico.nuevoA1" value="1"/>
+                                    <label class="radioButton" for="ecologicos21">1</label>
+          
+                                    <input type="radio" id="ecologicos22" name="ecologicos5" ng-model="ecologico.nuevoA1" value="2"/>
+                                    <label class="radioButton" for="ecologicos22">2</label>
+          
+                                    <input type="radio" id="ecologicos23" name="ecologicos5" ng-model="ecologico.nuevoA1" value="3"/>
+                                    <label class="radioButton" for="ecologicos23">3</label>
+          
+                                    <input type="radio" id="ecologicos24" name="ecologicos5" ng-model="ecologico.nuevoA1" value="4"/>
+                                    <label class="radioButton" for="ecologicos24">4</label>
+          
+                                    <input type="radio" id="ecologicos25" name="ecologicos5" ng-model="ecologico.nuevoA1" value="5"/>
+                                    <label class="radioButton" for="ecologicos25">5</label>
+                                <a  href>
+                                    <i class="icon-cancel-circled" style="color: red; zoom: 130%;" title="Eliminar" ng-click="eliminar('R',NuevoEcologico[0], '1')"></i>
+                                </a>
+
+                                </div>
+                                <hr>
+                            </div>
+          
+                            <div class="col s12" ng-show="contadorEcologico >= 2">
+                                <div class="col s7">     
+                                    <i class="icon-check"></i>
+                                    <label for="contactChoice3">{{NuevoEcologico[1]}}</label>
+                                </div>
+                            <div class="col s5">
+                                <input type="radio" id="ecologicos26" name="ecologicos6" ng-model="ecologico.nuevoA2" value="1"/>
+                                <label class="radioButton" for="ecologicos26">1</label>
+          
+                                <input type="radio" id="ecologicos27" name="ecologicos6" ng-model="ecologico.nuevoA2" value="2"/>
+                                <label class="radioButton" for="ecologicos27">2</label>
+          
+                                <input type="radio" id="ecologicos28" name="ecologicos6" ng-model="ecologico.nuevoA2" value="3"/>
+                                <label class="radioButton" for="ecologicos28">3</label>
+          
+                                <input type="radio" id="ecologicos29" name="ecologicos6" ng-model="ecologico.nuevoA2" value="4"/>
+                                <label class="radioButton" for="ecologicos29">4</label>
+          
+                                <input type="radio" id="ecologicos30" name="ecologicos6" ng-model="ecologico.nuevoA2" value="5"/>
+                                <label class="radioButton" for="ecologicos30">5</label>
+                                <a href>
+                                    <i class="icon-cancel-circled" style="color: red; zoom: 130%;" title="Eliminar" ng-click="eliminar('R',NuevoEcologico[1], '2')"></i>
+                                </a>
+                            </div>
+                            <hr>
+                            </div>
+          
+                            <div class="col s12" style="padding-top: 20px; padding-bottom: 20px;">
+                                <div class="col s4">     
+                                    <input type="checkbox" id="otroEcologico"  ng-model="otroEcologico"/>
+                                    <label for="otroEcologico" >Otro</label>
+                                </div>
+                                <div class="col s4" ng-show="otroEcologico == true">     
+                                    <input type="text" id="Ecologico" ng-model="EcologicoInput"/>
+                                    <label for="Ecologico" ng-click="">Nuevo Factor</label>
+                                </div>
+                                <div class="input-field col s1" ng-show="otroEcologico == true">
+                                    <button ng-click="NuevoFactorEcologico()"
+                                    style="padding-left: 20px;background-color: #fff; border: none;">
+                                    <i class=" icon-plus-circle" style="color: rgb(38, 22, 107); zoom: 190%; " title="AGREGAR"></i></button>
+                                </div>
+          
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </li>
+                      <li id="Legal_li" class="disabled" ng-click="validarFormulario('L')">
+                        <div class="collapsible-header"
+                         title="Normatividad del sector "><i class="icon-hammer"></i>LEGALES</div>
+                        <div class="collapsible-body">
+                          <div class="row">
+                            <div class="col s12" style="padding-top: 15px;">
+                              <div class="col s7">
+                                  <i class="icon-check"></i>
+                                  <label for="contactChoice1">Exceso Normativo</label>
+                              </div>
+                          <div class="col s5">
+                              <input type="radio" id="legis1" name="legislacion1" ng-model="legales.ExcesoNormativo" value="1"/>
+                              <label class="radioButton" for="legis1">1</label>
+    
+                              <input type="radio" id="legis2" name="legislacion1" ng-model="legales.ExcesoNormativo" value="2"/>
+                              <label class="radioButton" for="legis2">2</label>
+    
+                              <input type="radio" id="legis3" name="legislacion1" ng-model="legales.ExcesoNormativo" value="3"/>
+                              <label class="radioButton" for="legis3">3</label>
+    
+                              <input type="radio" id="legis4" name="legislacion1" ng-model="legales.ExcesoNormativo" value="4"/>
+                              <label class="radioButton" for="legis4">4</label>
+    
+                              <input type="radio" id="legis5" name="legislacion1" ng-model="legales.ExcesoNormativo" value="5"/>
+                              <label class="radioButton" for="legis5">5</label>
+    
+                              </div>
+                              <hr>
+                          </div>
+    
+    
+                      <div class="col s12">
+                          <div class="col s7">
+                              <i class="icon-check"></i>
+                          <label for="contactChoice2">Modificación de circular 008 (PQRSD) </label>
+                          </div>
+                          <div class="col s5">
+                              <input type="radio" id="legis6" name="legislacion2" ng-model="legales.Modificaciondecircular" value="1"/>
+                              <label class="radioButton" for="legis6">1</label>
+    
+                              <input type="radio" id="legis7" name="legislacion2" ng-model="legales.Modificaciondecircular" value="2"/>
+                              <label class="radioButton" for="legis7">2</label>
+    
+                              <input type="radio" id="legis8" name="legislacion2" ng-model="legales.Modificaciondecircular" value="3"/>
+                              <label class="radioButton" for="legis8">3</label>
+    
+                              <input type="radio" id="legis9" name="legislacion2" ng-model="legales.Modificaciondecircular" value="4"/>
+                              <label class="radioButton" for="legis9">4</label>
+    
+                              <input type="radio" id="legis10" name="legislacion2" ng-model="legales.Modificaciondecircular" value="5"/>
+                              <label class="radioButton" for="legis10">5</label>
+                          </div>
+                          <hr>
+                      </div>
+    
+                      
+                      <div class="col s12">
+                          <div class="col s7">     
+                              <i class="icon-check"></i>
+                              <label for="contactChoice3">Cambios permanentes de legislación</label>
+                          </div>
+    
+                          <div class="col s5">
+                              <input type="radio" id="legis11" name="legislacion3" ng-model="legales.CambiosPermanentesdelegislacion" value="1"/>
+                              <label class="radioButton" for="legis11">1</label>
+    
+                              <input type="radio" id="legis12" name="legislacion3" ng-model="legales.CambiosPermanentesdelegislacion" value="2"/>
+                              <label class="radioButton" for="legis12">2</label>
+    
+                              <input type="radio" id="legis13" name="legislacion3" ng-model="legales.CambiosPermanentesdelegislacion" value="3"/>
+                              <label class="radioButton" for="legis13">3</label>
+    
+                              <input type="radio" id="legis14" name="legislacion3" ng-model="legales.CambiosPermanentesdelegislacion" value="4"/>
+                              <label class="radioButton" for="legis14">4</label>
+    
+                              <input type="radio" id="legis15" name="legislacion3" ng-model="legales.CambiosPermanentesdelegislacion" value="5"/>
+                              <label class="radioButton" for="legis15">5</label>
+                          </div>
+                          <hr>
+                      </div>
+
+                      <div class="col s12">
+                        <div class="col s7">     
+                            <i class="icon-check"></i>
+                            <label for="contactChoice3">Reforma a la Salud</label>
+                        </div>
+  
+                        <div class="col s5">
+                            <input type="radio" id="legis16" name="legislacion4" ng-model="legales.ReformaSalud" value="1"/>
+                            <label class="radioButton" for="legis16">1</label>
+  
+                            <input type="radio" id="legis17" name="legislacion4" ng-model="legales.ReformaSalud" value="2"/>
+                            <label class="radioButton" for="legis17">2</label>
+  
+                            <input type="radio" id="legis18" name="legislacion4" ng-model="legales.ReformaSalud" value="3"/>
+                            <label class="radioButton" for="legis18">3</label>
+  
+                            <input type="radio" id="legis19" name="legislacion4" ng-model="legales.ReformaSalud" value="4"/>
+                            <label class="radioButton" for="legis19">4</label>
+  
+                            <input type="radio" id="legis20" name="legislacion4" ng-model="legales.ReformaSalud" value="5"/>
+                            <label class="radioButton" for="legis20">5</label>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="col s12">
+                        <div class="col s7">     
+                            <i class="icon-check"></i>
+                            <label for="contactChoice3">Habilitación de la Eps</label>
+                        </div>
+  
+                        <div class="col s5">
+                            <input type="radio" id="legis21" name="legislacion5" ng-model="legales.HabilitaciondelaEps" value="1"/>
+                            <label class="radioButton" for="legis21">1</label>
+  
+                            <input type="radio" id="legis22" name="legislacion5" ng-model="legales.HabilitaciondelaEps" value="2"/>
+                            <label class="radioButton" for="legis22">2</label>
+  
+                            <input type="radio" id="legis23" name="legislacion5" ng-model="legales.HabilitaciondelaEps" value="3"/>
+                            <label class="radioButton" for="legis23">3</label>
+  
+                            <input type="radio" id="legis24" name="legislacion5" ng-model="legales.HabilitaciondelaEps" value="4"/>
+                            <label class="radioButton" for="legis24">4</label>
+  
+                            <input type="radio" id="legis25" name="legislacion5" ng-model="legales.HabilitaciondelaEps" value="5"/>
+                            <label class="radioButton" for="legis25">5</label>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="col s12">
+                        <div class="col s7">     
+                            <i class="icon-check"></i>
+                            <label for="contactChoice3">Respuesta planes de mejoramiento</label>
+                        </div>
+  
+                        <div class="col s5">
+                            <input type="radio" id="legis26" name="legislacion6" ng-model="legales.Respuestaplanesdemejoramiento" value="1"/>
+                            <label class="radioButton" for="legis26">1</label>
+  
+                            <input type="radio" id="legis27" name="legislacion6" ng-model="legales.Respuestaplanesdemejoramiento" value="2"/>
+                            <label class="radioButton" for="legis27">2</label>
+  
+                            <input type="radio" id="legis28" name="legislacion6" ng-model="legales.Respuestaplanesdemejoramiento" value="3"/>
+                            <label class="radioButton" for="legis28">3</label>
+  
+                            <input type="radio" id="legis29" name="legislacion6" ng-model="legales.Respuestaplanesdemejoramiento" value="4"/>
+                            <label class="radioButton" for="legis29">4</label>
+  
+                            <input type="radio" id="legis30" name="legislacion6" ng-model="legales.Respuestaplanesdemejoramiento" value="5"/>
+                            <label class="radioButton" for="legis30">5</label>
+                        </div>
+                        <hr>
+                    </div>
+
+                      
+    
+                      <div class="col s12" ng-show="contadorLegal >= 1">
+                              <div class="col s7">     
+                                  <i class="icon-check"></i>
+                                  <label for="contactChoice3">{{NuevoLegal[0]}}</label>
+                              </div>
+                           <div class="col s5">
+                               <input type="radio" id="legis31" name="legislacion7" ng-model="legales.nuevoL1" value="1"/>
+                               <label class="radioButton" for="legis31">1</label>
+    
+                               <input type="radio" id="legis32" name="legislacion7" ng-model="legales.nuevoL1" value="2"/>
+                               <label class="radioButton" for="legis32">2</label>
+    
+                               <input type="radio" id="legis33" name="legislacion7" ng-model="legales.nuevoL1" value="3"/>
+                               <label class="radioButton" for="legis33">3</label>
+    
+                               <input type="radio" id="legis34" name="legislacion7" ng-model="legales.nuevoL1" value="4"/>
+                               <label class="radioButton" for="legis34">4</label>
+    
+                               <input type="radio" id="legis35" name="legislacion7" ng-model="legales.nuevoL1" value="5"/>
+                               <label class="radioButton" for="legis35">5</label>
+                               <a href>
+                                   <i class="icon-cancel-circled" style="color: red; zoom: 130%;" title="Eliminar" ng-click="eliminar('L',NuevoLegal[0],'1')" href></i>
+                               </a>
+                           </div>
+                          <hr>
+                       </div>
+    
+                       <div class="col s12" ng-show="contadorLegal >= 2">
+                          <div class="col s7">     
+                              <i class="icon-check"></i>
+                              <label for="contactChoice3">{{NuevoLegal[1]}}</label>
+                          </div>
+                       <div class="col s5">
+                           <input type="radio" id="legis36" name="legislacion8" ng-model="legales.nuevoL2" value="1"/>
+                           <label class="radioButton" for="legis36">1</label>
+    
+                           <input type="radio" id="legis37" name="legislacion8" ng-model="legales.nuevoL2" value="2"/>
+                           <label class="radioButton" for="legis37">2</label>
+    
+                           <input type="radio" id="legis38" name="legislacion8" ng-model="legales.nuevoL2" value="3"/>
+                           <label class="radioButton" for="legis38">3</label>
+    
+                           <input type="radio" id="legis39" name="legislacion8" ng-model="legales.nuevoL2" value="4"/>
+                           <label class="radioButton" for="legis39">4</label>
+    
+                           <input type="radio" id="legis40" name="legislacion8" ng-model="legales.nuevoL2" value="5"/>
+                           <label class="radioButton" for="legis40">5</label>
+                            <a href>
+                                <i class="icon-cancel-circled" style="color: red; zoom: 130%;" ng-click="eliminar('L',NuevoLegal[1],'2')" href></i>
+                            </a>
+                       </div>
+                      <hr>
+                   </div>
+    
+                      <div class="col s12" style="padding-top: 20px; padding-bottom: 20px;">
+                          <div class="col s4">     
+                              <input type="checkbox" id="otroLegales"  ng-model="otroLegales"/>
+                              <label for="otroLegales" >Otro</label>
+                          </div>
+                          <div class="col s4" ng-show="otroLegales == true">     
+                              <input type="text" id="Legales" ng-model="LegalesInput"/>
+                              <label for="Legales" ng-click="">Nuevo Factor</label>
+                          </div>
+                          <div class="input-field col s1" ng-show="otroLegales == true">
+                              <button ng-click="NuevoFactorLegal()"
+                              style="padding-left: 20px;background-color: #fff; border: none;">
+                              <i class=" icon-plus-circle" style="color: rgb(38, 22, 107); zoom: 190%; " title="AGREGAR"></i></button>
+                          </div>
+    
+                      </div>
+
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                   </div>
+
+                    <div class="col s4">
+                        <img src="assets\images\Análisis-pestel.png" alt="Pestel" style="padding-left: 60px;">
+                    </div>
+
+                  </div>
+
+                      <div class="row text-center">
+                          <a class="waves-effect waves-light btn white-text" ng-click="guardar()">
+                          <i class="icon-floppy-1"></i>GUARDAR</a>
+                        </div>
+                   
+                  </div>
+              </div>
+      </div>
+
+    </div>
+
+    <style>
+      
+
+        .strong{
+          color: black;
+          font-size: 25px;
+        }
+
+        td, th{
+          text-transform: uppercase;
+          text-align: justify;
+        }
+
+        .form-control {
+            font-size: .875rem;
+            font-weight: 400;
+            line-height: 1.5;
+            display: block;
+            width: 100%;
+            height: calc(1.5em + 1.25rem + 2px);
+            padding: 0.625rem 0.75rem;
+            transition: all .15s cubic-bezier(.68, -.55, .265, 1.55);
+            color: #8898aa;
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            background-color: #fff;
+            background-clip: padding-box;
+            box-shadow: 0 3px 2px rgb(233 236 239 / 5%);
+        }
+        input, button, select, optgroup, textarea {
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            margin: 0;
+        }
+
+        label{
+        font-size: 14px;
+        }
+            
+        /* //////////////////////////////////////////////////////////////////////////////// */
+      </style>
+      <div style="margin: 30px;"></div>
+    </div>

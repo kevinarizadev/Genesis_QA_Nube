@@ -1,0 +1,371 @@
+<div class="white newdesing" id="pantallaMedicamentos">
+    <div class="row section-header margin">
+        <ul class="left mailbox-custom-search list-inline w-100 d-flex justify-content-between align-items-center">
+            <li id="inicio">
+                <h5 class="cursor-pointer"
+                    style="font-family: 'Product Sans',Arial,sans-serif;font-size: 22px;line-height: 22px;opacity: .54;margin: 9px 0"
+                    onclick="location.reload();">
+                    Validador de Medicamentos
+                </h5>
+            </li>
+            <li ng-show="paso == 2 || paso == 3">
+                <ul class="tabs transparent" style="overflow:hidden;">
+                    <li class="tab col w-auto">
+                        <a ng-click="setPaso(2)" id="Sol" href class="active">Cargue
+                            <i class="zmdi zmdi-upload"></i></a>
+                    </li>
+                    <li class="tab col w-auto">
+                        <a ng-click="setPaso(3); archivosRadicados();" id="Nueva" href>Mis Cargues <i
+                                class="zmdi zmdi-cloud-upload"></i></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+  
+    <div class="card-content clearfix card" id="card-content" ng-show="paso == 1"
+        style="width: 30%;margin: 1rem auto auto auto;border-radius: 15px;">
+        <div class="row" style="margin-bottom: 0;margin-top: 1rem;">
+            <div class="col s12">
+                <div class="col s12 no-padding label-new m-b center">
+                    <input type="text" id="Form_Nombre" class="margin border-none input-text-new w-100 m-l"
+                        style="text-transform:uppercase" autocomplete="off" ng-model="form.BuscarIPS" numbers-only>
+                    <label>Nit de Prestador</label>
+                </div>
+            </div>
+            <div class="col s12 center m-b" style="margin-bottom: 15px;">
+                <button class="btn waves-effect waves-light" ng-click="BuscarIPS(form.BuscarIPS)"
+                    style="border-radius: 15px;"><i class="icon-search"></i></button>
+            </div>
+        </div>
+        <div class="fabs" style="margin-right: 40px;">
+            <a target="_blank" data-toggle="modal" data-target="#Modal_DescargarArchivo" ng-click="SetTab(99)"
+                class="fab green" tooltip="Descargar Reporte"><i
+                    class="prime zmdi animated rotateIn icon-doc-text"></i></a>
+        </div>
+    </div>
+  
+    <div class="row dashboard-wrapper content-container" style="width: 60%" ng-show="paso == 2">
+        <div class="card-content clearfix card" id="card-content"
+            style="margin: 1rem auto auto auto;border-radius: 15px;">
+            <div class="row" style="margin-bottom: 0;margin-top: 1rem;">
+                <div class="col s12">
+                    <div class="col s10">
+                        <strong>{{form.datosIPS.RAZON}}</strong>
+                    </div>
+                    <div class="col s2 center" ng-if="idUser == '0'">
+                        <a ng-click="setPaso(1)" style="cursor: pointer;"><i class="zmdi zmdi-arrow-left"></i>Atras</a>
+                    </div>
+                    <div class="row">
+                        <div class="col s4">
+                            <label class="m-l">Fecha de reporte</label>
+                            <input type="date" class="margin border-none input-text-new w-100 m-l"
+                                ng-init="setDefaultMinMax()" min="{{ cedula != 1083434770 && cedula != 1129521065 && cedula != 1045705784 ? minDate : '2020-01-01' }}" max="{{ maxDate }}"
+                                style="text-transform:uppercase" ng-model="form.fecha"
+                                ng-change="actualizaPlaceHolder(form.fecha)">
+                        </div>
+  
+                        <div class="col s7" style="margin-left: 20px;">
+                            <label class="default">Nombre del archivo: </label>
+                            <input type="text" style="color: red; font-weight: bold;"
+                                class="margin border-none input-text-new w-100 m-l" style="text-transform:uppercase"
+                                value="{{placeholder}}" readonly>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="container-input" ng-show="form.fecha != ''">
+                                <input type="file" name="file-7" id="file-7" class="inputfile inputfile-7"
+                                    data-multiple-caption="{count} archivos seleccionados" accept=".txt" />
+                                <label for="file-7">
+                                    <span class="iborrainputfile"></span>
+                                    <strong>
+                                        Seleccionar archivo
+                                    </strong>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col m-t m-b" style="margin-left: 30%;">
+                <button class="btn waves-effect waves-light right m-l" ng-click="cargarArchivo('N',1)"
+                    style="border-radius: 15px;"><i class="icon-doc-text-2"
+                        style="font-size: 1rem;">Validar</i></button>
+                <button class="btn waves-effect waves-light right" ng-click="limpiarDatos()" style="border-radius: 15px;"><i
+                        class="icon-eraser" style="font-size: 1rem;">Limpiar</i></button>
+            </div>
+        </div>
+    </div>
+  
+    <div class="col s12" style="margin-top: 1vh;" ng-show="paso==3">
+        <div class="col s12 m12 l12" style="justify-content: center;">
+            <div class="row" style="margin-bottom: 0px;">
+                <div class="col s12">
+                    <div class="row" style="margin-bottom: 0px;">
+                        <!--  -->
+                        <div class="col s3 m6 l3" style="position: relative; margin-left: 12%;">
+                            <div class="Tarjeta_Titulo">
+                                <div class="card cursor-pointer"
+                                    style="background: linear-gradient(to bottom left,#56b949,#56b949,#56b949);"
+                                    ng-click="filter('validado')">
+                                    <div class="card-content">
+                                        <i class="icon-ok-outline white-text"></i>
+                                        <h6>Validados
+                                        </h6>
+                                        <h5 style="padding-left: 60%;">{{cValidados}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- // -->
+                        <div class="col s3 m6 l3" style="position: relative;">
+                            <div class="Tarjeta_Titulo">
+                                <div class="card cursor-pointer"
+                                    style="background: linear-gradient(to bottom left,#ffa726,#fb8c00,#ffa726);"
+                                    ng-click="filter('pendiente')">
+                                    <div class="card-content">
+                                        <i class="icon-clipboard-2 white-text"></i>
+                                        <h6>Pendientes por Validar</h6>
+                                        <h5 style="padding-left: 35%;">{{cPP}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+  
+                        </div>
+                        <!-- // -->
+                        <div class="col s3 m6 l3" style="position: relative;">
+                            <div class="Tarjeta_Titulo">
+                                <div class="card cursor-pointer"
+                                    style="background: linear-gradient(to bottom left,#eb6794,#d81b60,#eb6794);"
+                                    ng-click="filter('error')">
+                                    <div class="card-content">
+                                        <i class="icon-attention-circled white-text"></i>
+                                        <h6>Cargue con Errores</h6>
+                                        <h5 style="padding-left: 40%;">{{cErrores}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- // -->
+                    </div>
+  
+                </div>
+  
+            </div>
+        </div>
+    </div>
+  
+    <div class="row dashboard-wrapper content-container white" style="width: 100%" ng-show="paso==3">
+        <div class="card-content clearfix card" id="card-content" style="border-radius: 15px;">
+            <div class="row" style="margin-bottom: 0;margin-top: 1rem;">
+                <div class="row dashboard-wrapper content-container white"
+                    style="padding-bottom: 20px;margin-bottom: 0;padding-left: 20px;padding-right: 20px;">
+                    <div class="col l12 m12 s12" style="position:relative">
+                        <div class="black-text title-panel"
+                            style="display: flex;justify-content: space-between;align-items: center;margin-bottom: 15px;">
+                            Listado de Radicaciones
+                            <input type="text" class="margin border-none input-text-new" ng-keyup="filter(filtro)"
+                                ng-model="filtro" placeholder="Buscar en la tabla">
+                        </div>
+                        <div id="tabla_scroll" class="scroll_x">
+                            <div class="responsive" ng-hide="inactiveipstable">
+                                <table class="striped table-bordered white" style="zoom: 0.8;">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" style="text-align:center;"><b>#</b></th>
+                                            <th rowspan="2" style="text-align:center;">RADICADO</th>
+                                            <th rowspan="2" style="text-align:center;">PERIODO</th>
+                                            <th rowspan="2" style="text-align:center;">CANTIDAD DE REGISTROS</th>
+                                            <th rowspan="2" style="text-align:center;">FECHA INGRESO AL SISTEMA</th>
+                                            <th rowspan="2" style="text-align:center;">FECHA DE VALIDACION</th>
+                                            <th rowspan="2" style="text-align:center;">ESTADO VALIDADO</th>
+                                            <th rowspan="2" style="text-align:center;">ESTADO CARGUE</th>
+                                            <th rowspan="2" colspan="4" style="text-align:center;">ACCIÓN</th>
+                                        </tr>
+  
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="x in archivosRadicadosDataTemp | inicio: currentPage * pageSize | limitTo: pageSize"
+                                            ng-hide="archivosRadicadosDataTemp.length == 0">
+                                            <th style="text-align:center;">{{$index + 1 }}</th>
+                                            <td style="text-align:center;"><b>{{x.proceso}}</b></td>
+                                            <td style="text-align:center;">{{x.periodo}}</td>
+                                            <td style="text-align:center;">{{x.cantidad_registros}}</td>
+                                            <td style="text-align:center;">{{x.fecha_cargue}}</td>
+                                            <td style="text-align:center;">{{x.fecha_confirmado}}</td>
+                                            <!-- <td style="text-align:center;">{{x.fecha_cargue}}</td>
+                          <td style="text-align:center;">{{x.fecha_cargue}}</td> -->
+                                            <td style="text-align:center;">{{x.estado_confirmacion}}</td>
+                                            <!-- <td style="text-align:center;">{{x.estado_cargue}}</td> -->
+                                            <td style="text-align:center;"><span style="cursor: pointer;"
+                                                    ng-class="x.clase"><b>{{x.estado_cargue}}</b></span></td>
+  
+  
+                                            <td style="text-align:center;">
+                                                <div class="tooltip" ng-if="x.estado_cargue == 'CON ERRORES'">
+                                                    <i style="cursor:pointer;width: 25px;" ng-click="verdetalle(x)"
+                                                        class="icon-download dropbtn2"></i>
+                                                    <span class="tooltiptext">Descargar Errores</span>
+                                                    <i style="cursor:pointer;width: 25px;"
+                                                        ng-click="actualizarSoporte(x)"
+                                                        class="icon-upload dropbtn2"></i>
+                                                    <span class="tooltiptext">Actualizar Soporte</span>
+                                                </div>
+                                            </td>
+                                        <tr ng-show="archivosRadicadosDataTemp.length == 0">
+                                            <th colspan="12">
+                                                <center>No hay cargues para mostrar</center>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <ul ng-hide="archivosRadicadosDataTemp.length == 0" style="text-align: center;"
+                                class="pagination" ng-hide="archivosRadicadosDataTemp.length > 0">
+                                <li><button ng-disabled='currentPage == 0' class="btn"
+                                        ng-click='currentPage = currentPage - 1'>&laquo;</button></li>
+                                <li ng-repeat='page in pages'><button ng-disabled='currentPage == page.no - 1'
+                                        class="btn" ng-click='setPage(page.no)'>{{page.no}}</button></li>
+                                <li><button ng-disabled='currentPage >= archivosRadicadosDataTemp.length/pageSize - 1'
+                                        class="btn" ng-click='currentPage = currentPage + 1'>&raquo;</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <div id="Modal_Direccion" class="modal" style="margin: 0 auto;max-height: 100%;width: 40%;top:0%;">
+        <div class="modal-content" style="padding: 0px !important;">
+            <div class="col s12 m6 l6 card margin">
+                <div class="ngdialog-close"
+                    style="font-size: 50px;position: absolute;z-index: 106;right: 0.5em;color: white;"
+                    ng-click="closeModal()">
+                </div>
+                <div class="card-content default-background white-text">
+                    <div class="col s11">
+                        <div class="col s5" style="display: inline-flex;">
+                            <span class="margin" style="font-size: 1.64rem;">Actualizar soporte</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin: 0;">
+                    <div class="col s12" style="margin-top: 1em;">
+                        <form id="anexo2" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col s11">
+                                    <input type="text" style="color: red; font-weight: bold;"
+                                        class="margin border-none input-text-new w-100 m-l"
+                                        style="text-transform:uppercase" value="{{placeholder}}" readonly>
+                                </div>
+                                <div class="col s12">
+                                    <!-- <div class="file-upload-wrapper file-field input-field" id="file-upload-wrapper2"
+                                        data-text="Archivo (MD)" style="margin: 0;width: -webkit-fill-available;">
+                                        <div class="right">
+                                            <input type="file" id="MD_Act" name="MD_Act">
+                                        </div>
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path" type="text" name="archivoAct"
+                                                style="border-radius: 0;height: 1rem;border-bottom: 0;"
+                                                ng-model="fileInput">
+                                        </div>
+                                        onchange="document.getElementById('iborrainputfile').innerHTML = this.value.split('\\')[2]"
+                                        inputfileUpdate inputfile-7Update
+                                        onchange="document.getElementById('iborrainputfile').innerHTML = this.value.split('\\')[2]"
+                                    </div> -->
+  
+                                    <!-- <div class="container-input" ng-show="form.fecha != ''">
+                                        <input type="file" name="file-7" id="file-7" class="inputfile inputfile-7"
+                                            data-multiple-caption="{count} archivos seleccionados" accept=".txt" />
+                                        <label for="file-7">
+                                            <span class="iborrainputfile"></span>
+                                            <strong>
+                                                Seleccionar archivo
+                                            </strong>
+                                        </label>
+                                    </div> -->
+  
+                                    <div class="container-input">
+                                        <input type="file" name="fileUpdate" id="fileUpdate" class="inputfile inputfile-7"
+                                            
+                                            accept=".txt">
+                                        <label for="fileUpdate">
+                                            <span class="iborrainputfileUpdate" id="fileUpdate"></span>
+                                            <strong>
+                                                Cargar
+                                            </strong>
+                                        </label>
+                                    </div>
+                                </div>
+  
+                                <div class="row">
+                                    <div class="col m-t m-b" style="margin-left: 30%;">
+                                        <button class="btn waves-effect waves-light right m-l"
+                                            ng-click="cargarArchivo('A', 2)" style="border-radius: 15px;"><i
+                                                class="icon-doc-text-2" style="font-size: 1rem;">Validar</i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <div id="Modal_DescargarArchivo" class="modal m-t" style="margin-left: 30%;">
+        <div class="modal-content" style="padding: 0px !important;">
+            <div class="col s12 m6 l6 card margin">
+                <div class="ngdialog-close"
+                    style="font-size: 50px;position: absolute;z-index: 106;right: 0.5em;color: white;"
+                    data-dismiss="modal" ng-click="SetTab(1)">
+                </div>
+                <div class="card-content default-background white-text">
+                    <div class="col s11">
+                        <div class="col s5" style="display: inline-flex;">
+                            <span class="margin" style="font-size: 1.64rem;">Descargar Reporte</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin: 0;">
+                    <div class="row dashboard-wrapper content-container white"
+                        style="padding-bottom: 20px;margin-bottom: 0;padding-left: 20px;padding-right: 20px;">
+                        <div class="col l12 m12 s12 center m-t">
+                            <div class="col s4">
+                                <label class="m-l">Año</label>
+                                <select class="select-new-style gray-input m-l" ng-change="cargaPeriodos()"
+                                    ng-model="Reporte.anno">
+                                    <option value="" disabled>SELECCIONAR</option>
+                                    <option ng-repeat="anno in Annos track by $index" ng-value="anno.ANNO">{{anno.ANNO}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col s4">
+                                <label class="m-l">Mes</label>
+                                <select ng-model="Reporte.periodo" class="select-new-style gray-input m-1">
+                                    <option value="" disabled>SELECCIONAR</option>
+                                    <option ng-repeat="periodo in Periodos track by $index" value="{{periodo.IDE}}">
+                                        {{periodo.NOMBRE}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col s4">
+                                <label class="m-l">Nit</label>
+                                <input type="text" class="margin border-none input-text-new w-100 m-l"
+                                    style="text-transform:uppercase" autocomplete="off" ng-model="Reporte.nit"
+                                    oninput="this.value=this.value.replace(/[^\d]/,'')">
+                            </div>
+                        </div>
+                        <div class="col l12 m12 s12 center m-t">
+                            <button class="btn waves-effect waves-light" ng-click="DescargaFile(Reporte)"
+                                style="border-radius: 15px;"><i class="icon-doc-text-2"
+                                    style="font-size: 1rem;">Descargar</i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

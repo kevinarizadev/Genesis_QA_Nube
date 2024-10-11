@@ -1,0 +1,305 @@
+<div class="white newdesing" id="pantalla" style="zoom: 77%;">
+    <style>
+      .newdesing .content-container {
+        min-height: 10px;
+      }
+    </style>
+    <div class="row section-header margin">
+      <ul class="left mailbox-custom-search list-inline w-100 d-flex justify-content-between align-items-center">
+        <li id="inicio">
+          <h5 class="cursor-pointer"
+            style="font-family: 'Product Sans',Arial,sans-serif;font-size: 22px;line-height: 22px;opacity: .54;margin: 9px 0"
+            onclick="location.reload();">
+            <spam>
+                <h5 class="icon-th-list">MATRIZ DOFA
+                </h5>
+            </spam>
+          </h5>
+        </li>
+      </ul>
+    </div>
+    <div class="row dashboard-wrapper content-container white">
+      <div id="Form" class="card-content clearfix card"style="width: 95%;margin: 1rem auto auto auto;border-radius: 15px;">
+              <div class="Hoja_1">
+                  <div class="card-content clearfix" style="padding-bottom: 0px; padding-left: 20px;">
+                    <div class="row">
+                        <div class="col s10">
+                            <div class="col s11">
+                                <blockquote>
+                                    <a ng-click="abrirDebilidades()" href="">
+                                        <i id="iconDebilidades" class="icon-down-open" title="MOSTRAR TABLA"></i>
+                                    </a> <strong>DEBILIDADES</strong><span style="color: red">*</span>
+                                </blockquote>
+                                <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l black-text" style="text-align: left; height: 40px;" type="text" autocomplete="off" 
+                                    placeholder="Debilidades"
+                                    ng-model="debilidades"/>
+                            </div>                      
+                        </div>
+                        <div class="row">
+                          <div class="input-field col s1">
+                            <button ng-click="validarCampos('D')"
+                             style="padding-right: 15px; padding-right: 15px; padding-left: 20px; margin-top: 48px; background-color: #fff; border: none;">
+                             <i class=" icon-plus-circle" style="color: rgb(38, 22, 107); zoom: 190%; " title="AGREGAR"></i></button>
+                          </div>
+                        </div>
+                  </div>
+                  
+  
+                      <div class="row" style="padding-bottom: 22px; padding-left: 20px;" ng-show="visibilidadD == true && datosDebilidades.length >= 1">
+                          <table class="responsive-table tablaListado bordered highlight" style="width: 85%;font-size: 6px !important; color: rgb(30, 15, 100);border: 3px solid;zoom: 95%;">
+                              <thead class="default-border default-color" style="color: white; background-color: rgb(18, 18, 94);">
+                                <th>N°</th>
+                                <th>DEBILIDADES</th>              
+                                <th>ACCION</th>
+                              </thead>
+                              <tbody>
+                                <tr style="cursor: pointer" ng-repeat="x in datosDebilidades track by $index">
+                                  <td class="order">{{$index + 1}}</td>
+                                  <td>{{x}}</td>
+                                  <td>
+                                  <i class="iconFontSize icon-trash default-color c-pointer" ng-click="eliminar(x, 'D')" style="zoom: 130%; color: red;" title="ELIMINAR"></i>
+                                  </td>                          
+                                </tr> 
+                                <tr ng-show="datosDebilidades.length == 0">
+                                  <td
+                                    class="center-align"
+                                    colspan="11"
+                                    style="font-weight: bolder"
+                                  >
+                                    No Hay Debilidades Creadas.
+                                  </td>
+                                </tr>                   
+                              </tbody>
+                            </table>
+                      </div>
+  
+                      <div class="row" style="padding-bottom: 5px;">
+                        <div class="col s10">
+                            <div class="col s11">
+                              <blockquote> <a ng-click="abrirOportunidades()" href=""><i id="iconOportunidades" class="icon-down-open" title="MOSTRAR TABLA"></i></a><strong>OPORTUNIDADES</strong><span style="color: red">*</span></blockquote>
+                                <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l black-text" style="text-align: left; height: 40px;" type="text" autocomplete="off" 
+                                        placeholder="Oportunidades"
+                                        ng-model="Oportunidades"/>
+                            </div>
+                          </div>
+  
+                          <div class="row">
+                            <div class="input-field col s1">
+                              <button ng-click="validarCampos('O')"
+                               style="padding-right: 15px; padding-right: 15px; padding-left: 20px; margin-top: 48px; background-color: #fff; border: none;">
+                               <i class=" icon-plus-circle" style="color: rgb(38, 22, 107); zoom: 190%; " title="AGREGAR"></i></button>
+                            </div>
+                          </div>
+                        </div>
+                       
+  
+                      
+                      <div class="row" style="padding-bottom: 30px;padding-left: 20px;" ng-show="visibilidadO == true && datosOportunidades.length >= 1">
+                          <table class="responsive-table tablaListado bordered highlight" style="width: 85%;font-size: 6px !important; color: rgb(30, 15, 100);border: 3px solid;zoom: 95%;">
+                              <thead class="default-border default-color" style="color: white; background-color: rgb(18, 18, 94);">
+                                <th>N°</th>
+                                <th>OPORTUNIDADES</th>              
+                                <th>ACCION</th>
+                              </thead>
+                              <tbody>
+                                <tr style="cursor: pointer"  ng-repeat="Opo in datosOportunidades track by $index">
+                                  <td class="order">{{$index + 1}}</td>
+                                  <td>{{Opo}}</td>
+                                  <td>
+                                  <i class="iconFontSize icon-trash default-color c-pointer" ng-click="eliminar(Opo, 'O')" style="zoom: 130%; color: red;" title="ELIMINAR"></i>
+                                  </td>                          
+                                </tr>
+                                <tr ng-show="datosOportunidades.length == 0">
+                                  <td
+                                    class="center-align"
+                                    colspan="11"
+                                    style="font-weight: bolder"
+                                  >
+                                    No Hay Oportunidades Creadas.
+                                  </td>
+                                </tr>                    
+                              </tbody>
+                            </table>
+                      </div>
+  
+                      <div class="row" style="padding-bottom: 5px;">
+                        <div class="col s10">
+                            <div class="col s11">
+                              <blockquote> <a ng-click="abrirFortaleza()" href=""><i id="iconFortaleza" class="icon-down-open" title="MOSTRAR TABLA"></i></a><strong>FORTALEZA</strong><span style="color: red">*</span></blockquote>
+                                <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l black-text" style="text-align: left; height: 40px;" type="text" autocomplete="off" 
+                                        placeholder="Fortaleza"
+                                        ng-model="Fortaleza"/>
+                            </div>
+                        </div>
+                          <div class="row">
+                            <div class="input-field col s1">
+                              <button ng-click="validarCampos('F')"
+                               style="padding-right: 15px; padding-right: 15px; padding-left: 20px; margin-top: 48px; background-color: #fff; border: none;">
+                               <i class=" icon-plus-circle" style="color: rgb(38, 22, 107); zoom: 190%; " title="AGREGAR"></i></button>
+                            </div>
+                          </div>
+                        </div>
+  
+                      <div class="row" style="padding-bottom: 30px; padding-left: 20px;" ng-show="visibilidadF == true && datosFortaleza.length >= 1">
+                          <table class="responsive-table tablaListado bordered highlight" style="width: 85%;font-size: 6px !important; color: rgb(30, 15, 100);border: 3px solid;zoom: 95%;">
+                              <thead class="default-border default-color" style="color: white; background-color: rgb(18, 18, 94);">
+                                <th>N°</th>
+                                <th>FORTALEZA</th>              
+                                <th>ACCION</th>
+                              </thead>
+                              <tbody>
+                                <tr style="cursor: pointer" ng-repeat="f in datosFortaleza track by $index">
+                                  <td class="order">{{$index + 1}}</td>
+                                  <td>{{f}}</td>
+                                  <td>
+                                  <i class="iconFontSize icon-trash default-color c-pointer" ng-click="eliminar(f, 'F')" style="zoom: 130%;color: red;" title="Eliminar"></i>
+                                  </td>                          
+                                </tr>  
+                                <tr ng-show="datosFortaleza.length == 0">
+                                  <td
+                                    class="center-align"
+                                    colspan="11"
+                                    style="font-weight: bolder"
+                                  >
+                                    No Hay Fortaleza Creadas.
+                                  </td>
+                                </tr>                    
+                              </tbody>
+                            </table>
+                      </div>
+  
+                      <div class="row" style="padding-bottom: 5px;">
+                        <div class="col s10">
+                          <div class="col s11">
+                            <blockquote> <a ng-click="abrirAmenazas()" href=""><i id="iconAmenazas" class="icon-down-open" title="MOSTRAR TABLA"></i></a><strong>AMENAZAS</strong><span style="color: red">*</span></blockquote>
+                              <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l black-text" style="text-align: left; height: 40px;" type="text" autocomplete="off" 
+                                      placeholder="Amenazas"
+                                      ng-model="Amenazas"/>
+                          </div>
+                        </div>
+  
+                          <div class="row">
+                            <div class="input-field col s1">
+                              <button ng-click="validarCampos('A')"
+                              style="padding-right: 15px; padding-right: 15px; padding-left: 20px; margin-top: 48px; background-color: #fff; border: none;">
+                              <i class=" icon-plus-circle" style="color: rgb(38, 22, 107); zoom: 190%; " title="AGREGAR"></i></button>
+                            </div>
+                          </div>
+                        </div>
+                        
+  
+                      <div class="row" style="padding-bottom: 30px;padding-left: 20px;" ng-show="visibilidadA == true && datosAmenazas.length >= 1">
+                          <table class="responsive-table tablaListado bordered highlight" style="width: 85%;font-size: 6px !important; color: rgb(30, 15, 100);border: 3px solid;zoom: 95%;">
+                              <thead class="default-border default-color" style="color: white; background-color: rgb(18, 18, 94);">
+                                <th>N°</th>
+                                <th>AMENAZAS</th>              
+                                <th>ACCION</th>
+                              </thead>
+                              <tbody>
+                                <tr style="cursor: pointer" ng-repeat="a in datosAmenazas track by $index">
+                                  <td class="order">{{$index + 1}}</td>
+                                  <td>{{a}}</td>
+                                  <td>
+                                  <i class="iconFontSize icon-trash default-color c-pointer" ng-click="eliminar(a, 'A')" style="zoom: 130%; color: red;" title="Eliminar"></i>
+                                  </td>                          
+                                </tr>  
+                                <tr ng-show="datosAmenazas.length == 0">
+                                  <td
+                                    class="center-align"
+                                    colspan="11"
+                                    style="font-weight: bolder"
+                                  >
+                                    No Hay Amenazas Creadas.
+                                  </td>
+                                </tr>              
+                              </tbody>
+                            </table>
+                      </div>
+                          <!-- Comienza File -->
+                      <div class="row">
+                          <div class="col s5">
+                              <label
+                                  class="c-pointer noselectxtpqr"
+                                  for="fileDOFA"
+                                  >Adjunto</label
+                              >
+                              <div class="file-field input-field">
+                                  <div class="btn">
+                                  <i class="icon-file-pdf"></i>
+                                  <input
+                                      type="file"
+                                      accept=".pdf"
+                                      id="fileDOFA"
+                                      name="fileDOFA"
+                                      ng-model="fileDOFA"
+                                 
+                                  />
+                                  </div>
+                                  <div class="file-path-wrapper">
+                                  <input
+                                      id="inputFilePlaceHolderMasive"
+                                      class="file-path"
+                                      type="text"
+                                      placeholder="Adjuntar PDF"
+                                  />
+                                  </div>
+                              </div>
+                              </div>
+                      </div>
+                    
+                     
+                      <!-- Fin File -->
+  
+                      <div class="row text-center">
+                          <a class="waves-effect waves-light btn white-text" ng-click="guardarDOFA()">
+                          <i class=" icon-folder-add"></i>GUARDAR</a>
+                        </div>
+                  </div>
+              </div>
+      </div>
+
+    </div>
+
+    <style>
+
+        .strong{
+          color: black;
+          font-size: 21px;
+        }
+
+        td, th{
+          text-transform: uppercase;
+          text-align: justify;
+        }
+
+.form-control {
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 1.25rem + 2px);
+    padding: 0.625rem 0.75rem;
+    transition: all .15s cubic-bezier(.68, -.55, .265, 1.55);
+    color: #8898aa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    background-color: #fff;
+    background-clip: padding-box;
+    box-shadow: 0 3px 2px rgb(233 236 239 / 5%);
+}
+input, button, select, optgroup, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    margin: 0;
+}
+
+label{
+  font-size: 14px;
+}
+    
+        /* //////////////////////////////////////////////////////////////////////////////// */
+      </style>
+      <div style="margin: 30px;"></div>
+    </div>

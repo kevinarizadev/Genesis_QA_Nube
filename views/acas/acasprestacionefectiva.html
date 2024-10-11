@@ -1,0 +1,495 @@
+<div class="white newdesing collapsible-new" ng-init="ObtenerRol()">
+    <style>
+     .botonesSo{
+        position: absolute;
+        left: 70px;
+        bottom: 17px;
+        font-weight: 600;
+        padding: 3px 5px;
+        font-size: 12px;
+        margin-top: 1px;
+        display: inline-block;
+        min-width: 10px;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        /* vertical-align: middle; */
+        border-radius: 10px;
+        /* background-color: #43a047; */
+     }
+  
+     #btn{
+       border:none;
+       border-radius:5px;
+       padding: 8px 24px;
+       font-size:8px;
+       cursor:pointer;
+     }
+  
+     #btn:hover{
+       background-color:#ddd;
+     }
+
+    .funcionarios:hover{
+        padding: 15px 33px; 
+    }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+  
+        #Imagen_back {
+        cursor: pointer;
+        width: 50vw;
+        margin: auto;
+        opacity: .1;
+        }
+  
+        .activeA{
+            background-color: #ff0000;
+            border-radius: 7px;
+            color: white;
+        }
+
+        :root {
+  /* Colors */
+  --brand-color: #6daed6;
+  --black: hsl(0, 0%, 0%);
+  --white: hsl(0, 0%, 100%);
+  /* Fonts */
+  --font-title: "Montserrat", sans-serif;
+  --font-text: "Lato", sans-serif;
+}
+
+        .tableFija{
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        /* RESET */
+
+        /* Box sizing rules */
+        *,
+        *::before,
+        *::after {
+        box-sizing: border-box;
+        }
+
+        /* Remove default margin */
+        body,
+        .card__title,
+        p {
+        margin: 0;
+        }
+
+        /* GLOBAL STYLES */
+
+        .card__title {
+            font-size: 18px;
+            font-family: var(--font-title);
+            color: var(--white);
+            line-height: 1.1;
+        }
+
+        /* p {
+        font-family: var(--font-text);
+        font-size: 1rem;
+        line-height: 1.5;
+        color: var(--white);
+        } */
+
+        .flow > * + * {
+            margin-top: var(--flow-space, 1em);
+        }
+
+        /* CARD COMPONENT */
+        .card {
+        display: grid;
+        place-items: center;
+        width: 80vw;
+        max-width: 30.875rem;
+        height: 18.125rem;
+        overflow: hidden;
+        border-radius: 0.625rem;
+        box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+        background-color: #2d5786;
+        cursor: pointer;
+        zoom: 80%;
+        }
+
+        .card > * {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+        }
+
+        .card__background {
+        object-fit: cover;
+        max-width: 100%;
+        height: 100%;
+        }
+
+        .card__content {
+        --flow-space: 0.9375rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-self: flex-end;
+        height: 55%;
+        /* padding: 0% 7.25rem 3.875rem; */
+        background: linear-gradient(
+            180deg,
+            hsla(0, 0%, 0%, 0) 0%,
+            hsla(0, 0%, 0%, 0.3) 10%,
+            hsl(0, 0%, 0%) 100%
+        );
+        padding-left: 100%;
+        padding-right: 100%;
+        }
+
+        .card__content--container {
+        --flow-space: 1.25rem;
+        }
+
+        .card__title {
+        position: relative;
+        width: max-content;
+        width: -moz-fit-content; /* Prefijo necesario para Firefox  */
+        }
+
+        .card__title::after {
+        content: "";
+        position: absolute;
+        height: 0.3125rem;
+        width: calc(100% + 24.25rem);
+        bottom: calc((4.25rem - 1.5rem) * -1);
+        left: -11.25rem;
+        background-color: var(--brand-color);
+        }
+
+        .card__button {
+        padding: 10px 28px;
+        width: fit-content;
+        width: -moz-fit-content; /* Prefijo necesario para Firefox  */
+        /* font-weight: bold; */
+        border-radius: 0.45em;
+        border: none;
+        background-color: var(--brand-color);
+        font-family: var(--font-title);
+        font-size: 18px;
+        color: var(--black);
+        }
+
+        .card__button:focus {
+        outline: 2px solid black;
+        outline-offset: -5px;
+        }
+
+        @media (any-hover: hover) and (any-pointer: fine) {
+
+        .card:hover,
+        .card:focus-within {
+            transform: scale(1.05);
+            transition: transform 500ms ease-in;
+        }
+
+        .card:hover .card__background,
+        .card:focus-within .card__background {
+            transform: scale(1.3);
+        }
+
+        .card:hover .card__content--container > :not(.card__title),
+        .card:hover,
+        .card:focus-within .card__content--container > :not(.card__title),
+        .card:focus-within {
+            opacity: 1;
+            transition: opacity 500ms ease-in;
+            transition-delay: 1000ms;
+        }
+
+        .card:hover .card__title::after,
+        .card:focus-within .card__title::after {
+            opacity: 1;
+            transform: scaleX(1);
+            transform-origin: left;
+            transition: opacity 500ms ease-in, transform 500ms ease-in;
+            transition-delay: 500ms;
+        }
+
+
+        }
+
+
+
+    </style> 
+    <div class="row section-header margin" >
+        <ul class="left mailbox-custom-search list-inline w-100 d-flex justify-content-between align-items-center">
+            <li id="inicio">
+                <h5><i class="icon-newspaper-1"></i> ACAS PRESTACION EFECTIVA</h5>
+            </li>
+        </ul>
+    </div>
+          
+      
+  <div class="row dashboard-wrapper content-container">
+    <div class="col s12 m12 l12" style="margin-top: 20px;justify-content: center;zoom:90%;">
+        <div class="row card-panel">
+            <div ng-show="activeTable == 0">
+                <div class="col medium-editor-dragover" style="border-radius: 5px;">
+                    <label class="icon-download" style="font-size: 19px;"> Exportar Por:</label>
+                </div>
+                <div class="col label-new no-padding s3">
+                    <select class="m-l select-default-new" id="asunto" style="box-shadow: none;border-radius: 6px;border: 2px solid darkgray;" ng-model="filtro.asunto">
+                        <option value="" disabled="">SELECCONAR</option>
+                        <option value="{{asu.codigo}}" ng-repeat="asu in filtAsusntos">{{asu.concepto}}</option>
+                    </select>
+                        <label for="asunto" style="font-size: 17px;font-weight:600;">Asuntos:<span style="color: red"> ( * )</span></label>
+                        <span style="position: fixed;margin-top: 2rem;color: red;" ng-show="validateExport">Por favor completar los campos</span>
+                </div>
+                <div class="col label-new">
+                    <label for="fechaInicio" style="font-size: 17px;font-weight:600;">Fecha Inicio </label>
+                        <input type="date" id="fechaInicio" ng-model="filtro.dateInit" class="input-text-new" max="{{sysDay | date:'yyyy-MM-dd'}}"
+                            style="border-radius: 13px; padding-left: 1rem;font-size: 16px;border: 2px solid darkgray;" required>                      
+                        <span class="red-text titleValid" style="font-size: 18px;position: fixed;margin: 50px 0;"></span>
+                </div>
+                <div class="col label-new">
+                    <label for="fechaFin" style="font-size: 17px;font-weight:600;">Fecha Fin </label>
+                        <input type="date" id="fechaFin" ng-model="filtro.dateEnd" class="input-text-new" max="{{sysDay | date:'yyyy-MM-dd'}}"
+                            style="border-radius: 13px; padding-left: 1rem;font-size: 16px;" required>                      
+                        <span class="red-text titleValid" style="font-size: 18px;position: fixed;margin: 50px 0;border: 2px solid darkgray;"></span>
+                </div>
+                <div class="col" style="margin: 1rem;">
+                    <button class="btn-floating background-color green" title="EXPORTAR EXCEL" ng-click="exportarDatos()">
+                        <i class="icon-file-excel"></i>
+                    </button>
+                </div>    
+            </div>
+            <div class="btn-panel right" style="display: flex;align-items: center;">
+                <input ng-show="activeTable == 3" type="text" class="margin border-none input-text-new" ng-model="filtrar" placeholder="Buscar en la tabla">
+                <i ng-show="activeAtras == true" ng-click="filtrar = '';atrasTabla()" class="icon-left-open-2">Atras</i>
+            </div>
+                <h6 ng-show="activeTable > 0" style="color: #8898aa !important;font-weight: 600 !important;font-size: 1.8125rem;text-align: center">
+                    {{titulo}}
+                </h6>
+        </div>
+
+
+        <div class="col s12 no-padding" ng-show="activeTable == 0">  
+            <!-- <blockquote class="text-bold">EPS</blockquote>
+            <div class="row margin">
+                    <div class="col" ng-repeat="x in autorizaciones.json_eps">
+                        <article class="card md-button" ng-click="BuscarAcasPersona(x, 'EPS')">
+                            <i class="large material-icons" style="color: white;position: relative;bottom: 87px; size: b5;">assignment</i>       
+                            <div class="card__content">
+                                    <div class="card__content--container">
+                                        <h2 class="card__title m-t ng-binding">{{x.nombre_motivo}}</h2>
+                                        <p class="card__description">
+                                        
+                                        </p>
+                                    </div>
+                                <div class="botonesSo">
+                                        <button class="card__button white red-text">{{x.activos}} Abiertas</button>
+                                        <button class="card__button white green-text">{{x.procesados}} Cerradas</button>
+                                </div>             
+                            </div>
+                          </article>
+                    </div>
+            </div>    -->
+
+             <blockquote class="text-bold">Redes</blockquote>
+            <div class="row margin">
+                    <div class="col" ng-repeat="x in autorizaciones.json_ips">
+                        <article class="card md-button" ng-click="BuscarAcasPersona(x, 'IPS')">
+                            <i class="large material-icons" style="color: white;position: relative;bottom: 87px; size: b5;">assignment</i>       
+                            <div class="card__content">
+                                    <div class="card__content--container">
+                                        <h2 class="card__title m-t ng-binding">{{x.nombre_concepto}}</h2>
+                                            <p class="card__description">
+                                    
+                                            </p>
+                                    </div>
+                                        <div class="botonesSo">
+                                                <button class="card__button white red-text">{{x.activos}} Abiertas</button>
+                                                <button class="card__button white green-text">{{x.procesados}} Cerradas</button>
+                                        </div>             
+                            </div>
+                        </article>
+        
+                    </div>
+            </div> 
+        </div>
+        
+        <div class="col s12 no-padding" style="margin-top: 22px;" ng-show="activeTable == 1">
+            <div class="row margin">
+                    <div class="col" ng-repeat="p in AcasXPersona">
+                        <article class="card">
+                            <i class="large material-icons" style="color: white;position: relative;bottom: 87px; size: b5;">assignment_ind</i>                          
+                                <div class="card__content">
+                                            <div class="card__content--container">
+                                                <h2 class="card__title m-t ng-binding">{{p.nombre}}</h2>
+                                                <p class="card__description">
+                                                
+                                                </p>
+                                            </div>
+                                        <div class="botonesSo">
+                                                <button class="card__button white red-text funcionarios" ng-click="estadosAcas(p, 'A')">{{p.activo}} Abiertas</button>
+                                                <button class="card__button white green-text funcionarios" ng-click="estadosAcas(p, 'P')">{{p.procesado}} Cerradas</button>
+                                        </div>                                  
+                                </div>
+                        </article>
+        
+                    </div>
+            </div>   
+        </div>
+
+        <div class="row margin" ng-show="activeTable == 2" style="position: relative;">
+            <div class="scroll_x" style="position: absolute;width: calc(100% - 10px);z-index: 10;overflow: hidden;">
+                <table id="tablaClone" class="striped table-bordered white" style="position: relative;">
+
+                </table>
+            </div>
+            <div id="tabla_scroll" class="scroll_x" style="overflow: auto;height: calc(100vh - 219px);">
+                <table id="H1_Tabla" class="tablaListado bordered highlight">
+                    <thead style="position: sticky; z-index: 10; top: 0;">
+                        <tr class="default-background white-text">
+                            <th data-field="Nombre" class="border-none">Nombre</th>
+                            <th data-field="Ticket" class="border-none">Ticket</th>
+                            <th data-field="Asusnto" class="border-none">Asunto</th>
+                            <th data-field="Autoriza" class="border-none">Autoriza</th>
+                            <th data-field="Fecha Ingreso" class="border-none">Fecha Ingreso</th>
+                            <th data-field="Fecha Cierre" class="border-none">Fecha Cierre</th>
+                            <th data-field="Dias" class="border-none center-align">Dias</th>
+                            <th data-field="Ciudad" class="border-none">Ciudad</th>
+                            <th data-field="Cargo" class="border-none">Cargo</th>
+                            <th data-field="Detalle" class="border-none center-align">Detalles</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="AcasPersona.length == 0">
+                            <td colspan="10" class="center-align">
+                                NO HAY SERVICIOS PARA MOSTRAR
+                            </td>
+                        </tr>
+                        <tr ng-repeat="acas in AcasPersona | filter:filtrar | inicio: currentPage*pageSize | limitTo:pageSize">
+                            <td>{{acas.nombre}}</td>
+                            <td>{{acas.numero}}</td> 
+                            <td>{{acas.asunto}}</td>
+                            <td>{{acas.nombre_autoriza}}</td>
+                            <td>{{acas.fecha_ingreso}}</td>
+                            <td>{{acas.fecha_cierre}}</td>
+                            <td class="center-align">{{acas.dias}}</td>
+                            <td>{{acas.ciudad}}</td>
+                            <td>{{acas.cargo}}</td>
+                            <td class="center-align">
+                                <i style="cursor:pointer;position: relative;display: flow-root;font-size: 17px;" class="icon-eye-6" ng-click="abrirModalDetalle(acas.descripcion,acas.numero,acas.ubicacion)">
+                                    <span style="position: absolute;font-size: 10px;height: 15px;width: 15px;min-height: 15px;min-width: 15px;border-radius: 50%;
+                                    top: 16px;left: 7px;font-weight: bold;display: flex;justify-content: center;align-items: center;" 
+                                        class="default-background white-text ng-binding" ng-class="{'orange':acas.dias <= 0}">{{acas.cantidad}}</span>
+                                </i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <tfoot>
+                <tr>
+                    <td colspan="10" class="border-none no-padding" style="user-select: none">
+                        <div class="black-text title-panel d-flex justify-content-between align-items-center" style="margin-top: 15px;">
+                            <select id="Pag" ng-model="Pag" class="gray-input select-default-new border-none" ng-change="MostrarNumeroPaginas()" style="width: auto;max-width: 100px;">
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="500">500</option>
+                           </select>
+                            <div class="right" style="margin-left: auto;">
+                                <button class="btn btn-small border-radius-none no-padding" ng-disabled="currentPage == 0" ng-click="btns_paginacion(currentPage-1)" style="box-shadow: none;">
+                                    <i class="icon-left-small"></i>
+                                </button>
+                                <small style="min-width: 90px;display: inline-block;text-align: center;padding: 0 1rem;">
+                                     Página {{currentPage+1}} de {{numberOfPages()}}
+                                 </small>
+                                <button class="btn btn-small border-radius-none no-padding" ng-disabled="currentPage >= AcasPersona.length/pageSize - 1" ng-click="btns_paginacion(currentPage+1)" style="box-shadow: none;">
+                                     <i class="icon-right-small"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </div>
+
+        <div id="modalDetalles" class="modal" style="width: 68%;">
+            <div class="col s12 m12 l12 margin no-padding">
+                <div class="border-radius-none card-content default-linear-gradient tableFija white-text" style="padding: 1px 10px;">
+                    <div class="w-50">
+                        <h5 class="row"><span class="margin" style="font-size: 1.64rem;"><i class="icon-list"></i>Detalles de la solicitud</span>
+                        </h5>
+                    </div>
+                       <div class="ngdialog-close" style="font-size: 42px;position: absolute;z-index: 21000;
+                                    right: 0.5em;top:-4px;color: white;" ng-click="closeModal()">
+                        </div>
+                  </div>
+                <br>
+                <div class="card-action">
+                    <div class="row">
+                        <div class="col l12 m12 sm12">
+                            <i ng-if="adjuntoPrincipal!= ''" ng-click="DescargarRespuesta(adjuntoPrincipal)" style="float: inline-start;cursor: pointer !important;" 
+                                    class="material-icons dp48" title="Adjunto">attach_file</i>
+                            <p><strong>DESCRIPCIÓN:</strong></p>
+                                <div class="row margin" style="overflow: auto;max-height: 200px;width: 100%;">
+                                    <label>{{descripcionPersona}}</label>
+                                </div>
+                        </div>
+                        <div class="col l12 m6 sm12">
+                            <br>
+                                <p><strong>RESPUESTAS: </strong></p>
+                                <div id="chat_comment" class="row" style="overflow:auto;">
+                                    <div class="row" ng-show="!detallesAcas.length"
+                                    style="display: flex;justify-content: center;align-items: center;height: 80%;">
+                                    <i class="icon-comment-2" style="font-size: 40px;"></i>
+                                    </div>
+                                    <div class="row" ng-repeat="com in detallesAcas"
+                                    ng-class="{'chat_right whi': nombre.toLowerCase() == com.nombre.toLowerCase()}">
+                                    <div class="col l1 md1 m1 margin no-padding border-none">
+                                        <img src="assets/images/users/default-user.png" alt="jim"
+                                        class="circle responsive-img valign margin hide-on-small-only">
+                                    </div>
+                                    <div class="col l11 md11 m11">
+                                        <div class="desc_com" style="padding: 1em;">
+                                                <!-- <i ng-if="com.ruta!=null" ng-click="DescargarRespuesta(com.renglon)" -->
+                                            <i ng-if="com.adjunto!= ''" ng-click="DescargarRespuesta(com.adjunto)" style="float: right;cursor: pointer !important;" 
+                                                    class="material-icons dp48">attach_file</i>
+                                                <p class="margin">
+                                                    <strong>{{com.descripcion}}</strong>
+                                                </p>
+                                                <small>{{com.EMISOR}}</small>
+                                        </div>
+                                        <div
+                                        style="width: 100%;height: 0;border-bottom: 1px solid #ffca867a;margin: 1em 0;position: relative;display: flex;justify-content: space-between;align-items: center;">
+                                        <!-- <span style="font-size: 10px;background-color: #ffffff;padding: 0 10px;">
+                                            {{com.fecha}}
+                                        </span> -->
+                                        <span style="font-size: 10px;background-color: #ffffff;padding: 0 10px;">
+                                            {{com.fecha}}
+                                        </span>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <center ng-show="detallesAcas.length == 0">NO HAY RESPUESTAS</center>
+                                </div>
+                        </div>
+                    </div>
+                </div>        
+            </div>
+
+       
+
+        </div>
+
+    </div>
+          
+  </div>

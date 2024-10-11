@@ -1,0 +1,404 @@
+<div id="gestionaut">
+    <div class="row">
+      <div class="col s12 m12 l12 magazine margin widgets-tabs">
+        <div class="card-panel widgets-tabs col l12" style="margin-top: 0px; padding-bottom: 15px;padding-top: 15px;">
+          <div class="col s12 l12">
+            <div class="row">
+              <div class="col s4">
+                <i class="material-icons left" style="margin-top: 14px;">zoom_in</i>
+                <h5>Consulta Avanzada PGP</h5>
+              </div>
+              <!-- <div class="col s8" style="text-align: right; margin-top: 15px;">
+                <div class="col s12 input-padding">
+                  Tipos de busqueda :
+
+                  <span> <input class="with-gap" type="radio" ng-model="filterOptions" name="occurrences" value="AVANZADO"
+                      id="avanzado" />
+                    <label style="height: 25px!important" ng-class="{'default-color': filterOptions=='AVANZADO'}"
+                      for="avanzado">AVANZADO</label>
+                  </span>
+                </div>
+              </div> -->
+                <div class="col s12">
+                    <form ng-submit="buscarAutorizaciones()">
+                    <div class="col s12" style="padding: 20px;">
+                        <ul class="StepProgress">
+                        <li class="StepProgress-item s">
+                            <strong class="noselectxtpqr">PRESTADOR</strong>
+                            <div class="row" id="seccion1">
+                                <!-- <div class="col s4">
+                                    <div class="row" style="margin: 0">
+                                    <label style=" margin-top: -20px;">Tipo de Documento</label>
+                                    </div>
+                                    <div class="col  s12">
+                                    <select class="select-chosen-eps" ng-model="jsonautorizacion.documento">
+                                        <option value="">SELECCIONAR</option>
+                                        <option value="{{x.CODIGO}}" ng-repeat="x in Tipos_Documentos">{{x.NOMBRE}}</option>
+                                    </select>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="col s4">
+                                    <div class="row" style="margin: 0">
+                                    <label for="with_icon" style="margin-top: -20px;">Numero</label>
+                                    </div>
+                                    <input id="nitips" type="text" ng-model="jsonautorizacion.numero" placeholder="Numero">
+                                </div> -->
+                                <div class="col s4">
+                                <div class="row" style="margin: 0">
+                                    <label for="with_icon" style="margin-top: -20px;">Nit</label>
+                                </div>
+                                <input id="with_icon1" type="text" ng-model="jsonautorizacion.nit"
+                                    placeholder="Documento">
+                                </div>
+                                <!-- <div class="col s4">
+                                <div class="row" style="margin: 0">
+                                    <label for="with_icon" style="margin-top: -20px;">Prestador</label>
+                                </div>
+                                <input id="with_icon1" type="text" ng-model="jsonautorizacion.responsableavanzado"
+                                    placeholder="Documento">
+                                </div> -->
+                                <!-- <div class="col s4">
+                                    <div class="row" style="margin: 0">
+                                    <label for="with_icon" style="margin-top: -20px;">Notificacion de descuento</label>
+                                    </div>
+                                    <input id="with_icon1" type="text" ng-model="jsonautorizacion.responsableavanzado"
+                                    placeholder="Notificacion">
+                                </div> -->
+                            </div>
+                        </li>
+                        <li class="StepProgress-item s">
+                            <strong class="noselectxtpqr">FILTRO</strong>
+                        
+                        <div  id="seccion2">
+                        <div class="row">                  
+                            <div class="col s4">
+                            <div class="row" style="margin: 0">
+                                <label style="margin-top: -20px;">Estado de la Factura</label>
+                            </div>
+                            <div class="col  s12">
+                                <select class="select-chosen-eps" ng-model="jsonautorizacion.estadoavanzado">
+                                    <option value="">SELECCIONAR</option>
+                                    <option value="A">ACTIVAS</option>
+                                    <option value="X">ANULADAS  </option>
+                                    <option value="G">GESTIONADAS</option>
+                                    <option value="P">PROCESADAS</option>
+                                </select>
+                            </div>
+                            </div>
+                            <div class="col s4">
+                                <div class="row" style="margin: 0">
+                                <label style=" margin-top: -20px;">Regional</label>
+                                </div>
+                                <div class="col s12">
+                                    <select class="select-chosen-eps" ng-model="jsonautorizacion.regional">
+                                        <option value="" disabled>SELECCIONAR</option>
+                                        <option value="{{reg.Codigo}}" ng-repeat="reg in regionales">{{reg.Nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- <div class="col s2">
+                            <div class="row" style="margin: 0">
+                                <label style="cursor: pointer;">Servicio</label>
+                            </div>
+                            <div class="col s12">
+                                <input type="number" placeholder="Codigo" min="1" max="9999" ng-model="jsonautorizacion.servicioavanzado">
+                            </div>
+                            </div> -->
+                        </div>                                
+                        <div class="row">
+                            <div class="col s6">
+                            <div class="row" style="margin: 0">
+                                <div class="input-field col s6" style="margin: 0">
+                                <label for="with_icon" style="margin-top: -20px;font-size: 10px">Inicio</label>
+                                <input id="with_icon" type="date" ng-model="jsonautorizacion.fecha_inicio"
+                                    max="{{maxDate}}">
+                                </div>
+                                <div class="input-field col s6" style="margin: 0">
+                                <label for="with_icon" style="margin-top: -20px;font-size: 10px">Fin</label>
+                                <input id="with_icon" type="date" ng-model="jsonautorizacion.fecha_fin"
+                                    max="{{maxDate}}">
+                                </div>
+                            </div>
+                            </div>
+                            <!-- <div class="col s6">
+                            <div class="row" style="margin-bottom: 10px">
+                                <label for="with_icon" style="margin-top: -20px;">Fecha Confirmación</label>
+                            </div>
+                            <div class="row" style="margin: 0">
+                                <div class="input-field col s6" style="margin: 0">
+                                <label for="with_icon" style="margin-top: -20px;font-size: 10px">Inicio</label>
+                                <input id="with_icon" type="date" ng-model="jsonautorizacion.fecha_confirmadoiniavanzado"
+                                    max="{{maxDate}}">
+                                </div>
+                                <div class="input-field col s6" style="margin: 0">
+                                <label for="with_icon" style="margin-top: -20px;font-size: 10px">Fin</label>
+                                <input id="with_icon" type="date" ng-model="jsonautorizacion.fecha_confirmadofinavanzado"
+                                    max="{{maxDate}}">
+                                </div>
+                            </div>
+                            </div> -->
+                        </div>
+                        </div>
+                        </li>                        
+                    </ul>               
+                    </div>
+                    <div class="col s1 right">
+                        <div class="input-field col m12 s12">
+                        <button class="btn white-text" type="submit"
+                            style="padding-right: 5px; padding-left: 5px; margin-top: 10px;"><i style="position: relative;"
+                            class="material-icons prefix">search</i></button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+          </div>
+  
+        </div>
+
+  
+        <style>
+          .tab a:hover {
+            background-color: #ddd !important;
+            color: white !important;
+          }
+  
+          /* Style the active class (and buttons on mouse-over) */
+          .activebtn-step,
+          .activebtn-step:hover {
+            background-color: #2196f3 !important;
+            color: white !important;
+          }
+  
+          .step-item {
+            height: 100px;
+            width: 100px;
+            border-radius: 100px;
+            padding: 0px;
+          }
+  
+          .donebtn-step,
+          .donebtn-step:hover {
+            background-color: #2196f3 !important;
+            color: white !important;
+          }
+  
+          .steper {
+            width: 60%;
+            display: inline-flex;
+            text-align: center;
+            padding-bottom: 10px;
+            margin-left: 20%;
+          }
+  
+          .step-divider {
+            width: 100%;
+            position: relative;
+            top: 30px;
+            margin-left: 0px;
+            margin-right: 0px;
+            margin-top: 20px;
+          }
+  
+          .btn-step-content {
+            position: relative;
+            display: none;
+            height: calc(100% - 132px);
+            width: inherit;
+            overflow: visible;
+            margin-left: 41px;
+            margin-right: 24px;
+          }
+  
+          .step-option {
+            background: #eee;
+            height: 70px;
+            position: absolute;
+            bottom: -45px;
+            width: 100%;
+            margin-bottom: 6px;
+            left: 0px;
+            z-index: 2;
+          }
+  
+          .back-step,
+          .back-step:hover {
+            margin-top: 7px;
+            position: absolute;
+            right: 80px;
+            background: #ff4350 !important;
+          }
+  
+          .flex {
+            display: flex !important;
+          }
+  
+          .btn-step {
+            background-color: rgba(0, 0, 0, .3);
+            color: white;
+          }
+  
+          .hover-item:hover {
+            background-color: rgba(221, 221, 221, 0.45);
+          }
+  
+          .hover-item:active {
+            background-color: rgba(221, 221, 221, 0.45);
+          }
+  
+          .tabmenu>li:target>a {
+            background-color: rgba(221, 221, 221, 0.45);
+          }
+  
+          .requerido {
+            color: red !important;
+          }
+  
+          .tabactiva {
+            background-color: rgba(206, 206, 206, 0.71);
+          }
+  
+          .colorblack {
+            color: black;
+          }
+  
+          .itemsspam {
+            color: white !important;
+            border-radius: 12px !important;
+            box-shadow: 2px 2px 3px 0px #ccc !important;
+            position: relative !important;
+            top: 5px !important;
+            left: 11px !important;
+            cursor: pointer;
+          }
+  
+          .hovpanel:hover {
+            background: #32364c2b;
+            color: #ffa51b;
+            cursor: pointer;
+          }
+  
+          .mayus {
+            text-transform: uppercase;
+          }
+  
+          #header-fixed {
+            position: fixed;
+            top: 0px;
+            display: none;
+          }
+  
+          .cuadrado {
+            width: 25vh;
+            max-width: 240px;
+            height: 25vh;
+            max-height: 240px;
+            position: relative;
+            background: white;
+            box-shadow: 0 0 8px 1px #c7c7c7;
+          }
+  
+          .coloritem {
+            color: black !important;
+          }
+  
+          .autprocesada {
+            background-color: #4CAF50 !important;
+          }
+  
+          .autactiva {
+            background-color: #ff9800 !important;
+          }
+  
+          .switch label {
+            font-weight: 600;
+          }
+  
+          .switch label .lever.check-c {
+            background-color: #818181 !important;
+          }
+  
+          .switch label .lever.check-c:after {
+            background-color: #26a69a;
+          }
+  
+          .switch label>span.activo {
+            color: #26a69a !important;
+          }
+  
+          .text-center {
+            text-align: center;
+          }
+  
+          div#modaldetalle {
+            top: 1% !important;
+          }
+  
+          div#modalnovedades {
+            top: 1% !important;
+          }
+  
+          .outer {
+            width: 1px;
+            height: 100%;
+            margin: auto;
+            position: relative;
+            overflow: hidden;
+          }
+  
+          .inner {
+            /* position: absolute; */
+            width: 100%;
+            height: 50vh;
+            background: grey;
+            top: 30%;
+            box-shadow: 0px 0px 30px 20px grey;
+          }
+  
+          .style-table-default {
+            height: 350px;
+            overflow: auto;
+          }
+  
+          /* Style Scroll */
+          .scrollTableDefault::-webkit-scrollbar {
+            /* width */
+            width: 5px;
+          }
+  
+          .scrollTableDefault::-webkit-scrollbar-track {
+            /* Track */
+            background: #f1f1f1;
+          }
+  
+          .scrollTableDefault::-webkit-scrollbar-thumb {
+            /* Handle */
+            background: #888;
+          }
+  
+          .scrollTableDefault::-webkit-scrollbar-thumb:hover {
+            /* Handle on hover */
+            background: #555;
+          }
+  
+          .swal2-container {
+            z-index: 10000 !important;
+          }
+  
+          .clase-gray {
+            color: #736a6a !important;
+          }
+  
+          .textFactura {
+            color: blue;
+            font-size: 10px;
+            font-weight: bold;
+          }
+  
+          .text_Tutela {
+            color: red;
+            font-weight: bold;
+          }
+        </style>
+      </div>
+    </div>

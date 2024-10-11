@@ -1,0 +1,701 @@
+<div class="white newdesing" id="pantalla" style="height: 100vh;">
+    <style>
+        .color-verde {
+            color: black;
+            background: #0e8d01;
+        }
+
+        .color-rojo {
+            color: black;
+            background: yellow;
+        }
+    </style>
+    <!-- <div class="row">
+        <div class="col l12 m12 s12">
+            <ul class="tabs transparent" style="overflow:hidden;">
+                <li class="tab col w-auto">
+                    <a ng-click="setTab(1);" id="consultaTab" href>CONSULTAR PLAN ANUAL DE AUDITORIA INTERNA</a>
+                </li>
+                <li class="tab col w-auto">
+                    <a ng-click="setTab(2);" id="generarTab" href>GENERAR PLAN ANUAL DE AUDITORIA INTERNA</a>
+                </li>
+            </ul>
+        </div> 
+     </div> -->
+    <!-- <img src="assets/images/Auditoria_Interna/marca.jpg"> -->
+    <div class="row section-header">
+        <ul class="left mailbox-custom-search list-inline"
+            style="width: 100%;display: flex;justify-content: space-between;align-items: center;">
+            <li id="inicio">
+                <h5 onclick="location.reload();">Plan Anual de Auditoria Interna</h5>
+            </li>
+            <li>
+                <ul class="tabs transparent" style="overflow:hidden;">
+                    <li class="tab col w-auto">
+                        <a ng-click="setTab(2);" id="generarTab" href>NUEVO<i class="icon-plus-outline"></i></a>
+                    </li>
+                    <li class="tab col w-auto">
+                        <a ng-click="setTab(1);" id="consultaTab" href class="active">CONSULTAR
+                            <i class="icon-eye-outline"></i></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div ng-show="tab == '2'">
+        <div class="row" ng-show="permisos.BPLV_CONSULTA == 'S'">
+            <div class="col s12" ng-show="pantalla == '3'">
+
+                <div class="col s2 right"
+                    ng-show="permisos.BPLV_MODIFICACION == 'S' && formPlanAnual.BPLV_ESTADO == 'A'">
+                    <div class="default-color cursor-pointer"
+                        style="border-radius: 0.3rem;border: 2px solid;padding: 0.2em;font-weight: 600;"
+                        ng-click="editar()"><i class="icon-edit"></i>
+                        Editar
+                    </div>
+                </div>
+                <div class="col s2 right">
+                    <!-- <div class="col s2 right"> -->
+                    <div class="default-color cursor-pointer"
+                        style="border-radius: 0.3rem;border: 2px solid;padding: 0.2em;font-weight: 600;"
+                        ng-click="descargaExcel()"><i class="icon-download-cloud"></i> Descargar
+                    </div>
+                </div>
+                <div class="col s2 right" ng-show="permisos.BPLV_APROBACION == 'S' && formPlanAnual.BPLV_ESTADO == 'A'">
+                    <div class="default-color cursor-pointer"
+                        style="border-radius: 0.3rem;border: 2px solid;padding: 0.2em;font-weight: 600;"
+                        ng-click="aprobarPlan(true)"><i class="icon-check"></i>
+                        Aprobar
+                    </div>
+                </div>
+
+                <div class="col s3 right" ng-show="permisos.BPLV_APROBACION == 'S' && formPlanAnual.BPLV_ESTADO == 'P'">
+                    <div class="default-color cursor-pointer"
+                        style="border-radius: 0.3rem;border: 2px solid;padding: 0.2em;font-weight: 600;"
+                        ng-click="editarAprobado()"><i class="icon-edit"></i>
+                        Modificar
+                    </div>
+                </div>
+                <div class="col s3 right" ng-show="permisos.BPLV_APROBACION == 'S' && formPlanAnual.BPLV_ESTADO == 'P'">
+                    <div class="default-color cursor-pointer"
+                        style="border-radius: 0.3rem;border: 2px solid;padding: 0.2em;font-weight: 600;"
+                        ng-click="nuevoPlanAnual()"><i class="icon-plus-outline"></i> Crear Nuevo Plan
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-custom-d" ng-show="permisos.BPLV_CONSULTA == 'S'">
+            <div class="card" ng-show="pantalla == 1" style="width: 90vw;border-radius: 5px;padding: 1em;">
+                <div class="row m-t">
+                    <div class="col s12">
+                        <div class="col s6">
+                            <div class="col s12 no-padding label-new m-b" style="margin-bottom: 6em;">
+                                <label id="objetivos">Objetivos <span style="color: red;">*</span></label>
+                                <textarea style="height: 11vh;text-transform: uppercase"
+                                    ng-model="formPlanAnual.BPLV_OBJETIVO"></textarea>
+                            </div>
+                        </div>
+                        <div class="col s6">
+                            <div class="col s12 no-padding label-new m-b" style="margin-bottom: 6em;">
+                                <label id="alcance_plan">Alcance de plan <span style="color: red;">*</span></label>
+                                <textarea style="height: 11vh;text-transform: uppercase"
+                                    ng-model="formPlanAnual.BPLV_ALCANCE"></textarea>
+                            </div>
+                        </div>
+                        <div class="col s6">
+                            <div class="col s12 no-padding label-new m-b" style="margin-bottom: 6em;">
+                                <label id="recursos">Recursos <span style="color: red;">*</span></label>
+                                <textarea style="height: 11vh;text-transform: uppercase"
+                                    ng-model="formPlanAnual.BPLV_RECURSOS"></textarea>
+                            </div>
+                        </div>
+                        <div class="col s6">
+                            <div class="col s12 no-padding label-new m-b" style="margin-bottom: 6em;">
+                                <label id="metodos">Métodos <span style="color: red;">*</span></label>
+                                <textarea style="height: 11vh;text-transform: uppercase"
+                                    ng-model="formPlanAnual.BPLV_METODOS"></textarea>
+                            </div>
+                        </div>
+                        <div class="col s6 no-padding label-new m-b">
+                            <input type="date"
+                                class="margin border-none input-text-new gray-input w-100 m-l ng-pristine ng-untouched ng-valid"
+                                autocomplete="off" style="text-transform: uppercase" name="fecha_plan"
+                                ng-model="formPlanAnual.BPLF_FECHA_PLAN">
+                            <label id="fecha_plan">Fecha del Plan <span style="color: red;">*</span></label>
+                        </div>
+                        <div class="col s6 no-padding label-new m-b">
+                            <select class="select-new-style gray-input m-l" style="box-shadow: none" name="vigencia"
+                                ng-model="formPlanAnual.BPLV_VIGENCIA">
+                                <option value="" disabled>SELECCIONAR</option>
+                                <option value="{{x.CODIGO}}" ng-selected="x.CODIGO == formPlanAnual.BPLV_VIGENCIA"
+                                    ng-repeat="x in listadoAnio track by $index | orderBy:'CODIGO':reverse">
+                                    {{x.CODIGO}}
+                                </option>
+                            </select>
+                            <label id="vigencia">Vigencia del Plan <span style="color: red;">*</span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <div class="col s2 center right" style="margin: 2%">
+                            <div class="default-color cursor-pointer"
+                                style="border-radius: 0.3rem;border: 2px solid;padding: 0.2em;font-weight: 600;"
+                                ng-click="ui_plan_auditoria()">Siguiente
+                            </div>
+                        </div>
+                        <div class="col s2 center left" style="margin: 2%">
+                            <div class="default-color cursor-pointer"
+                                style="border-radius: 0.3rem;border: 2px solid;padding: 0.2em;font-weight: 600;"
+                                ng-click="cancelarPlanAnual()">Cancelar
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" ng-show="pantalla == 2" ng-show="permisos.BPLV_CONSULTA == 'S'">
+            <div class="row">
+                <div class="col s2 center right m-t">
+                    <div class="default-color cursor-pointer"
+                        style="border-radius: 0.3rem;border: 2px solid;padding: 0.2em;font-weight: 600;"
+                        ng-click="nuevaAuditoria()">Nueva Auditoria
+                    </div>
+                </div>
+                <div class="col s12" style="margin-bottom: 2%;">
+                    <div class="col s6 m4 l4" ng-repeat="X in meses track by $index"
+                        style="margin: 0 auto;height: 199px;">
+                        <div id="cal" style="width: 85%;height: 90%;;margin-bottom: 0">
+                            <div class="header">
+                                <span class="left hook"></span>
+                                <span class="month-year" id="label"> {{X.MES}} </span>
+                                <span class="right hook"></span>
+                                <!-- <span class="right button" id="next" ng-click="nuevaAuditoria(($index+1))"><i
+                                        class="icon-plus"></i></span> -->
+                            </div>
+                            <div class="center" style="overflow: auto;max-height: 16vh;">
+                                <!-- <p style="margin: 0;" ng-repeat="A in X.AGENDA">{{A.objetivo | uppercase}}</p> -->
+                                <div ng-repeat="A in X.AGENDA track by $index" style="margin: 5px;">
+                                    <a class="fc-day-grid-event fc-h-event fc-event fc-not-start fc-end fc-draggable fc-resizable"
+                                        style="background-color: #777777;">
+                                        <div style="font-size: 1rem;">
+                                            <span class="fc-title" ng-click="editarAuditoria(A)">{{A.PROCESO_AUDITAR}}
+                                            </span>
+                                            <!-- <span class="fc-title"
+                                                ng-click="editarAuditoria(A)">{{nombreProcesoAuditar(A)}} </span> -->
+                                            <i class="icon-trash-empty right" style="font-size: 1rem; cursor: pointer;"
+                                                ng-click="removerAuditoria(A, X.AGENDA)"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <div class="col s2 center right" style="margin: 2%">
+                        <div class="default-color cursor-pointer"
+                            style="border-radius: 0.3rem;border: 2px solid;padding: 0.2em;font-weight: 600;"
+                            ng-click="verPlan()">Ver Plan
+                        </div>
+                    </div>
+                    <div class="col s2 center left" style="margin: 2%">
+                        <div class="default-color cursor-pointer"
+                            style="border-radius: 0.3rem;border: 2px solid;padding: 0.2em;font-weight: 600;"
+                            ng-click="atras()">Atras
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" id="marca-agua-aui" style="margin-bottom: 2%; min-height: 95vh;" ng-show="pantalla == 3"
+            ng-show="permisos.BPLV_CONSULTA == 'S'">
+            <div>
+                <!-- <div class="row">
+                    <div class="col s12">
+                        <div class="row card">
+                            <div class="col s12 center">
+                                <h6 style="font-weight: bold;">Plan Anual de Auditoria Interna</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="row">
+                    <div class="col s12" style="padding: 1rem;">
+                        <!-- <table>
+                            <tr>
+                                <th
+                                    style="background-color: #1a2e63;color: white;width: 10vw; border: solid;border-width: 3px; border-color: black;">
+                                    OBJETIVOS DEL PLAN</th>
+                                <th style="width: 60vw; border: solid;border-width: 3px;">
+                                    {{formPlanAnual.BPLV_OBJETIVO}}</th>
+                                <th
+                                    style="background-color: #1a2e63;color: white;width: 8vw; border: solid;border-width: 3px; border-color: black">
+                                    FECHA DEL PLAN</th>
+                                <th style="border: solid;border-width: 3px;">
+                                    {{formPlanAnual.BPLF_FECHA_PLAN_DIA }}</th>
+                                <th style="border: solid;border-width: 3px;">
+                                    {{formPlanAnual.BPLF_FECHA_PLAN_MES }}</th>
+                                <th style="border: solid;border-width: 3px;">
+                                    {{formPlanAnual.BPLF_FECHA_PLAN_ANIO }}</th>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <th style="background-color: #1a2e63;color: white;width: 35vw;;">ALCANCE</th>
+                                <th style="background-color: #1a2e63;color: white;width: 35vw;;">RECURSOS</th>
+                                <th colspan="2" style="background-color: #1a2e63;color: white;width: 35vw;;">METODOS
+                                </th>
+                                <th colspan="2" style="background-color: #1a2e63;color: white;width: 35vw;;">VIGENCIA
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="border: solid;border-width: 3px;">{{formPlanAnual.BPLV_ALCANCE }}</th>
+                                <th style="border: solid;border-width: 3px;">{{formPlanAnual.BPLV_RECURSOS }}</th>
+                                <th colspan="2" style="border: solid;border-width: 3px;">{{formPlanAnual.BPLV_METODOS }}
+                                </th>
+                                <th colspan="2" style="border: solid;border-width: 3px;">{{formPlanAnual.BPLV_VIGENCIA}}
+                                </th>
+                            </tr>
+                        </table> -->
+                        <div class="foot4 divcardcustom">
+                            <div class="text-al divcardcustom2" style="text-align: center;">
+                                <strong class="switch" style="font-weight:600;font-size: 0.9rem;">PLAN ANUAL DE
+                                    AUDITORIA INTERNA</strong>
+                            </div>
+                        </div>
+                        <!-- {{formPlanAnual | json}} -->
+                        <table id="table-plan" style="max-height: 70vh; overflow: auto;">
+                            <tr>
+                                <!-- <th class="custom-boder-table-d custom-theader-table-d">FECHA AUDITORIA</th> -->
+                                <th class="center custom-boder-table-d custom-theader-table-d">TIPO AUDITORIA</th>
+                                <th class="center custom-boder-table-d custom-theader-table-d">PROCESO AUDITAR</th>
+                                <!-- <th class="center custom-boder-table-d custom-theader-table-d">OBJETIVO AUDITORIA</th>
+                                <th class="center custom-boder-table-d custom-theader-table-d">DOCUMENTO A AUDITAR</th>
+                                <th class="center custom-boder-table-d custom-theader-table-d">SOPORTE NORMATIVO</th>
+                                <th class="center custom-boder-table-d custom-theader-table-d">DUEÑO DEL PROCESO</th> -->
+                                <th class="center custom-boder-table-d custom-theader-table-d">ENE</th>
+                                <th class="center custom-boder-table-d custom-theader-table-d">FEB</th>
+                                <th class="center custom-boder-table-d custom-theader-table-d">MAR</th>
+                                <th class="center custom-boder-table-d custom-theader-table-d">ABR</th>
+                                <th class="center custom-boder-table-d custom-theader-table-d">MAY</th>
+                                <th class="center custom-boder-table-d custom-theader-table-d">JUN</th>
+                                <th class="center custom-boder-table-d custom-theader-table-d">JUL</th>
+                                <th class="center custom-boder-table-d custom-theader-table-d">AGO</th>
+                                <th class="center custom-boder-table-d custom-theader-table-d">SEP</th>
+                                <th class="center custom-boder-table-d custom-theader-table-d">OCT</th>
+                                <th class="center custom-boder-table-d custom-theader-table-d">NOV</th>
+                                <th class="center custom-boder-table-d custom-theader-table-d">DIC</th>
+                                <!-- <th class="custom-boder-table-d custom-theader-table-d">OBSERVACION</th> -->
+                            </tr>
+                            <tr ng-repeat="x in arrPlanAeAuditorias track by $index">
+                                <!-- <td class="custom-boder-table-d">{{x.FECHA_PLAN}}</td> -->
+                                <td class="center custom-boder-table-d"><b>{{x.TIPO_AUDITORIA}}</b></td>
+                                <td class="center custom-boder-table-d"><b>{{x.PROCESO_AUDITAR}}</b></td>
+                                <!-- <td class="center custom-boder-table-d">{{x.OBJETIVO}}</td>
+                                <td class="center custom-boder-table-d">{{x.DOCUMENTO_AUDITAR}}</td>
+                                <td class="center custom-boder-table-d">{{x.SOPORTE_NORMATIVO}}</td>
+                                <td class="center custom-boder-table-d">{{x.DUENO_PROCESO}}</td> -->
+
+                                <td class="center custom-boder-table-d" ng-class="{'S': 'ai-mes-select-d'}[x.MES_1]">
+                                </td>
+                                <td class="center custom-boder-table-d" ng-class="{'S': 'ai-mes-select-d'}[x.MES_2]">
+                                </td>
+                                <td class="center custom-boder-table-d" ng-class="{'S': 'ai-mes-select-d'}[x.MES_3]">
+                                </td>
+                                <td class="center custom-boder-table-d" ng-class="{'S': 'ai-mes-select-d'}[x.MES_4]">
+                                </td>
+                                <td class="center custom-boder-table-d" ng-class="{'S': 'ai-mes-select-d'}[x.MES_5]">
+                                </td>
+                                <td class="center custom-boder-table-d" ng-class="{'S': 'ai-mes-select-d'}[x.MES_6]">
+                                </td>
+                                <td class="center custom-boder-table-d" ng-class="{'S': 'ai-mes-select-d'}[x.MES_7]">
+                                </td>
+                                <td class="center custom-boder-table-d" ng-class="{'S': 'ai-mes-select-d'}[x.MES_8]">
+                                </td>
+                                <td class="center custom-boder-table-d" ng-class="{'S': 'ai-mes-select-d'}[x.MES_9]">
+                                </td>
+                                <td class="center custom-boder-table-d" ng-class="{'S': 'ai-mes-select-d'}[x.MES_10]">
+                                </td>
+                                <td class="center custom-boder-table-d" ng-class="{'S': 'ai-mes-select-d'}[x.MES_11]">
+                                </td>
+                                <td class="center custom-boder-table-d" ng-class="{'S': 'ai-mes-select-d'}[x.MES_12]">
+                                </td>
+                                <!-- <td class="custom-boder-table-d">{{x.OBSERVACION}}</td> -->
+                            </tr>
+                        </table>
+                        <div class="foot4 divcardcustom m-t" ng-show="formPlanAnual.BPLV_ESTADO == 'P'">
+                            <div class="text-al divcardcustom2" style="text-align: center;">
+                                <strong class="switch" style="font-weight:600;font-size: 0.9rem;">APROBADO POR COMITE
+                                    PRIMARIO DE AUDITORIA INTERNA EL DIA </strong><strong>
+                                    {{formPlanAnual.BPLF_FECHA_APROBACION | date:'dd-MM-yyyy'}}
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="tab == 1" id="marca-agua-aui" style="min-height: 95vh;">
+        <div class="container-custom-d" ng-show="arrPlanAnualAuditorias.length > 0">
+            <div style="width: 90vw;border-radius: 5px;padding: 1em;">
+                <div class="row m-t grid-container-d" style="padding: 1rem; margin: unset;"
+                    ng-show="permisos.BPLV_CREACION == 'S'">
+                    <div class="default-background cursor-pointer grid-item-colum-d white-text"
+                        style="border-radius: 0.3rem;border: 2px solid;padding: 0.2em;font-weight: 600;"
+                        ng-click="nuevoPlanAnual()"><i class="icon-plus-outline"></i> Generar nuevo plan
+                    </div>
+                </div>
+                <div class="row m-t">
+                    <div class="col s12">
+                        <table class="bordered highlight table_center_align default-color"
+                            style="width: 100%;font-size: 6px !important;border: 3px solid;">
+                            <thead class="default-border default-color">
+                                <tr>
+                                    <th class="center" style="background-color: #1a2e63;color: white;">CODIGO</th>
+                                    <th class="center" style="background-color: #1a2e63;color: white;">RESPONSABLE</th>
+                                    <th class="center" style="background-color: #1a2e63;color: white;">FECHA CREACION
+                                    </th>
+                                    <th class="center" style="background-color: #1a2e63;color: white;">FECHA APROBACION
+                                    </th>
+                                    <th class="center" style="background-color: #1a2e63;color: white;">ESTADO</th>
+                                    <th class="center" style="background-color: #1a2e63;color: white;">ACCIONES</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="x in arrPlanAnualAuditorias track by $index">
+                                    <td class="center"><b>{{x.BPLN_CODIGO}}</b></td>
+                                    <td class="center"><b>{{x.BPLV_RESPONSABLE_NOMBRE}}</b></td>
+                                    <td class="center"><b>{{x.BPLF_FECHA_PLAN}}</b></td>
+                                    <td class="center"><b>{{x.BPLF_FECHA_APROBACION}}</b></td>
+                                    <td class="center">
+                                        <!-- <span class="badge-custom-d">
+                                            {{x.BPLV_ESTADO == 'A' ? 'ACTIVO' : x.BPLV_ESTADO == 'P' ? 'APROBADO' :
+                                            'INACTIVO'}}
+                                        </span> -->
+                                        <span style=" padding: 2px 10px;border-radius: 0.5em;"
+                                            ng-class="x.BPLV_ESTADO == 'P' ? 'color-verde':'color-rojo'"
+                                            class="ng-binding color-verde">
+                                            <b>
+                                                {{x.BPLV_ESTADO == 'A' ? 'ACTIVO' : 'APROBADO'}}
+                                            </b>
+                                        </span>
+                                    </td>
+                                    <td class="center" style="cursor: pointer;font-size: medium;">
+                                        <div class="tooltip"
+                                            ng-show="x.BPLV_ESTADO == 'A' && permisos.BPLV_MODIFICACION">
+                                            <i class="icon-cog-alt cursor-pointer;" ng-click="editarPlan(x)"></i>
+                                            <span class="tooltiptext"
+                                                style="font-size: 12px;width: 60px;margin-left: -30px;">Gestionar
+                                                Plan</span>
+                                        </div>
+                                        <div class="tooltip" ng-show="x.BPLV_ESTADO == 'P'">
+                                            <i class="icon-eye cursor-pointer;" ng-click="verPlanAprobado(x)"></i>
+                                            <span class="tooltiptext"
+                                                style="font-size: 12px;width: 60px;margin-left: -30px;">Ver Plan</span>
+                                        </div>
+                                        <div class="tooltip" ng-show="x.BPLV_ESTADO == 'P'">
+                                            <i class="icon-history cursor-pointer;"
+                                                ng-click="verhistoricoSoportes(x)"></i>
+                                            <span class="tooltiptext"
+                                                style="font-size: 12px;width: 60px;margin-left: -30px;">Historico</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL AGREGAR PLAN AUDITORIA  -->
+    <div id="Modal_Agregar_Plan" class="modal card" data-backdrop="static" data-keyboard="false"
+        style="margin: 0 auto; width: 60vw;min-height: 90vh; top: 0%; border-radius: 15px;">
+        <div class="col s12 m6 l6 margin">
+            <div class="ngdialog-close"
+                style="font-size: 50px;position: absolute;z-index: 106;right: 0.5em;color: white;"
+                ng-click="closeModal('Modal_Agregar_Plan')">
+            </div>
+            <div class="card-content default-background white-text">
+                <div class="col s11">
+                    <div class="col s5" style="display: inline-flex">
+                        <span class="margin" style="font-size: 1.64rem">Agregar Plan de
+                            Auditoria</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-t" style="max-height: 75vh; overflow: auto;">
+                <div class="col s12">
+                    <div class="col s6 no-padding label-new m-b">
+                        <label id="tipo_auditoria">Tipo de Auditoria</label>
+                        <select class="select-new-style gray-input m-l" style="box-shadow: none" name="tipo_auditoria"
+                            ng-model="planAuditoria.BPLC_TIPO_AUDITORIA">
+                            <option value="" disabled>SELECCIONAR</option>
+                            <option value="{{x.CODIGO}}" ng-selected="x.CODIGO == planAuditoria.BPLC_TIPO_AUDITORIA"
+                                ng-repeat="x in tiposAuditoria track by $index | orderBy:'CODIGO':reverse">
+                                {{x.NOMBRE}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col no-padding label-new m-b"
+                        ng-class="{'R': 's6', 'N': 's3', undefined: 's6'}[planAuditoria.BPLC_NIVEL]">
+                        <label id="nivel">Nivel</label>
+                        <select class="select-new-style gray-input m-l" style="box-shadow: none" name="nivel"
+                            ng-model="planAuditoria.BPLC_NIVEL"
+                            ng-change="{'R' : obtenerRegionales(), 'N': obtenerAreas()}">
+                            <option value="" disabled>SELECCIONAR</option>
+                            <option value="R">REGIONAL</option>
+                            <option value="N">NACIONAL</option>
+                        </select>
+                    </div>
+                    <div class="col s6 no-padding label-new m-b"
+                        ng-show="planAuditoria.BPLC_NIVEL == 'R' && arrRegionales.length > 0">
+                        <label id="regional">Regional</label>
+                        <select class="select-new-style gray-input m-l" style="box-shadow: none" name="regional"
+                            ng-model="planAuditoria.BPLV_REGIONAL">
+                            <option value="" disabled>SELECCIONAR</option>
+                            <option value="{{x.CODIGO}}" ng-repeat="x in arrRegionales track by $index">
+                                {{x.NOMBRE}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col no-padding label-new m-b"
+                        ng-class="{'R': 's6', 'N': 's3'}[planAuditoria.BPLC_NIVEL]"
+                        ng-show="planAuditoria.BPLC_NIVEL == 'R'">
+                        <label id="proceso_auditar">Proceso Auditar</label>
+                        <input
+                            class="margin border-none input-text-new gray-input w-100 m-l ng-pristine ng-untouched ng-valid"
+                            autocomplete="off" style="text-transform: uppercase" name="recursos"
+                            ng-model="planAuditoria.BPLV_PROCESO_NOM">
+                    </div>
+                    <div class="col no-padding label-new m-b"
+                        ng-class="{'R': 's6', 'N': 's3'}[planAuditoria.BPLC_NIVEL]"
+                        ng-show="planAuditoria.BPLC_NIVEL == 'N'">
+                        <label id="proceso_auditar">Proceso Auditar</label>
+                        <select class="select-new-style gray-input m-l" style="box-shadow: none" name="proceso_auditar"
+                            ng-model="planAuditoria.BPLV_PROCESO">
+                            <option value="" disabled>SELECCIONAR</option>
+                            <option value="{{x.AREN_CODIGO}}" ng-selected="x.AREN_CODIGO == planAuditoria.BPLV_PROCESO"
+                                ng-repeat="x in arrAreas track by $index">
+                                {{x.AREC_NOMBRE}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col s12" style="height: 15vh;">
+                    <div class="col s12 no-padding label-new m-b">
+                        <label id="objetivo_auditoria">Objetivo De La Auditoria</label>
+                        <textarea style="height: 11vh;text-transform: uppercase"
+                            ng-model="planAuditoria.BPLV_OBJETIVO"></textarea>
+                    </div>
+                </div>
+                <div class="col s12" style="height: 15vh;">
+                    <div class="col s12 no-padding label-new m-b">
+                        <label id="documento_auditar">Documento Auditar</label>
+                        <textarea style="height: 11vh;text-transform: uppercase"
+                            ng-model="planAuditoria.BPLV_DOCUMENTO_AUD"></textarea>
+                    </div>
+                </div>
+                <div class="col s12" style="height: 15vh;">
+                    <div class="col s12 no-padding label-new m-b">
+                        <label id="soporte_normativo">Soporte Normativo</label>
+                        <textarea style="height: 11vh;text-transform: uppercase"
+                            ng-model="planAuditoria.BPLV_SOPORTE_NORMATIVO"></textarea>
+                    </div>
+                </div>
+                <div class="col s12">
+                    <div class="col s12 no-padding label-new m-b">
+                        <select class="select-new-style gray-input m-l" style="box-shadow: none" name="dueno_proceso"
+                            ng-model="planAuditoria.BPLV_RESPONSABLE_PROCESO">
+                            <option value="" disabled>SELECCIONAR</option>
+                            <option value="{{x.CODIGO_CARGO}}" ng-repeat="x in arrJefes track by $index"
+                                ng-selected="planAuditoria.BPLV_RESPONSABLE_PROCESO == x.CODIGO_CARGO">
+                                {{x.NOMBRE_FUNC}} - {{x.NOMBRE_CARGO}}
+                            </option>
+                        </select>
+                        <label id="dueno_proceso">Dueño del proceso auditado</label>
+                    </div>
+                </div>
+                <div class="col s12" style="height: 15vh;">
+                    <div class="col s12 no-padding label-new m-b">
+                        <label id="observaciones">Observaciones</label>
+                        <textarea style="height: 11vh;text-transform: uppercase"
+                            ng-model="planAuditoria.BPLV_OBSERVACION"></textarea>
+                    </div>
+                </div>
+                <div class="row" ng-show="showMeses">
+                    <div class="col s2" ng-repeat="x in meses track by $index">
+                        <input type="checkbox" class="check" id="mes_{{$index+1}}" name="mes_{{$index+1}}"
+                            ng-click="selectMes($index+1)">
+                        <label for="mes_{{$index+1}}">{{x.MES}}</label><br>
+                    </div>
+                </div>
+                <div class="col s12 center">
+                    <div class="col s2 right" style="margin: 2%">
+                        <div class="default-color cursor-pointer"
+                            style="border-radius: 0.3rem;border: 2px solid;padding: 0.2em;font-weight: 600;"
+                            ng-click="nuevoPlanAuditoria(planAuditoria)">
+                            Guardar
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL APROBAR PLAN ANUAL AUDITORIA  -->
+    <div id="Modal_Aprobar_Plan" class="modal card" data-backdrop="static" data-keyboard="false"
+        style="margin: 0 auto; max-height: 100%; width: 50%; top: 0%; border-radius: 15px;">
+        <div class="col s12 m6 l6 margin">
+            <div class="ngdialog-close"
+                style="font-size: 50px;position: absolute;z-index: 106;right: 0.5em;color: white;"
+                ng-click="closeModal('Modal_Aprobar_Plan')">
+            </div>
+            <div class="card-content default-background white-text">
+                <div class="col s11">
+                    <div class="col s5" style="display: inline-flex">
+                        <span class="margin" style="font-size: 1.64rem">Aprobar Plan Anual de Auditoria Interna</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-t">
+                <div class="col s12">
+                    <div class="col s4 no-padding label-new m-b">
+                        <label id="creado_por">Creado por</label>
+                        <input
+                            class="margin border-none input-text-new gray-input w-100 m-l ng-pristine ng-untouched ng-valid"
+                            autocomplete="off" style="text-transform: uppercase" name="creado_por"
+                            ng-model="formAprobarPlan.BPLV_RESPONSABLE_NOMBRE" readonly>
+                    </div>
+                    <div class="col s4 no-padding label-new m-b">
+                        <label id="aprobado_por">Aprobado por</label>
+                        <input
+                            class="margin border-none input-text-new gray-input w-100 m-l ng-pristine ng-untouched ng-valid"
+                            autocomplete="off" style="text-transform: uppercase" name="aprobado_por"
+                            ng-model="formAprobarPlan.BPLV_RESPONSABLE_APROBACION_NOMBRE" readonly>
+                    </div>
+                    <div class="col s4 no-padding label-new m-b">
+                        <label id="fecha_aprobacion">Fecha de aprobacion</label>
+                        <input
+                            class="margin border-none input-text-new gray-input w-100 m-l ng-pristine ng-untouched ng-valid"
+                            autocomplete="off" style="text-transform: uppercase" name="fecha_aprobacion" type="date"
+                            ng-model="formAprobarPlan.BPLV_FECHA_APROBACION">
+                    </div>
+                    <div class="col s6 no-padding label-new m-b">
+                        <label id="soporte_plan_anual">Soporte Plan anual de auditoria interna</label>
+                        <input type="file" class="cutom-input-file"
+                            ng-model="formAprobarPlan.BPLV_SOPORTE_PLAN_ANUAL_AUDITORIA"
+                            id="BPLV_SOPORTE_PLAN_ANUAL_AUDITORIA" accept=".pdf">
+                    </div>
+                    <div class="col s6 no-padding label-new m-b">
+                        <label id="soporte_acta">Soporte Acta de reunion</label>
+                        <input type="file" class="cutom-input-file" ng-model="formAprobarPlan.BPLV_SOPORTE_ACTA_REUNION"
+                            id="BPLV_SOPORTE_ACTA_REUNION" accept=".pdf">
+                    </div>
+                </div>
+                <div class="col s12 center">
+                    <div class="col s4 left" style="margin: 2%">
+                        <div class="default-color cursor-pointer"
+                            style="border-radius: 0.3rem;border: 2px solid;padding: 0.2em;font-weight: 600;"
+                            ng-click="closeModal('Modal_Aprobar_Plan')">
+                            Cancelar
+                        </div>
+                    </div>
+                    <div class="col s4 right" style="margin: 2%">
+                        <div class="default-color cursor-pointer"
+                            style="border-radius: 0.3rem;border: 2px solid;padding: 0.2em;font-weight: 600;"
+                            ng-click="aprobarPlan(false)">
+                            Aprobar
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL HOSTORICO DE CARGUES  -->
+    <div id="Modal_Historico_Soportes" class="modal card" data-backdrop="static" data-keyboard="false"
+        style="margin: 0 auto; max-height: 100%; width: 80%; top: 0%; border-radius: 15px;">
+        <div class="col s12 m6 l6 margin">
+            <div class="ngdialog-close"
+                style="font-size: 50px;position: absolute;z-index: 106;right: 0.5em;color: white;"
+                ng-click="closeModal('Modal_Historico_Soportes')">
+            </div>
+            <div class="card-content default-background white-text">
+                <div class="col s11">
+                    <div class="col s5" style="display: inline-flex">
+                        <span class="margin" style="font-size: 1.64rem">HISTORICO DE PLANES</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-t">
+                <div class="col s12" style="max-height: 70vh;" ng-show="rutaSoporte == ''">
+                    <table class="bordered highlight table_center_align default-color"
+                        style="width: 100%;font-size: 6px !important;border: 3px solid;">
+                        <thead class="default-border default-color">
+                            <tr>
+                                <th style="background-color: #1a2e63;color: white;">TIPO SOPORTE</th>
+                                <th style="background-color: #1a2e63;color: white;">FECHA REGISTRO</th>
+                                <th style="background-color: #1a2e63;color: white;">RESPONSABLE</th>
+                                <th style="background-color: #1a2e63;color: white;">VER ACTA REUNION</th>
+                                <th style="background-color: #1a2e63;color: white;">VER PLAN ANUAL</th>
+                                <th style="background-color: #1a2e63;color: white;">VER ACTA MODIFICACION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="x in ArraySoportes track by $index">
+                                <td>{{x.SOPORTE_ACTA_MODIFICACION == null ? 'APROBACION' : 'MODIFICACION'}}</td>
+                                <td>{{x.FECHA_REGISTRO}}</td>
+                                <td>{{x.RESPONSABLE_NOM}}</td>
+                                <td style="cursor: pointer;font-size: medium;">
+                                    <div class="tooltip" ng-show="x.SOPORTE_ACTA_REUNION != null">
+                                        <i class="icon-eye cursor-pointer;"
+                                            ng-click="obtenerSoporte(x.SOPORTE_ACTA_REUNION, x.ROWNUM)"></i>
+                                        <span class="tooltiptext"
+                                            style="font-size: 12px;width: 60px;margin-left: -30px;">Ver Acta
+                                            Reunion</span>
+                                    </div>
+                                </td>
+                                <td style="cursor: pointer;font-size: medium;">
+                                    <div class="tooltip" ng-show="x.SOPORTE_PLAN_ANUAL_AUDITORIA != null">
+                                        <i class="icon-eye cursor-pointer;"
+                                            ng-click="obtenerSoporte(x.SOPORTE_PLAN_ANUAL_AUDITORIA,x.ROWNUM)"></i>
+                                        <span class="tooltiptext"
+                                            style="font-size: 12px;width: 60px;margin-left: -30px;">Ver Plan</span>
+                                    </div>
+                                </td>
+                                <td style="cursor: pointer;font-size: medium;">
+                                    <div class="tooltip" ng-show="x.SOPORTE_ACTA_MODIFICACION != null">
+                                        <i class="icon-eye cursor-pointer;"
+                                            ng-click="obtenerSoporte(x.SOPORTE_ACTA_MODIFICACION,x.ROWNUM)"></i>
+                                        <span class="tooltiptext"
+                                            style="font-size: 12px;width: 60px;margin-left: -30px;">Ver Acta
+                                            modificacion</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col s12" ng-show="rutaSoporte != ''">
+                    <iframe src="{{rutaSoporte}}" frameborder="0" style="width: 87vw;height: 80vh;"></iframe>
+                </div>
+                <div class="col s12 d-flex" ng-show="rutaSoporte != ''">
+                    <div class="col s4 center" style="margin: auto;">
+                        <div class="default-color cursor-pointer"
+                            style="border-radius: 0.3rem;border: 2px solid;padding: 0.2em;font-weight: 600;"
+                            ng-click="limpiarSoporte()"><i class="icon-download-cloud"></i> VOLVER
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

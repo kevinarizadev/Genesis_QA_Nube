@@ -1,0 +1,725 @@
+<div class="white newdesing collapsible-new" ng-init="ObtenerRol()">
+  <style>
+   .dropdown {
+     display: inline-block;
+     position: relative;
+   }
+
+   #btn{
+     border:none;
+     border-radius:5px;
+     padding: 8px 24px;
+     font-size:8px;
+     cursor:pointer;
+   }
+
+   #btn:hover{
+     background-color:#ddd;
+   }
+
+   .dropdown-options {
+       display: none;
+       position: absolute;
+       overflow: auto;
+       background-color: #fff;
+       border-radius: 5px;
+       box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+       right: 0; /* Cambiado de left a right */
+       z-index: 7;
+       font-size: 17px;
+       width: 195px;
+ }
+
+ .dropdown:hover .dropdown-options {
+     display: block;
+ }
+
+ .dropdown-options a {
+     display: block;
+     color: #000000;
+     padding: 5px;
+     text-decoration: none;
+     padding: 20px 40px;
+ }
+
+ .dropdown-options a:hover {
+     color: #0a0a23;
+     background-color: #ddd;
+     border-radius: 5px;
+ }
+   .fancy-file{
+        display: none;
+    }
+
+    .fancy-file + label{
+      display: flex;
+    }
+
+    .fancy-file__fancy-file-name,
+    .fancy-file__fancy-file-button{
+      padding: 0px 9px;
+      margin-top: 25px;
+    }
+
+    .fancy-file__fancy-file-name{
+      background: #EEE;
+      border: 1px solid #CACACA;
+      flex: 1;    
+      border-top-left-radius: 17px;   
+    }
+
+    .fancy-file__fancy-file-name span{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+    }
+
+    .fancy-file__fancy-file-button{
+      background: #1a2e63;
+      border: 1px solid #1a2e63;
+      color: white;
+      white-space: nowrap;
+      border-radius: 0 4px 4px;
+      cursor: pointer;
+    }
+
+
+      input[type=number]::-webkit-inner-spin-button,
+      input[type=number]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+      }
+
+        #Imagen_back {
+        cursor: pointer;
+        width: 50vw;
+        margin: auto;
+        opacity: .1;
+        }
+
+      .activeA{
+          background-color: #ff0000;
+          border-radius: 7px;
+          color: white;
+      }
+      .InactiveA{
+          background-color: #1d3166;
+          border-radius: 7px;
+          color: white;
+          width: 38px;
+          font-size: small;
+      }
+
+      .etiquetaRoja {
+        background-color: red;
+      }
+
+      .etiquetaVerde {
+        background-color: green;
+      }
+
+      .etiquetaNaranja{
+        background-color: rgb(211, 133, 15);
+      }
+
+      .etiquetaAzul{
+        background-color: rgb(16, 112, 190);
+      }
+
+      .etiquetaMorado{
+        background-color: rgb(25, 22, 185);
+      }
+
+      .etiquetaAmarillo{
+        background-color: rgb(250, 236, 35);
+      }
+
+      .etiquetagren{
+        background-color: rgb(7, 146, 123);
+      }
+ 
+  </style> 
+  <div class="row section-header margin" >
+      <ul class="left mailbox-custom-search list-inline w-100 d-flex justify-content-between align-items-center">
+          <li id="inicio">
+              <h5>ADMINISTRADOR DE REPORTES LEGALES</h5>
+          </li>
+          <li>
+              <ul class="tabs transparent">
+                  <li class="tab col w-auto">
+                      <a ng-click="seleccionar(1)" 
+                          href="javascript:void(0)">Reportes <i class="icon-doc-text-1"></i></a>
+                  </li>
+                  <li class="tab col w-auto">
+                      <a ng-click="seleccionar(2);" 
+                          href="javascript:void(0)">Adminstrador de Reporte <i class=" icon-lock-open-6"></i></a>
+                  </li>
+              </ul>
+          </li>
+      </ul>
+  </div>
+          <!-- IMAGEN DE FONDO -->
+ 
+          <!-- FIN IMAGEN DE FONDO -->
+
+         <!--  --> 
+    
+<div class="row dashboard-wrapper content-container" ng-show="admin == true">
+  <div class="col l12 m12 s12 center" >
+    <div style="position: absolute;width: 66vw;margin-top: 11em;margin-left: 5em;">
+      <div id="Imagen_back">
+        <img src="assets\images\reporte.png" alt="Imagen">
+      </div>
+    </div>
+  </div>
+  <!-- ------------------------------------------------------------------------------------------------------------- PERMISOS -->
+      <div class="row dashboard-wrapper content-container white" ng-show="tabs.select==2">       
+          <div class="foot4 divcardcustom" style="width: 100%;">
+              <div class="text-al divcardcustom2">
+                      <strong class="switch">USUARIOS CON PERMISOS</strong>
+                  <div class="tooltip">
+                      <i class="icon-user-add cursor-pointer" ng-click="AbrirModalBucarUsuario()"></i>
+                      <span class="tooltiptext" style="font-size: 12px;width: 70px;margin-left: -35px;">AGREGAR USUARIO</span>
+                  </div> 
+
+                <div class="col s3 no-padding label-new right" style="width: 25%;display: inline-flex;margin-right: 24px;margin-top: 0px;">
+                  <input class="black-text margin border-none input-text-new gray-input w-100" type="text" style="border-radius: 15px" placeholder="Buscar...."
+                      ng-model="filtroUsuario" ng-change="filterUsuariosPermisos(filtroUsuario);">
+                    <i class="icon-search cursor-pointer default-color" style="margin-left: -2.45em;" title="Buscar"></i>
+                </div>
+              </div>
+          </div>
+          
+          <!-- TABLA -->
+          <table id="EV_Tabla" class="table_center_align highlight border-color default-border" style="width:100%;font-size:5px!important; border-width: thick;">
+            <thead class="default-border default-color">
+              <tr>
+                <th>NÚM. #</th>
+                <th>CEDULA</th>
+                <th>NOMBRE</th>
+                <th>CARGO</th>
+                <th>ESTADO</th>
+                <th>TIPO</th>
+              </tr>
+            </thead>
+            <tbody style="z-index: 1; position: relative;">
+              <tr ng-repeat="lis in ListadoUsuarioPermisos"
+                style="color: black;cursor:pointer;">
+      
+                <td>{{$index + 1}}</td>
+                <td >{{lis.documento}}</td>
+                <td >{{lis.nombre}}</td>
+                <td> {{lis.cargo}}</td>                 
+                <td> 
+                  <span class="status white-text fw700 pad5 {{ObtenerEstadoColorPermisos(lis.estado)}}">
+                    {{lis.estado == 'A' ? 'ACTIVO' : 'INACTIVO'}}
+                  </span>
+                </td>
+                <td ng-click="cambiarTipo_Perfil('','A',lis)"> 
+                  <span class="status white-text fw700 pad5 {{ObtenerEstadoColorTipo(lis.tipo)}}">
+                    {{lis.tipo}}
+                  </span>
+                </td>
+                <!-- CARGUE -->
+              </tr>
+              <tr ng-if="ListadoUsuarioPermisos.length==0">
+                <td class="center-align" colspan="9" style="font-weight: bolder;">No se encontraron
+                  resultados.</td>
+              </tr>
+            </tbody>
+          </table>
+          
+        </div>
+
+
+  <!------ ------------------------------------------------------------------------------------------------------------- INSERTAR -->
+
+      <div ng-show="tabs.select==1 && report.select == 1" class="col s12 no-padding" style="margin-top: 22px;">
+          <div id="Form" class="card-content clearfix card"
+              style="width: 90%;margin: 1rem auto auto auto;border-radius: 15px;">
+          
+              <div class="row" style="margin-bottom: 0;width: 98%;margin-top: 1rem;">
+                  <div class="foot4 divcardcustom default-linear-gradient border-none" style="margin-bottom: 2vh;">
+                    <div style="font-size: 25px;position: absolute;z-index: 106;right: 0.5em; top: 11px; "
+                      ng-click="seleccionarReportes(2)"> <a href><i class="icon-reply-outline" title="Atras" style="color: white;"></i></a>
+                    </div>
+                  <div class="text-al divcardcustom2">
+                      <strong style="font-weight:600">REGISTRO DE REPORTE</strong>
+                  </div>
+                  </div>
+           
+              </div>
+              <div class="row" style="margin: 0vh 1vw;">
+                <div class="col s12">
+                  <div  class="default-color">
+
+                    <div class="col s6 label-new">
+                        <input ng-model="nombre_de_reporte" id="nombre_reporte" type="text" class="margin border-none input-text-new gray-input w-100 m-l"
+                            title="El nombre solo acepta letras y espacios en blanco">
+                          <label for="nombre_reporte"><i class="icon-newspaper-1"></i> NOMBRE:</label>
+                    </div>                 
+                    
+                    <div class="col s3 label-new">
+                      <input ng-model="numero_norma" id="numero_norma" type="number"
+                        class="margin border-none input-text-new gray-input w-100 m-l">
+                      <label for="numero_norma"><i class="icon-sort-numeric-outline"></i> NUMERO NORMA</label>
+                    </div>
+
+                    <div class="col s3 label-new">
+                      <select ng-model="estado_norma" id="estado_norma" class="select-default-new input-out-new m-l" style="box-shadow: none;">
+                          <option value="" disabled>Seleccionar</option>
+                          <option value="I" >INACTIVO</option>
+                          <option value="A" >ACTIVO</option>
+                      </select>
+                      <label for="estado_norma"><i class="icon-info-outline"></i>ESTADO DE NORMA:</label>
+                  </div>
+
+                <div class="col s12" style="margin-top: 25px;">
+                  
+                      <div class="col label-new m200 no-padding">
+                        <input ng-model="anio_reporte" id="anio" type="number"
+                          class="margin border-none input-text-new gray-input w-100 m-l">
+                          <label for="anio_reporte"><i class="icon-clock"></i> AÑO:</label>
+                      </div>
+
+                      <div class="col s3 label-new">
+                          <select ng-model="TipoNorma" id="TipoNorma" class="select-default-new input-out-new m-l" style="box-shadow: none;">
+                              <option value="" disabled>Seleccionar</option>
+                              <option value="{{x.NUMERO}}" ng-selected="TipoNorma == x.NUMERO" ng-repeat="x in tipo_norma">{{x.NOMBRE}}</option>
+                          </select>
+                          <label for="TipoNorma"><i class="icon-hammer"></i> TIPO DE NORMA:</label>
+                      </div> 
+
+                      <div class="col s4 label-new">
+                        <input type="text" class="margin border-none white input-text-new input-w-p gray-input w-100" autocomplete="off"  
+                        ng-model="Proceso" ng-keyup="buscarProcesos(Proceso)" ng-change="codigoProcesos(Proceso)" list ="ProcesoEncontrados"/>
+                    <datalist id="ProcesoEncontrados" open="open">
+                      <option value="{{nor.Nombre}}" ng-repeat="nor in ProcesoEncontrados"></option>
+                    </datalist>            
+                  <label for="form_tipoDocumento">PROCESO *</label>                        
+                      </div>
+                         
+                      <div class="col label-new md-display-1 s3">
+                        <label class="md-body-2">Adjunto Norma <span style="color: red;">*</span></label>
+                        <input type="file" class="fancy-file" id="archivoNorma" name="adjuntoCargue">
+                        <label for="archivoNorma">
+                          <span class="fancy-file__fancy-file-name">
+                            <span id="spanNorma">Ningun Archivo Seleccionado</span> 
+                          </span>
+                          <span class="fancy-file__fancy-file-button">Archivo</span>
+                        </label>   
+                    </div>
+
+                  </div>
+
+                  <div class="col s12" style="margin-top: 25px;">                     
+                    <div class="col label-new md-display-1 s3">
+                        <label class="md-body-2">Adjunto Anexo <span style="color: red;">*</span></label>
+                        <input type="file" class="fancy-file" id="archivoAnexo" name="adjuntoCargue">
+                        <label for="archivoAnexo">
+                          <span class="fancy-file__fancy-file-name">
+                            <span id="spanAnexo">Ningun Archivo Seleccionado</span> 
+                          </span>
+                          <span class="fancy-file__fancy-file-button">Archivo</span>
+                        </label>   
+                  </div>
+                  </div>
+
+                        <div class="col s12">
+                            <div class="col s12" style="margin-top: 25px; text-align: center;margin-bottom: 25px;">
+                              <input class="btn white-text default-linear-gradient" type="submit" value="Registrar"
+                                 ng-click="crearReporte(nombre_de_reporte, TipoNorma, anio_reporte, numero_norma, estado_norma)">
+                            </div>
+                        </div>
+                  </div>
+                </div>
+                <!-- prueba  -->
+                
+              </div>
+             
+              </div>   
+      </div>
+
+  <!-- ------------------------------------------------------------------------------------------------------------- LISTAR -->   
+      <div ng-show="tabs.select==1 &&  report.select == 2" class="col s12 no-padding">
+          <div id="Form" class="card-content clearfix" style="width: 96%;border-radius: 15px;">
+              <div style="width: 100%;">
+                <div class="col s12">
+                    <blockquote><strong style="font-size: 20px;">LISTADO DE REPORTE</strong></blockquote> 
+                  <div class="col s1 no-padding label-new left">
+                      <select class="select-new gray-input" style="box-shadow: none;" material-select watch
+                      ng-model="Pag" ng-change="MostrarNumeroPaginas()">
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                      <label style="font-size: .8rem;top: -1.5rem;">Mostrar</label>
+                      <div style="line-height: 2;">
+                        <i class="icon-arrows-cw-2 default-color cursor-pointer" style="margin-left: 4px;"
+                          title="Actualizar Tabla" ng-click="actualizarTabla()"></i>
+                      </div>
+                  </div>
+                  <div class="col s3 m11">
+                    <button class="icon-plus-circled-2 white-text right default-linear-gradient" type="button"
+                      style="border-radius: 10px;" ng-click="seleccionarReportes(1)" title="Crear Reportes">Nuevo Reporte</button>
+              
+                  </div>
+                    <form ng-submit="filterReportes(filtroReportes);">
+                      <div class="col s4 no-padding label-new m-b right"
+                        style="margin-right: .5rem !important;margin-top: 30px;">
+                        <label style="padding-left: 2%;font-size: inherit;">Buscar:</label>
+                        <div class="input-field-ps col s12">
+                          <input id="Var_Seccional_Filtrar_Sol" class="margin border-none input-text-new gray-input w-100 m-l" ng-model="filtroReportes" ng-change="filterReportes(filtroReportes);" 
+                            type="text" placeholder="..." style="cursor: pointer;" text-upper autocomplete="off">
+                          <a><i style="position: absolute; top: 5px; right: 0px;cursor: pointer;" class="material-icons prefix default-color" ng-click="filterReportes(filtroReportes);">search</i></a>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                
+                      <div style="width: 100%;" ng-init="ListadoReporte()">
+                          <table  id="H1_Tabla" class="tablaListado bordered highlight" 
+                          style="width:100%;font-size:6px !important;color: black;border:3px solid;">
+                            <thead class="default-border default-color" style="color: white; background-color: rgb(18, 18, 94);">
+                                <th>CODIGO</th>
+                                <th>NOMBRE</th>
+                                <th>NORMA</th>
+                                <th>NUMERO DE NORMA</th>
+                                <th>AÑO</th>
+                                <th>PROCESO</th>
+                                <th>ESTADO</th>
+                              <th><i class="icon-tasks" title="ACCION"></i>ACCION</th>
+                            </thead>
+                            <tbody style="z-index: 1; position: relative;">
+                              <tr style="cursor: pointer" ng-repeat="x in obtenerListadoReporte | filter: filtroReportes | inicio: currentPage * pageSize | limitTo: pageSize">
+                                  <td>{{x.CODIGO}}</td>
+                                  <td>{{x.NOMBRE}}</td>
+                                  <td>{{x.NORMA}}</td>
+                                  <td style="text-align: center;">{{x.NUMERO_NORMA}}</td>
+                                  <td >{{x.ANNO_NORMA}}</td>
+                                  <td>{{x.UNIC_NOMBRE}}</td>
+                                  <td>
+                                    <span class="status white-text fw700 pad5 {{ObtenerEstadoColor(x.NOM_ESTADO)}}">
+                                      {{x.NOM_ESTADO}}
+                                    </span>
+                                  </td>
+                                <td>
+                                   <div class="dropdown">
+                                         <button id="btn"><i style="font-size: 16px;" class="icon-cog-5"></i></button>
+                                         <div class="dropdown-options">
+                                           <a href ng-click="ModalEditar(x)"><i class="icon-pencil"></i> Editar</a>
+                                           <a href ng-click="verSoporte(x.ADJUNTO_NORMA)"><i class="icon-eye-6"></i> Ver Norma</a>
+                                           <a href ng-click="verSoporte(x.ANEXO)"><i class="icon-eye-6"></i> Ver Anexo</a>
+                                           <a href ng-click="replicarReporte(x)"><i class="icon-edit-alt"></i> Replicar</a>
+                                         </div>
+                                   </div>                  
+                                </td>    
+                              </tr>
+
+                              <tr ng-show="obtenerListadoReporte.length == 0">
+                                <td class="center-align" colspan="11" style="font-weight: bolder">
+                                  No se encontraron resultados.
+                                </td>
+                              </tr>
+                            </tbody>
+                            <tfoot class="default-linear-gradient white-text" style="font-weight: 600;">
+                              <td colspan="11" class="center" style="padding: 0;">
+                                TOTAL REPORTES ENCONTRADOS: {{obtenerListadoReporte.length}}
+                              </td>
+                            </tfoot>
+                          </table>
+
+                          <!-- PAGINACION -->
+                          <ul style="text-align: center;padding-top: 0px;" class="pagination">
+                           <li><button ng-disabled='currentPage == 0' class="btn-floating default-background"
+                                   ng-click="paso('back')">&laquo;</button></li>
+                           <li ng-repeat='page in pages'><button ng-disabled='currentPage == page.no - 1'
+                                   class="btn-floating default-background" ng-click='setPage(page.no)'>{{page.no}}</button>
+                           </li>
+                           <li><button ng-disabled='currentPage >= obtenerListadoReporteTemp.length/pageSize - 1'
+                                   class="btn-floating default-background" ng-click="paso('next')">&raquo;</button>
+                           </li>
+                       </ul>
+
+                          <!-- <ul style="text-align: center; padding-top: 20px" class="pagination">
+                              <li>
+                                <button
+                                  ng-disabled='currentPage == 0'
+                                  class="btn-floating default-linear-gradient"
+                                  ng-click="paso('back')">&laquo;</button>
+                              </li>
+                              <li ng-repeat="page in pages">
+                                <button ng-disabled='currentPage == page.no - 1' ng-class="{'activeA':currentPage == page.no - 1, 'InactiveA':currentPage != page.no - 1}"   
+                                  class="waves-effect" ng-click="setPage(page.no)">{{page.no}}</button>
+                              </li>
+                              <li>
+                                <button ng-disabled='currentPage >= obtenerListadoReporteTemp.length/pageSize - 1'
+                                  class="btn-floating default-linear-gradient" ng-click="paso('next')">&raquo;</button>
+                              </li>
+                            </ul> -->
+                        </div>                     
+              </div>
+          </div>
+
+          
+              
+      </div>
+
+
+  <!-- MODAL EDITAR -->
+      <div id="modalEditarReportes" class="modal" style="max-height: 100%;width: 97%; margin-top: 3%;">
+          <div class="col s12 m12 l12 card margin no-padding">
+            <div class="ngdialog-close" style="font-size: 42px;position: absolute;z-index: 106;right: 0.5em; top:-4px; color: white;"
+              ng-click="closeModal()">
+            </div>
+            <div class="card-content default-linear-gradient border-radius-none white-text" style="padding: 11px;">
+              <h5><span class="margin" style="font-size: 1.64rem;"><i class="icon-edit-2"></i> Editar Reportes</span>
+              </h5>
+            </div>
+            <div class="card-action" id="card-action"
+              style="overflow: auto;display: inline-block;width: 100%;height: 100%;padding-bottom: 0;">
+              <!-- ELEGIR -->
+              <div class="col s12">
+                <div  class="default-color">
+                      <div class="col s5 label-new">
+                          <input ng-model="editarNombre" id="editarNombre" type="text" autocomplete="off"
+                            class="margin border-none input-text-new gray-input w-100 m-l" required>
+                          <label for="editarNombre">NOMBRE <span style="color: red;">*</span></label>
+                        </div>
+
+                        <div class="col s2 no-padding label-new">
+                          <input ng-model="editarAnio" id="delimitado" type="text"
+                            class="margin border-none input-text-new gray-input w-100 m-l" required>
+                          <label for="delimitado">AÑO <span style="color: red;">*</span></label>
+                        </div>
+                        
+                        <div class="col s3 label-new">
+                          <select ng-model="editarEstado" id="Tipo_de_norma" class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                              <option value="" disabled>Seleccionar</option>
+                              <option value="I" >INACTIVO</option>
+                              <option value="A" >ACTIVO</option>
+                          </select>
+                          <label for="Tipo_de_norma"><i class="icon-hammer"></i>ESTADO DE NORMA: <span style="color: red;">*</span></label>
+                        </div>
+
+                             
+                      <div class="col s2 no-padding label-new">
+                        <input ng-model="editarNumeroNorma" id="delimitado" type="text"
+                          class="margin border-none input-text-new gray-input w-100 m-l" required>
+                        <label for="delimitado">NUMERO NORMA <span style="color: red;">*</span></label>
+                      </div> 
+
+                      <div class="col s12" style="margin-top: 15px;">
+                      </div>
+                      
+                      <div class="col s2 label-new m-b">
+                        <select ng-model="editarTipoNorma" id="Tipo_de_norma" class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                            <option value="" disabled>Seleccionar</option>
+                            <option value="{{x.NUMERO}}" ng-selected="editarTipoNorma == x.NUMERO" ng-repeat="x in tipo_norma">{{x.NOMBRE}}</option>
+                        </select>
+                        <label for="Tipo_de_norma"><i class="icon-hammer"></i> TIPO DE NORMA <span style="color: red;">*</span></label>
+                    </div> 
+
+                    
+              
+                      <div class="col s4 label-new">
+                            <input type="text" class="margin border-none white input-text-new input-w-p gray-input w-100" autocomplete="off"  
+                            ng-model="Proceso" ng-keyup="buscarProcesos(Proceso)" list ="ProcesoEncontrados" required/>
+                        <datalist id="ProcesoEncontrados" open="open">
+                          <option value="{{nor.Nombre}}" ng-repeat="nor in ProcesoEncontrados"></option>
+                        </datalist>            
+                            <label for="form_tipoDocumento"> PROCESO <span style="color: red;">*</span></label>                        
+                     </div>
+
+                     <div class="col s3 no-padding label-new" ng-show="viewsoporte == true">
+                          <input ng-model="editarAnexo" id="anexo" type="text"
+                            class="margin border-none input-text-new gray-input w-100 m-l" style="color: black;" disabled>
+                            <a  href><i class="icon-arrows-ccw" ng-click="cambioActualizarSoporte('A')"></i> </a>
+                          <label for="anexo">ANEXO <a href><i class="icon-eye-2" ng-click="verSoporte(rutaFileAnexo)"></i></a></label>
+                    </div>
+
+                    <div class="col s3 no-padding label-new" ng-show="viewsoporte == true">
+                            <input ng-model="editarAdjuntoNorma" id="AdjuntoNorma" type="text"
+                              class="margin border-none input-text-new gray-input w-100 m-l" style="color: black;" disabled>
+                              <a  href title="Ver Soporte"><i class="icon-arrows-ccw" ng-click="cambioActualizarSoporte('A')"></i> </a>
+                            <label for="editarAdjuntoNorma">ADJUNTO NORMA <a  href title="Actualizar Soporte"><i class="icon-eye-2" ng-click="verSoporte(rutaFileNorma)"></i> </a></label>
+                    </div>  
+
+                      <div class="col label-new md-display-1 s3" ng-show="viewsoporte == false">
+                          <label class="md-body-2">ANEXO<span style="color: red;">*</span>
+                          </label>
+                          <input type="file" class="fancy-file" id="editarArchivoAnexo" name="adjuntoCargue">
+                          <label for="editarArchivoAnexo">
+                            <span class="fancy-file__fancy-file-name">
+                              <span id="EditarSpanAnexo">Ningun Archivo Seleccionado</span> 
+                            </span>
+                            <span class="fancy-file__fancy-file-button">Archivo</span>
+                          </label>   
+                      </div>
+
+                      <div class="col label-new md-display-1 s3" ng-show="viewsoporte == false">
+                        <label class="md-body-2">ADJUNTO NORMA <span style="color: red;">*</span>
+                        </label>
+                        <input type="file" class="fancy-file" id="editarArchivoNorma" name="adjuntoCargue">
+                        <label for="editarArchivoNorma">
+                          <span class="fancy-file__fancy-file-name">
+                            <span id="EditarSpanNorma">Ningun Archivo Seleccionado</span> 
+                          </span>
+                          <span class="fancy-file__fancy-file-button">Archivo</span>  
+                        </label>   
+                    </div>
+                                         
+
+                      <div class="col s12">
+                          <div class="col s12" style="margin-top: 25px; text-align: center;">
+                            <input class="btn white-text default-linear-gradient" type="button" value="Editar" 
+                            ng-click="editarReporte(editarNombre, editarTipoNorma, editarAnio,editarNumeroNorma, editarEstado, Proceso, editarAdjuntoNorma, editarAnexo)">
+                          </div>
+                      </div>
+                </div>
+              </div>
+              <!-- //-// -->
+            </div>
+          </div>
+      </div>
+
+
+      <!-- MODAL BUSCAR USUARIOS -->
+    <div id="modalbuscarUsuariorReportes" class="modal" style="overflow: hidden; width: 40%;">
+      <div class="col s12 m12 l12 card margin no-padding">
+        <div class="ngdialog-close" style="font-size: 42px;position: absolute;z-index: 106;right: 0.5em; top:-4px; color: white;"
+          ng-click="closeModal()">
+        </div>
+        <div class="card-content default-linear-gradient border-radius-none white-text" style="padding: 11px;">
+          <h5><span class="margin" style="font-size: 1.64rem;"><i class="icon-child-1"></i> Agregar Usuarios</span>
+          </h5>
+        </div>
+        <div class="card-action" id="card-action"
+          style="overflow: auto;display: inline-block;width: 100%;height: 100%;padding-bottom: 0;">
+          <!-- USUARIO -->
+          <div class="col s12" style="margin-bottom: 21px;">
+            <div  class="default-color">
+              <form ng-submit="ObtenerFuncionario(buscarUsuarioAdmin)">
+                  <div ng-class="ListadoFuncionario.length == 0 ? colS12 : colS6" class="col s12 no-padding label-new">
+                      <input ng-model="buscarUsuarioAdmin" id="buscarUsuarioAdmin" type="text" autocomplete="off"
+                        class="margin border-none input-text-new gray-input w-100 m-l">
+                      <label for="editarNombre">Nombre o Numero de Identificacion:   <span style="color: red"> ( * )</span></label>
+                      <a href="javascript:void(0)" ng-click="ObtenerFuncionario(buscarUsuarioAdmin)">
+                        <i style=" position: absolute;top: 4px;right: 24px;cursor: pointer;" class="material-icons prefix default-color">search</i></a>
+                  </div>
+                  <div class="col s5 no-padding label-new" ng-show="ListadoFuncionario.length != 0">
+                    <select class="select-default-new input-out-new m-l" style="box-shadow: none;" style="box-shadow: none;"
+                    ng-model="tipoPermisos">
+                    <option value="" disabled>SELECCONAR</option>
+                    <option value="1">ADMINISTRADOR</option>
+                    <option value="2">SUPERVISOR</option>
+                    <option value="3">OPERATIVO</option>
+                    <option value="4">GESTION AREAS</option>
+                    <option value="5">CONSULTA</option>
+                    </select>
+                    <label for="editarNombre">Permiso:<span style="color: red"> ( * )</span></label>
+                  </div>
+              </form>            
+            </div>
+          </div>
+            <div class="col s12" style="max-height: 45vh; overflow-y: auto; margin-bottom: 21px;" ng-hide="ListadoFuncionario.length == 0">
+              <table class="table table-bordered table-striped" >
+                <thead class="md-whiteframe-z1">
+                  <tr>
+                    <th style="text-align: center">CODIGO</th>
+                    <th>NOMBRE</th>
+                    <th>CARGO</th>
+                    <th>SELECCIONAR</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="us in ListadoFuncionario">
+                    <td style="text-align: center">{{us.Codigo}}</td>
+                    <td>{{us.Nombre}}</td>
+                    <td>{{us.Cargo}}</td>
+                    <td>
+                      <div class="center">
+                        <i ng-click="seleccionarFuncionario(us)" style="cursor: pointer" class="material-icons prefix">check</i>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr ng-if="usuarioPermiso.length==0">
+                    <th class="center-align" colspan="4">
+                      No hay Resultados
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          <!-- //-// -->
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL CAMBIAR PERMISOS -->
+    <div id="modalCambiarPermiso" class="modal" style="overflow: hidden; width: 62%;">
+      <div class="col s12 m12 l12 card margin no-padding">
+        <div class="ngdialog-close" style="font-size: 42px;position: absolute;z-index: 106;right: 0.5em; top:-4px; color: white;"
+          ng-click="closeModal()">
+        </div>
+        <div class="card-content default-linear-gradient border-radius-none white-text" style="padding: 11px;">
+          <h5><span class="margin" style="font-size: 1.64rem;"><i class="icon-vcard"></i> Modificar Usuarios</span>
+          </h5>
+        </div>
+        <div class="card-action" id="card-action"
+          style="overflow: auto;display: inline-block;width: 100%;height: 100%;padding-bottom: 0;">
+          <!-- USUARIO -->
+          <div class="col s12" style="margin-bottom: 21px;">
+            <div  class="default-color">
+              <form>
+                  <div class="col s4 no-padding label-new">
+                    <input ng-model="buscarUsuarioAdmin" type="text" style="color: #656666;"
+                      class="margin border-none input-text-new gray-input w-100 m-l" disabled>
+                    <label for="editarNombre" style="color: #8b9195;">Nombre</label>
+                  </div>
+                  <div class="col s4 no-padding label-new">
+                    <select class="select-default-new input-out-new m-l" style="box-shadow: none;" style="box-shadow: none;"
+                    ng-model="tipoPermisos">
+                      <option value="" disabled>SELECCONAR</option>
+                      <option value="1">ADMINISTRADOR</option>
+                      <option value="2">SUPERVISOR</option>
+                      <option value="3">OPERATIVO</option>
+                      <option value="4">GESTION AREAS</option>
+                      <option value="5">CONSULTA</option>
+                    </select>
+                    <label for="tipoPermisos">Permiso:<span style="color: red"> ( * )</span></label>
+                  </div>
+
+                  <div class="col s4 no-padding label-new">
+                    <select class="select-default-new input-out-new m-l" style="box-shadow: none;" style="box-shadow: none;"
+                    ng-model="estadoPermiso">
+                      <option value="" disabled>SELECCONAR</option>
+                      <option value="A">ACTIVO</option>
+                      <option value="I">INACTIVO</option>
+                    </select>
+                    <label for="editarNombre">Estado:<span style="color: red"> ( * )</span></label>
+                  </div>
+              </form>            
+            </div>
+          </div>
+            <div class="col s12" style="max-height: 45vh;overflow-y: auto;margin-bottom: 21px;text-align: center;" ng-hide="ListadoFuncionario.length == 0">
+              <input class="btn white-text default-linear-gradient" type="submit" value="Guardar" ng-click="cambiarTipo_Perfil(tipoPermisos)">
+            </div>
+          <!-- //-// -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+        <div id="modalPermiso" class="modal" style="top: 30%; z-index: 2222; position: relative;">
+          <div class="modal-content">
+            <blockquote><h4>ACCESO NO PERMITIDO</h4></blockquote>            
+          <div class="contact-form-loader">
+              <center><i class="material-icons" style="color: #ff0000; font-size: 83px;">info_outline</i></center>
+          </div>
+          </div>          
+      </div>
+</div>

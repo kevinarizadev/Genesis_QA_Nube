@@ -1,0 +1,1092 @@
+<div class="white newdesing" id="pantalla">
+  <style>
+    .newdesing .content-container {
+      min-height: 0;
+    }
+
+    .content-container {
+      padding: 0 20px;
+    }
+  </style>
+  <div class="row section-header margin">
+    <ul class="left mailbox-custom-search list-inline w-100 d-flex justify-content-between align-items-center">
+      <li id="inicio">
+        <h5 class="cursor-pointer" style="font-size: 22px;line-height: 22px;opacity: .54;margin: 9px 0"
+          onclick="location.reload();">
+          Gestión Tutela Areas
+        </h5>
+      </li>
+      <li>
+        <!-- <ul>
+          <li>
+            <div class="col s12" style="display: flex;">
+              <i class="icon-download-alt iconsTitle c-pointer" ng-click="descargarInforme()"
+                title="Informe Tutelas Areas" ng-if="tipoRol == 'N'"></i>
+            </div>
+          </li>
+          <li>
+            <div class="col s12" style="display: flex;">
+              <i class="icon-loop-alt-1 iconsTitle c-pointer" ng-click="openModal('modal_cambioResp')"
+                title="Cambiar responsables" ng-if="tipoRol == 'N'"></i>
+            </div>
+          </li>
+        </ul> -->
+
+      </li>
+      <li>
+        <ul class="tabs transparent" style="overflow:hidden;">
+          <li>
+            <div class="col s12" style="display: flex;">
+              <i class="icon-download-alt iconsTitle c-pointer" ng-click="descargarInforme()"
+                title="Informe Tutelas Areas" ng-if="tipoRol == 'N'"></i>
+            </div>
+          </li>
+          <li>
+            <div class="col s12" style="display: flex;">
+              <i class="icon-loop-alt-1 iconsTitle c-pointer" ng-click="openModal('modal_cambioResp')"
+                title="Cambiar responsables" ng-if="tipoRol == 'N'"></i>
+            </div>
+          </li>
+          <li class="tab col w-auto">
+            <a ng-click="setTab(1)" id="Sol" href class="active">Gestion</a>
+          </li>
+          <li class="tab col w-auto">
+            <a ng-click="setTab(2);" id="Nueva" href>Consulta</a>
+          </li>
+        </ul>
+      </li>
+
+    </ul>
+  </div>
+
+  <!-- <button ng-click="Hoja_Limpiar()">asd</button> -->
+  <!-- //////////////////////////////////TAB 1////////////////////////////////// -->
+  <div class="row dashboard-wrapper content-container white">
+    <!-- TABLA -->
+    <!-- TABLA -->
+    <div class="col s12 m12 l12" style="justify-content: center;">
+      <div class="card-action" id="card-action"
+        style="overflow: auto;display: inline-block;width: 100%;height: 100%;padding-bottom: 0;"
+        ng-show="tabs == 1 && Form.Status == 0">
+        <!-- ELEGIR -->
+        <!-- <div class="col s12">
+          <button class="btn" ng-click="cambiarfunc('A','40381101')">area</button>
+          <button class="btn" ng-click="cambiarfunc('R','1043846210')">regional</button>
+          <button class="btn" ng-click="cambiarfunc('N','1042454684')">nacional</button>
+          <h6>TIPO: {{tipoRol}}</h6>
+        </div> -->
+        <div class="col s12">
+          <div class="col s1 no-padding label-new m-b left">
+            <select class="select-default-new input-out-new" style="box-shadow: none;" ng-model="Form.Mostrar"
+              ng-change="initPaginacion2(Form.Mostrar)">
+              <option value="20" selected>20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+            <label style="font-size: .8rem;top: -1.5rem;">Mostrar</label>
+            <div style="line-height: 2;">
+              <i class="icon-arrows-cw-2 default-color cursor-pointer" style="margin-left: 4px;"
+                title="Actualizar Tabla" ng-click="obtenerListadoTutelas(1)"></i>
+            </div>
+          </div>
+
+          <div class="col s3 no-padding label-new m-b right" style="margin-right: .5rem !important;">
+            <input class="margin border-none white input-text-new input-w-p input-out-new w-100 " type="text"
+              placeholder="Buscar" ng-model="Form.Filtro" ng-change="filter(Form.Filtro);">
+          </div>
+
+          <div class="col s2 no-padding label-new m-b right" style="margin-right: .5rem !important;">
+            <select class="select-default-new input-out-new m-l" style="box-shadow: none;" watch
+              ng-model="Form.filtroEstado" ng-change="filter(Form.filtroEstado)">
+              <option value="">TODOS</option>
+              <option value="EN PROCESO">EN PROCESO</option>
+              <option value="PROXIMO A VENCER">PROXIMO A VENCER</option>
+              <option value="VENCIDO">VENCIDO</option>
+              <!-- <option value="PROCESADO">PROCESADO</option> -->
+              <option value="GESTIONADO">GESTIONADO</option>
+            </select>
+          </div>
+
+
+        </div>
+
+        <div style="width:100%;">
+          <table class="tablaListado bordered" style="width:100%;font-size:6px !important;">
+            <thead class="default-linear-gradient">
+              <th>Cod. Tutela</th>
+              <th>Etapa</th>
+              <!-- <th>Renglon</th> -->
+              <th>Rad. Tutela</th>
+              <th>Regional</th>
+              <th>Accionante</th>
+              <th>Area Responsable</th>
+              <th>Fecha Vencimiento Resp.</th>
+              <th>Estado</th>
+            </thead>
+            <tbody>
+              <tr style="cursor:pointer;"
+                ng-repeat="x in listDatosTemp | inicio: currentPage * pageSize | limitTo: pageSize | orderBy:propertyName:reverse"
+                ng-click="editarTutela(x)">
+                <td>{{x.numero_tutela}}-{{x.renglon}}</td>
+                <td><span ng-if="x.num_incidente">{{x.num_incidente}} -</span> {{x.etapa}}</td>
+                <!-- <td>{{x.renglon}}</td> -->
+                <td>{{x.numero_radicacion}}</td>
+                <td>{{x.regional}}</td>
+                <td>{{x.afiliado_nombre != null ? x.afiliado_nombre : x.datos_accionante}}</td>
+                <td>{{x.area_responsable}}
+                  <i class="icon-user-4" style="font-size: 1rem;" title="{{x.funcionario_responsable}}"></i>
+                </td>
+                <td>{{x.fecha_vencimiento}}</td>
+                <td>
+                  <span class="{{x.color_actual}}">{{x.estado_actual}}</span>
+                </td>
+
+
+              </tr>
+              <tr ng-show="listDatosTemp.length==0">
+                <td class="center-align" colspan="9" style="font-weight: bolder;">No se encontraron resultados.</td>
+              </tr>
+              <tr class="cursor-pointer" ng-repeat="x in List.listadoTutelas track by $index ">
+
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="row margin">
+            <div class="col s6"><label for="normal">Total de tutelas filtrados:
+                {{listDatosTemp.length}}</label></div>
+            <div class="col s6 right-align"><label for="normal">Total de tutelas encontrados:
+                {{List.listadoTutelas.length}}</label></div>
+          </div>
+
+          <ul style="text-align: center;padding-top: 20px;" class="pagination">
+            <li><button ng-disabled='currentPage == 0' class="btn-floating default-linear-gradient"
+                ng-click="paso('back')">&laquo;</button></li>
+            <li ng-repeat='page in pages'><button ng-disabled='currentPage == page.no - 1'
+                class="btn-floating default-linear-gradient" ng-click='setPage(page.no)'>{{page.no}}</button></li>
+            <li><button ng-disabled='currentPage >= listDatosTemp.length/pageSize - 1'
+                class="btn-floating default-linear-gradient" ng-click="paso('next')">&raquo;</button></li>
+          </ul>
+        </div>
+
+        <!-- //-// -->
+      </div>
+      <!-- TABLA CONSULTA -->
+      <div class="card-action" id="card-action"
+        style="overflow: auto;display: inline-block;width: 100%;height: 100%;padding-bottom: 0;"
+        ng-show="tabs == 2 && Form.Status == 0">
+        <!-- ELEGIR -->
+        <div class="col s12">
+          <div class="col s1 no-padding label-new m-b left margin">
+            <div style="line-height: 2;">
+              <i class="icon-arrows-cw-2 default-color cursor-pointer" style="margin-left: 4px;"
+                title="Actualizar Tabla" ng-click="obtenerListadoTutelasConsulta(1)"></i>
+            </div>
+          </div>
+          <div class="col s3 no-padding label-new m-b right" style="margin-right: .5rem !important;margin-top: 0;">
+            <input class="margin border-none white input-text-new input-w-p input-out-new w-100 " type="text"
+              placeholder="Buscar" ng-model="filtroConsulta">
+          </div>
+        </div>
+        <div style="width:100%;overflow: auto;max-height: 70vh;">
+          <table class="tablaListado bordered" style="width:100%;font-size:6px !important;">
+            <thead class="default-linear-gradient">
+              <th>Cod. Tutela</th>
+              <th>Etapa</th>
+              <!-- <th>Renglon</th> -->
+              <th>Rad. Tutela</th>
+              <th>Regional</th>
+              <th>Accionante</th>
+              <th>Area Responsable</th>
+              <th>Fecha Vencimiento Resp.</th>
+              <th>Estado</th>
+            </thead>
+            <tbody>
+              <tr style="cursor:pointer;"
+                ng-repeat="x in listadoTutelasConsulta | filter: filtroConsulta"
+                ng-click="editarTutela(x)">
+                <td>{{x.numero_tutela}}-{{x.renglon}}</td>
+                <td><span ng-if="x.num_incidente">{{x.num_incidente}} -</span> {{x.etapa}}</td>
+                <!-- <td>{{x.renglon}}</td> -->
+                <td>{{x.numero_radicacion}}</td>
+                <td>{{x.regional}}</td>
+                <td>{{x.afiliado_nombre != null ? x.afiliado_nombre : x.datos_accionante}}</td>
+                <td>{{x.area_responsable}}
+                  <i class="icon-user-4" style="font-size: 1rem;" title="{{x.funcionario_responsable}}"></i>
+                </td>
+                <td>{{x.fecha_vencimiento}}</td>
+                <td>
+                  <span class="{{x.color_actual}}">{{x.estado_actual}}</span>
+                </td>
+              </tr>
+              <tr ng-show="listadoTutelasConsulta.length==0">
+                <td class="center-align" colspan="9" style="font-weight: bolder;">No se encontraron resultados.</td>
+              </tr>
+            </tbody>
+          </table>
+
+
+        </div>
+        <div class="row margin">
+          <!-- <div class="col s6"><label for="normal">Total de tutelas filtrados:
+              {{listDatosTemp.length}}</label></div> -->
+          <div class="col s12 right-align"><label for="normal">Total de tutelas encontrados:
+              {{listadoTutelasConsulta.length}}</label></div>
+        </div>
+
+        <!-- //-// -->
+      </div>
+      <!-- TABLA CONSULTA -->
+      <!-- FORM -->
+      <div class="col s12 m12 l12" ng-show="Form.Status == 1">
+        <div class="row margin" id="Form1">
+          <div class="col s12 m12 l12">
+            <blockquote class="blockquote_titulo default-linear-gradient">
+              Tutela: {{Form.codTutela}}
+              <span style="margin-left: 2em;">Renglon: {{Form.codRenglon}}</span>
+              <!-- <span style="margin-left: 2em;">Radicado: {{Form.radTutela}}</span> -->
+              <span style="margin-left: 2em;">Etapa: {{Form.etapaActual}}</span>
+              <!-- <i class="icon-doc-text-inv-1 cursor-pointer" title="Ver Histórico" ng-click="verHistoricoTutela()"></i> -->
+
+              <span class="right">Estado Tutela: {{Form.estado}}</span>
+              <span class="right" style="margin-right: 2em;">Regional: {{Form.regional}}</span>
+            </blockquote>
+          </div>
+          <div class="col s12 m12 l12">
+            <div class="col s3 no-padding label-new m-b">
+              <label>Tipo Doc</label>
+              <select class="select-default-new input-out-new m-l" ng-model="Form.tipoDocAccionante"
+                id="tipoDocAccionante" disabled>
+                <option value="" disabled>SELECCIONAR</option>
+                <option value="{{x.CODIGO}}" ng-selected="x.CODIGO == Form.tipoDocAccionante"
+                  ng-repeat="x in Tipos_Documentos">{{x.NOMBRE}}</option>
+              </select>
+            </div>
+
+            <div class="col s3 no-padding label-new m-b">
+              <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                autocomplete="off" ng-model="Form.numDocAccionante" maxlength="100" readonly>
+              <label>Numero Doc</label>
+            </div>
+            <div class="col s6 no-padding label-new m-b">
+              <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                autocomplete="off" ng-model="Form.nombreDocAccionante" maxlength="100" readonly>
+              <label>Accionante</label>
+            </div>
+          </div>
+          <div class="col s12 m12 l12 m-t">
+            <div class="col s13" style="padding-left: 2.3rem;">
+              <input type="checkbox" class="filled-in" id="Form_ttoIntegral" ng-model="Form.ttoIntegral"
+                onclick="return false">
+              <label for="Form_ttoIntegral">Tratamiento Integral</label>
+            </div>
+            <div class="col s13" style="padding-left: 2.3rem;">
+              <input type="checkbox" class="filled-in" id="Form_sgtoContinuo" ng-model="Form.sgtoContinuo"
+                onclick="return false">
+              <label for="Form_sgtoContinuo">Seguimiento Continuo</label>
+            </div>
+          </div>
+
+
+
+          <!-- SERVICIOS  -->
+          <div class="col s12 m12 l12 m-t">
+            <div class="col s12 m12 l12 m-b m-t default-border" style="border-radius: 15px; border-style: dashed;">
+              <blockquote class="default-linear-gradient" style="font-size: .9em; margin: 11px 0px;">Causas y Motivos
+              </blockquote>
+
+              <ul class="collapsible m-l" data-collapsible="accordion"
+                style="background-color: transparent;border: 0;box-shadow: none;margin-left: 0 !important;">
+                <!-- Causa 1 Tecnologias en Salud-->
+                <li>
+                  <div id="collapsible-header-listadoCausaSalud" class="collapsible-header"
+                    style="line-height: 3rem;padding: 0;min-height: 0;border-bottom: 0;background-color: #fff;"
+                    title="Desplegar lista">
+                    <div class="foot4 divcardcustom" style="background-color: #f1f3f4;">
+                      <div class="divcardcustom2" style="line-height: normal;">
+                        <span class="m-l" style="font-size: 0.9rem;font-weight: 700;"><i class="icon-down-2"
+                            style="font-size: 14px; display: contents !important;"></i>#1 |
+                          Causa: Tecnologias en Salud - Servicios ({{Form.listadoCausaSalud.length}})</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Body-->
+                  <div class="collapsible-body" style="border-bottom: 0;">
+                    <div class="row margin" style="padding: 0;box-shadow: 0px 0px 5px -1px #7d8386;margin-top: -3px;">
+                      <!-- ng-repeat="x in Form.listadoCausaSalud" -->
+                      <div class="col s12 m12 l12" style="display:flex" ng-repeat="x in Form.listadoCausaSalud">
+                        <div class="default-linear-gradient"
+                          style="width: 1%;line-height: 4.7;text-align: center;opacity: .5;border: 1px solid white;">
+                          <label
+                            style="font-size: 1rem;font-weight: 700;margin: auto;color: white;">{{$index+1}}</label>
+                        </div>
+                        <div style="width: 98%">
+                          <div class="col s12 m12 l12 no-padding">
+                            <div class="col s2">
+                              <label style="font-weight: 700;">Motivo:
+                              </label>
+                              <label>{{x.MOTIVO}}</label>
+                            </div>
+                            <div class="col s10">
+                              <label style="font-weight: 700;">CUMS/CUPS:
+                              </label>
+                              <label>{{x.PROC_NOMBRE}}</label>
+                            </div>
+
+                          </div>
+                          <div class="col s12 m12 l12 no-padding">
+                            <div class="col s5">
+                              <label style="font-weight: 700;">Subclase:
+                              </label>
+                              <label>{{x.SUBCLASIFICACION}}</label>
+                            </div>
+                            <div class="col s5">
+                              <label style="font-weight: 700;">Diagnostico:
+                              </label>
+                              <label>{{x.NOM_DIAGNOSTICO}}</label>
+                            </div>
+                            <div class="col s2" ng-show="x.MIPRES">
+                              <label style="font-weight: 700;">MIPRES:
+                              </label>
+                              <label>{{x.MIPRES}}</label>
+                            </div>
+                          </div>
+                          <div class="col s12 m12 l12 no-padding">
+                            <div class="col s6">
+                              <label style="font-weight: 700;">Medico
+                                Tratante: </label>
+                              <label>{{x.NOM_MEDICO}}</label>
+                            </div>
+                            <div class="col s6">
+                              <label style="font-weight: 700;">Prestador Solicitante:
+                              </label>
+                              <label>{{x.PRESTADOR_SOLICITANTE}}</label>
+                            </div>
+                          </div>
+                          <div class="col s12 m12 l12 no-padding" style="margin-bottom: 1vh;">
+                            <div class="col s6">
+                              <label style="font-weight: 700;">Prestador Asignado:
+                              </label>
+                              <label>{{x.PRESTADOR_ASIGNADO}}</label>
+                            </div>
+                            <div class="col s2">
+                              <label style="font-weight: 700;">Cantidad: </label>
+                              <label>{{x.CANTIDAD}}</label>
+                            </div>
+                            <div class="col s2">
+                              <label style="font-weight: 700;">Tiempo (Meses):</label>
+                              <label>{{x.TIEMPO}}</label>
+                            </div>
+
+                          </div>
+                          <hr style="margin: 1vh auto;width: 90%;border: 2px solid #f1f3f4;border-radius: 20%;"
+                            ng-if="($index + 1) != Form.listadoCausaSalud.length">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!-- Causa 1 Tecnologias en Salud-->
+
+                <li ng-repeat="x in Form.listadoCausas">
+                  <div id="collapsible-header-listadoCausas" class="collapsible-header"
+                    style="line-height: 3rem;padding: 0;min-height: 0;border-bottom: 0;background-color: #fff;"
+                    title="Desplegar lista">
+                    <div class="foot4 divcardcustom" style="background-color: #f1f3f4;">
+                      <div class="divcardcustom2" style="line-height: normal;">
+                        <span class="m-l" style="font-size: 0.9rem;font-weight: 700;"><i class="icon-down-2"
+                            style="font-size: 14px; display: contents !important;"></i>#{{$index+2}} | Causa/Motivo:
+                          {{x.x}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Body-->
+                  <div class="collapsible-body" style="border-bottom: 0;">
+                    <div class="col s12 m12 l12 m-b"
+                      style="padding: 0;box-shadow: 0px 0px 5px -1px #7d8386;margin-top: -3px;">
+                      <!-- Nombre  -->
+                      <div class="col s12 no-padding" style="margin-top: .3rem;">
+                        <div class="col s6">
+                          <label style="font-weight: 700;">Causa:
+                          </label>
+                          <label>{{x.CAUSA}}</label>
+                        </div>
+                        <div class="col s6">
+                          <label style="font-weight: 700;">Motivo:
+                          </label>
+                          <label>{{x.MOTIVO}}</label>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+            </div>
+          </div>
+
+
+
+          <!--  -->
+          <div class="row margin">
+            <div class="col s12 m12 l12 m-t m-b">
+              <!-- Form.gestionaArea == true -->
+              <div class="col s12 m12 l12 default-border no-padding">
+                <blockquote class="default-linear-gradient m-l m-r" style="font-size: .9em; margin: 11px 0px;">
+                  Gestionar Solicitud:
+                </blockquote>
+
+                <!-- SOLICITUD -->
+                <div class="col s12 m12 l12">
+
+                  <div class="col s4 no-padding label-new m-b">
+                    <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                      autocomplete="off" ng-model="Form.juridicoSolicitudResponsable" maxlength="100" readonly>
+                    <label>Juridico Solicitante</label>
+                  </div>
+
+                  <div class="col s3 no-padding label-new m-b">
+                    <input type="text" class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                      ng-model="Form.fechaSolicitudRegistro" readonly>
+                    <label>Fecha Solicitud</label>
+                  </div>
+
+                  <div class="col s3 no-padding label-new m-b">
+                    <input type="text" class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                      ng-model="Form.fecha_vencimiento" readonly>
+                    <label>Fecha Vencimiento</label>
+                  </div>
+                  <div class="col s2 no-padding label-new m-b">
+                    <input type="text"
+                      class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l {{Form.colorActual}}"
+                      ng-model="Form.estadoActual" readonly>
+                    <label>Estado</label>
+                  </div>
+
+                  <div class="col s12 no-padding label-new m-b" style="margin-bottom: 7.5rem;">
+                    <textarea class="white input-text-new input-out-new w-100 margin m-l m-r m-b" maxlength="1000"
+                      style="height: 100px;text-transform:uppercase;text-align: justify;" autocomplete="off"
+                      text-description text-upper ng-model="Form.observacionSolicitudJuridica" disabled></textarea>
+                    <label>Observación Juridica (<span class="red-text">*</span>)</label>
+                  </div>
+                </div>
+                <!--  -->
+
+
+                <div class="col s12 m12 l12">
+
+                  <div class="col s4 no-padding label-new m-b">
+                    <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l m-b"
+                      autocomplete="off" ng-model="Form.funcionarioResponsable" maxlength="100" readonly>
+                    <label>Funcionario Responsable</label>
+                  </div>
+
+                  <div class="col s12 no-padding label-new m-b m-t" style="margin-top: 2rem;margin-bottom: 5.5rem;">
+                    <textarea class="white input-text-new input-out-new w-100 margin m-l m-r" maxlength="1000"
+                      style="height: 100px;text-transform:uppercase;text-align: justify;" autocomplete="off"
+                      text-description text-upper ng-model="Form.observacionGestion"
+                      ng-disabled="!gestiona_Area"></textarea>
+                    <label>Observación Regional (<span class="red-text">*</span>)</label>
+                  </div>
+
+
+                  <div class="col s4 no-padding m-t" ng-show="gestiona_Area">
+                    <div class="file-upload-wrapper file-field input-field m-l" id="file-upload-wrapper"
+                      data-text="{{Form.soporte_B64 ? 'Archivo Seleccionado' : 'Cargar Archivo'}}">
+                      <input type="file" id="FormFile" name="FormFile">
+                      <i class="icon-check-1 green-text right" style="font-size: 1.3vw;" ng-show="Form.soporte_B64"></i>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="col s12 m12 l12" ng-show="Form.estadoGestion == 'G' || Form.estadoGestion == 'P'">
+
+                  <div class="col s4 no-padding label-new m-b">
+                    <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                      autocomplete="off" ng-model="Form.responsableGestion" maxlength="100" readonly>
+                    <label>Responsable de Gestionar</label>
+                  </div>
+
+                  <div class="col s3 no-padding label-new m-b">
+                    <input type="text" class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                      ng-model="Form.fechaGestion" readonly>
+                    <label>Fecha Respuesta Regional</label>
+                  </div>
+
+                  <div class="col s2 no-padding label-new m-b">
+                    <button class="btnSoportes white-text default-linear-gradient m-l m-r" type="button"
+                      title="Ver Soporte" ng-style="{'cursor': !Form.adjuntoGestion ? 'not-allowed': ''}"
+                      ng-click="verSoporte(Form.adjuntoGestion, 'Adjunto')"
+                      ng-disabled="!Form.adjuntoGestion">Soporte de Gestión</button>
+                  </div>
+
+
+                </div>
+
+                <div class="col s12 m12 l12" ng-show="Form.estadoGestion == 'P'">
+                  <div class="col s3 no-padding label-new m-b">
+                    <input type="text" class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                      ng-model="Form.fechaGestionNacional" readonly>
+                    <label>Fecha de Aprobación</label>
+                  </div>
+                </div>
+
+
+
+                <!--  -->
+                <div class="col s12 m12 l12 center m-b">
+                  <input class="btn white-text default-linear-gradient" type="submit" value="Guardar"
+                    ng-click="guardarGestionArea(Form.codTutela, Form.codRegional, Form.codRenglon);"
+                    ng-if="Form.Status == 1 && gestiona_Area">
+                  <input class="btn white-text btnGradientGreen" type="submit" value="Transferir"
+                    ng-click="modalTransferirGestionArea();" ng-if="Form.Status == 1 && gestiona_Area">
+
+
+                  <!--  -->
+                  <!--  -->
+                  <!--  -->
+                  <input class="btn white-text btnGradientGreen" type="submit" value="Aprobar Gestión"
+                    ng-click="guardarGestionRegional('A', Form.codTutela, Form.codRegional, Form.codRenglon)"
+                    ng-if="Form.Status == 1 && gestiona_Regional">
+
+                  <input class="btn white-text btnGradientRed" type="submit" value="Rechazar Gestión"
+                    ng-click="guardarGestionRegional('X', Form.codTutela, Form.codRegional, Form.codRenglon)"
+                    ng-if="Form.Status == 1 && gestiona_Regional">
+
+
+
+
+                </div>
+
+                <div class="col s12 m12 l12 center m-b m-t">
+                  <i class="icon-docs-1 default-color cursor-pointer" title="Ver Comentarios"
+                    style="font-size: 1.5em;position: relative;"
+                    ng-click="verComentariosTutela(Form.codTutela, Form.codRegional, Form.codRenglon)"
+                    ng-if="Form.cantidadComentarios > 0">
+                    <span class="default-background white-text cantidadComentarios">{{Form.cantidadComentarios}}</span>
+                  </i>
+
+                  <i class="icon-doc-new default-color cursor-pointer" title="Nuevo Comentario"
+                    style="font-size: 1.5em;"
+                    ng-click="agregarNuevoComentario(Form.codTutela, Form.codRegional, Form.codRenglon)"
+                    ng-if="tipoRol == 'N'"></i>
+
+
+                  <i class="icon-list-numbered-1 default-color cursor-pointer" title="Ver Transferencias"
+                    style="font-size: 1.5em;position: relative;"
+                    ng-click="verHistoricoTransferencias(Form.codTutela, Form.codRegional, Form.codRenglon)">
+                  </i>
+
+
+                </div>
+                <!-- <div class="col s12 m12 l12 center m-b m-t">
+                  <input class="btn white-text red btnGradientRed" type="submit" value="Cerrar" ng-click="atras();">
+                </div> -->
+
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        <div class="col s12 m12 l12 center m-t" st>
+          <input class="btn white-text red btnGradientRed" type="submit" value="Cerrar" ng-click="atras();">
+        </div>
+        <!-- FORM -->
+      </div>
+      <!-- TABLA -->
+
+      <!-- /////////// MODALS /////////// -->
+
+      <!-- /////////////////////////////////////////MODAL SOPORTE///////////////////////////////////////// -->
+      <div class="fabs" style="margin: 3px 50px;" ng-show="Form.Status == 1">
+        <a ng-click="verModalAdjuntos()" target="" class="fab cyan" tooltip="Adjuntos"><i
+            class="sec zmdi zmdi-file zmdi-hc-fw animated"></i></a>
+      </div>
+
+      <div id="Modal_Soportes" class="modal"
+        style="margin: 0 auto;max-height:99%;width: 95%;top:-100px !important;transition-duration: 0.3s;">
+        <div class="card margin">
+          <div class="ngdialog-close" style="float: right; font-size: 50px; padding-right: 20px;color: #fff;"
+            ng-click="closeModal()"></div>
+          <div class="card-content default-linear-gradient border-radius-none white-text">
+            <h5><span style="font-weight: 700;">Soportes De la Tutela</span> <span
+                ng-show="Form.soporteModalNombre!=''">-</span> {{Form.soporteModalNombre}}
+            </h5>
+          </div>
+          <div class="card-action" style="padding-left: 0px; padding-right: 0px;padding-bottom: 0;">
+            <div class="row allMails bg-white white" style="margin-bottom: 0px;">
+              <div class="col s12 m3 l3 mailsParts tabInbox_3_1">
+
+                <ul class="collection" id="collection">
+                  <li class="collection-item avatar waves-effect" style="padding-top: 15px;min-height: 60px;"
+                    title="{{x.NOMBRE}}" ng-click="verSoporteModal(x)" ng-repeat="x in Form.ListSoportes.TUTELA"
+                    ng-show="x.RUTA!=null && x.RUTA!=''">
+                    <img src="assets/images/acta.svg" alt="john" class="circle">
+                    <span class="title avtitle"><strong>{{x.NOMBRE}}</strong></span>
+                    <i class="right pulse2" style="font-size: 20px;"></i>
+                  </li>
+                  <li class="collection-item avatar waves-effect" style="padding-top: 15px;min-height: 60px;"
+                    title="{{x.NOMBRE}}" ng-click="verSoporteModal(x)" ng-repeat="x in Form.ListSoportes.INCIDENTES"
+                    ng-show="x.RUTA!=null && x.RUTA!=''">
+                    <img src="assets/images/acta.svg" alt="john" class="circle">
+                    <span class="title avtitle"><strong>{{x.NOMBRE}}</strong></span>
+                    <i class="right pulse2" style="font-size: 20px;"></i>
+                  </li>
+                </ul>
+
+              </div>
+              <div class="col s12 m9 l9 messageBox first_3_2 valign-wrapper Clase_AjustarHeigth_Modal_Soporte"
+                style="height: 80vh;" ng-show="Form.soporteModalUrl==''">
+                <i class="icon-file-pdf" style="margin: auto;font-size: 5em;"></i>
+              </div>
+              <div class="col s12 m9 l9 messageBox first_3_2 valign-wrapper Clase_AjustarHeigth_Modal_Soporte"
+                style="height: 95vh;overflow: auto;" ng-show="Form.soporteModalUrl!=''">
+                <iframe style="width: 100%;height: 100%;" ng-if="Form.soporteModalUrl!=''" type="application/pdf"
+                  ng-src="{{Form.soporteModalUrl}}" src="{{Form.soporteModalUrl}}">
+                </iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- /////////////////////////////////////////MODAL COMENTARIOS///////////////////////////////////////// -->
+      <div id="modal_Comentariostutela" class="modal" style="margin: 0 auto;max-height: 100%;width: 70%;top:0%;">
+        <div class="col s12 m12 l12 card margin no-padding">
+          <div class="ngdialog-close" style="font-size: 50px;position: absolute;z-index: 106;right: 0.5em;color: white;"
+            ng-click="closeModal()">
+          </div>
+          <div class="card-content default-linear-gradient border-radius-none white-text">
+            <h5><span class="margin" style="font-size: 1.64rem;">Comentarios
+                ({{Form.listadoComentarios.length}})</span>
+
+
+              <div class="switch" style="display: inline-flex;margin-left: 3vw">
+                <label>
+                  <span ng-class="{'activo':!Form.modalComentarios_Check}" class="activo">Comentarios</span>
+                  <input type="checkbox" ng-init="Form.modalComentarios_Check = false"
+                    ng-model="Form.modalComentarios_Check">
+                  <span class="lever check-c"></span>
+                  <span ng-class="{'activo':Form.modalComentarios_Check}">Historico Rechazos</span>
+                </label>
+              </div>
+            </h5>
+          </div>
+          <div class="card-action" id="card-action"
+            style="overflow: auto;display: inline-block;width: 100%;height: 100%;padding-bottom: 0;">
+            <!-- ELEGIR -->
+            <!-- //-// -->
+            <div class="col s12" ng-if="Form.listadoComentarios.length != 0">
+              <div style="max-height:70vh;overflow:auto;border: 2px solid;" class="default-color">
+                <table class="tablaListado highlight" style="width:100%;color: black;"
+                  ng-if="!Form.modalComentarios_Check">
+                  <thead>
+                    <th>#</th>
+                    <th>Fecha</th>
+                    <th>Responsable</th>
+                    <th>Comentario</th>
+                  </thead>
+                  <tbody id="idpro">
+                    <tr ng-repeat="x in Form.listadoComentarios" ng-if="!x.observacion_nacional">
+                      <td>{{$index + 1}}</td>
+                      <td>{{x.FECHA}}</td>
+                      <td>{{x.RESPONSABLE}}</td>
+                      <td style="max-width: 28vw;">{{x.OBSERVACION}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="tablaListado highlight" style="width:100%;color: black;"
+                  ng-if="Form.modalComentarios_Check">
+                  <thead>
+                    <th>#</th>
+                    <th>Fecha</th>
+                    <th>Responsable</th>
+                    <th>Observacion Rechazo</th>
+                  </thead>
+                  <tbody id="idpro">
+                    <tr ng-repeat="x in Form.listadoComentarios" ng-if="x.observacion_nacional">
+                      <td>{{$index + 1}}</td>
+                      <td>{{x.FECHA}}</td>
+                      <td>{{x.RESPONSABLE}}</td>
+                      <td>{{x.observacion_nacional}} <i class="icon-file-pdf default-color cursor-pointer red-text m-r"
+                          style="font-size: 1.5em;" title="Ver Soporte" ng-if="x.observacion_nacional"
+                          ng-click="verSoporte(x.ADJUNTO,'Adjunto')"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- //-// -->
+          </div>
+        </div>
+      </div>
+      <!-- /////////// -->
+      <!-- /////////// -->
+      <div id="modal_cambioResp" class="modal" style="margin: 0 auto;max-height: 100%;width: 40%;top:0%;">
+        <div class="col s12 m12 l12 card margin no-padding">
+          <div class="ngdialog-close" style="font-size: 50px;position: absolute;z-index: 106;right: 0.5em;color: white;"
+            ng-click="closeModal()">
+          </div>
+          <div class="card-content default-linear-gradient border-radius-none white-text">
+            <h5><span class="margin" style="font-size: 1.64rem;">Cambio de responsable</span>
+            </h5>
+          </div>
+          <div class="card-action" id="card-action"
+            style="overflow: auto;display: inline-block;width: 100%;height: 100%;padding-bottom: 0;">
+            <!-- ELEGIR -->
+            <!-- //-// -->
+            <div class="col s12 m12 l12">
+
+              <div class="col s6 no-padding label-new m-b">
+                <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                  autocomplete="off" ng-model="respActual" maxlength="15" numbers-only>
+                <label>Responsable Actual</label>
+              </div>
+              <div class="col s6 no-padding label-new m-b">
+                <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                  autocomplete="off" ng-model="respNuevo" maxlength="15" numbers-only>
+                <label>Responsable Nuevo</label>
+              </div>
+            </div>
+
+            <div class="col s12 m12 l12 center m-b">
+              <input class="btn white-text default-linear-gradient" type="submit" value="Guardar"
+                ng-click="actualizarRespo();">
+            </div>
+            <!-- //-// -->
+          </div>
+        </div>
+      </div>
+      <!-- /////////// -->
+      <div id="modal_Transferir" class="modal" style="margin: 0 auto;max-height: 100%;width: 40%;top:0%;">
+        <div class="col s12 m12 l12 card margin no-padding">
+          <div class="ngdialog-close" style="font-size: 50px;position: absolute;z-index: 106;right: 0.5em;color: white;"
+            ng-click="closeModal()">
+          </div>
+          <div class="card-content default-linear-gradient border-radius-none white-text">
+            <h5><span class="margin" style="font-size: 1.64rem;">Transferir Gestión
+              </span>
+            </h5>
+          </div>
+          <div class="card-action" id="card-action"
+            style="overflow: auto;display: inline-block;width: 100%;height: 100%;padding-bottom: 0;">
+            <!-- ELEGIR -->
+            <!-- //-// -->
+            <div class="col s12 m12 l12">
+
+              <form ng-submit="modalTransferirBuscarFuncs()">
+                <div class="col s12 no-padding label-new m-b">
+                  <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                    autocomplete="off" ng-model="Form.transferirResponsable" list="transferirResponsableListado"
+                    text-upper required>
+                  <datalist id="transferirResponsableListado" open="open">
+                    <option value="{{x.Cedula +' - '+ x.Nombre}}" ng-repeat="x in Form.transferirResponsableListado">
+                  </datalist>
+                  <label class="m-l">Responsable Nuevo
+                    <i class="icon-search c-pointer" ng-click="modalTransferirBuscarFuncs()"></i>
+                  </label>
+                </div>
+              </form>
+
+
+              <div class="col s12 no-padding label-new m-b m-t" style="margin-top: 2rem;margin-bottom: 5.5rem;">
+                <textarea class="white input-text-new input-out-new w-100 margin m-l m-r" maxlength="1000"
+                  style="height: 100px;text-transform:uppercase;text-align: justify;" autocomplete="off"
+                  text-description text-upper ng-model="Form.transferirObservacion"
+                  ng-disabled="!gestiona_Area"></textarea>
+                <label>Observación</label>
+              </div>
+            </div>
+
+            <div class="col s12 m12 l12 center m-b">
+              <input class="btn white-text default-linear-gradient" type="submit" value="Guardar"
+                ng-click="transferirGestionArea();">
+            </div>
+            <!-- //-// -->
+          </div>
+        </div>
+      </div>
+      <!-- /////////// -->.
+      <!-- /////////////////////////////////////////MODAL COMENTARIOS///////////////////////////////////////// -->
+      <div id="modal_Transferencias" class="modal" style="margin: 0 auto;max-height: 100%;width: 70%;top:0%;">
+        <div class="col s12 m12 l12 card margin no-padding">
+          <div class="ngdialog-close" style="font-size: 50px;position: absolute;z-index: 106;right: 0.5em;color: white;"
+            ng-click="closeModal()">
+          </div>
+          <div class="card-content default-linear-gradient border-radius-none white-text">
+            <h5><span class="margin" style="font-size: 1.64rem;">Transferencias
+                ({{Form.listadoTransferencias.length}})</span></h5>
+          </div>
+          <div class="card-action" id="card-action"
+            style="overflow: auto;display: inline-block;width: 100%;height: 100%;padding-bottom: 0;">
+            <!-- ELEGIR -->
+            <!-- //-// -->
+            <div class="col s12" ng-if="Form.listadoTransferencias.length != 0">
+              <div style="max-height:70vh;overflow:auto;border: 2px solid;" class="default-color">
+                <table class="tablaListado highlight" style="width:100%;color: black;">
+                  <thead>
+                    <th>Fecha</th>
+                    <th>Responsable</th>
+                    <th>Observacion</th>
+                  </thead>
+                  <tbody id="idpro">
+                    <tr ng-repeat="x in Form.listadoTransferencias">
+                      <td>{{x.fecha}}</td>
+                      <td>{{x.responsable_anterior}} <i class="icon-right-2"></i> {{x.responsable_nuevo}}</td>
+                      <td>{{x.observacion}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- //-// -->
+          </div>
+        </div>
+      </div>
+
+
+      <!-- /////////// -->
+    </div>
+    <!-- ///// -->
+
+
+    <style>
+      .switch label .lever.check-c:after {
+        background-color: #009005;
+      }
+
+      .switch label input[type=checkbox]:checked+.lever:after {
+        background-color: #ff9100;
+        left: 24px;
+      }
+
+      .switch label>span.activo {
+        color: #f0f0f0 !important;
+      }
+
+
+      .cantidadComentarios {
+        position: absolute;
+        font-size: 10px;
+        height: 15px;
+        width: 15px;
+        min-height: 15px;
+        min-width: 15px;
+        border-radius: 50%;
+        top: 16px;
+        left: 14px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .btnGradientRed {
+        background: linear-gradient(to bottom left, #e04242, #8b0000, #e04242);
+      }
+
+      .btnGradientGreen {
+        background: linear-gradient(to bottom left, #42e084, #008b15, #42e084);
+      }
+
+      .btnSoportes:hover {
+        font-weight: 600;
+      }
+
+      .etiquetaRoja {
+        padding: 5px;
+        background-color: red !important;
+        color: white;
+      }
+
+      .etiquetaVerde {
+        padding: 5px;
+        background-color: green !important;
+        color: white;
+      }
+
+      .etiquetaNaranja {
+        padding: 5px;
+        background-color: orange !important;
+        color: white;
+      }
+
+      .etiquetaAzul {
+        padding: 5px;
+        background-color: blue !important;
+        color: white;
+      }
+
+      .etiquetaMorado {
+        padding: 5px;
+        background-color: purple !important;
+        color: white;
+      }
+
+      .blockquote_titulo {
+        height: 2vw;
+        line-height: 2;
+        padding-right: 1.5rem;
+      }
+
+      .blockquote_subtitulo {
+        height: 2vw;
+        line-height: 2;
+        padding-right: 1.5rem;
+      }
+
+
+      #Form1 {
+        border: 1px solid;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .tablaListado th,
+      .tablaListado td {
+        text-align: center;
+      }
+
+      [type="checkbox"].filled-in:not(:checked)+label:after {
+        border: 2px solid #000000;
+      }
+
+      [type="checkbox"].filled-in:checked+label:after {
+        border: 2px solid #000000;
+        background-color: #000000;
+      }
+
+
+
+
+
+
+
+      /* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+      textarea {
+        resize: none;
+      }
+
+      #FormFile {
+        height: 2rem;
+        cursor: pointer;
+      }
+
+      .file-upload-wrapper {
+        position: relative;
+        z-index: 1;
+        cursor: pointer;
+        border: 1px solid #8a88865e !important;
+        height: 2.14rem;
+        border-radius: 2px;
+        margin: 0;
+        width: -webkit-fill-available;
+      }
+
+      .file-upload-wrapper:after {
+        text-align: center;
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px 15px;
+        display: block;
+        width: calc(100% - 40px);
+        pointer-events: none;
+        z-index: 20;
+        line-height: 1;
+        color: #80868b;
+        border-radius: 5px 10px 10px 5px;
+        font-weight: 400;
+        height: 8vh;
+      }
+
+      .file-upload-wrapper:hover:before {
+        background: #3d8c63;
+      }
+
+      .file-upload-wrapper input {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 99;
+        height: 43px;
+        margin: 0;
+        padding: 0;
+        display: block;
+        cursor: pointer;
+        width: 100%;
+        height: 10vh;
+      }
+
+      select:disabled {
+        color: black;
+      }
+
+      .default-linear-gradient {
+        border-radius: 0px !important;
+      }
+
+      .btn-floating .default-linear-gradient {
+        border-radius: 10px !important;
+      }
+
+      .Valid_Campo {
+        border: 1px solid red !important;
+      }
+
+      .text-upper {
+        text-transform: uppercase !important;
+      }
+
+      .tabs {
+        height: 30px !important;
+      }
+
+      .tabs .tab {
+        line-height: 30px !important;
+        height: 30px !important;
+      }
+
+
+      .label-new>label {
+        display: table;
+      }
+
+      #toast-container .toast {
+        border-radius: 10px !important;
+        font-weight: 600;
+        text-align: center !important;
+        word-break: keep-all;
+        padding: 10px 25px;
+        width: auto;
+        background: linear-gradient(to bottom left, #e04242, #8b0000, #e04242);
+      }
+
+      #toast-container .success {
+        background: linear-gradient(to bottom left, #0fda00, #007217, #0fda00);
+      }
+
+      .pagination {
+        text-align: center;
+        padding-top: 0px;
+        font-weight: 800;
+      }
+
+      blockquote {
+        font-weight: 700;
+        background-color: #f1f3f4;
+      }
+
+      /* //////////////////////////////////////////////////////////////////////////////// */
+    </style>
+  </div>

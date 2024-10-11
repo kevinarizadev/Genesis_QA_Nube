@@ -1,0 +1,163 @@
+<div class="white newdesing" id="pantalla">
+  <style>
+    .newdesing .content-container {
+      min-height: 0;
+    }
+  </style>
+  <div class="row section-header margin">
+    <ul class="left mailbox-custom-search list-inline w-100 d-flex justify-content-between align-items-center">
+      <li id="inicio">
+        <h5 class="cursor-pointer"
+          style="font-family: 'Product Sans',Arial,sans-serif;font-size: 22px;line-height: 22px;opacity: .54;margin: 9px 0"
+          onclick="location.reload();">
+          Flujo de Capita
+        </h5>
+      </li>
+    </ul>
+  </div>
+  <div class="row dashboard-wrapper content-container white" style="height: 90vh;">
+    <div class="col l12 m12 s12 center">
+      <div style="position: absolute;width: 83vw;margin-top: 10em;margin-left: 5em;">
+        <div id="Imagen_back">
+          <img src="images\administrativa\consultatercero.svg" alt="Imagen">
+        </div>
+      </div>
+    </div>
+    <div class="card-content clearfix card" style="width: 40%;margin: 1rem auto auto auto;border-radius: 8px;">
+      <div class="row" style="margin-bottom: 0; width: 95%;">
+        <div class="col s12 no-padding label-new" style="width: 98%; margin-bottom: 3rem;">
+          <label class="label-new-shirley" style="left: 129.5px;">Seleccionar Tipo Proceso</label>
+          <select ng-model="tipodeItem" ng-change="SeleccionarItem()" class="select-new gray-input"
+            ng-init="tipodeItem=''" style="box-shadow: none;display: block; padding: 5;border-radius: 10px;">
+            <option value="">Seleccionar</option>
+            <option ng-repeat="listado in selec_tipo_Proceso" ng-value="listado.Codigo">{{listado.ACtividad}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="Form" class="card-content clearfix card" ng-show="vercontenidoCapita"
+      style="width: 100%;margin: 2rem auto auto auto;border-radius: 8px;">
+      <div class="row" style="margin-bottom: 13;width: 100%;margin-top: 1rem;">
+        <div ng-show="titulo_Paso_1" class="tabla-result" style="max-height: 98vh;">
+          <div class="card-content">
+            <h5 style="display: flex;">{{titulo_selec_Proceso}}</h5>
+          </div>
+          <div class="card-action">
+            <div class="row">
+              <div class="col l2 m2 s2">
+                <label style="padding-left: 6%;font-size: inherit;" id="numero_doc1">Año:</label>
+                <div class="col s12 ">
+                  <input id="paso1.annoActual" ng-model="paso1.annoActual" type="text" style="border: 1px solid #dee2e6;
+                  border-radius: 0.25rem;
+                  background-color: #dfdede;
+                  background-clip: padding-box;
+                  padding: 0 1em;
+                  color: rgb(10 10 10);" disabled>
+                </div>
+              </div>
+              <div class="col l2 m2 s2" style="padding-left: 20px; padding-right: 0px;">
+                <label>Mes:</label>
+                <select ng-model="paso1.Mes" style="display: flex;border: 1px solid #dee2e6; border-radius: 0.25rem;">
+                  <option value="">Seleccione</option>
+                  <option ng-repeat="mes in listadeMeses" value="{{mes.codigo}}">{{mes.nombre}}</option>
+                </select>
+              </div>
+              <div  ng-show="verTemp_a_oficial && list_DatosTemp.length > 0 ">
+                <div class="col s12">
+                    <div class="col s1 no-padding label-new m-b left">
+                        <select class="select-new gray-input" style="box-shadow: none;" material-select watch
+                            ng-model="Vista1.Mostrar_Sol" ng-change="initPaginacion2(Vista1.Mostrar_Sol)">
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <label style="font-size: .8rem;top: -1.5rem;">Mostrar</label>
+                        <div style="line-height: 2;">
+                            <i class="icon-arrows-cw-2 default-color cursor-pointer" style="margin-left: 4px;"
+                                title="Actualizar Tabla" ng-click="CargueHistoricoPortabilidad()"></i>
+                        </div>
+                    </div>
+                    <div class="col s4 no-padding label-new m-b right"
+                        style="margin-right: .5rem !important;margin-top: 30px;">
+                        <input id="Var_Seccional_Filtrar_Sol"
+                            class="margin border-none input-text-new gray-input w-100 m-l" autocomplete="off"
+                            type="text" placeholder="..." ng-model="Vista1.buscarPotabilidad"
+                            ng-change="chg_filtrar('buscarPotabilidad');" text-upper>
+                        <label>Buscar</label>
+                        <i class="icon-search cursor-pointer default-color" style="margin-left: -1.45em;"
+                            title="Buscar"></i>
+                    </div>
+                </div>
+                <div style="width:100%;">
+                    <table id="H1_Tabla" class="bordered table_center_align"
+                        style="width:100%;font-size:6px !important;line-height: 0.5;">
+                        <thead class="center-align default-background default-border white-text">
+                            <tr>
+                              <th class="center">MES</th>
+                              <th class="center">AÑO</th>
+                              <th class="center">CANTIDAD REGISTRO</th>
+                              <th class="center">REGIMEN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="info in list_DatosTemp | inicio: currentPage * pageSize | limitTo: pageSize | orderBy:propertyName:reverse"
+                                ng-click="" style="color: black;">
+                                <td class="center">{{info.MES}}</td>
+                                <td class="center">{{info.ANNO}}</td>
+                                <td class="center">{{info.REGISTRO}}</td>
+                                <td class="center">{{info.REGIMEN}}</td>
+                            </tr>
+                            <tr ng-show="list_DatosTemp.length==0">
+                                <td class="center-align" colspan="9" style="font-weight: bolder;">No se encontraron
+                                    resultados.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="width: 100%;display: flex;">
+                        <div style="width: 50%;">
+                            <label for="normal">Total de documentos filtrados:
+                                {{list_DatosTemp.length}}</label>
+                        </div>
+                        <div style="width: 50%;text-align: right;">
+                            <label for="normal">Total de documentos encontrados:
+                                {{Vista1_datos.length}}</label>
+                        </div>
+                    </div>
+                    <ul style="text-align: center;padding-top: 0px;" class="pagination">
+                        <li><button ng-disabled='currentPage == 0' class="btn-floating default-background"
+                                ng-click="paso('back')">&laquo;</button></li>
+                        <li ng-repeat='page in pages'><button ng-disabled='currentPage == page.no - 1'
+                                class="btn-floating default-background"
+                                ng-click='setPage(page.no)'>{{page.no}}</button>
+                        </li>
+                        <li><button ng-disabled='currentPage >= list_DatosTemp.length/pageSize - 1'
+                                class="btn-floating default-background" ng-click="paso('next')">&raquo;</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            </div>
+            <div class="row">
+              <div class="input-field center">
+                <button class="btn btn-primary" type="submit" ng-click="cancelar_proceso_Capita()"
+                  style="border-radius:5px;">Cancelar</button>
+                <button class="btn btn-primary" ng-class="classebuttonApertura" ng-disabled="aperturalmaDisable"
+                  type="submit" ng-click="generar_flujo_de_Capita(paso1.Mes,paso1.annoActual)" style="border-radius:5px;">Confirmar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    #Imagen_back {
+      cursor: pointer;
+      width: 50vw;
+      margin: auto;
+      opacity: .4;
+    }
+  </style>
+</div>

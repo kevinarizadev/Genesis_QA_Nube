@@ -1,0 +1,450 @@
+<div class="white newdesing position-relative" id="pantalla">
+  <style>
+    .newdesing .content-container {
+      min-height: 0;
+    }
+
+    .content-container {
+      padding: 0 20px;
+    }
+  </style>
+  <div class="row section-header margin">
+    <ul class="left mailbox-custom-search list-inline w-100 d-flex justify-content-between align-items-center">
+      <li id="inicio">
+        <h5 class="cursor-pointer"
+          style="font-family: 'Product Sans',Arial,sans-serif;font-size: 22px;line-height: 22px;opacity: .54;margin: 9px 0"
+          onclick="location.reload();">
+          Reporte - Auditoría de Cuentas
+        </h5>
+      </li>
+      <!-- <li>
+        <ul class="tabs transparent" style="overflow:hidden;">
+          <li class="tab col w-auto" ng-if="esAdmin==-1">
+            <a ng-click="SetTab(1)" id="tab_1" href class="active">Mi Reporte
+            </a>
+          </li>
+          <li class="tab col w-auto" ng-if="esAdmin!=-1">
+            <a ng-click="SetTab(2)" id="tab_2" href>Reporte
+            </a>
+          </li>
+        </ul>
+      </li> -->
+    </ul>
+  </div>
+  <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <div class="row dashboard-wrapper content-container white no-padding" style="padding-bottom: 20px;margin-bottom: 0;">
+    <div id="Hoja1_Principal" class="card-content clearfix card" style="width: 100%;margin: auto;" ng-show="Tabs == 1">
+      <div class="row">
+        <div class="col s12 m12 s12">
+          <div class="col s3 no-padding label-new">
+            <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" type="date"
+              autocomplete="off" ng-model="Vista1.F_Inicio">
+            <label>Fecha de Inicio (*)</label>
+          </div>
+          <div class="col s3 no-padding label-new">
+            <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" type="date"
+              autocomplete="off" ng-model="Vista1.F_Fin">
+            <label>Fecha de Fin (*)</label>
+          </div>
+          <!-- <div class="col s3 no-padding label-new">
+            <input type="date" class="margin border-none input-date-new w-100" ng-model="Vista1.F_Inicio"
+              max="{{SysDay | date:'yyyy-MM-dd'}}">
+            <label>Desde</label>
+          </div>
+
+          <div class="col s3 no-padding label-new">
+            <input type="date" class="margin border-none input-date-new w-100" ng-model="Vista1.F_Fin"
+              max="{{SysDay | date:'yyyy-MM-dd'}}">
+            <label>Hasta</label>
+          </div> -->
+
+          <div class="col s3 no-padding label-new">
+            <select class="select-default-new input-out-new m-l" ng-model="Vista1.Tipo">
+              <option value="FS">Factura</option>
+              <option value="FD">Glosa</option>
+            </select>
+            <label>Tipo (*)</label>
+          </div>
+          <div class="col s3">
+            <button class="btn" style="border-radius: 5px;background-color: #4CAF50;margin-top: 1.8em;"
+              ng-click="buscarFacturas('Vista1')">CONSULTAR</button>
+          </div>
+          <!--
+          <div class="col s4 no-padding label-new m-b">
+            <select class="select-new gray-input" style="box-shadow: none;" material-select ng-model="Vista1.Tipo">
+              <option value="FS">Factura</option>
+              <option value="FD">Glosa</option>
+            </select>
+            <label>Tipo</label>
+          </div> -->
+
+        </div>
+        <!-- <div class="col s12 m12 s12">
+                    <div class="col s12 no-padding label-new m-b">
+                        <input id="Vista1_Num_Sol" class="margin border-none input-text-new gray-input w-100 m-l"
+                            autocomplete="off" maxlength="20" ng-change="FormatSoloNumero('Vista1_Num_Sol')"
+                            ng-keyup="KeyFind_buscarFacturas($event)" ng-model="Vista1.Num_Sol">
+                        <label id="Vista1_Num_Sol_Label">Número de {{Rol_Cargo_Texto}}</label>
+                    </div>
+                </div> -->
+
+      </div>
+    </div>
+    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <div class="card-content clearfix card" ng-show="Tabs == 1 && Vista1.listDatos.length">
+
+      <div class="row" style="margin-bottom: 0;">
+        <div class="row" style="margin: 1em;">
+          <div class="d-flex" style="justify-content: space-between;">
+            <select class="select-default-new input-out-new black-text left" style="width: 10%;"
+              ng-model="Vista1.Mostrar_Sol" ng-change="initPaginacion2(Vista1.Mostrar_Sol,'Vista1')">
+              <option value="10" selected>10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+            <input class="margin border-none white input-text-new input-w-p input-out-new m-l black-text right w-50"
+              style="text-align:right;" autocomplete="off" placeholder="Buscar..." ng-model="Vista1.Filtrar_Sol"
+              ng-change="filter(Vista1.Filtrar_Sol,'Vista1');">
+          </div>
+
+
+
+          <div style="width:100%;">
+            <table id="H1_Tabla" class="tabla_new_m bordered table_center_align"
+              style="width:100%;font-size:6px !important;">
+              <thead class="default-background" style="color:white;">
+                <tr>
+                  <th>Fecha Procesado</th>
+                  <th>Factura</th>
+                  <th>Tipo</th>
+                  <th>Prestador</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  ng-repeat="X in Vista1.listDatosTemp | inicio: Vista1.currentPage * Vista1.pageSize | limitTo: Vista1.pageSize"
+                  style="color: black;">
+                  <td>{{X.FECHA}}</td>
+                  <td>{{X.FACTURA}}</td>
+                  <td>{{X.DOCUMENTO}}</td>
+                  <td>{{X.NIT+'-'+X.IPS}}</td>
+                  <td>${{FormatPesoNumero(X.VALOR.toString().replace(',', '.'))}}</td>
+                </tr>
+                <tr ng-show="Vista1.listDatosTemp.length==0">
+                  <td class="center-align" colspan="9" style="font-weight: bolder;">No se encontraron
+                    resultados.</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="width: 100%;display: flex;font-weight: 600;">
+              <div style="width: 33%;">
+                <label>Total de documentos filtrados:
+                  {{Vista1.listDatosTemp.length}}</label>
+              </div>
+              <div style="width: 33%;">
+                <label>Total de documentos encontrados:
+                  {{Vista1.listDatos.length}}</label>
+              </div>
+              <div style="width: 33%;text-align: right;">
+                <label>Valor Total:
+                  ${{FormatPesoNumero(Vista1.Sum_Total.toString().replace(',', '.'))}}</label>
+              </div>
+            </div>
+            <ul style="text-align: center;padding-top: 0px;" class="pagination">
+              <li><button ng-disabled='Vista1.currentPage == 0' class="btn-floating default-background"
+                  ng-click="paso('back','Vista1')">&laquo;</button></li>
+              <li ng-repeat='page in Vista1.pages'><button ng-disabled='Vista1.currentPage == page.no - 1'
+                  class="btn-floating default-background" ng-click='setPage(page.no,"Vista1")'>{{page.no}}</button>
+              </li>
+              <li><button ng-disabled='Vista1.currentPage >= Vista1.listDatosTemp.length/Vista1.pageSize - 1'
+                  class="btn-floating default-background" ng-click="paso('next','Vista1')">&raquo;</button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- ///////////////// -->
+    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <!-- ///////////////// -->
+    <div id="Hoja2_Principal" class="card-content clearfix card" style="width: 100%;margin: auto;" ng-show="Tabs == 2">
+      <div class="row">
+        <div class="col s12 m12 s12 m-b m-t">
+          <div class="col s2 no-padding label-new">
+            <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" type="date"
+              autocomplete="off" ng-model="Vista2.F_Inicio">
+            <label>Fecha de Inicio (*)</label>
+          </div>
+          <div class="col s2 no-padding label-new">
+            <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" type="date"
+              autocomplete="off" ng-model="Vista2.F_Fin">
+            <label>Fecha de Fin (*)</label>
+          </div>
+          <div class="col s2 no-padding label-new">
+            <select class="select-default-new input-out-new m-l" ng-model="Vista2.Glosa">
+              <option value="S" selected>Si</option>
+              <option value="N">No</option>
+              <option value="T">Todos</option>
+            </select>
+            <label>Glosa (*)</label>
+          </div>
+          <!--
+          <div class="col s4 no-padding label-new m-b">
+            <select class="select-new gray-input" style="box-shadow: none;" material-select ng-model="Vista1.Tipo">
+              <option value="FS">Factura</option>
+              <option value="FD">Glosa</option>
+            </select>
+            <label>Tipo</label>
+          </div> -->
+        </div>
+        <div class="col s12 m12 s12">
+          <form ng-submit="buscarFuncionarios()">
+            <div class="col s5 no-padding label-new ">
+              <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                autocomplete="off" ng-model="Vista2.funcionario" list="listadoFuncionarios" text-upper>
+              <datalist id="listadoFuncionarios" open="open">
+                <option value="{{x.codigo +' - '+ x.nombre}}" ng-repeat="x in Vista2.listadoFuncionarios">
+              </datalist>
+              <label class="m-l">Funcionario (*)
+                <i class="icon-search c-pointer" ng-click="buscarFuncionarios()"></i>
+              </label>
+            </div>
+          </form>
+          <form ng-submit="buscarPrestadores()">
+            <div class="col s5 no-padding label-new ">
+              <input class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                autocomplete="off" ng-model="Vista2.prestador" list="listadoPrestadores" text-upper>
+              <datalist id="listadoPrestadores" open="open">
+                <option value="{{x.codigo +' - '+ x.nombre}}" ng-repeat="x in Vista2.listadoPrestadores">
+              </datalist>
+              <label class="m-l">Prestador (*)
+                <i class="icon-search c-pointer" ng-click="buscarPrestadores()"></i>
+              </label>
+            </div>
+          </form>
+          <div class="col s1">
+            <button class="btn" style="border-radius: 5px;background-color: #4CAF50;margin-top: 1.8em;"
+              ng-click="Vista2_buscarFacturas('Vista2')">CONSULTAR</button>
+          </div>
+        </div>
+        <!-- <div class="col s12 m12 s12">
+                    <div class="col s12 no-padding label-new m-b">
+                        <input id="Vista1_Num_Sol" class="margin border-none input-text-new gray-input w-100 m-l"
+                            autocomplete="off" maxlength="20" ng-change="FormatSoloNumero('Vista1_Num_Sol')"
+                            ng-keyup="KeyFind_buscarFacturas($event)" ng-model="Vista1.Num_Sol">
+                        <label id="Vista1_Num_Sol_Label">Número de {{Rol_Cargo_Texto}}</label>
+                    </div>
+                </div> -->
+
+      </div>
+    </div>
+    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <div class="card-content clearfix card" ng-show="Tabs == 2 && Vista2.listDatos.length">
+
+      <div class="row" style="margin-bottom: 0;">
+        <div class="row" style="margin: 1em;">
+          <div class="d-flex" style="justify-content: space-between;">
+            <select class="select-default-new input-out-new black-text left" style="width: 10%;"
+              ng-model="Vista2.Mostrar_Sol" ng-change="initPaginacion2(Vista2.Mostrar_Sol,'Vista2')">
+              <option value="10" selected>10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+            <span class="btn" ng-click="generarExcel()">Generar Excel</span>
+            <input class="margin border-none white input-text-new input-w-p input-out-new m-l black-text right w-50"
+              style="text-align:right;" autocomplete="off" placeholder="Buscar..." ng-model="Vista2.Filtrar_Sol"
+              ng-change="filter(Vista2.Filtrar_Sol,'Vista2');">
+          </div>
+
+
+
+          <div style="width:100%;">
+            <table id="H1_Tabla" class="tabla_new_m table-bordered table_center_align"
+              style="width:100%;font-size:6px !important;">
+              <thead style="color:white;">
+                <tr>
+                  <th colspan="{{Vista2.Tipo_F_P != 'T' ? '4':'5'}}" class="default-background">Factura</th>
+                  <th colspan="3" class="default-background-dark">Glosa</th>
+                </tr>
+                <tr>
+                  <th class="default-background">#</th>
+                  <th class="default-background">Fecha Rad.</th>
+                  <th class="default-background">Valor</th>
+                  <th class="default-background" ng-show="Vista2.Tipo_F_P!='F'">Responsable</th>
+                  <th class="default-background" ng-show="Vista2.Tipo_F_P!='P'">Prestador</th>
+                  <!-- <th>Estado</th> -->
+                  <th class="default-background-dark">Fecha Rad.</th>
+                  <th class="default-background-dark">Oportuna</th>
+                  <th class="default-background-dark">Valor</th>
+                  <th class="default-background-dark">% Glosado</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr
+                  ng-repeat="X in Vista2.listDatosTemp | inicio: Vista2.currentPage * Vista2.pageSize | limitTo: Vista2.pageSize"
+                  style="color: black;">
+                  <td>{{X.FACTURA}}</td>
+                  <td>{{X.FACTURA_FECHA_RADICACION}}</td>
+                  <td>${{FormatPesoNumero(X.FACTURA_VALOR.toString().replace(',', '.'))}}</td>
+                  <td ng-show="Vista2.Tipo_F_P!='F'">{{X.FACTURA_RESPONSABLE}}</td>
+                  <td ng-show="Vista2.Tipo_F_P!='P'">{{X.FACTURA_IPS}}</td>
+                  <!-- <td>{{X.GLOSA_ESTADO}}</td> -->
+                  <td>{{X.GLOSA_FECHA_RADICACION}}</td>
+                  <td>
+                    <span class="status {{X.DIAS_DIF >= 0 && X.GLOSA_ESTADO != null ? 'green':'red'}}">{{X.DIAS_DIF >= 0 && X.GLOSA_ESTADO != null ? 'SI':'NO'}}</span>
+                  </td>
+                  <td>${{FormatPesoNumero(X.GLOSA_VALOR.toString().replace(',', '.'))}}</td>
+                  <td>{{X.PORCENTAJE_GLOSADO}}</td>
+                </tr>
+                <tr ng-show="Vista2.listDatosTemp.length==0">
+                  <td class="center-align" colspan="9" style="font-weight: bolder;">No se encontraron
+                    resultados.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="{{Vista2.Tipo_F_P != 'T' ? '4':'5'}}">Valor Total Factura:
+                    ${{FormatPesoNumero(Vista2.Sum_Total_Factura.toString().replace(',', '.'))}}</td>
+                  <td colspan="3">Valor Total Glosa:
+                    ${{FormatPesoNumero(Vista2.Sum_Total_Glosa.toString().replace(',', '.'))}}</td>
+                  <td>% Glosado:
+                    {{ ((Vista2.Sum_Total_Glosa/Vista2.Sum_Total_Factura)*100).toFixed(2) }}%</td>
+
+
+
+                  <!-- <div style="width: 10%;text-align: right;">
+                    <label></label>
+                  </div>
+                  <div style="width: 10%;text-align: right;">
+                    <label></label>
+                  </div>
+                  <div style="width: 10%;text-align: right;">
+                    <label></label>
+                  </div> -->
+                </tr>
+
+              </tfoot>
+            </table>
+            <div style="width: 100%;display: flex;font-weight: 600;">
+              <div style="width: 50%;">
+                <label>Total de documentos filtrados:
+                  {{Vista2.listDatosTemp.length}}</label>
+              </div>
+              <div style="width: 49%;">
+                <label>Total de documentos encontrados:
+                  {{Vista2.listDatos.length}}</label>
+              </div>
+
+            </div>
+            <ul style="text-align: center;padding-top: 0px;" class="pagination">
+              <li><button ng-disabled='Vista2.currentPage == 0' class="btn-floating default-background"
+                  ng-click="paso('back','Vista2')">&laquo;</button></li>
+              <li ng-repeat='page in Vista2.pages'><button ng-disabled='Vista2.currentPage == page.no - 1'
+                  class="btn-floating default-background" ng-click="setPage(page.no,'Vista2')">{{page.no}}</button>
+              </li>
+              <li><button ng-disabled='Vista2.currentPage >= Vista2.listDatosTemp.length/Vista2.pageSize - 1'
+                  class="btn-floating default-background" ng-click="paso('next','Vista2')">&raquo;</button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+    <style>
+      .tabla_new_m th,
+      tabla_new_m td {
+        padding: 7px 10px;
+      }
+
+      .tabla_new_m th {
+        font-size: 13px;
+      }
+
+      .Ani_Down {
+        animation: slide 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) normal both;
+      }
+
+      .Ani_Up {
+        animation: slideout 0.01s cubic-bezier(0.55, 0.085, 0.68, 0.53) normal both;
+      }
+
+      @keyframes slide {
+        0% {
+          filter: blur(1px);
+          opacity: 0;
+        }
+
+        100% {
+          filter: blur(0px);
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideout {
+        0% {
+          filter: blur(0px);
+          opacity: 1;
+        }
+
+        100% {
+          filter: blur(1px);
+          opacity: 0;
+        }
+      }
+
+      .table_border_c2 td {
+        border-color: #c2c2c2;
+      }
+
+      .table_center_align h6,
+      .table_center_align span {
+        font-size: 1em !important;
+      }
+
+      .switch label .lever.check-c:after {
+        background-color: #ffffff;
+      }
+
+      .switch label input[type=checkbox]:checked+.lever:after {
+        background-color: #ffffff;
+      }
+
+      .table_overflow th {
+        position: sticky;
+        top: 0;
+        z-index: 9;
+      }
+
+      .table_border,
+      .table_border th,
+      .table_border td {
+        border: 1px solid #c2c2c2;
+      }
+
+      .table_center_align,
+      .table_center_align th,
+      .table_center_align td {
+        text-align: center;
+      }
+
+
+      #toast-container .toast {
+        border-radius: 25px !important;
+        font-weight: 600;
+        text-align: center !important;
+        word-break: keep-all;
+        padding: 10px 25px;
+        width: auto;
+      }
+
+      .swal-wide {
+        width: 850px !important;
+      }
+    </style>
+  </div>

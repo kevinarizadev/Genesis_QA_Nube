@@ -1,0 +1,280 @@
+<div class="white newdesing" style="position: relative">
+  <div class="row">
+    <div class="col s12 m12 l12 center">
+      <h6>CONSULTA PRODUCTOS PGP</h6>
+    </div>
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <div class="col s12">
+          <div class="row margin Anim_Show">
+            <div class="col offset-s3" style="margin-top: 2.5vh">
+              <i
+                class="material-icons prefix"
+                style="margin-top: 10px; font-size: 4vh"
+                >search</i
+              >
+            </div>
+            <div class="col s4">
+              <div class="row" style="margin: 0">
+                <label for="with_icon" style="margin-top: -20px"
+                  >Nombre o Codigo de producto</label
+                >
+              </div>
+              <input type="text" autocomplete="off" ng-model="query" />
+            </div>
+            <div class="col">
+              <div class="input-field col m12 s12">
+                <button
+                  class="btn-large white-text default-background"
+                  ng-click="P_LISTA_CUPS()"
+                >
+                  Buscar
+                </button>
+                <br />
+              </div>
+            </div>
+            <div class="col" ng-show="pantalla > 1">
+              <div class="input-field col m12 s12">
+                <button
+                  class="btn-large white-text default-background"
+                  ng-click="volverFunc()"
+                >
+                  Volver
+                </button>
+                <br />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="col s12 m12 l12"
+        style="max-height: 70vh; overflow-y: auto"
+        ng-if="arrCups.length > 0 && pantalla == 2"
+      >
+        <table
+          class="bordered highlight table_center_align default-color"
+          style="width: 100%; font-size: 6px !important; border: 3px solid"
+        >
+          <thead class="default-border default-color">
+            <tr>
+              <th style="background-color: #1a2e63; color: white">#</th>
+              <th style="background-color: #1a2e63; color: white">NOMBRE</th>
+              <th style="background-color: #1a2e63; color: white">CODIGO</th>
+              <th style="background-color: #1a2e63; color: white">VER</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="x in arrCups track by $index">
+              <td>{{$index+1}}</td>
+              <td>{{x.NOMBRE}}</td>
+              <td>{{x.NUMERO}}</td>
+              <td style="cursor: pointer; font-size: medium">
+                <div class="tooltip">
+                  <i
+                    class="icon-eye cursor-pointer;"
+                    ng-click="P_CONSULTA_REFERENCIA_ACTIVA(x)"
+                  ></i>
+                  <span
+                    class="tooltiptext"
+                    style="font-size: 12px; width: 60px; margin-left: -30px"
+                    >Ver Detalle</span
+                  >
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div
+        class="col s12 m12 l12"
+        ng-show="arrResult.length > 0 && pantalla == 3"
+        style="max-height: 70vh; overflow: auto"
+      >
+        <div id="id_MPFiltrar_Diag" class="foot4 divcardcustom">
+          <div class="text-al divcardcustom2">
+            <!-- <strong class="switch" style="font-weight: 600" 
+              >{{cups.NUMERO}} - {{cups.NOMBRE}} - {{regimen == 'KS' ?
+              'SUBSIDIADO' : 'CONTRIBUTIVO'}}</strong
+            >-->
+            <div
+              class="col s3 no-padding label-new right"
+              style="
+                width: 25%;
+                display: inline-flex;
+                margin-right: -5px;
+                margin-top: -2px;
+              "
+            >
+              <input
+                class="margin border-none input-text-new black-text gray-input w-100 m-l ng-pristine ng-valid ng-touched"
+                style="text-align: right"
+                autocomplete="off"
+                placeholder="Filtrar"
+                ng-model="filter"
+              />
+            </div>
+          </div>
+        </div>
+        <table
+          class="bordered highlight table_center_align default-color"
+          style="width: 100%; font-size: 6px !important; border: 3px solid"
+        >
+          <thead class="default-border default-color">
+            <!-- <tr class="center">
+                            <th style="background-color: #1a2e63;color: white;">{{cups.NOMBRE}}</th>
+                            <th style="background-color: #1a2e63;color: white;">{{regimen == 'KS' ? 'SUBSIDIADO' :
+                                'CONTRIBUTIVO'}}</th>
+                            <th style="background-color: #1a2e63;color: white;">Filtro</th>
+                            <th><input type="text" autocomplete="off" ng-model="filter"></th>
+                            <th></th>
+                        </tr> -->
+            <tr>
+              <th style="background-color: #1a2e63; color: white">REGIONAL</th>
+              <th style="background-color: #1a2e63; color: white">PRESTADOR</th>
+              <th style="background-color: #1a2e63; color: white">REGIMEN</th>
+              <th style="background-color: #1a2e63; color: white">AMBITO</th>
+              <th style="background-color: #1a2e63; color: white">DX</th>
+              <th style="background-color: #1a2e63; color: white">
+                PORTABILIDAD
+              </th>
+              <th style="background-color: #1a2e63; color: white">POBLACION</th>
+              <th style="background-color: #1a2e63; color: white">TIPO</th>
+              <th style="background-color: #1a2e63; color: white">
+                VER COBERTURA
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              ng-repeat="x in arrResult | filter:filter track by $index"
+              ng-if="arrResult.length > 0"
+            >
+              <td>{{x.DEPARTAMENTO}}</td>
+              <td>{{x.NOMBRE_PRESTADOR}}</td>
+              <td>{{regimen == 'KS' ? 'SUBSIDIADO' : 'CONTRIBUTIVO'}}</td>
+              <td>{{x.AMBITO}}</td>
+              <td>{{x.APLICA_DX}}</td>
+              <td>{{x.APLICA_PORTABILIDAD}}</td>
+              <td>{{x.POBLACION_PGP}}</td>
+              <td>{{x.TIPO}}</td>
+              <td style="cursor: pointer; font-size: medium">
+                <div class="tooltip">
+                  <i
+                    class="icon-eye cursor-pointer;"
+                    ng-click="p_lista_municipios_pgp(x)"
+                  ></i>
+                  <span
+                    class="tooltiptext"
+                    style="font-size: 12px; width: 60px; margin-left: -30px"
+                    >Ver Cobertura</span
+                  >
+                </div>
+                <div class="tooltip">
+                  <i class="icon-medkit cursor-pointer;" ng-click="p_lista_dx_pgp(x)"></i>
+                  <span class="tooltiptext"
+                      style="font-size: 12px;width: 60px;margin-left: -30px;">DX</span>
+              </div>
+              </td>
+            </tr>
+            <tr ng-if="arrResult.length == 0">
+              <td>EL PRODUCTO SELECCIONADO NO SE ENCUENTRA EN NINGUN PGP</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div ng-if="arrResult.length == 0 && pantalla == 3" class="center">
+        <strong>EL PRODUCTO SELECCIONADO NO SE ENCUENTRA EN NINGUN PGP</strong>
+      </div>
+      <!-- <div class="col s12 m12 l12 center" ng-show="arrMunicipios.length > 0 && pantalla == 4"
+                style="max-height: 70vh; overflow: auto;">
+                <div class="col s3 card m-l" ng-repeat="x in arrMunicipios | filter:filter track by $index">
+                    <h5>{{x.NOMBRE_MUNICIPIO}}</h5>
+                    <strong>{{x.DEPARTAMENTO}}</strong>
+                </div>
+            </div> -->
+    </div>
+  </div>
+  <!-- MODAL AGREGAR PLAN AUDITORIA  -->
+  <div
+    id="Modal_Municipios"
+    class="modal card"
+    data-backdrop="static"
+    data-keyboard="false"
+    style="margin: 0 auto; width: 30vw; top: 0%; border-radius: 15px"
+  >
+    <div class="row m-t">
+      <div class="col s12">
+        <table
+          class="bordered highlight table_center_align default-color"
+          style="width: 100%; font-size: 6px !important; border: 3px solid"
+        >
+          <thead class="default-border default-color">
+            <tr>
+              <th
+                class="center"
+                style="background-color: #1a2e63; color: white"
+              >
+                #
+              </th>
+              <th
+                class="center"
+                style="background-color: #1a2e63; color: white"
+              >
+                CODIGO
+              </th>
+              <th
+                class="center"
+                style="background-color: #1a2e63; color: white"
+              >
+                DEPARTAMENTO
+              </th>
+              <th
+                class="center"
+                style="background-color: #1a2e63; color: white"
+              >
+                MUNICIPIO
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="x in arrMunicipios | filter:filter track by $index">
+              <td class="center">{{$index +1}}</td>
+              <td class="center">{{x.CNUN_MUNICIPIO}}</td>
+              <td class="center">{{x.DEPARTAMENTO}}</td>
+              <td class="center">{{x.NOMBRE_MUNICIPIO}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DX  -->
+  <div id="Modal_dx" class="modal card" data-backdrop="static" data-keyboard="false"
+  style="margin: 0 auto; width: 30vw; top: 0%; border-radius: 15px;">
+  <div class="row m-t">
+      <div class="col s12">
+          <table class="bordered highlight table_center_align default-color"
+              style="width: 100%;font-size: 6px !important;border: 3px solid;">
+              <thead class="default-border default-color">
+                  <tr>
+                      <th class="center" style="background-color: #1a2e63;color: white;">#</th>
+                      <th class="center" style="background-color: #1a2e63;color: white;">CODIGO</th>
+                      <th class="center" style="background-color: #1a2e63;color: white;">NOMBRE</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr ng-repeat="x in arrDx | filter:filter track by $index">
+                      <td class="center">{{$index +1}}</td>
+                      <td class="center">{{x.CNDC_CODIGO_DX}}</td>
+                      <td class="center">{{x.DIAC_NOMBRE}}</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+</div>

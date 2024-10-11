@@ -1,0 +1,1865 @@
+<div id="validacioncamposVacios" class="white newdesing validacioncamposVacios">
+    <!-- configuracion de los tabs principales -->
+    <div class="row section-header" style="margin-top:7px">
+        <ul class="left mailbox-custom-search list-inline"
+            style="width: 100%;display: flex;justify-content: space-between;align-items: center;">
+            <li id="inicio">
+                <i ng-click="Refrescar_Inicio()"></i>
+                <h5 onclick="location.reload();" class="cursor-pointer">MODULO DE EVALUACION DEL DESEMPEÑO</h5>
+            </li>
+            <li>
+                <ul class="tabs transparent" style="overflow:hidden;">
+                    <li class="tab col w-auto" ng-class="{subraya : Tabs == 1}">
+                        <a ng-click="Set_Tab(1);" id="tabs_1" href>Evaluacion<i class="icon-clipboard"></i></a>
+                    </li>
+                    <li class="tab col w-auto" ng-class="{subraya : Tabs == 2}" ng-show="show_Gestion">
+                        <a ng-click="Set_Tab(2);" id="tabs_2" href>Gestion<i class="icon-chart-bar"></i></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div ng-show="formularioEvaluacion">
+        <!-- Vista del formulario inicial -->
+        <div class="col s12" ng-show="verFormulario">
+            <div class="card ng-scope" style="margin: 38px; bottom: 10px ;zoom:95%;">
+                <blockquote style="zoom:160%">
+                    <!-- <h6>Procedimiento para evalucion del desempeño</h6> -->
+                    <h6>EVALUACION DEL DESEMPEÑO</h6>
+                </blockquote>
+                <div class="row">
+                    <div class="col s12">
+                        <div class="col l12 m12 s12">
+                            <div class="form-group row" style="zoom:95%">
+                                <div class="col l2 m2 s2 form-group">
+                                    <label id="fechaVista_label" style="padding-left: 9%;font-size: inherit;">Fecha de
+                                        evaluacion:<span class="red-text">*</span></label>
+                                    <div class="col s12 ">
+                                        <input
+                                            class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l ng-pristine ng-valid ng-valid-max ng-touched"
+                                            id="fechaVista" ng-model="form1.fechaVista" type="date"
+                                            style="font-size: 12px;" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group col l2 m2 s2">
+                                    <label style="padding-left: 5%;font-size: inherit;" id="nombredelEvaluado_label"
+                                        class="control-label">Nombre del
+                                        evaluado:<span style="color:red;">*</span></label>
+                                    <form ng-submit="openmodals('listdeFuncionario')" ng-click="consultaFuncionario()">
+                                        <div class="form-group input-field margin col s12">
+                                            <a href="javascript:void(0)" ng-click="openmodals('listdeFuncionario')">
+                                                <input id="nombredelEvaluado" type="text"
+                                                    ng-model="form1.nombredelEvaluado"
+                                                    style="cursor: pointer;font-size: 9px;color: black;"
+                                                    class="clase-gray" autocomplete="off" required="required">
+                                                <label for="nombredelEvaluado" style="cursor: pointer;"></label>
+                                                <i style="position: absolute; top: 5px; right: -35px;cursor: pointer;"
+                                                    class="material-icons prefix default-color">search</i></a>
+                                        </div>
+                                </div>
+                                <div class="col l3 m3 s3">
+                                    <label style="padding-left: 4%;font-size: inherit;">Cargo:</label>
+                                    <div class="col s12">
+                                        <input ng-model="form1.Cargo" type="text" style="font-size: 9px;color: black;"
+                                            disabled>
+                                    </div>
+                                </div>
+                                <div class="col l3 m3 s3">
+                                    <label style="padding-left: 4%;font-size: inherit;">Jefe inmediato:</label>
+                                    <div class="col s12">
+                                        <input ng-model="form1.JefeInmediato" type="text"
+                                            style="font-size: 9px;color: black;" disabled>
+                                    </div>
+                                </div>
+                                <div class="col l2 m2 s2">
+                                    <label style="padding-left: 4%;font-size: inherit;">Area:</label>
+                                    <div class="col s12">
+                                        <input ng-model="form1.Area" type="text" style="font-size: 9px;color: black;"
+                                            disabled>
+                                    </div>
+                                </div>
+                                <div class="center row">
+                                    <button type="button" ng-click="Inicio()"
+                                        class="center   icon-cancel white-text default-background"
+                                        style="border-radius: 10px;">Cancelar</button>
+                                    <button type="button" ng-click="validadorFormulario()"
+                                        class="center white-text default-background  icon-arrows-ccw"
+                                        style="border-radius: 10px;">Cargar
+                                        evaluacion</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="modallistFuncionarios" class="modal form-group" style="overflow: hidden;zoom:85%">
+                <div class="modal-content" style="padding: 0px !important;">
+                    <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+                        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+                            <div class="default-background" style="padding: 0;zoom:85%;">
+                                <div class="col l12 m12 s12">
+                                    <div class="row margin">
+                                        <div class="col s11">
+                                            <h5 class="white-text">Listado de funcionarios</h5>
+                                        </div>
+                                        <div class="col s1">
+                                            <h5 style="text-align: end;"><i style="cursor:pointer;"
+                                                    ng-click="closemodals('listdeFuncionario')"
+                                                    class="material-icons white-text">close</i>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+                                <div class="form-group row">
+                                    <div class="col s12">
+                                        <div class="col s4 no-padding label-new m-b right"
+                                            style="margin-right: .5rem !important;margin-top: 30px;">
+                                            <label style="padding-left: 2%;font-size: inherit;">Buscar:</label>
+                                            <div class="input-field-ps col s12">
+                                                <input id="id_buscarFuncionario"
+                                                    class="margin border-none input-text-new gray-input w-100 m-l"
+                                                    ng-model="buscarFuncionario" type="text" placeholder="..."
+                                                    style="cursor: pointer;" text-upper autocomplete="off">
+                                                <a><i style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                                                        class="material-icons prefix default-color">search</i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        style="width:100%;color: black;border:3px solid; overflow-x:hidden; max-height: 60vh;">
+                                        <table class="highlight tabla_nueva_resp">
+                                            <thead>
+                                                <tr>
+                                                    <th>Cedula</th>
+                                                    <th>Nombre</th>
+                                                    <th>Seleccionar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="default-border">
+                                                <tr
+                                                    ng-repeat="funcionarios in list_DatosTemp  |  orderBy:propertyName:reverse | filter:buscarFuncionario">
+                                                    <td>{{funcionarios.DOCUMENTO}}</td>
+                                                    <td>{{funcionarios.NOMBRE}}</td>
+                                                    <td>
+                                                        <div class="center">
+                                                            <i ng-click="seleccionarFuncionario(funcionarios)"
+                                                                style="cursor:pointer;"
+                                                                class="material-icons prefix">check</i>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-show="list_DatosTemp.length==0">
+                                                    <td class="center-align" colspan="10" style="font-weight: bolder;">
+                                                        No se
+                                                        encontraron
+                                                        resultados para su revision.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <div style="width: 89%;display: flex;">
+                                        <div style="width: 50%;">
+                                            <label for="normal">Total encontrados:
+                                                {{list_DatosTemp.length}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal mensaje de permisos al modulo -->
+        <div id="modalpermisos" class="center modal">
+            <div class="modal-content" style="padding: 0px !important;">
+                <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+                    <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+                        <div class="card-content foot4">
+                            <div class="s12">
+                                <h5 class="white-text">Coordial saludo.
+                            </div>
+                            <div class="center s12">
+                                <h5 class="white-text">En estos momentos no cuentas con los permisos para trabajar en el
+                                    modulo de
+                                    de EVALUACION DE DESEMPEÑO,
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Vista de preguntas -->
+        <div class="col s12" ng-show="verPreguntas">
+            <div class="card ng-scope" style="margin: 38px; bottom: 10px ;zoom:78%;">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="col l12 m12 s12">
+                            <div class="row center">
+                                <strong>
+                                    <strong>NOMBRE DEL EVALUADO</strong>
+                                    <h6>** {{form1.nombredelEvaluado}} **</h6>
+                                </strong>
+                            </div>
+                            <blockquote>
+                                <h6>Procedimiento para evalucion del desempeño</h6>
+                            </blockquote>
+                            <div class="form-group row">
+                                <div class="row">
+                                    <div class="col s12" style="zoom:78%">
+                                        <div class="col l12 m12 s12">
+                                            <ul class="collapsible">
+                                                <!-- Preguntas 1 -->
+                                                <li ng-show="pregunta1">
+                                                    <div class="collapsible-header default-background  white-text  btn_2 m-b "
+                                                        style="border-radius: 10px 40px 40px 10px;">
+                                                        <button type="button" ng-click="consulta_Pregunta_rellenar('1')"
+                                                            class="center default-background  white-text  btn_2 "
+                                                            style="border-radius: 10px 40px 40px 10px;">{{preguntas1}}</button>
+                                                    </div>
+                                                    <div class="collapsible-body" id="preguntas1">
+                                                        <div class="col s12">
+                                                            <div class="form-group row"
+                                                                ng-repeat="x in list | orderBy: 'COD_COMPETENCIA'">
+                                                                <div class="row">
+                                                                    <div class="col l12 m12 s12 form-group">
+                                                                        <div class="col s12">
+                                                                            <blockquote>
+                                                                                <label style="font-size: inherit;">
+                                                                                    {{x.NOMBRE_COMPETENCIA}} </label>
+                                                                            </blockquote>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <td class="center">
+                                                                    <div class="row">
+                                                                        <div class="col l12 m12 s12 form-group">
+
+                                                                            <div class="col s12">
+                                                                                <strong>
+                                                                                    <label
+                                                                                        style="font-size: inherit;color:black">
+                                                                                        {{x.NOMBRE_CONCEPTO}}</label>
+                                                                                </strong>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col l12 m12 s12 form-group">
+                                                                            <div class="form-check"
+                                                                                style="height: 1rem;">
+                                                                                <input type="radio"
+                                                                                    class="form-check-input"
+                                                                                    id="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[0].COD_RESPUESTA}}-{{1}}"
+                                                                                    name="NC-{{x.COD_COMPETENCIA}}-{{1}}"
+                                                                                    ng-click="validadorPreguntas(1,x.COD_COMPETENCIA,x.RESPUESTAS[0].COD_RESPUESTA);">
+                                                                                <label class="form-check-label"
+                                                                                    for="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[0].COD_RESPUESTA}}-{{1}}"></label>
+                                                                            </div>
+                                                                            <div class="col l6 m6 s6 form-group">
+                                                                                <div class="col s12">
+                                                                                    <label style="font-size: inherit;">
+                                                                                        {{x.RESPUESTAS[0].NOMBRE_RESPUESTA}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col l12 m12 s12 form-group">
+                                                                            <div class="form-check"
+                                                                                style="height: 1rem;">
+                                                                                <input type="radio"
+                                                                                    class="form-check-input"
+                                                                                    id="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[1].COD_RESPUESTA}}-{{1}}"
+                                                                                    name="NC-{{x.COD_COMPETENCIA}}-{{1}}"
+                                                                                    ng-click="validadorPreguntas(1,x.COD_COMPETENCIA,x.RESPUESTAS[1].COD_RESPUESTA);">
+                                                                                <label class="form-check-label"
+                                                                                    for="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[1].COD_RESPUESTA}}-{{1}}"></label>
+                                                                            </div>
+                                                                            <div class="col l6 m6 s6 form-group">
+                                                                                <div class="col s12">
+                                                                                    <label style="font-size: inherit;">
+                                                                                        {{x.RESPUESTAS[1].NOMBRE_RESPUESTA}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col l12 m12 s12 form-group">
+                                                                            <div class="form-check"
+                                                                                style="height: 1rem;">
+                                                                                <input type="radio"
+                                                                                    class="form-check-input"
+                                                                                    id="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[2].COD_RESPUESTA}}-{{1}}"
+                                                                                    name="NC-{{x.COD_COMPETENCIA}}-{{1}}"
+                                                                                    ng-click="validadorPreguntas(1,x.COD_COMPETENCIA,x.RESPUESTAS[2].COD_RESPUESTA);">
+                                                                                <label class="form-check-label"
+                                                                                    for="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[2].COD_RESPUESTA}}-{{1}}"></label>
+                                                                            </div>
+                                                                            <div class="col l6 m6 s6 form-group">
+                                                                                <div class="col s12">
+                                                                                    <label style="font-size: inherit;">
+                                                                                        {{x.RESPUESTAS[2].NOMBRE_RESPUESTA}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col l12 m12 s12 form-group">
+                                                                            <div class="form-check"
+                                                                                style="height: 1rem;">
+                                                                                <input type="radio"
+                                                                                    class="form-check-input"
+                                                                                    id="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[3].COD_RESPUESTA}}-{{1}}"
+                                                                                    name="NC-{{x.COD_COMPETENCIA}}-{{1}}"
+                                                                                    ng-click="validadorPreguntas(1,x.COD_COMPETENCIA,x.RESPUESTAS[3].COD_RESPUESTA);">
+                                                                                <label class="form-check-label"
+                                                                                    for="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[3].COD_RESPUESTA}}-{{1}}"></label>
+                                                                            </div>
+                                                                            <div class="col l6 m6 s6 form-group">
+                                                                                <div class="col s12">
+                                                                                    <label style="font-size: inherit;">
+                                                                                        {{x.RESPUESTAS[3].NOMBRE_RESPUESTA}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col l8 m8 s8">
+                                                                                <label
+                                                                                    style=" margin-top: -20px; padding-left: 1%;">Observaciones:{{x.OBSERVACION.toString().length}}
+                                                                                    -
+                                                                                    Máximo:
+                                                                                    1000{{x.OBSERVACION}}</label>
+                                                                                <div class="col s12">
+                                                                                    <div class="shadow-textarea">
+                                                                                        <textarea class="z-depth-1"
+                                                                                            id="CM-{{1}}-{{x.COD_COMPETENCIA}}"
+                                                                                            rows="3" cols="50"
+                                                                                            ng-model="obervaciones"
+                                                                                            ng-change="validadorPreguntas(1,x.COD_COMPETENCIA,x.RESPUESTAS[0].COD_RESPUESTA);"
+                                                                                            placeholder="Observaciones"
+                                                                                            tyle="margin: 0px; height: 123px;"
+                                                                                            style="margin: 0px;/* width: 1268px; */height: 87px;"
+                                                                                            text-upper maxlength="999"
+                                                                                            ng-keyup="formatTexto('exampleFormControlTextarea1')"></textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <!-- Preguntas 2 -->
+                                                <li ng-show="pregunta2">
+                                                    <div class="collapsible-header default-background  white-text  btn_2 m-b "
+                                                        style="border-radius: 10px 40px 40px 10px;">
+                                                        <button type="button" ng-click="consulta_Pregunta_rellenar('2')"
+                                                            class="center default-background  white-text  btn_2 "
+                                                            style="border-radius: 10px 40px 40px 10px;">{{preguntas2}}</button>
+                                                    </div>
+                                                    <div class="collapsible-body" id="preguntas2">
+                                                        <div class="col s12">
+                                                            <div class="form-group row"
+                                                                ng-repeat="x in list | orderBy: 'COD_COMPETENCIA'">
+                                                                <div class="row">
+                                                                    <div class="col l12 m12 s12 form-group">
+                                                                        <div class="col s12">
+                                                                            <blockquote>
+                                                                                <label style="font-size: inherit;">
+                                                                                    {{x.NOMBRE_COMPETENCIA}} </label>
+                                                                            </blockquote>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <td class="center">
+                                                                    <div class="row">
+                                                                        <div class="col l12 m12 s12 form-group">
+
+                                                                            <div class="col s12">
+                                                                                <strong>
+                                                                                    <label
+                                                                                        style="font-size: inherit;color:black">
+                                                                                        {{x.NOMBRE_CONCEPTO}}</label>
+                                                                                </strong>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col l12 m12 s12 form-group">
+                                                                            <div class="form-check"
+                                                                                style="height: 1rem;">
+                                                                                <input type="radio"
+                                                                                    class="form-check-input"
+                                                                                    id="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[0].COD_RESPUESTA}}-{{2}}"
+                                                                                    name="NC-{{x.COD_COMPETENCIA}}-{{2}}"
+                                                                                    ng-click="validadorPreguntas(2,x.COD_COMPETENCIA,x.RESPUESTAS[0].COD_RESPUESTA);">
+                                                                                <label class="form-check-label"
+                                                                                    for="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[0].COD_RESPUESTA}}-{{2}}"></label>
+                                                                            </div>
+                                                                            <div class="col l6 m6 s6 form-group">
+                                                                                <div class="col s12">
+                                                                                    <label style="font-size: inherit;">
+                                                                                        {{x.RESPUESTAS[0].NOMBRE_RESPUESTA}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col l12 m12 s12 form-group">
+                                                                            <div class="form-check"
+                                                                                style="height: 1rem;">
+                                                                                <input type="radio"
+                                                                                    class="form-check-input"
+                                                                                    id="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[1].COD_RESPUESTA}}-{{2}}"
+                                                                                    name="NC-{{x.COD_COMPETENCIA}}-{{2}}"
+                                                                                    ng-click="validadorPreguntas(2,x.COD_COMPETENCIA,x.RESPUESTAS[1].COD_RESPUESTA);">
+                                                                                <label class="form-check-label"
+                                                                                    for="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[1].COD_RESPUESTA}}-{{2}}"></label>
+                                                                            </div>
+                                                                            <div class="col l6 m6 s6 form-group">
+                                                                                <div class="col s12">
+                                                                                    <label style="font-size: inherit;">
+                                                                                        {{x.RESPUESTAS[1].NOMBRE_RESPUESTA}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col l12 m12 s12 form-group">
+                                                                            <div class="form-check"
+                                                                                style="height: 1rem;">
+                                                                                <input type="radio"
+                                                                                    class="form-check-input"
+                                                                                    id="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[2].COD_RESPUESTA}}-{{2}}"
+                                                                                    name="NC-{{x.COD_COMPETENCIA}}-{{2}}"
+                                                                                    ng-click="validadorPreguntas(2,x.COD_COMPETENCIA,x.RESPUESTAS[2].COD_RESPUESTA);">
+                                                                                <label class="form-check-label"
+                                                                                    for="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[2].COD_RESPUESTA}}-{{2}}"></label>
+                                                                            </div>
+                                                                            <div class="col l6 m6 s6 form-group">
+                                                                                <div class="col s12">
+                                                                                    <label style="font-size: inherit;">
+                                                                                        {{x.RESPUESTAS[2].NOMBRE_RESPUESTA}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col l12 m12 s12 form-group">
+                                                                            <div class="form-check"
+                                                                                style="height: 1rem;">
+                                                                                <input type="radio"
+                                                                                    class="form-check-input"
+                                                                                    id="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[3].COD_RESPUESTA}}-{{2}}"
+                                                                                    name="NC-{{x.COD_COMPETENCIA}}-{{2}}"
+                                                                                    ng-click="validadorPreguntas(2,x.COD_COMPETENCIA,x.RESPUESTAS[3].COD_RESPUESTA);">
+                                                                                <label class="form-check-label"
+                                                                                    for="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[3].COD_RESPUESTA}}-{{2}}"></label>
+                                                                            </div>
+                                                                            <div class="col l6 m6 s6 form-group">
+                                                                                <div class="col s12">
+                                                                                    <label style="font-size: inherit;">
+                                                                                        {{x.RESPUESTAS[3].NOMBRE_RESPUESTA}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col l8 m8 s8">
+                                                                                <label
+                                                                                    style=" margin-top: -20px; padding-left: 1%;">Observaciones:{{x.OBSERVACION.toString().length}}
+                                                                                    -
+                                                                                    Máximo:
+                                                                                    1000{{x.OBSERVACION}}</label>
+                                                                                <div class="col s12">
+                                                                                    <div class="shadow-textarea">
+                                                                                        <textarea class="z-depth-1"
+                                                                                            id="CM-{{2}}-{{x.COD_COMPETENCIA}}"
+                                                                                            rows="3" cols="50"
+                                                                                            ng-model="obervaciones"
+                                                                                            ng-change="validadorPreguntas(2,x.COD_COMPETENCIA,x.RESPUESTAS[0].COD_RESPUESTA);"
+                                                                                            placeholder="Observaciones"
+                                                                                            tyle="margin: 0px; height: 123px;"
+                                                                                            style="margin: 0px;/* width: 1268px; */height: 87px;"
+                                                                                            text-upper maxlength="999"
+                                                                                            ng-keyup="formatTexto('exampleFormControlTextarea1')"></textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <!-- Preguntas 3 -->
+                                                <li ng-show="pregunta3">
+                                                    <div class="collapsible-header default-background  white-text  btn_2 m-b "
+                                                        style="border-radius: 10px 40px 40px 10px;">
+                                                        <button type="button" ng-click="consulta_Pregunta_rellenar('3')"
+                                                            class="center default-background  white-text  btn_2 "
+                                                            style="border-radius: 10px 40px 40px 10px;">{{preguntas3}}</button>
+                                                    </div>
+                                                    <div class="collapsible-body" id="preguntas3">
+                                                        <div class="col s12">
+                                                            <div class="form-group row"
+                                                                ng-repeat="x in list | orderBy: 'COD_COMPETENCIA'">
+                                                                <div class="row">
+                                                                    <div class="col l12 m12 s12 form-group">
+                                                                        <div class="col s12">
+                                                                            <blockquote>
+                                                                                <label style="font-size: inherit;">
+                                                                                    {{x.NOMBRE_COMPETENCIA}} </label>
+                                                                            </blockquote>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <td class="center">
+                                                                    <div class="row">
+                                                                        <div class="col l12 m12 s12 form-group">
+
+                                                                            <div class="col s12">
+                                                                                <strong>
+                                                                                    <label
+                                                                                        style="font-size: inherit;color:black">
+                                                                                        {{x.NOMBRE_CONCEPTO}}</label>
+                                                                                </strong>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col l12 m12 s12 form-group">
+                                                                            <div class="form-check"
+                                                                                style="height: 1rem;">
+                                                                                <input type="radio"
+                                                                                    class="form-check-input"
+                                                                                    id="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[0].COD_RESPUESTA}}-{{3}}"
+                                                                                    name="NC-{{x.COD_COMPETENCIA}}-{{3}}"
+                                                                                    ng-click="validadorPreguntas(3,x.COD_COMPETENCIA,x.RESPUESTAS[0].COD_RESPUESTA);">
+                                                                                <label class="form-check-label"
+                                                                                    for="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[0].COD_RESPUESTA}}-{{3}}"></label>
+                                                                            </div>
+                                                                            <div class="col l6 m6 s6 form-group">
+                                                                                <div class="col s12">
+                                                                                    <label style="font-size: inherit;">
+                                                                                        {{x.RESPUESTAS[0].NOMBRE_RESPUESTA}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col l12 m12 s12 form-group">
+                                                                            <div class="form-check"
+                                                                                style="height: 1rem;">
+                                                                                <input type="radio"
+                                                                                    class="form-check-input"
+                                                                                    id="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[1].COD_RESPUESTA}}-{{3}}"
+                                                                                    name="NC-{{x.COD_COMPETENCIA}}-{{3}}"
+                                                                                    ng-click="validadorPreguntas(3,x.COD_COMPETENCIA,x.RESPUESTAS[1].COD_RESPUESTA);">
+                                                                                <label class="form-check-label"
+                                                                                    for="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[1].COD_RESPUESTA}}-{{3}}"></label>
+                                                                            </div>
+                                                                            <div class="col l6 m6 s6 form-group">
+                                                                                <div class="col s12">
+                                                                                    <label style="font-size: inherit;">
+                                                                                        {{x.RESPUESTAS[1].NOMBRE_RESPUESTA}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col l12 m12 s12 form-group">
+                                                                            <div class="form-check"
+                                                                                style="height: 1rem;">
+                                                                                <input type="radio"
+                                                                                    class="form-check-input"
+                                                                                    id="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[2].COD_RESPUESTA}}-{{3}}"
+                                                                                    name="NC-{{x.COD_COMPETENCIA}}-{{3}}"
+                                                                                    ng-click="validadorPreguntas(3,x.COD_COMPETENCIA,x.RESPUESTAS[2].COD_RESPUESTA);">
+                                                                                <label class="form-check-label"
+                                                                                    for="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[2].COD_RESPUESTA}}-{{3}}"></label>
+                                                                            </div>
+                                                                            <div class="col l6 m6 s6 form-group">
+                                                                                <div class="col s12">
+                                                                                    <label style="font-size: inherit;">
+                                                                                        {{x.RESPUESTAS[2].NOMBRE_RESPUESTA}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col l12 m12 s12 form-group">
+                                                                            <div class="form-check"
+                                                                                style="height: 1rem;">
+                                                                                <input type="radio"
+                                                                                    class="form-check-input"
+                                                                                    id="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[3].COD_RESPUESTA}}-{{3}}"
+                                                                                    name="NC-{{x.COD_COMPETENCIA}}-{{3}}"
+                                                                                    ng-click="validadorPreguntas(3,x.COD_COMPETENCIA,x.RESPUESTAS[3].COD_RESPUESTA);">
+                                                                                <label class="form-check-label"
+                                                                                    for="NC-{{x.COD_COMPETENCIA}}-{{x.RESPUESTAS[3].COD_RESPUESTA}}-{{3}}"></label>
+                                                                            </div>
+                                                                            <div class="col l6 m6 s6 form-group">
+                                                                                <div class="col s12">
+                                                                                    <label style="font-size: inherit;">
+                                                                                        {{x.RESPUESTAS[3].NOMBRE_RESPUESTA}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col l8 m8 s8">
+                                                                                <label
+                                                                                    style=" margin-top: -20px; padding-left: 1%;">Observaciones:{{x.OBSERVACION.toString().length}}
+                                                                                    -
+                                                                                    Máximo:
+                                                                                    1000{{x.OBSERVACION}}</label>
+                                                                                <div class="col s12">
+                                                                                    <div class="shadow-textarea">
+                                                                                        <textarea class="z-depth-1"
+                                                                                            id="CM-{{3}}-{{x.COD_COMPETENCIA}}"
+                                                                                            rows="3" cols="50"
+                                                                                            ng-model="obervaciones"
+                                                                                            ng-change="validadorPreguntas(3,x.COD_COMPETENCIA,x.RESPUESTAS[0].COD_RESPUESTA);"
+                                                                                            placeholder="Observaciones"
+                                                                                            tyle="margin: 0px; height: 123px;"
+                                                                                            style="margin: 0px;/* width: 1268px; */height: 87px;"
+                                                                                            text-upper maxlength="999"
+                                                                                            ng-keyup="formatTexto('exampleFormControlTextarea1')">
+                                                                                        </textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="center row">
+                                                <button ng-hide="cantPreguntas == 24 && validacionGneral == 0"
+                                                    type="button" ng-click="validarconteo()"
+                                                    class="center    icon-play-1 white-text default-background"
+                                                    style="border-radius: 10px;zoom:130%;">Siguiente</button>
+                                                <button type="button" ng-click="Inicio()"
+                                                    class="center   icon-cancel white-text default-background"
+                                                    style="border-radius: 10px;zoom:130%;">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s12" ng-show="vistaGestion && plandedesarrollo">
+        <div class="card ng-scope" style="margin: 38px; bottom: 10px ;zoom:90%;">
+            <blockquote class="margin">
+                <!-- <h6>Lista de Evaluaciones Realizadas </h6> -->
+                <h6 style="zoom:160%">LISTADO DE EVALUACIONES REALIZADAS</h6>
+            </blockquote>
+            <div class="row">
+                <div class="col s12">
+                    <div class="col l12 m12 s12">
+                        <div class="row margin">
+                            <div class="col l12 m12 s12">
+                                <div class="row right">
+                                    <button type="button" class="center icon-reply white-text default-background"
+                                        style="border-radius: 10px;" ng-click="Inicio()"
+                                        title="Volver al incio">Atras</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col s12 m12 l12 margin">
+                                <div class="ngdialog-close"
+                                    style="font-size: 30px;position: absolute;z-index: 106;right: 0.5em;color: white;"
+                                    ng-click="closemodals('detalleObservacion')">
+                                </div>
+                                <div class="col s4 no-padding label-new m-b right"
+                                    style="margin-right: 2.5rem !important;margin-top: 30px;">
+                                    <label style="padding-left: 2%;font-size: inherit;">Buscar:</label>
+                                    <div class="input-field-ps col s12">
+                                        <input id="id_gestion"
+                                            class="margin border-none input-text-new gray-input w-100 m-l"
+                                            ng-model="buscarGestion" type="text" placeholder="..."
+                                            style="cursor: pointer;" text-upper autocomplete="off">
+                                        <a><i style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                                                class="material-icons prefix default-color">search</i></a>
+                                    </div>
+                                </div>
+                                <div class="col s12">
+                                    <li style="display: flow-root" class="left">
+                                        <button
+                                            class="white-text default-background btn_2 {{filtrocheck_option != 'PLAN_DE_DESARROLLO' ? 'blue' : ''}}"
+                                            type="button"
+                                            ng-click="filtrocheck_option = 'PLAN_DE_DESARROLLO';p_obtener_planDesarrollo('P')"
+                                            style="zoom:100% default-background;border-top-left-radius: 10px 10px;border-top-right-radius: 10px 10px;"
+                                            id="capa1">EVALUACION INFERIORES AL 80%</button>
+                                        <button
+                                            class="white-text default-background btn_2 {{filtrocheck_option != 'SIN_PLAN_DE_DESARROLLO' ? 'blue' : ''}}"
+                                            type="button"
+                                            ng-click="filtrocheck_option = 'SIN_PLAN_DE_DESARROLLO';p_obtener_planDesarrollo('C')"
+                                            style="zoom:100% default-background;border-top-left-radius: 10px 10px;border-top-right-radius: 10px 10px;"
+                                            id="capa2">EVALUACION SUPERIORES AL 80%</button>
+                                            <button
+                                            class="white-text default-background btn_2 {{filtrocheck_option != 'CONSOLIDADO_GENERAL' ? 'blue' : ''}}"
+                                            type="button"
+                                            ng-click="filtrocheck_option = 'CONSOLIDADO_GENERAL';p_obtener_planDesarrollo('T')"
+                                            style="zoom:100% default-background;border-top-left-radius: 10px 10px;border-top-right-radius: 10px 10px;"
+                                            id="capa2">CONSOLIDADO GENERAL  DE LAS EVALUACIONES</button>
+                                    </li>
+                                </div>
+                                <div ng-show="plandedesarrollo" class="col s12">
+                                    <div style="max-height:60vh;overflow-y:auto;border: 1px solid;overflow-x: hidden;">
+                                        <table id="tabla_modal_ENTREGA" class=" highlight"
+                                            style="width:100%;color: black;">
+                                            <thead>
+                                                <th class="center default-background  white-text">Doc Empleado</th>
+                                                <th class="center default-background  white-text">Nombre del Empleado
+                                                </th>
+                                                <th class="center default-background  white-text">Area Funcionario
+                                                </th>
+                                                <th class="center default-background  white-text">Jefe Inmediato</th>
+                                                <th class="center default-background  white-text">Competencias
+                                                    Organizacionales (30%)</th>
+                                                <th class="center default-background  white-text">Competencias Blandas (40%)
+                                                </th>
+                                                <th class="center default-background  white-text">Competencias Tecnicas (30%)
+                                                </th>
+                                                <th class="center default-background  white-text">Total Resultado</th>
+                                                <th class="center default-background  white-text">Clasificacion</th>
+                                                <th class="center default-background  white-text">Evaluacion</th>
+                                                <th class="center default-background  white-text">Plan de Desarrollo</th>
+                                                <th class="center default-background  white-text">Imprimir</th>
+                                            </thead>
+                                            <tbody id="idpro">
+                                                <tr ng-repeat="eva in listdeEvaluaciones |  filter:buscarGestion">
+                                                    <td class="center">{{eva.DOC_EMPLEADO}}</td>
+                                                    <td class="center">{{eva.FUNCIONARIO}}</td>
+                                                    <td class="center">{{eva.AREA_FUNCIONARIO}}</td>
+                                                    <td class="center">{{eva.JEFE}}</td>
+                                                    <td class="center">{{eva.PORC_PROCESO_1}}%</td>
+                                                    <td class="center">{{eva.PORC_PROCESO_2}}%</td>
+                                                    <td class="center">{{eva.PORC_PROCESO_3}}%</td>
+                                                    <td class="center">{{eva.PUNTAJE}}%</td>
+                                                    <td class="center">{{eva.NOMBRE_RESULTADO}}</td>
+                                                    <td class="center">
+                                                        <i ng-click="imprimirSupervision(eva,'N')"
+                                                            class="icon-eye-1 fs-20 cursor-pointer"
+                                                            title="Ver evaluacion"></i>
+                                                    </td>
+                                                    <td class="center">
+                                                        <i ng-click="plandeDesarrollo(eva)"
+                                                            class=" icon-edit-1 fs-20 cursor-pointer"
+                                                            title="Editar evaluacion"></i>
+                                                    </td>
+                                                    <td ng-hide="{{eva.ESTADO_PLAN == null}}" class="center">
+                                                        <i ng-click="imprimirSupervision(eva)"
+                                                            class="icon-print-3 fs-20 cursor-pointer"
+                                                            title="Imprimir evaluacion"></i>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div style="width: 89%;display: flex;">
+                                        <div style="width: 50%;">
+                                            <label for="normal">Total de de contratos:
+                                                {{listdeEvaluaciones.length}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal listado de prestadores supervisados -->
+            <div id="modalconsultaPrestador" class="modal form-group" style="overflow: hidden;">
+                <div class="modal-content" style="padding: 0px !important;">
+                    <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+                        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+                            <div class="default-background" style="padding: 0;zoom:60%;">
+                                <div class="col l12 m12 s12">
+                                    <div class="row margin">
+                                        <div class="col s11">
+                                            <h5 class="white-text">Listado de prestadores</h5>
+                                        </div>
+                                        <div class="col s1">
+                                            <h5 style="text-align: end;"><i style="cursor:pointer;"
+                                                    ng-click="closemodals('consultaPrestador')"
+                                                    class="material-icons white-text">close</i>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+                                <div class="form-group row">
+                                    <div class="col s12">
+                                        <form ng-submit="consulta_Prestador1(buscard1)">
+                                            <div class="input-field col s6" style="margin-left:-21px;">
+                                                <input id="buscard1" type="text" ng-model="buscard1"
+                                                    style="cursor: pointer;" class="clase-gray" autocomplete="off">
+                                                <label for="buscard1" style="cursor: pointer;">Prestadores:
+                                                    <span style="color:red;">*</span></label>
+                                                <a href="javascript:void(0)"> <i
+                                                        style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                                                        class="material-icons prefix default-color">search</i></a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div style="width: 100%;">
+                                        <table id="H1_Tabla" class="bordered table_center_align"
+                                            style="width:100%;font-size:6px !important;">
+                                            <thead class="center-align default-background default-border white-text">
+                                                <tr>
+                                                    <th>Nit</th>
+                                                    <th>Prestador supervisado</th>
+                                                    <th>Seleccionar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="default-border">
+                                                <tr
+                                                    ng-repeat="prestadores in listadodePrestadores1  |  filter:buscard1 as resultips">
+                                                    <td style="text-align:center;">{{prestadores.CODIGO}}</td>
+                                                    <td style="text-align:center;">{{prestadores.NOMBRE}}</td>
+                                                    <td>
+                                                        <div class="center">
+                                                            <i ng-click="seleccionaripsReceptora1(prestadores)"
+                                                                style="cursor:pointer;"
+                                                                class="material-icons prefix">check</i>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-show="listadodePrestadores1.length==0">
+                                                    <td class="center-align" colspan="10" style="font-weight: bolder;">
+                                                        No se
+                                                        encontraron
+                                                        resultados para su revision.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div style="width: 89%;display: flex;">
+                                            <div style="width: 50%;">
+                                                <label for="normal">Total encontrados:
+                                                    {{listadodePrestadores1.length}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Vista de resultados -->
+    <div class="col s12" ng-show="vistaResulto">
+        <div class="card ng-scope" style="margin: 38px; bottom: 10px ;zoom:78%;">
+            <div style="margin: 38px; bottom: 10px ;">
+                <form class="form-group" name="formulario" ng-submit="guardar_Resultado()" novalidate="novalidate">
+                    <div class="row center">
+                        <div class="col l12 m12 s12">
+                            <div class="row right" style="margin-top: 15px;">
+                                <button type="button" class="center icon-reply white-text default-background"
+                                    style="border-radius: 10px;" ng-click="controldeVistas('vistaGestion')"
+                                    title="Volver al incio">Atras</button>
+                            </div>
+                            <strong>
+                                <strong>NOMBRE DEL EVALUADO</strong>
+                                <h6>** {{nombredelEvaluado}} **</h6>
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col l12 m12 s12">
+                            <strong>RESULTADO DE LA EVALUCION</strong>
+                        </div>
+
+                        <div class="col l3 m3 s3 ">
+                            <div class="col s12">
+                                <label style="font-size: inherit;">Competencias
+                                    organizacionales:</label>
+                                <input ng-model="result.proceso1" type="text" disabled>
+                            </div>
+                        </div>
+                        <div class="col l2 m2 s2">
+                            <div class="col s12">
+                                <label style="font-size: inherit;">Competencias
+                                    blandas:</label>
+                                <input ng-model="result.proceso2" type="text" disabled>
+                            </div>
+                        </div>
+                        <div class="col l2 m2 s2">
+                            <div class="col s12">
+                                <label style="font-size: inherit;">Competencias
+                                    tecnicas:</label>
+                                <input ng-model="result.proceso3" type="text" disabled>
+                            </div>
+                        </div>
+                        <div class="col l1 m1 s1">
+                            <div class="col s12">
+                                <label style="font-size: inherit;">Total:</label>
+                                <input ng-model="result.total" type="text" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="row center">
+                            <div class="col l12 m12 s12">
+                                <strong>
+                                    <label style="color:black">PLAN DE DESARROLLO</label>
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="row justify-content">
+                            <div class="col l12 m12 s12">
+                                <strong>
+                                    <label>En el caso de que el evaluado obtenga un porcentaje
+                                        de desempeño inferior al 80%, se debe generar un plan de
+                                        acompañamiento
+                                        por
+                                        6 meses, en el cual se deben hacer un plan por cada criterio que
+                                        obtuvo
+                                        una
+                                        calificación igual o inferior a 30 y un acta de compromiso donde
+                                        debe
+                                        quedar
+                                        por sentado la obligación de cumplir cada una de las actividades
+                                        del
+                                        plan.
+                                        Cada 2 meses el evaluado debe reunirse con el Jefe Directo y
+                                        Gestión
+                                        Humana
+                                        a fin de que se haga seguimiento a la evolución del plan. A los
+                                        6
+                                        meses
+                                        a
+                                        manera de seguimiento, se hace una evaluación de desempeño, a
+                                        fin de
+                                        revisar
+                                        la evolución del plan.
+                                    </label>
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col l12 m12 s12">
+                                <label style=" margin-top: -20px; padding-left: 1%;">Fortalezas del
+                                    evaluado:
+                                    {{result.observacionesResult1.toString().length}} - Máximo: 600<span
+                                        class="red-text">*</span></label>
+                                <div class="col s12">
+                                    <div class="form-group shadow-textarea">
+                                        <textarea class="form-control z-depth-1" id="exampleFormControlTextarea1"
+                                            rows="3"
+                                            ng-keyup="handleKeyPress($event,'result', 'result.observacionesResult1')"
+                                            ng-model="result.observacionesResult1" cols="50"
+                                            placeholder="Por favor escriba su conclusion"
+                                            tyle="margin: 0px; height: 114px;"
+                                            style="margin: 0px;/* width: 1268px; */height: 134px;" text-upper
+                                            maxlength="599"
+                                            ng-keyup="formatTexto('exampleFormControlTextarea1')"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col l12 m12 s12">
+                                <label style=" margin-top: -20px; padding-left: 1%;">Áreas Susceptibles
+                                    de
+                                    Mejorar:
+                                    {{result.observacionesResult2.toString().length}} - Máximo: 600<span
+                                        class="red-text">*</span></label>
+                                <div class="col s12">
+                                    <div class="form-group shadow-textarea">
+                                        <textarea class="form-control z-depth-1" id="exampleFormControlTextarea1"
+                                            rows="3"
+                                            ng-keyup="handleKeyPress($event,'result', 'result.observacionesResult2')"
+                                            ng-model="result.observacionesResult2" cols="50"
+                                            placeholder="Por favor escriba su conclusion"
+                                            tyle="margin: 0px; height: 114px;"
+                                            style="margin: 0px;/* width: 1268px; */height: 134px;" text-upper
+                                            maxlength="599"
+                                            ng-keyup="formatTexto('exampleFormControlTextarea1')"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col l12 m12 s12">
+                                <label style=" margin-top: -20px; padding-left: 1%;">Comentarios del
+                                    Evaluado:
+                                    {{result.observacionesResult3.toString().length}} - Máximo: 600<span
+                                        class="red-text">*</span></label>
+                                <div class="col s12">
+                                    <div class="form-group shadow-textarea">
+                                        <textarea class="form-control z-depth-1" id="exampleFormControlTextarea1"
+                                            rows="3"
+                                            ng-keyup="handleKeyPress($event,'result', 'result.observacionesResult3')"
+                                            ng-model="result.observacionesResult3" cols="50"
+                                            placeholder="Por favor escriba su conclusion"
+                                            tyle="margin: 0px; height: 114px;"
+                                            style="margin: 0px;/* width: 1268px; */height: 134px;" text-upper
+                                            maxlength="599"
+                                            ng-keyup="formatTexto('exampleFormControlTextarea1')"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col l12 m12 s12">
+                                <label style=" margin-top: -20px; padding-left: 1%;">Compromisos del
+                                    Evaluado:
+                                    {{result.observacionesResult4.toString().length}} - Máximo: 600<span
+                                        class="red-text">*</span></label>
+                                <div class="col s12">
+                                    <div class="form-group shadow-textarea">
+                                        <textarea class="form-control z-depth-1" id="exampleFormControlTextarea1"
+                                            rows="3"
+                                            ng-keyup="handleKeyPress($event,'result', 'result.observacionesResult4')"
+                                            ng-model="result.observacionesResult4" cols="50"
+                                            placeholder="Por favor escriba su conclusion"
+                                            tyle="margin: 0px; height: 114px;"
+                                            style="margin: 0px;/* width: 1268px; */height: 134px;" text-upper
+                                            maxlength="599"
+                                            ng-keyup="formatTexto('exampleFormControlTextarea1')"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col l12 m12 s12">
+                                <label style=" margin-top: -20px; padding-left: 1%;">Comentarios del
+                                    Evaluador:
+                                    {{result.observacionesResult5.toString().length}} - Máximo: 600<span
+                                        class="red-text">*</span></label>
+                                <div class="col s12">
+                                    <div class="form-group shadow-textarea">
+                                        <textarea class="form-control z-depth-1" id="exampleFormControlTextarea1"
+                                            rows="3"
+                                            ng-keyup="handleKeyPress($event,'result', 'result.observacionesResult5')"
+                                            ng-model="result.observacionesResult5" cols="50"
+                                            placeholder="Por favor escriba su conclusion"
+                                            tyle="margin: 0px; height: 114px;"
+                                            style="margin: 0px;/* width: 1268px; */height: 134px;" text-upper
+                                            maxlength="599"
+                                            ng-keyup="formatTexto('exampleFormControlTextarea1')"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="center row">
+                        <div class="center" style="margin-top: 23px;">
+                            <button type="button" ng-click="controldeVistas('vistaGestion')"
+                                class="center   icon-cancel white-text default-background"
+                                style="border-radius: 10px;zoom:130%;">Cancelar</button>
+                            <button type="submit" class="icon-floppy white-text default-background"
+                                style="border-radius: 10px;zoom:130%;">Guardar
+                                resultado</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <style>
+        .titleps1 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 40px !important;
+            color: green !important;
+        }
+
+        .titleps2 {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 40px !important;
+            color: rgb(229, 105, 105) !important;
+        }
+
+
+        .bordercolorContestado {
+            border-color: green;
+        }
+
+        .bordercolor {
+            border-color: red;
+        }
+
+
+        #validacioncamposVacios {
+            max-height: 50vh;
+        }
+
+        .tabla_nueva_resp th {
+            position: sticky;
+            top: 0;
+            z-index: 9;
+            background-color: #1a2e63;
+            color: white;
+        }
+
+        .subraya {
+            border-bottom-style: ridge !important;
+            border-color: #1a2e63 !important;
+            margin: 0px 9px !important;
+        }
+
+        .ps-light-yellow {
+            background-color: #f7fb00de !important;
+        }
+
+        .ps-light-green {
+            background-color: rgb(3, 197, 20) !important;
+        }
+
+        .ps-light-red {
+            background-color: #f75050 !important;
+        }
+
+        .ps-light-purple {
+            background-color: rgb(71, 71, 165) !important;
+        }
+
+        #tabla_modal_ENTREGA th {
+            position: sticky;
+            top: 0;
+            z-index: 9;
+        }
+
+        .btn_2 {
+            border: none;
+            border-radius: 2px;
+            display: inline-block;
+            height: 36px;
+            line-height: 36px;
+            outline: 0;
+            padding: 0 2rem;
+            text-transform: uppercase;
+            vertical-align: middle;
+            -webkit-tap-highlight-color: transparent;
+            background-color: #1a2e63;
+        }
+
+        .textCollapsible {
+            border: none;
+            border-radius: 2px;
+            display: inline-block;
+            height: 36px;
+            line-height: 36px;
+            outline: 0;
+            padding: 0 2rem;
+            text-transform: uppercase;
+            vertical-align: middle;
+            -webkit-tap-highlight-color: transparent;
+            background-color: #fcfcfd;
+        }
+
+        .light-red {
+            background-color: palevioletred !important;
+        }
+
+
+        .input-field-ps {
+            position: relative;
+            margin-top: 1px;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        .select-new-ps {
+            outline: none !important;
+            height: 34px;
+            background-color: white;
+            display: block;
+            border: 1px solid #8a88865e;
+            border-radius: 0.25rem;
+            border-bottom: 1px solid #8a88865e;
+            box-shadow: none !important;
+        }
+
+        .btn-new-ps {
+            border: none;
+            border-radius: 2px;
+            display: inline-block;
+            height: 32px;
+            line-height: 36px;
+            outline: 0;
+            padding: 0 2rem;
+            text-transform: uppercase;
+            vertical-align: middle;
+            background-color: #1a2e63;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        .border_bottom_LR {
+            border-bottom-left-radius: 0px !important;
+            border-bottom-right-radius: 0px !important;
+        }
+
+        .Green_Est {
+            background-color: green !important;
+        }
+
+        .Red_Est {
+            background-color: red !important;
+        }
+
+        .buena {
+            color: rgb(3, 197, 20) !important;
+        }
+
+        .poca {
+            color: rgb(235, 156, 5) !important;
+        }
+
+        .baja {
+            color: rgb(245, 75, 75) !important;
+        }
+
+        .teal.activo {
+            background-color: rgb(3, 197, 20) !important;
+        }
+
+        .teal.procesado {
+            background-color: rgb(71, 71, 165) !important;
+        }
+
+
+        .yellow {
+            background-color: #b7a60f !important;
+        }
+
+
+
+
+        #IMG_Secc {
+            cursor: pointer;
+        }
+
+        #IMG_Secc:hover .tooltip-css3 {
+            display: block;
+        }
+
+        .tooltip-css3:before {
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 20px solid #6c63ff;
+            bottom: -15px;
+            content: "";
+            height: 0;
+            left: 50%;
+            margin-left: -30px;
+            position: absolute;
+            transform: skew(-45deg);
+            width: 0;
+        }
+
+        .tooltip-css3 {
+            background-color: #6c63ff;
+            border-radius: 100% 100% 100% 100%;
+            box-shadow: 0 0 5px 0 rgb(108 99 255 / 49%);
+            color: #FFFFFF;
+            display: none;
+            left: 70%;
+            padding: 20px 30px;
+            position: absolute;
+            top: 23%;
+        }
+
+        .Btn_Secc_Pen {
+            background-color: #afaaff;
+            box-shadow: 0 0 5px 0 rgb(108 99 255 / 49%);
+            color: #FFFFFF;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .Btn_Secc_New {
+            background-color: #afaaff;
+            box-shadow: 0 0 5px 0 rgb(108 99 255 / 49%);
+            color: #FFFFFF;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        /* /// */
+        .Con_pulse_P {
+            /* background: #FF6D4A; */
+            border-radius: 50%;
+            color: #FFF;
+            animation: animate-pulse_P 5s linear infinite;
+            cursor: pointer;
+        }
+
+        @keyframes animate-pulse_P {
+            0% {
+                box-shadow: 0 0 0 0 rgba(71, 71, 165, 0.7), 0 0 0 0 rgba(71, 71, 165, 0.7);
+            }
+
+            40% {
+                box-shadow: 0 0 0 15px rgba(71, 71, 165, 0.0), 0 0 0 0 rgba(71, 71, 165, 0.7);
+            }
+
+            80% {
+                box-shadow: 0 0 0 0 rgba(71, 71, 165, 0.0), 0 0 0 15px rgba(71, 71, 165, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(71, 71, 165, 0.0), 0 0 0 0 rgba(71, 71, 165, 0);
+            }
+        }
+
+
+        .Con_pulse_G {
+
+            border-radius: 50%;
+            color: #FFF;
+            animation: animate-pulse_G 3s linear infinite;
+            cursor: pointer;
+        }
+
+        @keyframes animate-pulse_G {
+            0% {
+                box-shadow: 0 0 0 0 rgba(162, 162, 175, 0.7), 0 0 0 0 rgba(162, 162, 175, 0.7);
+            }
+
+            40% {
+                box-shadow: 0 0 0 15px rgba(71, 71, 165, 0.0), 0 0 0 0 rgba(162, 162, 175, 0.7);
+            }
+
+            80% {
+                box-shadow: 0 0 0 0 rgba(71, 71, 165, 0.0), 0 0 0 15px rgba(71, 71, 165, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(71, 71, 165, 0.0), 0 0 0 0 rgba(71, 71, 165, 0);
+            }
+        }
+
+
+        .Con_pulse_V {
+            /* background: #FF6D4A; */
+            border-radius: 50%;
+            color: #FFF;
+            animation: animate-pulse_V 5s linear infinite;
+            cursor: pointer;
+        }
+
+        @keyframes animate-pulse_V {
+            0% {
+                box-shadow: 0 0 0 0 rgba(43, 255, 36, 0.7), 0 0 0 0 rgba(43, 255, 36, 0.7);
+            }
+
+            40% {
+                box-shadow: 0 0 0 15px rgba(43, 255, 36, 0.0), 0 0 0 0 rgba(43, 255, 36, 0.7);
+            }
+
+            80% {
+                box-shadow: 0 0 0 0 rgba(43, 255, 36, 0.0), 0 0 0 15px rgba(43, 255, 36, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(43, 255, 36, 0.0), 0 0 0 0 rgba(43, 255, 36, 0);
+            }
+        }
+
+        /* /// */
+        .Animacion_HojaForm {
+            animation: 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s 1 normal both running swing-in-top-fwd;
+        }
+
+        @keyframes swing-in-top-fwd {
+            0% {
+                /* -webkit-transform: rotateX(-100deg);
+          transform: rotateX(-100deg);
+          -webkit-transform-origin: top;
+          transform-origin: top; */
+                opacity: 0;
+            }
+
+            100% {
+                /* -webkit-transform: rotateX(0deg);
+          transform: rotateX(0deg);
+          -webkit-transform-origin: top;
+          transform-origin: top; */
+                opacity: 1;
+            }
+        }
+
+        .BgColor_A {
+            background: linear-gradient(to bottom left, #37daf0, #00acc1, #37daf0);
+        }
+
+        .BgColor_R {
+            background: linear-gradient(to bottom left, #f1ad5a, #fb8c00, #f1ad5a);
+        }
+
+        .BgColor_C {
+            background: linear-gradient(to bottom left, #e65b8e, #d81b60, #e65b8e);
+        }
+
+        .BgColor_O {
+            background: linear-gradient(to bottom left, #d7d9db, #6A6D71, #d7d9db);
+        }
+
+        .BgColor_N {
+            background: linear-gradient(to bottom left, #63f193, #25D962, #63f193);
+        }
+
+        .Color_A {
+            color: #00acc1 !important;
+            border-left: 5px solid #00acc1;
+        }
+
+        .Color_R {
+            color: #fb8c00 !important;
+            border-left: 5px solid #fb8c00;
+        }
+
+
+
+        .Color_C {
+            color: #d81b60 !important;
+            border-left: 5px solid #d81b60;
+        }
+
+        .Color_O {
+            color: #6A6D71 !important;
+            border-left: 5px solid #6A6D71;
+        }
+
+        .Color_N {
+            color: #25D962 !important;
+            border-left: 5px solid #25D962;
+        }
+
+        .textarea2 {
+            padding: 0.5rem !important;
+            width: calc(100% - 0rem) !important;
+            /* background-color: #cbcdce; */
+            background-color: #f1f3f4;
+            resize: none;
+            height: 7rem;
+        }
+
+        input.input-text-new {
+            background-color: #fff !important;
+        }
+
+        .gray-input {
+            background-color: #f1f3f4 !important;
+        }
+
+        .Tarjeta_Titulo {
+            -webkit-transition: all .8s cubic-bezier(.34, 1.61, .7, 1);
+            transition: all .8s cubic-bezier(.34, 1.61, .7, 1);
+            position: relative;
+            z-index: 3;
+        }
+
+        .Tarjeta_Titulo:hover {
+            transform: translate3d(0, -25px, 0);
+        }
+
+        .Tarjeta_Titulo>.card {
+            border-radius: .375rem;
+            z-index: 2;
+        }
+
+        .Tarjeta_Titulo .card-content {
+            padding: 0.6rem 0.8rem;
+            display: flex;
+        }
+
+        .Tarjeta_Titulo h6 {
+            color: #FFFFFF !important;
+            font-weight: 600 !important;
+            font-size: 0.8125rem;
+        }
+
+        .Tarjeta_Texto {
+            z-index: -1;
+            margin-top: -3.7em;
+            width: calc(100% - 30px);
+            left: 15px;
+            /* text-align: center; */
+            width: auto;
+            border-radius: .375rem;
+            height: 41px;
+            padding: 0.9rem 0.8rem;
+        }
+
+        .Tarjeta_Texto>span {
+            position: relative;
+            font-size: 0.8em;
+            font-weight: 700;
+        }
+
+        #H1_Tabla>thead,
+        #H1_Tabla>tbody {
+            font-size: 1em;
+            /* border: 3px; */
+            border-width: medium;
+            border-style: solid;
+            border-radius: .375rem;
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        }
+
+        .Class_Tabla_Btn_Gestionar {
+            border-radius: .375rem;
+            width: 30%;
+            margin: auto;
+            border-width: medium;
+        }
+
+        .Class_Tabla_Btn_Gestionar h6 {
+            font-weight: 700 !important;
+            font-size: 0.8125rem;
+        }
+
+        .animated {
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+        }
+
+        .switch label .lever.check-c:after {
+            background-color: #ffffff;
+        }
+
+        .switch label input[type=checkbox]:checked+.lever:after {
+            background-color: #ffffff;
+        }
+
+        .dropdown-content li {
+            min-height: 23px;
+        }
+
+        .select_maxheigth ul {
+            max-height: 125px;
+        }
+
+        .dropdown-content li>span {
+            line-height: 32px;
+            padding: 0px 16px;
+        }
+
+        .currency-input {
+            position: relative;
+        }
+
+        .currency {
+            padding-left: -22px;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 8px;
+            font-size: 21px;
+        }
+
+        #toast-container .toast {
+            border-radius: 10px !important;
+            font-weight: 600;
+            text-align: center !important;
+            word-break: keep-all;
+            padding: 10px 25px;
+            width: auto;
+            background: linear-gradient(to bottom left, #e04242, #8b0000, #e04242);
+        }
+
+        blockquote {
+            font-weight: 700;
+            background-color: #f1f3f4;
+        }
+
+        .VistaFile .Iframe {
+            visibility: hidden;
+            height: 50vh;
+            color: #fff;
+            text-align: center;
+            margin-bottom: -0.6rem;
+            border-top-right-radius: 6px;
+            border-top-left-radius: 6px;
+            position: absolute;
+            z-index: 1;
+            bottom: calc(100% + 6px);
+            right: 0;
+            opacity: 0;
+            transition: opacity 1s;
+            border: 3px solid #333333;
+        }
+
+        .VistaFile:hover .Iframe {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .Iframe:hover {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .input-file-radius-cargado {
+            /* border-top-right-radius: 0 !important; */
+            /* border-bottom-right-radius: 0 !important; */
+            background-color: #03c5146e !important;
+        }
+
+        .input-file-radius-cargado2 {
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+            background-color: #03c5146e !important;
+        }
+
+        .input-file-radius-opcional {
+            background-color: #0000004f !important;
+        }
+
+        .input-file-radius-obligatorio {
+            background-color: #f54b4bb0 !important;
+        }
+
+        .input-file-radiu {
+            border-radius: 10px;
+        }
+
+        .input-file-radius {
+            border-radius: 10px;
+        }
+
+        .select-wrapper input.select-dropdown:disabled {
+            color: black;
+        }
+
+        .list-group-item:last-child {
+            margin-bottom: 0;
+            border-bottom-right-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+        .list-group-item:first-child {
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        .list-group-item:hover {
+            color: #1a2e63;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .list-group-item.hover {
+            color: #1a2e63;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .list-group-item {
+            position: relative;
+            display: block;
+            padding: 10px 15px;
+            margin-bottom: -1px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .list-group {
+            font-size: 14px;
+        }
+
+        .class_upper td,
+        .class_upper th {
+            text-transform: uppercase;
+        }
+
+        .class_gris {
+            color: rgba(0, 0, 0, 0.26) !important;
+        }
+
+        .class_label {
+            color: #80868b;
+        }
+
+        /*******************/
+
+        .switch label .lever {
+            background-color: #1a2e63;
+            width: 60px;
+            height: 29px;
+        }
+
+        .switch label .lever:after {
+            left: 4px;
+            top: 4px;
+            background-color: #fff !important;
+        }
+
+        .switch label .lever.check-c {
+            background-color: #1a2e63 !important;
+        }
+
+        .switch label input[type=checkbox]:checked+.lever:after {
+            left: 35px;
+        }
+
+        /* // */
+        .lever.check-c:hover span.lever.check-c:after {
+            width: 100px !important;
+        }
+
+        /**/
+        [type="checkbox"].filled-in:not(:checked)+label:after {
+            border: 3px solid #1a2e63;
+        }
+
+        [type="checkbox"].filled-in:checked+label:after {
+            border: 3px solid #1a2e63;
+            background-color: #1a2e63;
+        }
+
+        .modal {
+            border-radius: 10px;
+            overflow: hidden;
+            max-height: 88%;
+            z-index: 1003;
+            display: none;
+            opacity: 0;
+            transform: scaleX(0.7);
+            top: 4%;
+        }
+
+        .pagination {
+            text-align: center;
+            padding-top: 0px;
+            font-weight: 800;
+        }
+
+        /* --------------------------------------------------------------------------------------------- */
+        @keyframes Anim_Show {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .Anim_Show {
+            animation-name: Anim_Show;
+            animation-duration: 1s;
+        }
+
+        .Con_pulse_A {
+            border-radius: 50%;
+            color: #FFF;
+            animation: animate-pulse_A 5s linear infinite;
+        }
+
+        @keyframes animate-pulse_A {
+            0% {
+                box-shadow: 0 0 0 0 #f7fb00de, 0 0 0 0 #f7fb00de;
+            }
+
+            40% {
+                box-shadow: 0 0 0 15px rgba(3, 197, 20, 0.0), 0 0 0 0 #f7fb00de;
+            }
+
+            80% {
+                box-shadow: 0 0 0 0 rgba(3, 197, 20, 0.0), 0 0 0 15px rgba(3, 197, 20, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(3, 197, 20, 0.0), 0 0 0 0 rgba(3, 197, 20, 0);
+            }
+        }
+
+        .Con_pulse_X {
+            /* background: #FF6D4A; */
+            border-radius: 50%;
+            color: #FFF;
+            animation: animate-pulse_X 5s linear infinite;
+            cursor: pointer;
+        }
+
+        @keyframes animate-pulse_X {
+            0% {
+                box-shadow: 0 0 0 0 #f75050, 0 0 0 0 #f75050;
+            }
+
+            40% {
+                box-shadow: 0 0 0 15px rgba(245, 75, 75, 0.0), 0 0 0 0 #f75050;
+            }
+
+            80% {
+                box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 15px rgba(245, 75, 75, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(245, 75, 75, 0);
+            }
+        }
+
+        .Con_pulse_D {
+            /* background: #FF6D4A; */
+            border-radius: 50%;
+            color: #FFF;
+            animation: animate-pulse_D 5s linear infinite;
+            cursor: pointer;
+        }
+
+        @keyframes animate-pulse_D {
+            0% {
+                box-shadow: 0 0 0 0 rgba(235, 156, 5, 0.7), 0 0 0 0 rgba(235, 156, 5, 0.7);
+            }
+
+            40% {
+                box-shadow: 0 0 0 15px rgba(235, 156, 5, 0.0), 0 0 0 0 rgba(235, 156, 5, 0.7);
+            }
+
+            80% {
+                box-shadow: 0 0 0 0 rgba(235, 156, 5, 0.0), 0 0 0 15px rgba(235, 156, 5, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(235, 156, 5, 0.0), 0 0 0 0 rgba(235, 156, 5, 0);
+            }
+        }
+
+        [type="radio"]:checked+label:after,
+        [type="radio"].with-gap:checked+label:after {
+            background-color: #1a2e63;
+            z-index: 0
+        }
+
+        [type="radio"]:checked+label:after,
+        [type="radio"].with-gap:checked+label:before,
+        [type="radio"].with-gap:checked+label:after {
+            border: 2px solid #1a2e63
+        }
+
+
+
+        input[type=text] {
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            background-color: #fff;
+            background-clip: padding-box;
+            padding: 0 1em;
+            font-weight: 600;
+            height: 2rem;
+        }
+    </style>
+</div>

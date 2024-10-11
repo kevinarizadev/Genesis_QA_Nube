@@ -1,0 +1,1543 @@
+<div class="white newdesing" id="pantalla">
+  <!-- header  -->
+  <div class="row section-header margin">
+    <ul
+      class="left mailbox-custom-search list-inline w-100 d-flex justify-content-between align-items-center"
+    >
+      <li id="inicio">
+        <h5 class="cursor-pointer">
+          <i
+            class="icon-file-archive"
+            title="Refrescar"
+          ></i>
+          Eventos ATEL
+        </h5>
+      </li>
+      <li>
+        <ul class="tabs transparent" style="overflow: hidden">
+          <li class="tab col w-auto">
+            <a ng-click="SetTabAtel(1);" id="tabRegistro" ng-if="sesionUsuarios.CARGAR_REPORTE == '1'" href class="active"
+              >Registro<i class="icon-doc-add"></i
+            ></a>
+          </li>
+          <li class="tab col w-auto">
+            <a ng-click="SetTabAtel(2);" id="tabConsultaAtel" ng-if="sesionUsuarios.estado == '1'" href class="active"
+              >Consulta<i class="icon-th-list"></i
+            ></a>
+          </li>
+          <li class="tab col w-auto">
+            <a ng-click="SetTabAtel(3);" id="tabPermiso" ng-if="sesionUsuarios.ADMIN == '1'"  href  class="active"
+              >Permisos<i class="icon-lock-open-2"></i
+            ></a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <!-- FIN HEADER -->
+      <!-- <div class="col s12" ng-if="sesionUsuarios.estado === '2'">
+        <center style="color: #ccc;height: 1000px;font-size: 30px;">NO TIENES PERMISOS PARA ACCEDER.</center>
+      </div> -->
+  <!-- MODAL INFO USUARIO PERMISOS -->
+  <!-- <div id="modalInfo" class="modal" style="width: 35%; background-color: rgb(12, 12, 121);">
+    <div class="modal-content">
+      <h4 style="color: #ccc;">Bienvenido, {{nombreSesion}}</h4>
+      <br/>
+      <h5 style="color: #ccc;">No tienes los permisos para tener acceso a este modulo</h5>
+      <p style="color: #ccc;">Si quieres tener acceso, comunicate con los administradores</p>
+    </div>
+    <div class="modal-footer">
+      <a href="" ng-click="closeModal()" class="modal-close waves-effect waves-green btn white-text">OK</a>
+    </div>
+  </div> -->
+    <!-- FIN MODAL INFO USUARIO PERMISOS  -->
+
+    <!-- BUSQUEDA POR DOCUMENTO -->
+  <div
+    class="row dashboard-wrapper content-container white"
+    ng-show="TabsAtel==1"
+  >
+    <!-- <i class="material-icons prefix" style="margin-top: 20px; font-size: 4vh;">assignment_ind</i>
+      <label for="tipo_documento">Tipo de Documento</label> -->
+    <div class="card" style="width: 1000px;">
+      <div class="card-content clearfix" style="padding-bottom: 0px; padding-left: 125px;">
+        <form>
+          <div class="row margin Anim_Show">
+            <div class="col">
+              <label>Tipo de Documento</label>
+              <select
+                style="
+                  display: flex;
+                  border: 1px solid #dee2e6;
+                  border-radius: 0.25rem;
+                      "
+                ng-model="tipo_documento"
+              >
+                <option value="" ng-disabled="true">SELECCIONAR</option>
+                <option
+                  ng-repeat="tip in Tipos_Documentos"
+                  value="{{tip.CODIGO}}"
+                >
+                  {{tip.NOMBRE}}
+                </option>
+              </select>
+            </div>
+            <div class="input-field col s4">
+              <label for="num_documento">Numero de Documento</label>
+              <input
+                id="num_documento"
+                ng-model="numero_Identicacion"
+                type="text"
+                autocomplete="off"
+              />
+            </div> 
+            <div class="row">
+              <div class="input-field col s3">
+                <button
+                  class="btn white-text"
+                  ng-click="Obtener_DatosAfiliado(tipo_documento,numero_Identicacion)"
+                  style="
+                    padding-right: 15px;
+                    padding-left: 20px;
+                    margin-top: 10px;
+                        "
+                >
+                <i class="icon-search-7"></i> Buscar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Inicio de Informacion Afiliado -->
+
+    <div class="tablasdeInfo" ng-show="verDatosAfiliado">
+      <div
+        class="row dashboard-wrapper white"
+      >
+            <div class="row" style="margin-bottom: 0px; margin-top: 68px;">
+              <!-- FILTRADO -->
+              <div
+                id="Diag_1"
+                class="foot4 divcardcustom"
+              >
+                <div class="text-al divcardcustom2">
+                  <i class=" icon-doc-text"></i><strong class="switch" style="font-weight: 700">
+                    Datos Basicos Afiliado</strong
+                  >
+                </div>
+              </div>
+
+              <form>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: end;
+                    flex-direction: row;
+                    gap: 1em;
+                    border-left: 3px solid #111;
+                    border-right: 3px solid #111;
+                    zoom: 90%;
+                  "
+                >
+                  <div>
+                    <div class="row" style="margin: 0">
+                      <div class="col s3">
+                        <label
+                          class="c-pointer noselectxtpqr"
+                          for="tipodocumento"
+                          >Tipo de Documento</label
+                          >
+                        <input
+                          type="text"
+                          id="TipoDocumentoAfiliado"
+                          ng-model="Tipos_Afiliado[0].tipo"
+                          style="color: black;"
+                          disabled
+                        />
+                      </div>
+                      <div class="col s3">
+                        <label
+                          class="c-pointer noselectxtpqr"
+                          for="DocumentoAfiliado"
+                          >Numero de Documento</label
+                        >
+                        <input
+                          type="text"
+                          id="DocumentoAfiliado"
+                          ng-model="Tipos_Afiliado[0].documento"
+                          style="color: black;"
+                          disabled
+                        />
+                      </div>
+                      <div class="col s3">
+                        <label
+                          class="c-pointer noselectxtpqr"
+                          for="nombreAfiliado"
+                          >Primer Nombre</label
+                        >
+                        <input
+                          type="text"
+                          id="nombreAfiliado"
+                          ng-model="Tipos_Afiliado[0].primer_nombre"
+                          style="color: black;"
+                          disabled
+                        />
+                      </div>
+                      <div class="col s3">
+                        <label
+                          class="c-pointer noselectxtpqr"
+                          for="SegnombreAfiliado"
+                          >Segundo Nombre</label
+                        >
+                        <input
+                          type="text"
+                          id="SegnombreAfiliado"
+                          ng-model="Tipos_Afiliado[0].segundo_nombre"
+                          style="color: black;"
+                          disabled
+                        />
+                      </div>
+                      <div class="col s3">
+                        <label
+                          class="c-pointer noselectxtpqr"
+                          for="apellidoAfiliado"
+                          >Primer Apellido</label
+                        >
+                        <input
+                          type="text"
+                          id="apellidoAfiliado"
+                          ng-model="Tipos_Afiliado[0].primer_apellido"
+                          style="color: black;"
+                          disabled
+                        />
+                      </div>
+                      <div class="col s3">
+                        <label
+                          class="c-pointer noselectxtpqr"
+                          for="segapellidoAfiliado"
+                          >Segundo Apellido</label
+                        >
+                        <input
+                          type="text"
+                          id="segapellidoAfiliado"
+                          ng-model="Tipos_Afiliado[0].segundo_apellido"
+                          style="color: black;"
+                          disabled
+                        />
+                      </div>
+                      <div class="col s3">
+                        <label
+                          class="c-pointer noselectxtpqr"
+                          for="EpsAnterior"
+                          >Anterior EPS</label
+                        >
+                        <input
+                          type="text"
+                          id="EpsAnterior"
+                          ng-model="Tipos_Afiliado[0].anterior_EPS"
+                          style="color: black;"
+                          disabled
+                        />
+                      </div>
+                      <div class="col s3">
+                        <label
+                          class="c-pointer noselectxtpqr"
+                          for="NacimientoAfiliado"
+                          >Fecha de Nacimiento</label
+                        >
+                        <input
+                          type="text"
+                          id="NacimientoAfiliado"
+                          ng-model="Tipos_Afiliado[0].fecha_nacimiento"
+                          style="color: black;"
+                          disabled
+                        />
+                      </div>
+                      <div class="col s3">
+                        <label
+                          class="c-pointer noselectxtpqr"
+                          for="ubicacionAfiliado"
+                          >Regional</label
+                        >
+                        <input
+                          type="text"
+                          id="ubicacionAfiliado"
+                          ng-model="Tipos_Afiliado[0].regional"
+                          style="color: black;"
+                          disabled
+                        />
+                      </div>
+                      <div class="col s3">
+                        <label
+                          class="c-pointer noselectxtpqr"
+                          for="GeneroAfiliado"
+                          >Genero</label
+                        >
+                        <input
+                          type="text"
+                          id="GeneroAfiliado"
+                          ng-model="Tipos_Afiliado[0].genero"
+                          style="color: black;"
+                          disabled
+                        />
+                      </div>
+                      <div class="col s3">
+                        <label
+                          class="c-pointer noselectxtpqr"
+                          for="regimenAfiliado"
+                          >Regimen</label
+                        >
+                        <input
+                          type="text"
+                          id="regimenAfiliado"
+                          ng-model="Tipos_Afiliado[0].regimen"
+                          style="color: black;"
+                          disabled
+                        />
+                      </div>
+                      <div class="col s3">
+                        <label
+                          class="c-pointer noselectxtpqr"
+                          for="edadAfiliado"
+                          >Edad</label
+                        >
+                        <input
+                          type="text"
+                          id="edadAfiliado"
+                          ng-model="Tipos_Afiliado[0].edad"
+                          style="color: black;"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <!-- FILTRADO -->
+
+              <!-- /TABLA/ -->
+              <div
+                id="Diag_2"
+                class="foot4 divcardcustom"
+              >
+                <div class="text-al divcardcustom2">
+                  <i class="icon-archive"></i><strong class="switch" style="font-weight: 700">
+                    Registro Evento ATEL</strong
+                  >
+                </div>
+              </div>
+              <div style="width: 100%">
+                <form id="formRegistro" name="formRegistro">
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: end;
+                      flex-direction: row;
+                      gap: 1em;
+                      border-left: 3px solid #111;
+                      border-right: 3px solid #111;
+                      zoom: 90%;
+                    ">
+                    <div>
+                      <div class="row" style="margin: 0">
+                        <div class="col s3">
+                          <label
+                            class="c-pointer noselectxtpqr"
+                            for="tiposolicitud"
+                            >Tipo de Evento<span style="color: red">*</span></label
+                          >
+                          <select
+                            class="select-chosen-eps"
+                            style="padding-top: 0px"
+                            ng-model="tipoEvento"
+                          >
+                            <option value="" disabled>SELECCIONAR</option>
+                            <option value="EL">ENFERMEDAD LABORAL</option>
+                            <option value="AT">ACCIDENTE DE TRABAJO</option>
+                          </select>
+                        </div>
+                        <div class="col s3">
+                          <label
+                            class="c-pointer noselectxtpqr"
+                            for="tiposolicitud"
+                            >{{tipoEvento == 'AT' ? 'Fecha de Evento' : 'Fecha de Estructuracion'}}<span style="color: red">*</span></label
+                          >
+                          <input
+                            type="date"
+                            id="fechaEstructuracion"
+                            name="fechaEstructuracion"
+                            max="{{sysDay | date:'yyyy-MM-dd'}}"
+                            ng-model="fechaEstructuracion"
+                            ng-required="true"
+                          />
+                          <span class="errorSpan" ng-if="formRegistro.fechaEstructuracion.$invalid && formRegistro.fechaEstructuracion.$dirty">Por favor ingresar Fecha*</span>
+                        </div>
+                        <div class="col s4">
+                          <label
+                            class="c-pointer noselectxtpqr"
+                            for="tiposolicitud"
+                            >Fecha de Dictamen<span style="color: red">*</span></label
+                          >
+
+                          <input
+                            type="date"
+                            id="fechaDict"
+                            name="fechaDict"
+                            max="{{sysDay | date:'yyyy-MM-dd'}}"
+                            ng-model="fechaDictamen"
+                            ng-change="validarFecha()"
+                            ng-required="true"
+                          />
+                          <span class="fechaMayor" id="fechaMayor" style="display: none;">La fecha de Dictamen no puede ser menor*</span>
+                          <span class="errorSpan" ng-if="formRegistro.fechaDict.$invalid && formRegistro.fechaDict.$dirty">Por favor ingresar Fecha*</span>
+                        </div>
+                        <div class="col s2">
+                          <label
+                            class="c-pointer noselectxtpqr"
+                            for="tiposolicitud"
+                            >N° de Dictamen<span style="color: red">*</span></label>
+                          <input
+                            class="form-control"
+                            type="number"
+                            id="NumDicta"
+                            name="NumDicta"
+                            minlength="2"
+                            min="1"
+                            ng-model="NumDictamen"
+                            placeholder="Numero de Dictamen"
+                            ng-required="true"
+                          />
+                          <span class="errorSpan" ng-if="formRegistro.NumDicta.$invalid && formRegistro.NumDicta.$dirty"> Por favor ingresar Dictamen*</span>
+
+                        </div>
+                        <div class="col s3" ng-click="AbrirModal()" >
+                          <label
+                            class="c-pointer noselectxtpqr"
+                            for="diagnosticoATELmodal"
+                            >Diagnostico<span style="color: red">*</span></label
+                          >
+                          <div class="input-field-ps col s12">
+                            <input
+                              id="with_icon"
+                              ng-model="diagnosticoATELmodal"
+                              name="dianostico"
+                              type="text"
+                              style="cursor: pointer"
+                              autocomplete="off" />
+                          </div>
+                      <span class="errorSpan" ng-if="formRegistro.dianostico.$invalid && formRegistro.dianostico.$dirty"> Por favor ingresar Diagnostico*</span>
+
+                        </div>
+
+                        <div class="col s3"  ng-show="contadorInput >= 1">
+                          <label
+                            class="c-pointer noselectxtpqr"
+                            for="diagnosticoATEL1">Diagnostico 1</label>
+                          <div class="input-field-ps col s12">
+                            <input
+                              id="with_icon"
+                              ng-model="diagnosticoATEL1"
+                              name="dianostico2"
+                              type="text"
+                              style="cursor: pointer"
+                              autocomplete="off"/>
+                          </div>
+                      <span class="error" ng-if="formRegistro.dianostico2.$invalid && formRegistro.dianostico2.$dirty"> Por favor ingresar Diagnostico*</span>
+
+                        </div>
+                        <div class="col s3"  ng-show="contadorInput >= 2">
+                          <label
+                            class="c-pointer noselectxtpqr"
+                            for="diagnosticoATEL2">Diagnostico 2</label>
+                          <div class="input-field-ps col s12">
+                            <input
+                              id="with_icon"
+                              ng-model="diagnosticoATEL2"
+                              name="dianostico3"
+                              type="text"
+                              style="cursor: pointer"
+                              autocomplete="off"/>
+                          </div>
+                      <span class="error" ng-if="formRegistro.dianostico3.$invalid && formRegistro.dianostico3.$dirty"> Por favor ingresar Diagnostico*</span>
+
+                        </div>
+                        <div class="col s3" ng-show="contadorInput >= 3">
+                          <label
+                            class="c-pointer noselectxtpqr"
+                            for="diagnosticoATEL3"
+                            >Diagnostico 3</label>
+                          <div class="input-field-ps col s12">
+                            <input
+                              id="with_icon"
+                              ng-model="diagnosticoATEL3"
+                              name="dianostico4"
+                              type="text"
+                              style="cursor: pointer"
+                              autocomplete="off"/>
+                          </div>
+                      <span class="error" ng-if="formRegistro.dianostico4.$invalid && formRegistro.dianostico4.$dirty"> Por favor ingresar Diagnostico*</span>
+
+                        </div>
+
+                        <div class="col s3" ng-show="contadorInput >= 4">
+                          <label
+                            class="c-pointer noselectxtpqr"
+                            for="diagnosticoATEL4">Diagnostico 4</label>
+                          <div class="input-field-ps col s12">
+                            <input
+                              id="with_icon"
+                              ng-model="diagnosticoATEL4"
+                              name="dianostico5"
+                              type="text"
+                              style="cursor: pointer"
+                              autocomplete="off"/>
+                          </div>
+                      <span class="error" ng-if="formRegistro.dianostico5.$invalid && formRegistro.dianostico5.$dirty"> Por favor ingresar Diagnostico*</span>
+
+                        </div>
+
+                        <div class="col s3" ng-show="contadorInput >= 5">
+                          <label
+                            class="c-pointer noselectxtpqr"
+                            for="diagnosticoATEL4">Diagnostico 5</label>
+                          <div class="input-field-ps col s12">
+                            <input
+                              id="with_icon"
+                              ng-model="diagnosticoATEL5"
+                              name="dianostico5"
+                              type="text"
+                              style="cursor: pointer"
+                              autocomplete="off"/>
+                          </div>
+                      <span class="error" ng-if="formRegistro.dianostico6.$invalid && formRegistro.dianostico6.$dirty"> Por favor ingresar Diagnostico*</span>
+                        </div>
+
+                        <div class="col s3">
+                          <label
+                            class="c-pointer noselectxtpqr"
+                            for="tiposolicitud"
+                            >Fecha de Diagnostico<span style="color: red">*</span></label
+                          >
+                          <input
+                            type="date"
+                            id="fechadeDiagnostico"
+                            name="fechadeDiagnostico"
+                            max="{{sysDay | date:'yyyy-MM-dd'}}"
+                            ng-model="fechadeDiagnostico"
+                            ng-required="true"
+                          />
+                        <span class="errorSpan" ng-if="formRegistro.fechadeDiagnostico.$invalid && formRegistro.fechadeDiagnostico.$dirty">Por favor ingresar Fecha*</span>
+                        </div>
+                        <div class="col s3">
+                          <label
+                            class="c-pointer noselectxtpqr"
+                            for="entidadCalificadora"
+                            >Entidad Calificadora<span style="color: red">*</span></label>
+                          <input
+                            type="text"
+                            id="entidadCalificadora"                      
+                            ng-model="entidadCalificadora"
+                            name="entidadC"
+                            ng-required="true"
+
+                          />
+                          <span class="errorSpan" ng-if="formRegistro.entidadC.$invalid && formRegistro.entidadC.$dirty"> Por favor ingresar Entidad*</span>
+                        </div>
+                    <div class="col s3">
+                          <label
+                            class="c-pointer noselectxtpqr"
+                            for="fileEventoAtel"
+                            >Adjunto<span style="color: red">*</span></label
+                          >
+                          <div class="file-field input-field">
+                            <div class="btn">
+                              <i class="icon-file-pdf"></i>
+                              <input
+                                type="file"
+                                accept=".pdf"
+                                id="fileEventoAtel"
+                                name="fileEventoAtel"
+                                ng-model="fileEventoAtel"
+                                ng-change="filtroPdfEventoAtel()"
+                              />
+                            </div>
+                            <div class="file-path-wrapper">
+                              <input
+                                id="inputFilePlaceHolderMasive"
+                                class="file-path"
+                                type="text"
+                                placeholder="Adjuntar PDF"
+                              />
+                              <span
+                                ng-if="dataFile"
+                                ng-class="{'red-text': filePqrs==null, 'green-text': filePqrs!=null }"
+                                >{{dataFile}}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div
+                id="Diag_2"
+                class="foot4 divcardcustom default-linear-gradient"
+              >
+                <div class="text-al divcardcustom2"></div>
+              </div>
+              <!-- FIN TABLA -->
+            </div>       
+      </div>
+    </div>
+    <div class="row text-center" ng-show="cancelarBoton">
+      <a
+      class="waves-effect waves-light btn white-text"
+      ng-click="validaFormEventosA()"
+      >
+      <i class="icon-plus-1"></i>
+      REGISTRAR</a>
+      <button
+        class="waves-effect waves-light btn white-text red"
+        ng-click="cancelarEventoatel()"
+      >
+      <i class="icon-cancel-circled2"></i>
+        CANCELAR
+      </button>
+    </div>
+  </div>
+  <!-- FIN DE TAB REGISTRAR  -->
+
+  <!-- MODAL DIAGNOSTICO  -->
+  <div id="modaldiagnosticoATEL" class="modal" style="overflow: hidden; border-radius: 15px;">
+    <div class="modal-content" style="padding: 0px !important">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px; height: 1000px;">
+          <div class="card-content foot4" style="padding: 10px; height: 75px; border-radius: 15px;">
+            <div class="col s8">
+              <h5 style="display: flex; align-items: center; justify-content: space-between; padding-left: 30px;">
+                <span class="white-text"><i class="icon-medkit"></i>DIAGNOSTICOS</span>
+                <i
+                  style="cursor: pointer"
+                  ng-click="closeModal()"
+                  class="material-icons white-text"
+                >
+                  close
+                </i>
+              </h5>
+            </div>
+          </div>
+          
+          
+          <div class="card-action" style="padding-bottom: 3px; border-top: 0">
+            <div class="row">
+            <div id="contenedor" ng-class="contadorInput == 0 ? calseDiv1 : calseDiv2"  style="padding-left: 28px;">
+                <form ng-submit="buscarDiagnosticoAtel()">
+                  <div class="input-field col s10">
+                    <input
+                      id="diaginputAtel"
+                      type="text"
+                      ng-model="diaginputAtel"
+                      style="cursor: pointer"
+                      class="clase-gray"/>
+
+                    <label for="diaginputAtel" style="cursor: pointer"
+                      >Diagnostico Principal:
+                      <span style="color: red"> ( * )</span></label>
+                    <a href="javascript:void(0)" ng-click="buscarDiagnosticoAtel()">
+                      <i style="position: absolute;
+                          top: 4px;
+                          right: 0px;
+                          cursor: pointer;"
+                        class="material-icons prefix default-color">search</i></a>
+                  </div>
+                 
+          
+                 <div class="col s1">
+                  <a href title="Nuevo Diagnostico"><i class="icon-plus-squared" ng-show="agregar == true" ng-click="contadorDiagnostico()" style="zoom: 120%; color: #24d124;"></i>  </a>
+                 </div>                               
+                </form>                                   
+              <div
+                style="max-height: 45vh; overflow-y: auto" class="col s12"
+              >
+              <div class="col m-b">
+                <span class="menu" style="color: rgb(21, 150, 21); padding-left: 80px; margin: 100px;" ng-show="txtDiag == true"><i class=" icon-check-1"></i> Diagnostico Principal Agregado Correctamente</span>
+              </div>
+
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th style="text-align: center">CODIGO</th>
+                      <th>DIAGNOSTICO</th>
+                      <th>SELECCIONAR</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="diag in datosDiagnostico">
+                      <td style="text-align: center">{{diag.Codigo}}</td>
+                      <td>{{diag.Nombre}}</td>
+                      <td>
+                        <div class="center">
+                          <i 
+                            ng-click="seleccionardiagnostico(diag)"
+                            style="cursor: pointer"
+                            class="material-icons prefix"
+                            >check</i>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr ng-if="datosDiagnostico.length==0">
+                      <th class="center-align" colspan="4">
+                        No hay Resultados
+                      </th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="col s5">
+              <div class="col s12" style="padding-left: 28px;">
+               <form class="contact-form" ng-submit="buscarMasDiagnosticos(diagnostico1)">
+                    <label for="diagnostico1" ng-show="contadorInput >= 1" style="cursor: pointer" ng-click="buscarMasDiagnosticos(diagnostico1)">Diagnostico 1:</label>
+                        <a href title="Agregar"><i class=" icon-ok"  ng-show="contadorInput >= 1" ng-click="seleccionarNuevosDiagnostico(diagnostico1, 1)" style="color: #0fda00;"></i> </a>  
+                        <a href title="Cancelar"><i class="icon-cancel"  ng-show="contadorInput == 1" ng-click="contadorInput = 0" style="color: #da3300;"></i></a>  
+                          
+                  <input class="diagnosticoAd border-none white input-text-new input-w-p input-out-new w-100 m-l black-text" type="text" id="DocumentoAfiliado"
+                    placeholder="Diagnostico 1" ng-model="diagnostico1" ng-show="contadorInput >= 1"
+                    autocomplete="off" list="datosDiagnosticoNuevo"/>
+                  <span style="color: red; display: none;" id="selecDiagnostico"> Seleccione el diagnostico</span>
+                        <datalist id="datosDiagnosticoNuevo" open="open">
+                          <option value="{{x.Nombre}}" ng-repeat="x in datosDiagnosticoNuevo">
+                        </datalist>
+              </form>
+    
+            <form class="contact-form" ng-submit="buscarMasDiagnosticos(diagnostico2)">
+                  <label for="diagnostico2" ng-show="contadorInput >= 2" style="cursor: pointer" ng-click="buscarMasDiagnosticos(diagnostico2)">Diagnostico 2:</label> 
+                    <a href title="Agregar">
+                      <i class=" icon-ok" ng-click="seleccionarNuevosDiagnostico(diagnostico2, 2)" ng-show="contadorInput >= 2" style="color: #0fda00;"></i>  
+                    </a>
+                    <a href title="Cancelar">
+                      <i class="icon-cancel"  ng-show="contadorInput == 2" ng-click="contadorInput = 1" style="color: #da3300;"></i>
+                    </a>
+
+                  <input class="diagnosticoAd border-none white input-text-new input-w-p input-out-new w-100 m-l black-text" type="text" id="diagnostico2"
+                    placeholder="Diagnostico 2" ng-show="contadorInput >= 2" ng-model="diagnostico2" style="color: black;" 
+                    autocomplete="off" list="datosDiagnosticoNuevo"/>
+                  <span style="color: red; display: none;" id="selecDiagnostico2">Seleccione el diagnostico</span>
+                  <datalist id="datosDiagnosticoNuevo" open="open">
+                    <option value="{{x.Nombre}}" ng-repeat="x in datosDiagnosticoNuevo">
+                  </datalist>
+            </form>
+
+            <form class="contact-form" ng-submit="buscarMasDiagnosticos(diagnostico3)">
+              <label for="diagnostico3" ng-show="contadorInput >= 3" style="cursor: pointer" ng-click="buscarMasDiagnosticos(diagnostico3)">
+                Diagnostico 3:</label>
+              <a href title="Agregar">  
+              <i class=" icon-ok"  ng-show="contadorInput >= 3" ng-click="seleccionarNuevosDiagnostico(diagnostico3, 3)" style="color: #0fda00;"></i>
+              </a>
+              <a href title="Cancelar">
+                <i class="icon-cancel"  ng-show="contadorInput == 3" ng-click="contadorInput = 2" style="color: #da3300;"></i>
+              </a>
+
+              <input class="diagnosticoAd border-none white input-text-new input-w-p input-out-new w-100 m-l black-text"
+              type="text" id="diagnostico3" placeholder="Diagnostico 3" ng-model="diagnostico3" ng-show="contadorInput >= 3" 
+              style="color: black;" list="datosDiagnosticoNuevo"/>
+              <span style="color: red; display: none;" id="selecDiagnostico3"> Seleccione el diagnostico</span>
+            <datalist id="datosDiagnosticoNuevo" open="open">
+              <option value="{{x.Nombre}}" ng-repeat="x in datosDiagnosticoNuevo"> 
+            </datalist>
+            </form>
+
+            <form class="contact-form" ng-submit="buscarMasDiagnosticos(diagnostico4)">
+                <label for="diagnostico4" ng-show="contadorInput >= 4" style="cursor: pointer" ng-click="buscarMasDiagnosticos(diagnostico4)">
+                  Diagnostico 4:</label> 
+                  <a href title="Agregar">
+                  <i class=" icon-ok"  ng-show="contadorInput >= 4" ng-click="seleccionarNuevosDiagnostico(diagnostico4, 4)" style="color: #0fda00;"></i> 
+                  </a>
+                  <a href title="Cancelar">
+                  <i class="icon-cancel"  ng-show="contadorInput == 4" ng-click="contadorInput = 3" style="color: #da3300;"></i>
+                  </a>
+                  
+                  <input class="diagnosticoAd border-none white input-text-new input-w-p input-out-new w-100 m-l black-text"
+                    type="text" id="diagnostico4" placeholder="Diagnostico 4" ng-model="diagnostico4" ng-show="contadorInput >= 4"
+                    style="color: black;" list="datosDiagnosticoNuevo"/>
+                <span style="color: rgb(255, 0, 0); display: none;" id="selecDiagnostico4">Seleccione el diagnostico</span>
+                <datalist id="datosDiagnosticoNuevo" open="open">
+                    <option value="{{x.Nombre}}" ng-repeat="x in datosDiagnosticoNuevo">
+                </datalist>
+            </form>
+
+            <form class="contact-form" ng-submit="buscarMasDiagnosticos(diagnostico5)">
+                <label for="diagnostico5" ng-show="contadorInput >= 5" style="cursor: pointer" ng-click="buscarMasDiagnosticos(diagnostico5)">Diagnostico 5:</label> 
+                  <a href title="Agregar">
+                    <i class=" icon-ok"  ng-show="contadorInput >= 5" ng-click="seleccionarNuevosDiagnostico(diagnostico5, 5)" style="color: #0fda00;"></i> 
+                  </a>
+                  <a href title="Cancelar">
+                    <i class="icon-cancel"  ng-show="contadorInput == 5" ng-click="contadorInput = 4" style="color: #da3300;"></i>
+                  </a>
+                  <input class="diagnosticoAd border-none white input-text-new input-w-p input-out-new w-100 m-l black-text" type="text" id="diagnostico5"
+                  placeholder="Diagnostico 5" ng-model="diagnostico5" ng-show="contadorInput >= 5" style="color: black;" list="datosDiagnosticoNuevo"/>
+                <span style="color: red; display: none;" id="selecDiagnostico5">Seleccione el diagnostico</span>
+                <datalist id="datosDiagnosticoNuevo" open="open">
+                  <option value="{{x.Nombre}}" ng-repeat="x in datosDiagnosticoNuevo">
+                </datalist>
+              </form>
+
+              </div>           
+            </div>
+          </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIN MODAL DIAGNOSTICO -->
+
+  <!-- INICIO DE TAB CONSULTA -->
+
+  <div
+    class="row dashboard-wrapper content-container white"
+    ng-show="TabsAtel == 2"
+  >
+  <div class="row" style="margin-bottom: 0;">
+
+    <div class="col s12 m12 l12" style="justify-content: center">
+      <div
+        class="card-action"
+        id="card-action"
+        style="
+          overflow: auto;
+          display: inline-block;
+          height: 100%;
+          padding-bottom: 0;
+        "
+      >
+        <!-- MOSTRAR PAGINADO -->
+        <div class="col s1 no-padding label-new m-b left">
+          <select class="select-new gray-input" style="box-shadow: none;" material-select watch
+              ng-model="Mostrar_Pag" ng-change="Mostrarnumerodatos()">
+              <option value="10" selected>10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+          </select>
+          <label style="font-size: .8rem;top: -1.5rem;">Mostrar</label>
+      </div>
+      <!-- FIN PAGINADO -->
+        
+        <div class="foot4 divcardcustom">
+          <div class="text-al divcardcustom2">
+            <strong class="switch"
+              >CONSULTA ({{registroConsulta.length}})</strong>
+
+            <div class="tooltip">
+              <i class="icon-download-1 cursor-pointer" title="Exportar Excel" ng-click="abrirFormExportar()"></i>
+              <span class="tooltiptext" style="font-size: 12px;width: 70px;margin-left: -35px;">Exportar Excel</span>
+            </div>  
+            <div class="tooltip">
+              <i class="icon-history cursor-pointer" title="Actualizar" ng-click="actualizarTabla()"></i>
+              <span class="tooltiptext" style="font-size: 12px;width: 70px;margin-left: -35px;">Actualizar</span>
+            </div>
+            <div class="tooltip">
+              <i class="icon-filter-1 cursor-pointer" title="Filtrar" ng-click="abrirFormFiltro()"></i>
+              <span class="tooltiptext" style="font-size: 12px;width: 70px;margin-left: -35px;">Filtrar</span>
+            </div>
+            <div
+              class="col s3 no-padding label-new right"
+              style="
+                width: 25%;
+                display: inline-flex;
+                margin-right: -5px;
+                margin-top: -2px;
+              "
+            >
+              <input
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l black-text"
+                style="text-align: right"
+                type="text"
+                autocomplete="off"
+                placeholder="Buscar Registro"
+                ng-model="filtroregistroAtel"
+                ng-change="filterATEL(filtroregistroAtel)"
+              />
+            </div>
+          </div>
+
+        </div>
+
+        <div class="divcardcustom" ng-show="visibilidadFiltro" style="transition: all 2s;" >  
+          
+          <div class="col s12" style="
+          color: rgb(30, 15, 100);
+          border: 3px solid;">
+            <div class="align-items-center black-text col d-flex justify-content-between s12 title-panel no-padding"
+            style="margin-bottom: 15px;">
+                  <div class="switch col s3">
+                    <label>
+                        <a class="btn margin-bottom-10" style="background-color: rgba(199 23 4 / 80%);">Filtro</a>
+                    </label>
+                  </div>
+              <div class="col s3">
+                <small>Inicio: </small> <small>(<span style="color: #e04242;">*</span>)</small>
+                <input  type="date"   ng-model="fechainicio" 
+                 max="{{sysDay | date:'yyyy-MM-dd'}}" class="border-none input-date-new input-out-new margin white" />
+              </div>
+             
+              <div class="col s3">
+                <small>Fin:</small> <small>(<span style="color: #e04242;">*</span>)</small>
+                <input  type="date"  ng-model="fechafinalAtel" 
+                max="{{sysDay | date:'yyyy-MM-dd'}}" class="border-none input-date-new input-out-new margin white"/>
+                </div>
+                <div class="col s4">
+                    <small>Tipo de Evento:</small> <small>(<span style="color: #e04242;">*</span>)</small>
+                    <select
+                      class="select-chosen-eps"
+                      style="padding-top: 0px; font-size: smaller;"
+                      ng-model="tipoEventoFiltrar"
+                    >
+                      <option value="" disabled>SELECCIONAR</option>
+                      <option value="EL">ENFERMEDAD LABORAL</option>
+                      <option value="AT">ACCIDENTE DE TRABAJO</option>
+                      <option value="TD">TODOS</option>
+                    </select>     
+                  </div>
+                <div class="col s4">
+                  <i ng-click="Filtroporfecha()" class="btn btn-small cursor-pointer icon-filter-1"
+                    title="Listar"></i>
+                    <i ng-click="obtenerRegistrosAtel()" ng-show="inactiveCancelfiltro == true" class="btn btn-small cursor-pointer red  icon-cancel-circle-2"
+                    title="Cancelar Filtro"></i>
+                </div>
+                
+
+              </div>                 
+              
+        </div>
+        </div>
+
+        <div class="divcardcustom" ng-show="visibilidadExportar" style="transition: all 2s;" >  
+          <div class="col s12" style="
+          color: rgb(30, 15, 100);
+          border: 3px solid;">
+        <div class="align-items-center black-text col d-flex justify-content-between s12 title-panel no-padding"
+            style="margin-bottom: 15px;">
+            <div class="switch col s3">
+              <label>
+                  <a class="btn margin-bottom-10" style=" background-color: rgba(25, 7, 69, 0.8);">Exportar</a>
+              </label>
+            </div>
+              <div class="col s3">
+                <small>Inicio:</small> <small>(<span style="color: #e04242;">*</span>)</small>
+                <input  type="date" id="fechaIniexportar"  ng-model="fechaIniexportar"  
+                 max="{{sysDay | date:'yyyy-MM-dd'}}" class="border-none input-date-new input-out-new margin white" />
+              </div>
+
+              <div class="col s3">
+                <small>Fin:</small> <small>(<span style="color: #e04242;">*</span>)</small>
+                <input  type="date" id="fechafinalAtelExportar"  ng-model="fechafinalAtelExportar"
+                max="{{sysDay | date:'yyyy-MM-dd'}}" class="border-none input-date-new input-out-new margin white"/>
+                </div>
+
+                <div class="col s4">
+                    <small>Tipo de Evento:</small> <small>(<span style="color: #e04242;">*</span>)</small>
+                    <select
+                      class="select-chosen-eps"
+                      style="padding-top: 0px; font-size: smaller;"
+                      ng-model="tipoEventoExportar"
+                    >
+                      <option value="" disabled>SELECCIONAR</option>
+                      <option value="EL">ENFERMEDAD LABORAL</option>
+                      <option value="AT">ACCIDENTE DE TRABAJO</option>
+                      <option value="TD">TODOS</option>
+
+                    </select>     
+                  </div>
+                <div class="col s4">
+                  <i  class="btn btn-small cursor-pointer  icon-download-5"
+                    title="EXPORTAR EXCEL" ng-click="exportarArchivo()"></i>
+                </div>
+              </div>                 
+              
+        </div>
+        </div>
+
+        <div class="default-color" ng-init="obtenerRegistrosAtel()">
+          <table
+            class="responsive-table tablaListado bordered highlight"
+            style="
+              width: 100%;
+              font-size: 6px !important;
+              color: rgb(30, 15, 100);
+              border: 3px solid;
+              zoom: 95%;
+            " 
+          >
+            <thead class="default-border default-color">
+              <th>Fecha de Registro</th>
+              <th>Fecha del Dictamen</th>
+              <th>Fecha de Estructuracion/Evento</th>
+              <th>ID del Dictamen</th>
+              <th>Tipo y numero de Documento</th>
+              <th>Nombre del Afiliado</th>
+              <th>Diagnostico</th>
+              <th>Regional</th>
+              <th>Regimen</th>
+              <th>Edad</th>
+              <th>Entidad Calificadora</th>
+              <th>Tipo de Evento</th>
+              <th><i class="icon-tasks" title="ACCION"></i></th>
+            </thead>
+            <tbody>
+              <tr
+                style="cursor: pointer"
+                ng-repeat="x in registroConsulta | filter: filtroregistroAtel | inicio: currentPage * pageSize | limitTo: pageSize"
+               >
+                <td class="order">{{x.fecha_registro}}</td>
+                <td> {{x.fecha_dictamen}}</td>
+                <td>{{x.fecha_estructuracion}}</td>
+                <td>{{x.numero_dictamen}}</td>
+                <td>{{x.tipo_documento}} - {{x.documento}}</td>
+                <td>{{x.primer_nombre}} {{x.segundo_nombre}} {{x.primer_apellido}} {{x.segundo_apellido}}</td>
+                <td>{{x.diagnostico}}</td>
+                <td>{{x.regional}}</td>
+                <td>{{x.regimen}}</td>
+                <td>{{x.edad}}</td>
+                <td>{{x.entidad_calificadora}}</td>
+                <td>{{x.tipo_evento}}</td>
+                <td>
+                <i
+                  class="iconFontSize icon-file-pdf default-color c-pointer"
+                  ng-click="descargarSoporte(x.ruta)"
+                  style="zoom: 130%;"
+                  title="VER ADJUNTO"
+                ></i>
+                </td>                          
+              </tr>
+              <tr ng-show="registroConsulta.length == 0">
+                <td
+                  class="center-align"
+                  colspan="11"
+                  style="font-weight: bolder"
+                >
+                  No se encontraron resultados.
+                </td>
+              </tr>
+              <tr ng-show="registroConsultaTemp.length == 0">
+                <td
+                  class="center-align"
+                  colspan="11"
+                  style="font-weight: bolder"
+                >
+                  No se encontraron resultados.
+                </td>
+              </tr>
+            </tbody>
+            <tfoot class="default-background white-text" style="font-weight: 600;">
+              <td colspan="6" class="center" style="padding: 0;">
+                TOTAL ENCONTRADAS: {{registroConsulta.length}}
+              </td>
+              <td colspan="8" class="center" style="padding: 0;">
+                TOTAL ENCONTRADAS POR FILTRO: {{registroConsultaTemp.length}}
+              </td>
+            </tfoot>
+          </table>
+
+          <!-- <div class="row margin">
+            <div class="col s4">
+              <label for="totalEncontradas"
+                >TOTAL ENCONTRADAS: {{registroConsulta.length}}</label>
+            </div>
+
+            <div class="col s6 right-align">
+              <label for="totalFiltro"
+                >TOTAL ENCONTRADAS POR FILTRO: {{registroConsultaTemp.length}}</label>
+            </div>   
+          </div> -->
+
+          <ul style="text-align: center; padding-top: 20px" class="pagination">
+            <li>
+              <button
+                ng-disabled='currentPage == 0'
+                class="btn-floating default-linear-gradient"
+                ng-click="paso('back')"
+              >
+                &laquo;
+              </button>
+            </li>
+            <li ng-repeat="page in pages">
+              <button
+                ng-disabled='currentPage == page.no - 1'
+                class="btn-floating default-linear-gradient"
+                ng-click="setPage(page.no)"
+              >
+                {{page.no}}
+              </button>
+            </li>
+            <li>
+              <button
+                ng-disabled='currentPage >= registroConsultaTemp.length/pageSize - 1'
+                class="btn-floating default-linear-gradient"
+                ng-click="paso('next')"
+              >
+                &raquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <!-- //-// -->
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+    <!-- INICIO DE TAB PERMISOS -->
+
+  <div class="row dashboard-wrapper content-container white" ng-show="TabsAtel == 3">
+    <div class="col s3 no-padding label-new m-b left"
+              style="margin-right: .5rem !important;margin-top: 3vh;width: 24%;">
+              <input class="margin border-none input-text-new gray-input w-100 m-l" type="text" style="border-radius: 15px" placeholder="...."
+                ng-model="filtroUsuario" ng-change="filterUsuariosPermisos(filtroUsuario);">
+              <label>Buscar</label>
+              <i class="icon-search cursor-pointer default-color" style="margin-left: -2.45em;" title="Buscar"></i>
+     </div>
+
+    <div class="foot4 divcardcustom" style="width: 100%;">
+      <div class="text-al divcardcustom2">
+        <strong class="switch"
+          >LISTADO DE USUARIOS CON PERMISOS</strong>
+
+        <div class="tooltip">
+          <i class="icon-user-add cursor-pointer" ng-click="AbrirModalBucarUsuario()"></i>
+          <span class="tooltiptext" style="font-size: 12px;width: 70px;margin-left: -35px;">AGREGAR USUARIO</span>
+        </div> 
+    </div>
+    </div>
+
+    <!-- MODALPERMISOS -->
+    <div id="modalbuscarUsuarioATEL" class="modal" style="overflow: hidden; width: 40%; border-radius: 16px;">
+      <div class="modal-content" style="padding: 0px !important">
+        <div class="col s12" style="padding-left: 0px; padding-right: 0px">
+          <div class="card charts" style="margin-top: 0px; margin-bottom: 0px">
+            <div class="card-content foot4" style="padding: 10px; height: 70px; border-radius: 15px;">
+              <div class="col s12">
+                <h5 style="display: flex; align-items: center; justify-content: space-between;">
+                  <span class="white-text" autocomplete="off">AGREGAR USUARIOS</span>
+                  <i
+                    style="cursor: pointer"
+                    ng-click="closeModal()"
+                    class="material-icons white-text"
+                  >
+                    close
+                  </i>
+                </h5>
+              </div>
+            </div>
+            <div class="card-action" style="padding-bottom: 3px; border-top: 0">
+              <div class="row">
+                <div class="col s12">
+                  <form ng-submit="buscarUsuario()">
+                    <div class="input-field col s12">
+                      <input
+                        id="buscarUsuarioAtel"
+                        type="text"
+                        ng-model="buscarUsuarioAtel"
+                        style="cursor: pointer"
+                        class="clase-gray"
+                        autocomplete="off"
+                      />
+                      <label for="buscarUsuarioAtel" style="cursor: pointer"
+                        >Nombre o Numero de Identificacion:
+                        <span style="color: red"> ( * )</span></label
+                      >
+                      <a
+                        href="javascript:void(0)"
+                        ng-click="buscarUsuario()">
+                        <i
+                          style="
+                            position: absolute;
+                            top: 4px;
+                            right: 0px;
+                            cursor: pointer;
+                                "
+                          class="material-icons prefix default-color">search</i></a>
+                    </div>
+                  </form>
+                </div>
+                <div
+                class="col s12"
+                style="max-height: 45vh; overflow-y: auto"
+              >
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th style="text-align: center">CEDULA</th>
+                      <th>NOMBRE</th>
+                      <th>CARGO</th>
+                      <th>SELECCIONAR</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      ng-repeat="us in usuarioPermiso"
+                    >
+                      <td style="text-align: center">{{us.cedula}}</td>
+                      <td>{{us.nombre}}</td>
+                      <td>{{us.cargo}}</td>
+                      <td>
+                        <div class="center">
+                          <i
+                            ng-click="seleccionarUsuario(us)"
+                            style="cursor: pointer"
+                            class="material-icons prefix"
+                            >check</i>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr ng-if="usuarioPermiso.length==0">
+                      <th class="center-align" colspan="4">
+                        No hay Resultados
+                      </th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+        <!-- TABLA -->
+        <table id="EV_Tabla" class="bordered table_center_align highlight border-color default-border" style="width:100%;font-size:5px!important; border-width: thick;">
+          <thead class="default-border default-color">
+            <tr>
+              <th>NÚM. #</th>
+              <th>CEDULA</th>
+              <th>NOMBRE</th>
+              <th>CARGO</th>
+              <th>REGISTRO</th>
+              <th>CONSULTA</th>
+              <th>ADMINISTRADOR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="lis in listadoUsuariosPermisos | filter: filtroUsuario"
+              style="color: black;cursor:pointer;">
+    
+              <td>{{$index + 1}}</td>
+              <td >{{lis.CEDULA}}</td>
+              <td >{{lis.NOMBRE}}</td>
+              <td> {{lis.CARGO}}</td>
+              <!-- CARGUE -->
+              <td>
+                <div class="tooltip">
+                  <i ng-class="{'cargue':lis.CARGAR_REPORTE == 2}" class="{{lis.CARGAR_REPORTE == 1 ? ' icon-ok-outline' : 'icon-cancel-outline'}} default-color c-pointer"
+                    style="font-size: 16px; "
+                    ng-click="cambiarPermisos(lis,'cargarReporte', lis.CARGAR_REPORTE == 1 ? 2 : 1)"></i>
+                  <span class="tooltiptext"
+                    style="font-size: 12px;width: 70px;margin-left: -36px;margin-bottom: 4px;">{{lis.CARGAR_REPORTE == '1'
+                    ?
+                    'Si' :
+                    'No'}}</span>
+                </div>
+              </td>
+              <!-- ESTADO  -->
+              <td>
+                  <div class="switch">
+                    <div class="col s12">
+                        <p>
+                            <label>
+                              <span ng-class="{'inactivo':lis.ESTADO == false}">NO</span>
+                              <input type="checkbox"  ng-model="lis.ESTADO" ng-click="cambiarPermisos(lis,'estado', lis.ESTADO)">
+                              <span  class="lever check-c"></span>
+                              <span ng-class="{'activo':lis.ESTADO == true}" class="spinner">SI</span>
+                            </label>
+                        </p>
+                    </div>
+                </div>
+              </td>
+                <!-- ADMIN -->
+              <td>
+                <div class="switch">
+                  <div class="col s12">
+                      <p>
+                          <label>
+                            <span ng-class="{'inactivo':lis.ADMIN == false}">NO</span>
+                            <input type="checkbox"  ng-model="lis.ADMIN" ng-click="cambiarPermisos(lis,'rolUsuario', lis.ADMIN)">
+                            <span  class="lever check-c"></span>
+                            <span ng-class="{'activo':lis.ADMIN == true}" class="spinner">SI</span>
+                          </label>
+                      </p>
+                  </div>
+              </div>
+              </td>
+
+            </tr>
+            <tr ng-if="listadoUsuariosPermisos.length==0">
+              <td class="center-align" colspan="9" style="font-weight: bolder;">No se encontraron
+                resultados.</td>
+            </tr>
+          </tbody>
+        </table>
+    
+  </div>
+
+  <style>
+    .switch label input[type=checkbox]:checked+.lever:after{
+      background-color: hsl(113, 76%, 47%);
+      left: 24px;
+
+    }
+
+    .switch label .lever.check-c:after{
+      background-color: #e04242;
+    }
+
+    table th,
+    table td {
+      text-align: center;
+    }
+
+    thead {
+          border-bottom: 1px solid #d0d0d0;
+          background-color: gainsboro;
+          }    
+
+    #EV_Tabla>thead {
+      font-size: 1em;
+      /* border: 3px; */
+      border-width: medium;
+      border-style: solid;
+      border-radius: .375rem;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .table_border,
+    .table_border th,
+    .table_border td {
+      border: 1px solid #c2c2c2;
+    }
+
+    .table_center_align,
+    .table_center_align th,
+    .table_center_align td {
+      text-align: center;
+    }
+
+    .etiquetaRoja {
+      padding: 5px;
+      background-color: red;
+      color: white;
+    }
+
+    .etiquetaVerde {
+      padding: 5px;
+      background-color: green;
+      color: white;
+    }
+
+    .etiquetaNaranja {
+      padding: 5px;
+      background-color: orange;
+      color: white;
+    }
+
+    .file-upload-wrapper {
+      position: relative;
+      width: 100%;
+      height: 10vh;
+      /* height: 44px; */
+      /* border: 1px solid #eeeeee; */
+      z-index: 1;
+      border-radius: 10px;
+      border: 2px dashed #ccc;
+    }
+
+    .file-upload-wrapper.success {
+      border: 2px dashed #08d108;
+    }
+
+    .file-upload-wrapper:after {
+      text-align: center;
+      content: attr(data-text);
+      font-size: 3vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #fff;
+      padding: 10px 15px;
+      display: block;
+      width: calc(100% - 40px);
+      pointer-events: none;
+      z-index: 20;
+      line-height: 2;
+      color: #999;
+      border-radius: 5px 10px 10px 5px;
+      font-weight: 400;
+      height: 8vh;
+    }
+
+    .file-upload-wrapper:hover:before {
+      background: #3d8c63;
+    }
+
+    .file-upload-wrapper input {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 99;
+      height: 43px;
+      margin: 0;
+      padding: 0;
+      display: block;
+      cursor: pointer;
+      width: 100%;
+      height: 10vh;
+    }
+
+    /* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+    .Con_pulse_A {
+      border-radius: 50%;
+      color: #fff;
+      animation: animate-pulse_A 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_A {
+      0% {
+        box-shadow: 0 0 0 0 rgba(3, 197, 20, 0.7), 0 0 0 0 rgba(3, 197, 20, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(3, 197, 20, 0),
+          0 0 0 0 rgba(3, 197, 20, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(3, 197, 20, 0), 0 0 0 15px rgba(3, 197, 20, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(3, 197, 20, 0), 0 0 0 0 rgba(3, 197, 20, 0);
+      }
+    }
+
+    .Con_pulse_X {
+      border-radius: 50%;
+      color: #fff;
+      animation: animate-pulse_X 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_X {
+      0% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.7),
+          0 0 0 0 rgba(245, 75, 75, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(245, 75, 75, 0),
+          0 0 0 0 rgba(245, 75, 75, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0),
+          0 0 0 15px rgba(245, 75, 75, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0), 0 0 0 0 rgba(245, 75, 75, 0);
+      }
+    }
+
+    td{
+      text-transform: uppercase;
+    }
+
+    .switch label>span.activo {
+      color: rgb(21, 139, 31) !important;
+      
+    }
+
+    .tooltip>i.cargue {
+      color: #e04242;
+    }
+
+    .switch label>span.inactivo {
+      color: rgb(214, 45, 23) !important;
+    }
+
+    .switch label>span.si .lever.check-c:after {
+      color: rgb(214, 23, 23) !important;
+    }
+
+    .switch label>span.si input[type=checkbox]:checked+.lever:after{
+      background-color: red;
+    }
+
+    select:disabled {
+      color: black;
+    }
+    
+
+    .default-linear-gradient {
+      border-radius: 0px !important;
+    }
+
+    .btn-floating .default-linear-gradient {
+      border-radius: 10px !important;
+    }
+
+    .Valid_Campo {
+      border: 1px solid red !important;
+    }
+
+    .text-upper {
+      text-transform: uppercase !important;
+    }
+
+    .tabs {
+      height: 30px !important;
+    }
+
+    .tabs .tab {
+      line-height: 30px !important;
+      height: 30px !important;
+    }
+
+    .label-new > label {
+      display: table;
+    }
+
+    #toast-container .toast {
+      border-radius: 10px !important;
+      font-weight: 600;
+      text-align: center !important;
+      word-break: keep-all;
+      padding: 10px 25px;
+      width: auto;
+      background: linear-gradient(to bottom left, #e04242, #8b0000, #e04242);
+    }
+
+    #toast-container .success {
+      background: linear-gradient(to bottom left, #0fda00, #007217, #0fda00);
+    }
+
+    .errorSpan{
+    color: red;
+          }
+
+    /* //////////////////////////////////////////////////////////////////////////////// */
+  </style>
+</div>

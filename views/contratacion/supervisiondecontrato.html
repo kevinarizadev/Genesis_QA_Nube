@@ -1,0 +1,2286 @@
+<div id="pantalla" class="white newdesing">
+  <!-- configuracion de los tabs principales -->
+  <div class="row section-header" style="margin-top: 7px">
+    <ul
+      class="left mailbox-custom-search list-inline"
+      style="width: 100%;display: flex;justify-content: space-between;align-items: center;">
+      <li id="inicio">
+        <h5 onclick="location.reload();" class="cursor-pointer">
+          MODULO SUPERVISIÓN DE CONTRATOS
+        </h5>
+      </li>
+      <li>
+        <ul class="tabs transparent" style="overflow: hidden">
+          <li
+            class="tab col w-auto" ng-class="{subraya : Tabs == 1}"ng-show="show_tab_inicio">
+            <a ng-click="Set_Tab(1);" id="tabs_1" href>INICIO</a>
+          </li>
+          <li
+            class="tab col w-auto"
+            ng-class="{subraya : Tabs == 2}" ng-show="show_tab_administracion">
+            <a ng-click="Set_Tab(2);" id="tabs_2" href>ADMINISTRACION</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div ng-show="show_procesoSupervision">
+    <!-- INICIO DE PROCESO DE SUPERVISION -->
+    <div class="col s12" ng-show="vistaConsulta">
+      <div class="card ng-scope" style="margin: 38px; bottom: 10px; zoom: 75%">
+        <div class="row margin">
+          <div class="col l11 m11 s11 center">
+            <strong>
+              <h5><b>PROCESO DE SUPERVISION</b></h5>
+            </strong>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col l7 m7 s7">
+            <div class="row center">
+              <div class="row form-group">
+                <div class="col s12 m12 l12 margin">
+                  <div class="col s12">
+                    <div class="col s4 no-padding label-new m-b right" style="margin-right: 0.5rem !important; margin-top: 30px" >
+                      <input id="Var_Seccional_Filtrar_Sol" class="margin border-none input-text-new gray-input w-100 m-l" autocomplete="off" type="text" placeholder="Buscar..." ng-model="listContratos" text-upper/>
+                      <i class="icon-search cursor-pointer default-color" style="margin-left: -1.45em" title="Buscar"></i>
+                    </div>
+                  </div>
+                  <!-- ng-show="tipodeRol == 'SUPERVISOR'" -->
+                      <div class="col l12 m12 s12" >
+                            <div ng-repeat="c in listaConsolidado" class="card-panel center-align white-text no-padding">
+                              <div style="padding: 5px 5px 5px;background-color: #1a2e63;position:relative">
+                                <p class="margin" style="z-index: 10;position: relative;">
+                                  <strong style="padding: 2px 15px;" class="ng-binding">
+                                    ESTADO DE LAS SUPERVISIONES
+                                  </strong>
+                                </p>
+                              </div>
+                              <div class="black-text white" style="font-size: 14px;padding: 10px 20px;display: flex;justify-content: space-around;">
+                                <a class="red-text" style="width: 50%;display: grid;font-weight: bold">{{c.CANTIDAD}}<span class="icon-chart-line ng-binding">  Supervisiones a Realizar</span> 
+                                </a>
+                                <a class="green-text" 
+                                 style="width: 50%;border-left: 1px solid #ededed;display: grid;font-weight: bold">{{c.REALIZADAS}}<span class="ng-binding icon-ok-5">  Supervisiones Realizadas</span>
+                                </a>
+                              </div>
+                            </div>
+                      </div>
+                  <div class="col s12" style="margin-top: -13px;">
+                    <div style="max-height: 66vh;overflow-y: auto;border: 1px solid;overflow-x: hidden;">
+                      <table id="tabla_modal_ENTREGA" class="highlight" style="width: 100%; color: black">
+                        <thead>
+                          <th class="center default-background white-text">NIT</th>
+                          <th class="center default-background white-text">IPS</th>
+                          <th class="center default-background white-text">FECHA DE EVALUACION</th>
+                          <th class="center default-background white-text">SUPERVISION</th>
+                          <th class="center default-background white-text">CONTROL</th>
+                          <th class="center default-background white-text">ACCION{{list.PROCESO}}</th>
+                        </thead>
+                        <tbody id="idpro">
+                          <tr ng-repeat="list in lista_Contrato |  filter:listContratos">
+                            <td class="center"><b>{{list.CODIGO}}</b></td>
+                            <td class="center"><b>{{list.NOMBRE}}</b></td>
+                            <td class="center"><b>{{list.FECHA}}</b></td>
+                            <td class="center">
+                              <!-- ng-show="list.REALIZADA == 'N' || list.PROCESO == 7" -->
+                              <i   ng-click="function_nuevaSupervision(list)" class="icon-user-plus fs-20 cursor-pointer" title="Nueva supervicion"></i>
+                            </td>
+                            <td class="center">
+                              <i ng-show="list.REALIZADA =='S' && list.PROCESO == null  " ng-click="function_bucarSupervision(list)" class="icon-search-5 fs-20 cursor-pointer" title="Buscar evaluacion"></i>
+                            <i ng-show="list.PROCESO > 1 || list.PROCESO == 8" ng-click="function_editarSupervision(list);" class="icon-edit-3 fs-20 cursor-pointer" style="color: red" title="Se encuentra en el proceso #{{list.PROCESO === 8 ? (7 + ',ya has terminado la supervisión. Por favor, informa a tu supervisor.') : list.PROCESO }}"></i>
+                            </td>
+                            <td class="center">
+                              <i  ng-show="list.PROCESO > 1 || list.PROCESO == 7" ng-click="function_eliminarSupervcion(list)" class="icon-trash fs-20 cursor-pointer" title="Eliminar Supervision"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div style="width: 41%; display: flex">
+                      <label for="normal">Total de de contratos: {{lista_Contrato.length}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col l5 m5 s5">
+            <div class="row center" style="margin-top: 124px">
+              <img
+                src="assets/images/Supervisioncontrato/supervision.svg"
+                class="margin center"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- LISTADO DE CONTRATATOS -->
+    <div class="col s12" ng-show="vistaconsultaContrato">
+      <div class="card ng-scope" style="margin: 38px; bottom: 10px; zoom: 90%">
+        <div class="row">
+          <div class="col s12">
+            <div class="col l12 m12 s12">
+              <div class="row form-group" ng-show="visualTable">
+                <blockquote>
+                  <h6>Listado de Contratos</h6>
+                </blockquote>
+                <div class="row margin">
+                  <div class="col l12 m12 s12">
+                      <div class="row right">
+                        <button type="button" class="center icon-reply" style="border-radius: 10px" ng-click="Inicio()" title="Volver al incio"></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col s12 m12 l12 margin">
+                  <div class="col s12">
+                    <div style="max-height: 70vh;overflow-y: auto;border: 1px solid;overflow-x: hidden;">
+                      <table id="tabla_modal_ENTREGA" class="highlight" style="width: 100%; color: black">
+                        <thead>
+                          <th class="center default-background white-text">Id Proceso</th>
+                          <th class="center default-background white-text">Fecha supervision</th>
+                          <th class="center default-background white-text">Ips</th>
+                          <th class="center default-background white-text">Supervisor</th>
+                          <th class="center default-background white-text">Ver supervion detalle</th>
+                          <th class="center default-background white-text">Imprimir</th>
+                          <!-- <th class="center default-background white-text">Editar</th> -->
+                        </thead>
+                        <tbody id="idpro">
+                          <tr ng-repeat="contratos in listaconsultaContrato |  filter:busquedaInfo">
+                          <td class="center">{{contratos.ID_PROCESO}}</td>
+                            <td class="center">{{contratos.FECHA_VISITA}}</td>
+                            <td class="center">{{contratos.IPS}}</td>
+                            <td class="center">{{contratos.SUPERVISIOR}}</td>
+                            <td class="center">
+                              <i ng-click="function_obtener_supervision_detalle(contratos)" class="icon-eye-1 fs-20 cursor-pointer" title="Ver supervision detalle"></i>
+                            </td>
+                            <td class="center">
+                              <i ng-click="function_imprimirSupervision(contratos,'P')" class="icon-print-3 fs-20 cursor-pointer" title="Imprimir evaluacion"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div style="width: 89%; display: flex">
+                      <div style="width: 50%">
+                        <label for="normal">Total de de contratos:{{listaconsultaContrato.length}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group" ng-show="visualtableDetalle">
+          <blockquote><h6>Listado de Contratos Detalle</h6></blockquote>
+          <div class="row margin">
+            <div class="col l12 m12 s12">
+                <div class="row right">
+                  <button type="button" class="center icon-reply" style="border-radius: 10px" ng-click="function_controlVista('vistaconsultaContrato')"  title="Volver al incio"></button>
+                </div>
+            </div>
+          </div>
+          <div class="col s12 m12 l12 margin">
+            <div class="col s12">
+              <div style="max-height: 70vh;overflow-y: auto;border: 1px solid;overflow-x: hidden;">
+                <table id="tabla_modal_ENTREGA" class="highlight" style="width: 100%; color: black">
+                  <thead>
+                    <th class="center default-background white-text">Fecha supervision</th>
+                    <th class="center default-background white-text">Ips</th>
+                    <th class="center default-background white-text">N° de contrato</th>
+                    <th class="center default-background white-text">Supervisor</th>
+                    <th class="center default-background white-text">Ver supervion</th>
+                    <th class="center default-background white-text">Imprimir</th>
+                    <!-- <th class="center default-background white-text">Editar</th> -->
+                  </thead>
+                  <tbody id="idpro">
+                    <tr ng-repeat="contratos in listaconsultaDetalle |  filter:busquedaInfo">
+                      <td class="center">{{contratos.FECHA_VISITA}}</td>
+                      <td class="center">{{contratos.IPS}}</td>
+                      <td class="center">{{contratos.CONTRATO}}</td>
+                      <td class="center">{{contratos.SUPERVISIOR}}</td>
+                      <td class="center">
+                        <i ng-click="function_imprimirSupervision(contratos,'N')" class="icon-eye-1 fs-20 cursor-pointer" title="Ver evaluacion"></i>
+                      </td>
+                      <td class="center">
+                        <i ng-click="function_imprimirSupervision(contratos,'S')" class="icon-print-3 fs-20 cursor-pointer" title="Imprimir evaluacion"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div style="width: 89%; display: flex">
+                <div style="width: 50%">
+                  <label for="normal">Total de de contratos:
+                    {{listaconsultaDetalle.length}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal listado de prestadores supervisados -->
+        <!-- <div id="modalconsultaPrestador" class="modal form-group" style="overflow: hidden">
+          <div class="modal-content" style="padding: 0px !important">
+            <div class="col s12" style="padding-left: 0px; padding-right: 0px">
+              <div class="card charts" style="margin-top: 0px; margin-bottom: 0px">
+                <div class="default-background" style="padding: 0; zoom: 60%">
+                  <div class="col l12 m12 s12">
+                    <div class="row margin">
+                      <div class="col s11">
+                        <h5 class="white-text">Listado de prestadores</h5>
+                      </div>
+                      <div class="col s1">
+                        <h5 style="text-align: end">
+                          <i
+                            style="cursor: pointer"
+                            ng-click="closemodals('consultaPrestador')"
+                            class="material-icons white-text"
+                            >close</i
+                          >
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="card-action"
+                  style="padding-bottom: 3px; border-top: 0"
+                >
+                  <div class="form-group row">
+                    <div class="col s12">
+                      <form ng-submit="consulta_Prestador1(buscard1)">
+                        <div
+                          class="input-field col s6"
+                          style="margin-left: -21px"
+                          ng-click="consulta_Prestador1(buscard1)"
+                        >
+                          <input
+                            id="buscard1"
+                            type="text"
+                            ng-model="buscard1"
+                            style="cursor: pointer"
+                            class="clase-gray"
+                            autocomplete="off"
+                          />
+                          <label for="buscard1" style="cursor: pointer"
+                            >Prestadores:
+                            <span style="color: red">*</span></label
+                          >
+                          <a href="javascript:void(0)">
+                            <i
+                              style="
+                                position: absolute;
+                                top: 5px;
+                                right: 0px;
+                                cursor: pointer;
+                              "
+                              class="material-icons prefix default-color"
+                              >search</i
+                            ></a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                    <div style="width: 100%">
+                      <table
+                        id="H1_Tabla"
+                        class="bordered table_center_align"
+                        style="width: 100%; font-size: 6px !important"
+                      >
+                        <thead
+                          class="center-align default-background default-border white-text"
+                        >
+                          <tr>
+                            <th>Nit</th>
+                            <th>Prestador supervisado</th>
+                            <th>Seleccionar</th>
+                          </tr>
+                        </thead>
+                        <tbody class="default-border">
+                          <tr
+                            ng-repeat="prestadores in listadodePrestadores1  |  filter:buscard1 as resultips"
+                          >
+                            <td style="text-align: center">
+                              {{prestadores.CODIGO}}
+                            </td>
+                            <td style="text-align: center">
+                              {{prestadores.NOMBRE}}
+                            </td>
+                            <td>
+                              <div class="center">
+                                <i
+                                  ng-click="seleccionaripsReceptora1(prestadores)"
+                                  style="cursor: pointer"
+                                  class="material-icons prefix"
+                                  >check</i
+                                >
+                              </div>
+                            </td>
+                          </tr>
+                          <tr ng-show="listadodePrestadores1.length==0">
+                            <td
+                              class="center-align"
+                              colspan="10"
+                              style="font-weight: bolder"
+                            >
+                              No se encontraron resultados para su revision.
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div style="width: 89%; display: flex">
+                        <div style="width: 50%">
+                          <label for="normal"
+                            >Total encontrados:
+                            {{listadodePrestadores1.length}}</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <!-- INICIO FORMULARIO DE NUEVA SUPERVISION  -->
+    <div class="col s12" ng-show="vistanuevaSupervision">
+      <div class="card ng-scope" style="margin: 38px; bottom: 10px; zoom: 75%">
+        <div class="row">
+          <div class="col s12">
+            <div class="col l12 m12 s12">
+              <blockquote>
+                <h6><b>Procedimiento de operación, seguimiento y evaluacion de la red</b>
+                </h6>
+              </blockquote>
+              <div class="row margin">
+                <div class="col l12 m12 s12">
+                  <div class="row right">
+                    <button type="button" class="center icon-reply" style="border-radius: 10px" ng-click="Inicio()" title="Volver al incio"></button>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col l2 m2 s2">
+                  <label id="id_nuevasuper_fecha_Vista_label" style="padding-left: 6%; font-size: inherit">Fecha supervision:<span style="color: red">*</span></label>
+                  <div class="col s12">
+                    <input id="id_nuevasuper_fecha_Vista"  class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l ng-pristine ng-valid ng-valid-max ng-touched" 
+                     ng-model="nuevasuper.fecha_Vista" type="date" ng-change="validarVacio('id_nuevasuper_fecha_Vista','id_nuevasuper_fecha_Vista_label')" required/>
+                  </div>
+                </div>
+                <div class="col l2 m2 s2">
+                  <label style="padding-left: 4%; font-size: inherit">Prestador supervisado:</label>
+                  <div class="col s12">
+                    <input ng-model="nuevasuper.prestadorSupervisado" type="text" disabled/>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3">
+                  <label style="padding-left: 4%; font-size: inherit">Nombre del contrastita:</label>
+                  <div class="col s12">
+                    <input ng-model="nuevasuper.nombreContratista" type="text" disabled/>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col l2 m2 s2">
+                  <label id="id_nuevasuper_selecRegimen_label" for="selecRegimen" style="padding-left: 5%; font-size: inherit">Regimen:<span style="color: red">*</span></label>
+                  <div class="col s12" type="text">
+                    <select class="select-new-ps cursor-pointer" type="text" ng-model="nuevasuper.selecRegimen" id="id_nuevasuper_selecRegimen"
+                    ng-change="function_optener_contrato_Total();validarVacio('id_nuevasuper_selecRegimen','id_nuevasuper_selecRegimen_label')" required>
+                      <option value="" disabled>SELECCIONAR</option>
+                      <option value="KT">AMBOS</option>
+                      <option value="KS">SUBSIDIADO</option>
+                      <option value="KC">CONTRIBUTIVO</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col l2 m2 s2">
+                  <label style="padding-left: 4%; font-size: inherit">Regional:</label>
+                  <div class="col s12">
+                    <input ng-model="nuevasuper.regional" type="text" disabled />
+                  </div>
+                </div>
+                <div class="col l2 m2 s2">
+                  <label id="id_nuevasuper_numeroDocumento_label" style="padding-left: 9%; font-size: inherit">Numero del documento:<span style="color: red">*</span></label>
+                  <div class="col s12">
+                    <input class="margin border-none white input-w-p input-out-new w-100 m-l ng-pristine ng-valid ng-valid-max ng-touched" id="id_nuevasuper_numeroDocumento" 
+                    ng-model="nuevasuper.numeroDocumento" ng-keyup="FormatSoloNumero('id_nuevasuper_numeroDocumento')" ng-change="validarVacio('id_nuevasuper_numeroDocumento','id_nuevasuper_numeroDocumento_label')" minlength="0" maxlength="12" type="text" autocomplete="off" required/>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3">
+                  <label id="id_nuevasuper_representante_prestador_label" style="padding-left: 5%; font-size: inherit">Representante del prestador:<span style="color: red">*</span></label>
+                  <div class="col s12">
+                    <input class="margin border-none white input-w-p input-out-new w-100 m-l ng-pristine ng-valid ng-valid-max ng-touched"  id="id_nuevasuper_representante_prestador"
+                      ng-model="nuevasuper.representante_prestador" type="text" ng-change="validarVacio('id_nuevasuper_representante_prestador','id_nuevasuper_representante_prestador_label')" ng-keyup="formattexto_Mayuscula('id_nuevasuper_representante_prestador')" required/>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3">
+                  <label id="id_nuevasuper_cargo_repredentante_label" style="padding-left: 5%; font-size: inherit" >Cargo representante del prestador:<span style="color: red">*</span></label>
+                  <div class="col s12">
+                    <input id="id_nuevasuper_cargo_repredentante" ng-model="nuevasuper.cargo_repredentante" class="margin border-none white input-w-p input-out-new w-100 m-l ng-pristine ng-valid ng-valid-max ng-touched"  
+                      type="text" ng-change="validarVacio('id_nuevasuper_cargo_repredentante','id_nuevasuper_cargo_repredentante_label')" ng-keyup="formattexto_Mayuscula('id_nuevasuper_cargo_repredentante')" required/>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col s12 m12 l12 margin" ng-show="listContrato.length > 0">
+                  <blockquote>
+                    <h6>Contratos</h6>
+                  </blockquote>
+                  <div class="col s12">
+                    <div style="max-height: 70vh;overflow-y: auto;border: 1px solid;overflow-x: hidden;">
+                      <table id="tabla_modal_ENTREGA" class="highlight" style="width: 100%; color: black">
+                        <thead>
+                          <th class="center default-background white-text">N° Contrato</th>
+                          <th class="center default-background white-text">Codigo de habilitacion</th>
+                          <th class="center default-background white-text">Supervisor Cajacopi EPS SAS</th>
+                          <th class="center default-background white-text">Fecha inicio</th>
+                          <th class="center default-background white-text">Fecha final</th>
+                          <th class="center default-background white-text">Formato de pago</th>
+                          <th class="center default-background white-text">Valor</th>
+                          <th class="center default-background white-text">Tipo de garantia</th>
+                          <th class="center default-background white-text">Vigencia de garantia</th>
+                        </thead>
+                        <tbody id="idpro">
+                          <tr ng-repeat="contratos in listContrato |  filter:busquedaInfo">
+                            <td class="center">{{contratos.NUMERO}}</td>
+                            <td class="center">{{contratos.HABILITACION}}</td>
+                            <td class="center">{{contratos.NOMBRE_INTERVENTOR}}</td>
+                            <td class="center">{{contratos.F_INICIAL}}</td>
+                            <td class="center">{{contratos.F_FINAL}}</td>
+                            <td class="center">{{contratos.FORMA_PAGO}}</td>
+                            <td class="center">{{contratos.VALOR}}</td>
+                            <td class="center">{{contratos.GARANTIA}}</td>
+                            <td class="center">{{contratos.VIGENCIA_GARANTIA}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div style="width: 89%; display: flex">
+                      <div style="width: 50%">
+                        <label for="normal">Total de de contratos: {{listContrato.length}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col l12 m12 s12">
+                    <label style="margin-top: -20px; padding-left: 1%">Descripcion de los servicios contratados al prestador</label>
+                    <div class="col s12">
+                      <div class="shadow-textarea">
+                        <textarea class="form-control z-depth-1" id="id_nuevasuper_observaciones" rows="3" 
+                        ng-keyup="handleKeyPress($event,'nuevasuper', 'id_nuevasuper_observaciones')" ng-model="nuevasuper.observaciones" 
+                        required="required" cols="50" placeholder="Comentario" tyle="margin: 0px; height: 123px;"
+                         style="margin: 0px;background:#f1f3f4;height: 134px;"text-uppermaxlength="3999"
+                         ng-keyup="formattexto_Mayuscula('id_nuevasuper_observaciones)"disabled></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="center row">
+                  <label> OBJETIVO: Vigilar, controlar y evaluar permanentemente las obligaciones contractuales entre las partes dentro del plazo estipulado.</label>
+                </div>
+                <div class="center row">
+                  <button type="button" class="center white-text default-background" style="border-radius: 10px; zoom: 130%" ng-click="function_validar_informacion()">Validar informacion</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal listado de prestadores supervisados -->
+        <!-- <div id="modallistprestadoresSupervisados" class="modal" style="overflow: hidden">
+          <div class="modal-content" style="padding: 0px !important">
+            <div class="col s12" style="padding-left: 0px; padding-right: 0px">
+              <div class="card charts" style="margin-top: 0px; margin-bottom: 0px">
+                <div class="default-background" style="padding: 0; zoom: 60%">
+                  <div class="col l12 m12 s12">
+                    <div class="row margin">
+                      <div class="col s11">
+                        <h5 class="white-text">Listado de prestadores</h5>
+                      </div>
+                      <div class="col s1">
+                        <h5 style="text-align: end">
+                          <i style="cursor: pointer" ng-click="closemodals('listprestadoresSupervisados')" class="material-icons white-text">close</i>
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-action" style="padding-bottom: 3px; border-top: 0">
+                  <div class="form-group row">
+                    <div class="col s12">
+                      <form ng-submit="consulta_Prestador2(buscard2)">
+                        <div class="input-field col s6" style="margin-left: -21px" ng-click="consulta_Prestador2(buscard2)">
+                          <input id="buscard2" type="text" ng-model="buscard2" style="cursor: pointer" class="clase-gray" autocomplete="off"/>
+                          <label for="buscard2" style="cursor: pointer">Prestadores:<span style="color: red">*</span></label>
+                          <a href="javascript:void(0)"><i style="position: absolute;top: 5px;right: 0px;cursor: pointer;"class="material-icons prefix default-color">search</i></a>
+                        </div>
+                      </form>
+                    </div>
+                    <div style="width: 100%">
+                      <table id="H1_Tabla" class="bordered table_center_align" style="width: 100%; font-size: 6px !important">
+                        <thead class="center-align default-background default-border white-text">
+                          <tr>
+                            <th>Nit</th>
+                            <th>Prestador supervisado</th>
+                            <th>Seleccionar</th>
+                          </tr>
+                        </thead>
+                        <tbody class="default-border">
+                          <tr
+                            ng-repeat="prestadores in listadodePrestadores2  |  filter:buscard2 as resultips">
+                            <td style="text-align: center">
+                              {{prestadores.CODIGO}}
+                            </td>
+                            <td style="text-align: center">
+                              {{prestadores.NOMBRE}}
+                            </td>
+                            <td>
+                              <div class="center">
+                                <i ng-click="seleccionaripsReceptora2(prestadores);" style="cursor: pointer" class="material-icons prefix" >check</i>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr ng-show="listadodePrestadores2.length==0">
+                            <td class="center-align  colspan="10  style="font-weight: bolder">No se encontraron resultados para su revision.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div style="width: 89%; display: flex">
+                        <div style="width: 50%">
+                          <label for="normal">Total encontrados:{{listadodePrestadores2.length}}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+      <!-- FIN DE FORMULARIO DE NUEVA SUPERVISION  -->
+    <!-- ****************************************************** INICIO DE EVALUACION INSERT-->
+    <div class="col s12" ng-show="iniciarprocesodeEvaluacion">
+      <div class="card ng-scope" style="margin: 38px; bottom: 10px; zoom: 70%">
+        <blockquote>
+          <h4>INICIO DE EVALUACION</h4>
+        </blockquote>
+        <div class="row">
+          <div class="col s12">
+            <div class="col l12 m12 s12">
+              <form class="form-group" name="formulario" novalidate="novalidate">
+                <!-- Proceso 1 -->
+                <ul class="collapsible" ng-show="evaluacionInicial">
+                  <div class="row">
+                    <div class="col l6 m6 s6" style="margin-top: 18px">
+                      <div class="col s12">
+                        <div class="row left">
+                          <blockquote>
+                            <strom class="black-text" style="color:black"> PROCESO DE EVALUACION <br>PRESTADOR :: <a style="color:red">{{nuevasuper.nombreContratista}}<a/> ::</strom>
+                          </blockquote>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col l6 m6 s6" style="margin-top: 18px">
+                      <div class="col s12">
+                        <div class="row right">
+                          <button type="button" class="center icon-reply" style="border-radius: 10px" ng-click="Inicio()" title="Volver al incio"></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <li ng-repeat="p in lista_pregunta_procesos">
+                    <div class="white-text default-background btn_2 collapsible-header m-b" style="border-radius: 10px 40px 40px 10px">
+                      Proceso {{p.CODIGO_PROCESO}}
+                    </div>
+                    <div class="black-text textCollapsible">
+                      <strong>{{p.NOMBRE_PROCESO}}</strong>
+                    </div>
+                    <div class="collapsible-body" id="insert{{p.CODIGO_PROCESO}}">
+                      <div class="col s12">
+                        <div class="form-group row" ng-repeat="x in p.PREGUNTAS | orderBy: 'CODIGO_PROCESO'">
+                          <div class="col s12">
+                            <label style="font-size: inherit">{{x.CODIGO_PREGUNTA}} - {{x.NOMBRE_PREGUNTA}}</label>
+                          </div>
+                          <div class="row">
+                            <div class="form-group col l2 m2 s2">
+                              <label id="insert{{x.CODIGO_PROCESO}}_{{x.CODIGO_PREGUNTA}}label" style="padding-left: 2%; font-size: inherit">Seleccione:<span style="color: red">*</span></label>
+                              <div class="col s12" type="text">
+                                <select class="select-new-ps cursor-pointer" id="insert{{x.CODIGO_PROCESO}}_{{x.CODIGO_PREGUNTA}}" ng-model="x.SELECT" 
+                                ng-change="validarVacio('insert{{x.CODIGO_PROCESO}}_{{x.CODIGO_PREGUNTA}}','insert{{x.CODIGO_PROCESO}}_{{x.CODIGO_PREGUNTA}}label')" required>
+                                  <option value="" disabled>SELECCIONAR</option>
+                                  <option value="1">CUMPLE</option>
+                                  <option value="2">NO CUMPLE</option>
+                                  <option value="3">NO APLICA</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="form-group col l8 m8 s8">
+                                <label id="insert{{x.CODIGO_PROCESO}}_{{x.CODIGO_PREGUNTA}}obs_label" style="margin-top: -20px; padding-left: 1%" >Observaciones:{{x.OBSERVACION.toString().length}}-Máximo: 1000<span style="color: red">*</span></label>
+                                <div class="col s12">
+                                  <div class="form-group shadow-textarea">
+                                    <textarea class="form-control z-depth-1" id="insert{{x.CODIGO_PROCESO}}_{{x.CODIGO_PREGUNTA}}obs"  rows="3"
+                                    ng-model="x.OBSERVACION" cols="50" placeholder="Observaciones"style="margin: 0px; height: 123px;"
+                                    text-upper maxlength="999" ng-required="x.SELECT == '1'|| x.SELECT == '2' || x.SELECT == '3'"
+                                    ng-change="validarVacio('insert{{x.CODIGO_PROCESO}}_{{x.CODIGO_PREGUNTA}}obs','insert{{x.CODIGO_PROCESO}}_{{x.CODIGO_PREGUNTA}}obs_label')"
+                                    required>
+                                </textarea>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <br />
+                      </div>
+                    </div>
+                  <div class="row">
+                    <div class="center col l12 m12 s12">
+                      <div class="col s12">
+                        <div class="center row">
+                          <button ng-click="function_guardarPregunta_inicial(p.CODIGO_PROCESO)" class="center icon-floppy white-text default-background"
+                           style="border-radius: 10px; zoom: 130%" texto="Guardar proceso">Guardar Proceso</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  </li>
+                </ul>
+              </form>
+              <div class="row" ng-show="calcularResultado">
+                <div class="center col l12 m12 s12">
+                  <div class="col s12">
+                    <div class="row margin">
+                      <div class="col l12 m12 s12">
+                          <div class="row right">
+                            <button type="button" class="center icon-reply" style="border-radius: 10px" ng-click="Inicio()" title="Volver al incio"></button>
+                        </div>
+                      </div>
+                    </div>
+                    <h5 style="background-color: lightyellow">
+                      HAS FINALIZADO EL PROCESO DE PREGUNTAS,POR FAVOR PROCEDA A
+                      CALCULAR EL RESULTADO DE LA SUPERVISION
+                    </h5>
+                    <div class="center row">
+                      <button
+                        ng-click="function_calcula_Resultado()"
+                        class="center icon-floppy white-text default-background"
+                        style="border-radius: 10px; zoom: 130%"
+                        texto="Guardar proceso"
+                      >
+                        Calcular Resultado
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!--  ****************************************************** FIN DE INICIO DE EVALUACION INSERT-->
+ 
+  <div class="col 12" ng-show="vistapreguntasUpdate">
+    <div class="card ng-scope" style="margin: 38px; bottom: 10px; zoom: 70%">
+      <blockquote>
+        <h4>INICIO DE EVALUACION EDITAR</h4>
+      </blockquote>
+      <div class="row">
+        <div class="col s12">
+          <div class="col l12 m12 s12">
+            <form name="formulario" novalidate="novalidate">
+          <ul class="collapsible">
+                  <div class="row">
+                    <div class="col l6 m6 s6" style="margin-top: 18px">
+                      <div class="col s12">
+                        <div class="row left">
+                          <blockquote>
+                            <strom> PROCESO DE EVALUACION </strom>
+                          </blockquote>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col l6 m6 s6" style="margin-top: 18px">
+                      <div class="col s12">
+                        <div class="row right">
+                          <button type="button" class="center icon-reply" style="border-radius: 10px" ng-click="Inicio()" title="Volver al incio"></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <li ng-repeat="p in listaprocesosedit1">
+                    <div class="white-text default-background btn_2 collapsible-header m-b"
+                      style="border-radius: 10px 40px 40px 10px;" >Proceso
+                      {{p.Cod_proceso}}
+                    </div>
+                    <div class="black-text textCollapsible">
+                      <strong>{{p.Nombre_proceso}}</strong>
+                    </div>
+                    <div class="collapsible-body" id="{{p.Cod_proceso}}">
+                      <div class="col s12">
+                        <div class="row" ng-repeat="x in p.PREGUNTAS | orderBy: 'Cod_proceso'">
+                          <div class="col s12">
+                            <label style="font-size: inherit;">{{x.Cod_pregunta}}
+                              {{x.Nombre_pregunta}}</label>
+                          </div>
+                          <div class="row">
+                            <div class="col l2 m2 s2">
+                              <label id="{{x.Cod_proceso}}_{{x.Cod_pregunta}}"
+                                style="padding-left: 2%;font-size: inherit;">Seleccione:<span
+                                  style="color:red;">*</span></label>
+                              <div class="col s12 " type="text">
+                                <select class="select-new-ps cursor-pointer" id="uddate-{{x.Cod_proceso}}_{{x.Cod_pregunta}}" ng-model="x.select" 
+                                ng-change="validarllenos('uddate-{{x.Cod_proceso}}_{{x.Cod_pregunta}}','id_label-{{x.Cod_proceso}}_{{x.Cod_pregunta}}')"
+                                  required>
+                                  <option value="" disabled>SELECCIONAR</option>
+                                  <option value="1">CUMPLE</option>
+                                  <option value="2">NO CUMPLE</option>
+                                  <option value="3">NO APLICA</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col l8 m8 s8">
+                                <label id="id-obervacion-update-{{x.Cod_proceso}}_{{x.Cod_pregunta}}"
+                                  style=" margin-top: -20px; padding-left: 1%;">Observaciones:{{x.Observacion.toString().length}} - Máximo: 1000<span
+                                  style="color:red;">*</span></label>
+                                <div class="col s12">
+                                  <div class="shadow-textarea">
+                                    <textarea class="form-control z-depth-1"
+                                      id="obervacion-update-{{x.Cod_proceso}}_{{x.Cod_pregunta}}" rows="3"
+                                      ng-keyup="handleKeyPress($event,'proceso1', 'pregunta1_observaciones')"
+                                      ng-model="x.Observacion" cols="50" placeholder="Observaciones"
+                                      tyle="margin: 0px; height: 123px;" style="margin: 0px;height: 87px;" text-upper
+                                      maxlength="999" ng-required="x.select == '1'|| x.select == '2' || x.select == '3'"
+                                      ng-keyup="formattexto_Mayuscula('exampleFormControlTextarea1')"
+                                      ng-change="validarllenos('obervacion-update-{{x.Cod_proceso}}_{{x.Cod_pregunta}}','id-obervacion-update-{{x.Cod_proceso}}_{{x.Cod_pregunta}}')"
+                                      required="required"></textarea>
+                              
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <br>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="center col l12 m12 s12">
+                        <div class="col s12">
+                          <div class="center row">
+                            <button ng-show="show_numeroProceso && show_supervisorRol" ng-click="function_guardarprocesoUpdate(p.Cod_proceso)"  class="center icon-floppy white-text default-background"
+                             style="border-radius: 10px; zoom: 130%" texto="Guardar proceso">Guardar Proceso</button>
+    
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li ng-repeat="p in listaprocesosedit2">
+                    <div class="white-text default-background btn_2 collapsible-header m-b" style="border-radius: 10px 40px 40px 10px">
+                      Proceso {{p.CODIGO_PROCESO}}
+                    </div>
+                    <div class="black-text textCollapsible">
+                      <strong>{{p.NOMBRE_PROCESO}}</strong>
+                    </div>
+                    <div class="collapsible-body" id="update{{p.CODIGO_PROCESO}}">
+                      <div class="col s12">
+                        <div class="form-group row" ng-repeat="x in p.PREGUNTAS | orderBy: 'CODIGO_PROCESO'">
+                          <div class="col s12">
+                            <label style="font-size: inherit">{{x.CODIGO_PREGUNTA}} - {{x.NOMBRE_PREGUNTA}}</label>
+                          </div>
+                          <div class="row">
+                            <div class="form-group col l2 m2 s2">
+                              <label id="update{{x.CODIGO_PROCESO}}_{{x.CODIGO_PREGUNTA}}label" style="padding-left: 2%; font-size: inherit">Seleccione:<span style="color: red">*</span></label>
+                              <div class="col s12" type="text">
+                                <select class="select-new-ps cursor-pointer" id="update{{x.CODIGO_PROCESO}}_{{x.CODIGO_PREGUNTA}}" ng-model="x.SELECT" 
+                                ng-change="validarVacio('update{{x.CODIGO_PROCESO}}_{{x.CODIGO_PREGUNTA}}','update{{x.CODIGO_PROCESO}}_{{x.CODIGO_PREGUNTA}}label')" required>
+                                  <option value="" disabled>SELECCIONAR</option>
+                                  <option value="1">CUMPLE</option>
+                                  <option value="2">NO CUMPLE</option>
+                                  <option value="3">NO APLICA</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="form-group col l8 m8 s8">
+                                <label id="update{{x.CODIGO_PROCESO}}_{{x.CODIGO_PREGUNTA}}obs_label" style="margin-top: -20px; padding-left: 1%" >Observaciones:{{x.OBSERVACION.toString().length}}-Máximo: 1000<span style="color: red">*</span></label>
+                                <div class="col s12">
+                                  <div class="form-group shadow-textarea">
+                                    <textarea class="form-control z-depth-1" id="update{{x.CODIGO_PROCESO}}_{{x.CODIGO_PREGUNTA}}obs"  rows="3"
+                                    ng-model="x.OBSERVACION" cols="50" placeholder="Observaciones"style="margin: 0px; height: 123px;"
+                                    text-upper maxlength="999" ng-required="x.SELECT == '1'|| x.SELECT == '2' || x.SELECT == '3'"
+                                    ng-change="validarVacio('update{{x.CODIGO_PROCESO}}_{{x.CODIGO_PREGUNTA}}obs','update{{x.CODIGO_PROCESO}}_{{x.CODIGO_PREGUNTA}}obs_label')"
+                                    required>
+                                </textarea>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <br />
+                      </div>
+                    </div>
+                  <div class="row">
+                    <div class="center col l12 m12 s12">
+                      <div class="col s12">
+                        <div class="center row">
+                          <button ng-show="show_numeroProceso && show_supervisorRol" ng-click="function_guardarpreguntasUpdate(p.CODIGO_PROCESO)" class="center icon-floppy white-text default-background"
+                           style="border-radius: 10px; zoom: 130%" texto="Guardar proceso">Guardar Proceso</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+         
+                  </li>
+                </ul> 
+                <div class="row" ng-show="calcularResultado">
+                  <div class="center col l12 m12 s12">
+                    <div class="col s12">
+                      <h5 style="background-color: lightyellow">
+                        POR FAVOR PROCEDA A CALCULAR EL RESULTADO DE LA SUPERVISION
+                      </h5>
+                      <div class="center row">
+                        <button
+                          ng-click="function_calcula_Resultado()"
+                          class="center icon-calc white-text default-background"
+                          style="border-radius: 10px; zoom: 130%"
+                          texto="Guardar proceso"
+                        >
+                          Calcular Resultado
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- RESUMEN DE RESULTADO -->
+    <div class="col s12" ng-show="vistaResulto">
+      <div class="card ng-scope" style="margin: 38px; bottom: 10px; zoom: 75%">
+        <form class="form-group" name="formulario" ng-submit="function_guardar_Resultado('I',contratos)" novalidate="novalidate">
+          <div class="row">
+            <div class="col s12">
+              <div class="col l12 m12 s12">
+                <div class="row">
+                  <blockquote>
+                    <h6>Resumen de resultado</h6>
+                  </blockquote>
+                  <div class="row">
+                    <div class="col l6 m6 s6">
+                      <label style="padding-left: 2%; font-size: inherit">Mantenimiento de las condiciones de habilitacion ysoportes contractuales 15%:</label>
+                      <div class="col s12">
+                        <input ng-model="result.proceso1" type="text" style="background: #f1f3f4;color:black" disabled/>
+                      </div>
+                    </div>
+                    <div class="col l6 m6 s6">
+                      <label style="padding-left: 2%; font-size: inherit">Indicadores 20%:</label>
+                      <div class="col s12">
+                        <input ng-model="result.proceso2" type="text" style="background: #f1f3f4;color:black" disabled/>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col l6 m6 s6">
+                      <label style="padding-left: 2%; font-size: inherit"
+                        >Cumplimiento financieros 5%:</label
+                      >
+                      <div class="col s12">
+                        <input
+                          ng-model="result.proceso3"
+                          type="text" style="background: #f1f3f4;color:black"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="col l6 m6 s6">
+                      <label style="padding-left: 2%; font-size: inherit"
+                        >Prestación efectiva de los servicios 20%:</label
+                      >
+                      <div class="col s12">
+                        <input
+                          ng-model="result.proceso4"
+                          type="text" style="background: #f1f3f4;color:black"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col l6 m6 s6">
+                      <label style="padding-left: 2%; font-size: inherit"
+                        >Satisfacción del usuario 20%:</label
+                      >
+                      <div class="col s12">
+                        <input
+                          ng-model="result.proceso5"
+                          type="text" style="background: #f1f3f4;color:black"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="col l6 m6 s6">
+                      <label style="padding-left: 2%; font-size: inherit"
+                        >Tutelas 5%:</label
+                      >
+                      <div class="col s12">
+                        <input
+                          ng-model="result.proceso6"
+                          type="text" style="background: #f1f3f4;color:black"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col l4 m4 s4">
+                      <label style="padding-left: 2%; font-size: inherit"
+                        >Planes de accion 15%</label
+                      >
+                      <div class="col s12">
+                        <input
+                          ng-model="result.proceso7"
+                          type="text" style="background: #f1f3f4;color:black"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="col l4 m4 s4">
+                      <label style="padding-left: 2%; font-size: inherit"
+                        >Total:</label
+                      >
+                      <div class="col s12">
+                        <input ng-model="result.total" type="text" style="background: #f1f3f4;color:black" disabled />
+                      </div>
+                    </div>
+                    <div class="col l4 m4 s4">
+                      <label style="padding-left: 2%; font-size: inherit"
+                        >Calificacion:</label
+                      >
+                      <div class="col s12">
+                        <input
+                          ng-model="result.calificacion"
+                          type="text" style="background: #f1f3f4;color:black"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col l6 m6 s6">
+                      <label
+                        style="margin-top: -20px; padding-left: 1%"
+                        id="id_form1observacionesResult1_label"
+                        >Conclusion - Caracteres:
+                        {{form1.observacionesResult1.toString().length}} -
+                        Máximo: 2000</label
+                      ><span style="color: red">*</span>
+                      <div class="col s12">
+                        <div class="form-group shadow-textarea">
+                          <textarea
+                            class="form-control z-depth-1 "
+                            id="id_form1observacionesResult1"
+                            rows="3"
+                            ng-keyup="handleKeyPress($event,'form1', 'form1.observacionesResult1')"
+                            ng-model="form1.observacionesResult1"
+                            cols="50"
+                            placeholder="Por favor escriba su conclusion"
+                            tyle="margin: 0px; height: 123px;"
+                            style="margin: 0px; height: 134px;"
+                            text-upper
+                            maxlength="1999"
+                            ng-keyup="formattexto_Mayuscula('id_form1observacionesResult1')"
+                            ng-change="validarVacio('id_form1observacionesResult1','id_form1observacionesResult1_label')"
+                            ;
+                            required
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col l6 m6 s6">
+                      <label
+                        id="id_form1observacionesResult2_label"
+                        style="margin-top: -20px; padding-left: 1%">Recomendacion - Caracteres:{{form1.observacionesResult2.toString().length}} - Máximo: 2000</label
+                      ><span style="color: red">*</span>
+                      <div class="col s12">
+                        <div class="form-group shadow-textarea">
+                          <textarea
+                            class="form-control z-depth-1"
+                            id="id_form1observacionesResult2"
+                            rows="3"
+                            ng-keyup="handleKeyPress($event,'form1', 'form1.observacionesResult2')"
+                            ng-model="form1.observacionesResult2"
+                            cols="50"
+                            placeholder="Por favor escriba su recomendacion"
+                            tyle="margin: 0px; height: 123px;"
+                            style=" margin: 0px;  height: 134px;"
+                            text-upper
+                            maxlength="1999"
+                            ng-keyup="formattexto_Mayuscula('id_form1observacionesResult2')"
+                            ng-change="validarVacio('id_form1observacionesResult2','id_form1observacionesResult2_label')"
+                            required
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="center row">
+                <div class="center" style="margin-top: 23px">
+                  <button
+                    type="submit"
+                    class="icon-floppy white-text default-background"
+                    style="border-radius: 10px; zoom: 130%"
+                  >
+                    Guardar Resultado
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col 12" ng-show="vistarespuestaUpdate">
+      <div class="card ng-scope" style="margin: 38px; bottom: 10px; zoom: 75%">
+        <form ng-submit="function_guardar_Resultado('U',contratos)" novalidate="novalidate">
+          <div class="row">
+            <div class="col s12">
+              <div class="col l12 m12 s12">
+                <div class="row">
+                  <blockquote>
+                    <h6>Resumen de resultado</h6>
+                  </blockquote>
+                  <div class="row">
+                    <div class="col l6 m6 s6">
+                      <label style="padding-left: 2%; font-size: inherit"
+                        >Mantenimiento de las condiciones de habilitacion y
+                        soportes contractuales 15%:</label
+                      >
+                      <div class="col s12">
+                        <input
+                          ng-model="editresult.proceso1"
+                          type="text"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="col l6 m6 s6">
+                      <label style="padding-left: 2%; font-size: inherit"
+                        >Indicadores 20%:</label
+                      >
+                      <div class="col s12">
+                        <input
+                          ng-model="editresult.proceso2"
+                          type="text"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col l6 m6 s6">
+                      <label style="padding-left: 2%; font-size: inherit"
+                        >Cumplimiento financieros 5%:</label
+                      >
+                      <div class="col s12">
+                        <input
+                          ng-model="editresult.proceso3"
+                          type="text"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="col l6 m6 s6">
+                      <label style="padding-left: 2%; font-size: inherit"
+                        >Prestación efectiva de los servicios 20%:</label
+                      >
+                      <div class="col s12">
+                        <input
+                          ng-model="editresult.proceso4"
+                          type="text"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col l6 m6 s6">
+                      <label style="padding-left: 2%; font-size: inherit"
+                        >Satisfacción del usuario 20%:</label
+                      >
+                      <div class="col s12">
+                        <input
+                          ng-model="editresult.proceso5"
+                          type="text"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="col l6 m6 s6">
+                      <label style="padding-left: 2%; font-size: inherit"
+                        >Tutelas 5%:</label
+                      >
+                      <div class="col s12">
+                        <input
+                          ng-model="editresult.proceso6"
+                          type="text"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col l4 m4 s4">
+                      <label style="padding-left: 2%; font-size: inherit"
+                        >Planes de accion 15%</label
+                      >
+                      <div class="col s12">
+                        <input
+                          ng-model="editresult.proceso7"
+                          type="text"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="col l4 m4 s4">
+                      <label style="padding-left: 2%; font-size: inherit"
+                        >Total:</label
+                      >
+                      <div class="col s12">
+                        <input
+                          ng-model="editresult.total"
+                          type="text"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="col l4 m4 s4">
+                      <label style="padding-left: 2%; font-size: inherit"
+                        >Calificacion:</label
+                      >
+                      <div class="col s12">
+                        <input
+                          ng-model="editresult.calificacion"
+                          type="text"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col l6 m6 s6">
+                      <label
+                        id="id_edit_observacionesResult1_label"
+                        style="margin-top: -20px; padding-left: 1%"
+                        class="red-text"
+                        >Conclusion - Caracteres:
+                        {{edit.observacionesResult1.toString().length}} -
+                        Máximo: 2000</label
+                      ><span style="color: red">*</span>
+                      <div class="col s12">
+                        <div class="shadow-textarea">
+                          <textarea
+                            class="form-control z-depth-1 error-input"
+                            id="id_edit_observacionesResult1"
+                            rows="3"
+                            ng-keyup="handleKeyPress($event,'edit', 'edit.observacionesResult1')"
+                            ng-model="edit.observacionesResult1"
+                            cols="50"
+                            placeholder="Por favor escriba su conclusion"
+                            tyle="margin: 0px; height: 123px;"
+                            style="
+                              margin: 0px; /* width: 1268px; */
+                              height: 134px;
+                            "
+                            text-upper
+                            maxlength="1999"
+                            ng-keyup="formattexto_Mayuscula('id_edit_observacionesResult1')"
+                            ng-change="validarllenos('id_edit_observacionesResult1','id_edit_observacionesResult1_label')"
+                            required
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col l6 m6 s6">
+                      <label
+                        id="id_idit_recomendacionesResult2_label"
+                        style="margin-top: -20px; padding-left: 1%"
+                        class="red-text"
+                        >Recomendacion - Caracteres:
+                        {{edit.observacionesResult2.toString().length}} -
+                        Máximo: 2000</label
+                      ><span style="color: red">*</span>
+                      <div class="col s12">
+                        <div class="shadow-textarea">
+                          <textarea
+                            class="form-control z-depth-1 error-input"
+                            id="id_idit_recomendacionesResult2"
+                            rows="3"
+                            ng-keyup="handleKeyPress($event,'edit', 'edit.observacionesResult2')"
+                            ng-model="edit.observacionesResult2"
+                            cols="50"
+                            placeholder="Por favor escriba su recomendacion"
+                            tyle="margin: 0px; height: 123px;"
+                            style="
+                              margin: 0px; /* width: 1268px; */
+                              height: 134px;
+                            "
+                            text-upper
+                            maxlength="1999"
+                            ng-keyup="formattexto_Mayuscula('id_idit_recomendacionesResult2')"
+                            ng-change="validarllenos('id_idit_recomendacionesResult2','id_idit_recomendacionesResult2_label')"
+                            required
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="center row">
+                <div class="center" style="margin-top: 23px">
+                  <button type="submit" class="icon-floppy white-text default-background" style="border-radius: 10px; zoom: 130%">Guardar Resultado</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div ng-show="show_administracion">
+    <!-- LISTA DE ADMINISTRACION -->
+    <div class="col s12" ng-show="vistaConsulta">
+      <div class="card ng-scope" style="margin: 38px; bottom: 10px; zoom: 75%">
+        <div class="row margin">
+          <div class="col l12 m12 s12 center">
+            <strong>
+              <h5><b>LISTADO DE SUPERVISORES</b></h5>
+            </strong>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col l7 m7 s7">
+            <div class="row center">
+              <div class="row form-group">
+                <div class="col s12 m12 l12 margin">
+                  <div class="col s12">
+                    <div class="col s4 no-padding label-new m-b right" style="margin-right: 0.5rem !important; margin-top: 30px">
+                      <input id="Var_Seccional_Filtrar_Sol" class="margin border-none input-text-new gray-input w-100 m-l" autocomplete="off"
+                      type="text"placeholder="Buscar..."ng-model="buscarlistSupervisores"text-upper/>
+                      <i class="icon-search cursor-pointer default-color"style="margin-left: -1.45em"title="Buscar"></i>
+                    </div>
+                  </div>
+                  <div class="col s12">
+                    <div style="max-height: 66vh;overflow-y: auto;border: 1px solid;overflow-x: hidden;">
+                      <table id="tabla_modal_ENTREGA" class="highlight" style="width: 100%; color: black">
+                        <thead>
+                          <th class="center default-background white-text">REGIONAL</th>
+                          <th class="center default-background white-text">SUPERVISOR</th>
+                          <th class="center default-background white-text">SUPERVISOR SUPLENTE</th>
+                          <th class="center default-background white-text">CONTROL</th>
+                        </thead>
+                        <tbody id="idpro">
+                          <tr ng-repeat="list in listSupervisores |  filter:buscarlistSupervisores">
+                            <td class="center"><b>{{list.NOMBRE_DPTO}}</b></td>
+                            <td class="center"><b>{{list.NOM_SUPERVISOR}}</b></td>
+                            <td class="center"><b>{{list.NOM_SUPLENTE}}</b></td>
+                            <td class="center">
+                              <i ng-click="openmodals('buscarSupervisores',list)" class="icon-clipboard fs-20 cursor-pointer" title="Nueva supervicion"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div style="width: 41%; display: flex">
+                      <label for="normal">Total de regionales: {{listSupervisores.length}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col l5 m5 s5">
+            <div class="row center" style="margin-top: 124px">
+              <img
+                src="assets/images/Supervisioncontrato/supervision.svg"
+                class="margin center"
+              />
+          </div>
+          </div>
+        </div>  
+          <!-- Modal buscar supervisados -->
+        <div id="modalbuscarSupervisores" class="modal" style="overflow: hidden">
+            <div class="modal-content" style="padding: 0px !important">
+              <div class="col l12 m12 s12" style="padding-left: 0px; padding-right: 0px">
+                <div  style="margin-top: 0px; margin-bottom: 0px">
+                  <div class="default-background" style="padding: 0; zoom: 60%">
+                    <div class="col l12 m12 s12">
+                      <div class="row margin">
+                        <div class="col l11 m11 s11">
+                          <h5 class="white-text">Organizador de supervisores</h5>
+                        </div>
+                        <div class="col l1 m1 s1">
+                          <h5 style="text-align: end">
+                            <i style="cursor: pointer" ng-click="closemodals('buscarSupervisores')" class="material-icons white-text" >close</i>
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col l12 m12 s12">
+                    <div class="row">
+                  <div class="col l6 m6 s6">
+                    <blockquote><strong>SUPERVISOR ACTUAL</strong></blockquote>
+                     <div class="col l4 m4 s4">
+                      <form ng-submit="function_obtener_funcionarios('I');">
+                          <label style="padding-left: 8%;font-size: inherit;">Buscar:<span class="red-text"> * </span></label>
+                          <div class="col s12 ">
+                              <input ng-model="consulta.documentosupervisorActual" id="id_consulta_numeroDocumento" type="text" style="width: 127px;font-size: 90%;" placeholder="Por Nombre o C.C">
+                              <a href="javascript:void(0)" ng-click="function_obtener_funcionarios('I');" > <i
+                                      style="position: relative; top: -40px; right: 0px; cursor: pointer; margin-left: 137px;" class="material-icons prefix default-color">search</i></a>
+                          </div>
+                      </form>
+                    </div>
+                   <div class="col l7 m7 s7" >
+                      <label style="padding-left: 4%;font-size: inherit;">Nombre:</label>
+                      <div class="col s12 ">
+                          <input ng-model="consulta.nombrefuncionarioActual" type="text"
+                              style="color: #000000c7;background: #f1f3f4;" disabled>
+                      </div>
+                   </div>
+                  </div>
+                  <div class="col l6 m6 s6">
+                  <blockquote><strong>SUPLENTE ACTUAL</strong></blockquote>
+                  <div class="col l4 m4 s4">
+                    <form ng-submit="function_obtener_funcionarios('S');">
+                        <label style="padding-left: 8%;font-size: inherit;">Buscar:<span class="red-text"> * </span></label>
+                        <div class="col s12 ">
+                            <input ng-model="consulta.documentosupervisorSumplente" id="id_consulta_documentosupervisorSumplente" type="text" style="width: 127px;font-size: 90%;" placeholder="Por Nombre o C.C">
+                            <a href="javascript:void(0)" ng-click="function_obtener_funcionarios('S');"> 
+                            <i style="position: relative; top: -40px; right: 0px; cursor: pointer; margin-left: 137px;" class="material-icons prefix default-color">search</i></a>
+                        </div>
+                    </form>
+                  </div>
+                    <div class="col l7 m7 s7" >
+                       <label style="padding-left: 4%;font-size: inherit;">Nombre:</label>
+                        <div class="col s12 ">
+                           <input ng-model="consulta.nombrefuncionarioSumplente" type="text"
+                            style="color: #000000c7;background: #f1f3f4;" disabled>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                                 <!-- boton cancelar y guardar -->
+                <div class="row">
+                  <div style="text-align: center;">
+                            <button class="icon-cancel-circled-outline white-text default-background"
+                                          type="button" ng-click="closemodals('buscarSupervisores')"
+                                          style="border-radius: 10px;">Cancelar</button>
+                                 <button class="icon-floppy white-text default-background" type="button"
+                                          ng-click="guadar_gestion_supervisor()"
+                                          style="border-radius: 10px;">Guardar</button>
+                         </div>
+                              </div>
+                <div class="row" ng-show="listconsultasupervisorActual.length > 0 && show_tablasupersotesActual">
+                  <div class="col l12 m12 s12">
+                    <div class="row center">
+                      <div class="row form-group">
+                        <div class="col s12 m12 l12 margin">
+                          <label class="center"><strong><h5>{{tittle_tabla_supervisores}}</h5></strong></label>
+                          <div class="col s12">
+                            <div class="col s4 no-padding label-new m-b right" style="margin-right: 0.5rem !important; margin-top: 30px">
+                              <input id="Var_Seccional_Filtrar_Sol" class="margin border-none input-text-new gray-input w-100 m-l" autocomplete="off"
+                              type="text"placeholder="Buscar..."ng-model="buscarlistconsultaSupervisoresActual"text-upper/>
+                              <i class="icon-search cursor-pointer default-color"style="margin-left: -1.45em"title="Buscar"></i>
+                            </div>
+                          </div>
+                          <div class="col s12">
+                            <div style="max-height: 40vh;overflow-y: auto;border: 1px solid;overflow-x: hidden;">
+                              <table id="tabla_modal_ENTREGA" class="highlight" style="width: 100%; color: black">
+                                <thead>
+                                  <th class="center default-background white-text">SUPERVISOR</th>
+                                  <th class="center default-background white-text">CARGO</th>
+                                  <th class="center default-background white-text">ACCION</th>
+                                </thead>
+                                <tbody id="idpro">
+                                  <tr ng-repeat="list in listconsultasupervisorActual |  filter:buscarlistconsultaSupervisoresActual">
+                                    <td class="center"><b>{{list.NOMBRE}}</b></td>
+                                    <td class="center"><b>{{list.CARGO}}</b></td>
+                                    <td class="center">
+                                      <i ng-click="function_supervisorSeleccionado(list,'I');" class="icon-check-1 fs-20 cursor-pointer" title="Seleccionar"></i>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div style="width: 41%; display: flex">
+                              <label for="normal">Total de regionales: {{listconsultasupervisorActual.length}}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" ng-show="listconsultasupervisoSuplente.length > 0 && show_tablasupersotesSuplentes">
+                  <div class="col l12 m12 s12">
+                    <div class="row center">
+                      <div class="row form-group">
+                        <div class="col s12 m12 l12 margin">
+                          <label class="center"><strong><h5>{{tittle_tabla_Suplentes}}</h5></strong></label>
+                          <div class="col s12">
+                            <div class="col s4 no-padding label-new m-b right" style="margin-right: 0.5rem !important; margin-top: 30px">
+                              <input id="Var_Seccional_Filtrar_Sol" class="margin border-none input-text-new gray-input w-100 m-l" autocomplete="off"
+                              type="text"placeholder="Buscar..."ng-model="buscarlistconsultaSupervisores"text-upper/>
+                              <i class="icon-search cursor-pointer default-color"style="margin-left: -1.45em"title="Buscar"></i>
+                            </div>
+                          </div>
+                          <div class="col s12">
+                            <div style="max-height: 40vh;overflow-y: auto;border: 1px solid;overflow-x: hidden;">
+                              <table id="tabla_modal_ENTREGA" class="highlight" style="width: 100%; color: black">
+                                <thead>
+                                  <th class="center default-background white-text">SUPERVISOR</th>
+                                  <th class="center default-background white-text">CARGO</th>
+                                  <th class="center default-background white-text">ACCION</th>
+                                </thead>
+                                <tbody id="idpro">
+                                  <tr ng-repeat="list in listconsultasupervisoSuplente |  filter:buscarlistconsultaSupervisores">
+                                    <td class="center"><b>{{list.NOMBRE}}</b></td>
+                                    <td class="center"><b>{{list.CARGO}}</b></td>
+                                    <td class="center">
+                                      <i ng-click="function_supervisorSeleccionado(list,'S');" class="icon-check-1 fs-20 cursor-pointer" title="Seleccionar"></i>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div style="width: 41%; display: flex">
+                              <label for="normal">Total de regionales: {{listconsultasupervisoSuplente.length}}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+           </div>
+        </div>         
+      </div>
+    </div>
+    </div>
+  </div>
+  <style>
+    #tabla_scroll th {
+      padding: 3px 10px;
+    }
+
+    #tabla_scroll li > button.btn {
+      font-size: small;
+      height: auto;
+      line-height: inherit;
+      padding: 0 1rem;
+    }
+
+    .table_border,
+    .table_border th,
+    .table_border td {
+      border: 1px solid #c2c2c2;
+    }
+
+    .table_center_align,
+    .table_center_align th,
+    .table_center_align td {
+      text-align: center;
+    }
+
+    .swal-wide {
+      width: 850px !important;
+    }
+    p.dotted {
+      border-style: dotted;
+    }
+
+    /* Estilo inicial para los campos requeridos */
+    .error-label {
+      color: red !important;
+    }
+
+    .error-input {
+      border-color: red !important;
+    }
+
+    /* Estilo para el mensaje de error */
+    .error-message {
+      color: red;
+      display: none;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .subraya {
+      border-bottom-style: ridge !important;
+      border-color: #1a2e63 !important;
+      margin: 0px 9px !important;
+    }
+
+    .ps-light-yellow {
+      background-color: #f7fb00de !important;
+    }
+
+    .ps-light-green {
+      background-color: rgb(3, 197, 20) !important;
+    }
+
+    .ps-light-red {
+      background-color: #f75050 !important;
+    }
+
+    .ps-light-purple {
+      background-color: rgb(71, 71, 165) !important;
+    }
+
+    #tabla_modal_ENTREGA th {
+      position: sticky;
+      top: 0;
+      z-index: 9;
+    }
+
+    .btn_2 {
+      border: none;
+      border-radius: 2px;
+      display: inline-block;
+      height: 36px;
+      line-height: 36px;
+      outline: 0;
+      padding: 0 2rem;
+      text-transform: uppercase;
+      vertical-align: middle;
+      -webkit-tap-highlight-color: transparent;
+      background-color: #1a2e63;
+    }
+
+    .textCollapsible {
+      border: none;
+      border-radius: 2px;
+      display: inline-block;
+      height: 36px;
+      line-height: 36px;
+      outline: 0;
+      padding: 0 2rem;
+      text-transform: uppercase;
+      vertical-align: middle;
+      -webkit-tap-highlight-color: transparent;
+      background-color: #fcfcfd;
+    }
+
+    .light-red {
+      background-color: palevioletred !important;
+    }
+
+    .input-field-ps {
+      position: relative;
+      margin-top: 1px;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+    .select-new-ps {
+      outline: none !important;
+      height: 34px;
+      background-color: white;
+      display: block;
+      border: 1px solid #8a88865e;
+      border-radius: 0.25rem;
+      border-bottom: 1px solid #8a88865e;
+      box-shadow: none !important;
+    }
+
+    .btn-new-ps {
+      border: none;
+      border-radius: 2px;
+      display: inline-block;
+      height: 32px;
+      line-height: 36px;
+      outline: 0;
+      padding: 0 2rem;
+      text-transform: uppercase;
+      vertical-align: middle;
+      background-color: #1a2e63;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .border_bottom_LR {
+      border-bottom-left-radius: 0px !important;
+      border-bottom-right-radius: 0px !important;
+    }
+
+    .Green_Est {
+      background-color: green !important;
+    }
+
+    .Red_Est {
+      background-color: red !important;
+    }
+
+    .buena {
+      color: rgb(3, 197, 20) !important;
+    }
+
+    .poca {
+      color: rgb(235, 156, 5) !important;
+    }
+
+    .baja {
+      color: rgb(245, 75, 75) !important;
+    }
+
+    .teal.activo {
+      background-color: rgb(3, 197, 20) !important;
+    }
+
+    .teal.procesado {
+      background-color: rgb(71, 71, 165) !important;
+    }
+
+    .yellow {
+      background-color: #b7a60f !important;
+    }
+
+    #IMG_Secc {
+      cursor: pointer;
+    }
+
+    #IMG_Secc:hover .tooltip-css3 {
+      display: block;
+    }
+
+    .tooltip-css3:before {
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 20px solid #6c63ff;
+      bottom: -15px;
+      content: "";
+      height: 0;
+      left: 50%;
+      margin-left: -30px;
+      position: absolute;
+      transform: skew(-45deg);
+      width: 0;
+    }
+
+    .tooltip-css3 {
+      background-color: #6c63ff;
+      border-radius: 100% 100% 100% 100%;
+      box-shadow: 0 0 5px 0 rgb(108 99 255 / 49%);
+      color: #ffffff;
+      display: none;
+      left: 70%;
+      padding: 20px 30px;
+      position: absolute;
+      top: 23%;
+    }
+
+    .Btn_Secc_Pen {
+      background-color: #afaaff;
+      box-shadow: 0 0 5px 0 rgb(108 99 255 / 49%);
+      color: #ffffff;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .Btn_Secc_New {
+      background-color: #afaaff;
+      box-shadow: 0 0 5px 0 rgb(108 99 255 / 49%);
+      color: #ffffff;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    /* /// */
+    .Con_pulse_P {
+      /* background: #FF6D4A; */
+      border-radius: 50%;
+      color: #fff;
+      animation: animate-pulse_P 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_P {
+      0% {
+        box-shadow: 0 0 0 0 rgba(71, 71, 165, 0.7),
+          0 0 0 0 rgba(71, 71, 165, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(71, 71, 165, 0),
+          0 0 0 0 rgba(71, 71, 165, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(71, 71, 165, 0),
+          0 0 0 15px rgba(71, 71, 165, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(71, 71, 165, 0), 0 0 0 0 rgba(71, 71, 165, 0);
+      }
+    }
+
+    .Con_pulse_G {
+      border-radius: 50%;
+      color: #fff;
+      animation: animate-pulse_G 3s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_G {
+      0% {
+        box-shadow: 0 0 0 0 rgba(162, 162, 175, 0.7),
+          0 0 0 0 rgba(162, 162, 175, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(71, 71, 165, 0),
+          0 0 0 0 rgba(162, 162, 175, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(71, 71, 165, 0),
+          0 0 0 15px rgba(71, 71, 165, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(71, 71, 165, 0), 0 0 0 0 rgba(71, 71, 165, 0);
+      }
+    }
+
+    .Con_pulse_V {
+      /* background: #FF6D4A; */
+      border-radius: 50%;
+      color: #fff;
+      animation: animate-pulse_V 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_V {
+      0% {
+        box-shadow: 0 0 0 0 rgba(43, 255, 36, 0.7),
+          0 0 0 0 rgba(43, 255, 36, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(43, 255, 36, 0),
+          0 0 0 0 rgba(43, 255, 36, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(43, 255, 36, 0),
+          0 0 0 15px rgba(43, 255, 36, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(43, 255, 36, 0), 0 0 0 0 rgba(43, 255, 36, 0);
+      }
+    }
+
+    /* /// */
+    .Animacion_HojaForm {
+      animation: 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s 1 normal both
+        running swing-in-top-fwd;
+    }
+
+    @keyframes swing-in-top-fwd {
+      0% {
+        /* -webkit-transform: rotateX(-100deg);
+          transform: rotateX(-100deg);
+          -webkit-transform-origin: top;
+          transform-origin: top; */
+        opacity: 0;
+      }
+
+      100% {
+        /* -webkit-transform: rotateX(0deg);
+          transform: rotateX(0deg);
+          -webkit-transform-origin: top;
+          transform-origin: top; */
+        opacity: 1;
+      }
+    }
+
+    .BgColor_A {
+      background: linear-gradient(to bottom left, #37daf0, #00acc1, #37daf0);
+    }
+
+    .BgColor_R {
+      background: linear-gradient(to bottom left, #f1ad5a, #fb8c00, #f1ad5a);
+    }
+
+    .BgColor_C {
+      background: linear-gradient(to bottom left, #e65b8e, #d81b60, #e65b8e);
+    }
+
+    .BgColor_O {
+      background: linear-gradient(to bottom left, #d7d9db, #6a6d71, #d7d9db);
+    }
+
+    .BgColor_N {
+      background: linear-gradient(to bottom left, #63f193, #25d962, #63f193);
+    }
+
+    .Color_A {
+      color: #00acc1 !important;
+      border-left: 5px solid #00acc1;
+    }
+
+    .Color_R {
+      color: #fb8c00 !important;
+      border-left: 5px solid #fb8c00;
+    }
+
+    .Color_C {
+      color: #d81b60 !important;
+      border-left: 5px solid #d81b60;
+    }
+
+    .Color_O {
+      color: #6a6d71 !important;
+      border-left: 5px solid #6a6d71;
+    }
+
+    .Color_N {
+      color: #25d962 !important;
+      border-left: 5px solid #25d962;
+    }
+
+    .textarea2 {
+      padding: 0.5rem !important;
+      width: calc(100% - 0rem) !important;
+      /* background-color: #cbcdce; */
+      background-color: #f1f3f4;
+      resize: none;
+      height: 7rem;
+    }
+
+    input.input-text-new {
+      background-color: #fff !important;
+    }
+
+    .gray-input {
+      background-color: #f1f3f4 !important;
+    }
+
+    .Tarjeta_Titulo {
+      -webkit-transition: all 0.8s cubic-bezier(0.34, 1.61, 0.7, 1);
+      transition: all 0.8s cubic-bezier(0.34, 1.61, 0.7, 1);
+      position: relative;
+      z-index: 3;
+    }
+
+    .Tarjeta_Titulo:hover {
+      transform: translate3d(0, -25px, 0);
+    }
+
+    .Tarjeta_Titulo > .card {
+      border-radius: 0.375rem;
+      z-index: 2;
+    }
+
+    .Tarjeta_Titulo .card-content {
+      padding: 0.6rem 0.8rem;
+      display: flex;
+    }
+
+    .Tarjeta_Titulo h6 {
+      color: #ffffff !important;
+      font-weight: 600 !important;
+      font-size: 0.8125rem;
+    }
+
+    .Tarjeta_Texto {
+      z-index: -1;
+      margin-top: -3.7em;
+      width: calc(100% - 30px);
+      left: 15px;
+      /* text-align: center; */
+      width: auto;
+      border-radius: 0.375rem;
+      height: 41px;
+      padding: 0.9rem 0.8rem;
+    }
+
+    .Tarjeta_Texto > span {
+      position: relative;
+      font-size: 0.8em;
+      font-weight: 700;
+    }
+
+    #H1_Tabla > thead,
+    #H1_Tabla > tbody {
+      font-size: 1em;
+      /* border: 3px; */
+      border-width: medium;
+      border-style: solid;
+      border-radius: 0.375rem;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+        0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .Class_Tabla_Btn_Gestionar {
+      border-radius: 0.375rem;
+      width: 30%;
+      margin: auto;
+      border-width: medium;
+    }
+
+    .Class_Tabla_Btn_Gestionar h6 {
+      font-weight: 700 !important;
+      font-size: 0.8125rem;
+    }
+
+    .animated {
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+    }
+
+    .switch label .lever.check-c:after {
+      background-color: #ffffff;
+    }
+
+    .switch label input[type="checkbox"]:checked + .lever:after {
+      background-color: #ffffff;
+    }
+
+    .dropdown-content li {
+      min-height: 23px;
+    }
+
+    .select_maxheigth ul {
+      max-height: 125px;
+    }
+
+    .dropdown-content li > span {
+      line-height: 32px;
+      padding: 0px 16px;
+    }
+
+    .currency-input {
+      position: relative;
+    }
+
+    .currency {
+      padding-left: -22px;
+    }
+
+    .currency-symbol {
+      position: absolute;
+      left: 8px;
+      font-size: 21px;
+    }
+
+    #toast-container .toast {
+      border-radius: 10px !important;
+      font-weight: 600;
+      text-align: center !important;
+      word-break: keep-all;
+      padding: 10px 25px;
+      width: auto;
+      background: linear-gradient(to bottom left, #e04242, #8b0000, #e04242);
+    }
+
+    blockquote {
+      font-weight: 700;
+      background-color: #f1f3f4;
+    }
+
+    .VistaFile .Iframe {
+      visibility: hidden;
+      height: 50vh;
+      color: #fff;
+      text-align: center;
+      margin-bottom: -0.6rem;
+      border-top-right-radius: 6px;
+      border-top-left-radius: 6px;
+      position: absolute;
+      z-index: 1;
+      bottom: calc(100% + 6px);
+      right: 0;
+      opacity: 0;
+      transition: opacity 1s;
+      border: 3px solid #333333;
+    }
+
+    .VistaFile:hover .Iframe {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .Iframe:hover {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .input-file-radius-cargado {
+      /* border-top-right-radius: 0 !important; */
+      /* border-bottom-right-radius: 0 !important; */
+      background-color: #03c5146e !important;
+    }
+
+    .input-file-radius-cargado2 {
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+      background-color: #03c5146e !important;
+    }
+
+    .input-file-radius-opcional {
+      background-color: #0000004f !important;
+    }
+
+    .input-file-radius-obligatorio {
+      background-color: #f54b4bb0 !important;
+    }
+
+    .input-file-radiu {
+      border-radius: 10px;
+    }
+
+    .input-file-radius {
+      border-radius: 10px;
+    }
+
+    .select-wrapper input.select-dropdown:disabled {
+      color: black;
+    }
+
+    .list-group-item:last-child {
+      margin-bottom: 0;
+      border-bottom-right-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+
+    .list-group-item:first-child {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    .list-group-item:hover {
+      color: #1a2e63;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .list-group-item.hover {
+      color: #1a2e63;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .list-group-item {
+      position: relative;
+      display: block;
+      padding: 10px 15px;
+      margin-bottom: -1px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+    }
+
+    .list-group {
+      font-size: 14px;
+    }
+
+    .class_upper td,
+    .class_upper th {
+      text-transform: uppercase;
+    }
+
+    .class_gris {
+      color: rgba(0, 0, 0, 0.26) !important;
+    }
+
+    .class_label {
+      color: #80868b;
+    }
+
+    /*******************/
+
+    .switch label .lever {
+      background-color: #1a2e63;
+      width: 60px;
+      height: 29px;
+    }
+
+    .switch label .lever:after {
+      left: 4px;
+      top: 4px;
+      background-color: #fff !important;
+    }
+
+    .switch label .lever.check-c {
+      background-color: #1a2e63 !important;
+    }
+
+    .switch label input[type="checkbox"]:checked + .lever:after {
+      left: 35px;
+    }
+
+    /* // */
+    .lever.check-c:hover span.lever.check-c:after {
+      width: 100px !important;
+    }
+
+    /**/
+    [type="checkbox"].filled-in:not(:checked) + label:after {
+      border: 3px solid #1a2e63;
+    }
+
+    [type="checkbox"].filled-in:checked + label:after {
+      border: 3px solid #1a2e63;
+      background-color: #1a2e63;
+    }
+
+    .modal {
+      border-radius: 10px;
+      overflow: hidden;
+      max-height: 88%;
+      z-index: 1003;
+      display: none;
+      opacity: 0;
+      transform: scaleX(0.7);
+      top: 4%;
+    }
+
+    .pagination {
+      text-align: center;
+      padding-top: 0px;
+      font-weight: 800;
+    }
+
+    /* --------------------------------------------------------------------------------------------- */
+    @keyframes Anim_Show {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .Anim_Show {
+      animation-name: Anim_Show;
+      animation-duration: 1s;
+    }
+
+    .Con_pulse_A {
+      border-radius: 50%;
+      color: #fff;
+      animation: animate-pulse_A 5s linear infinite;
+    }
+
+    @keyframes animate-pulse_A {
+      0% {
+        box-shadow: 0 0 0 0 #f7fb00de, 0 0 0 0 #f7fb00de;
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(3, 197, 20, 0), 0 0 0 0 #f7fb00de;
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(3, 197, 20, 0), 0 0 0 15px rgba(3, 197, 20, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(3, 197, 20, 0), 0 0 0 0 rgba(3, 197, 20, 0);
+      }
+    }
+
+    .Con_pulse_X {
+      /* background: #FF6D4A; */
+      border-radius: 50%;
+      color: #fff;
+      animation: animate-pulse_X 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_X {
+      0% {
+        box-shadow: 0 0 0 0 #f75050, 0 0 0 0 #f75050;
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(245, 75, 75, 0), 0 0 0 0 #f75050;
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0),
+          0 0 0 15px rgba(245, 75, 75, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0), 0 0 0 0 rgba(245, 75, 75, 0);
+      }
+    }
+
+    .Con_pulse_D {
+      /* background: #FF6D4A; */
+      border-radius: 50%;
+      color: #fff;
+      animation: animate-pulse_D 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_D {
+      0% {
+        box-shadow: 0 0 0 0 rgba(235, 156, 5, 0.7),
+          0 0 0 0 rgba(235, 156, 5, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(235, 156, 5, 0),
+          0 0 0 0 rgba(235, 156, 5, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(235, 156, 5, 0),
+          0 0 0 15px rgba(235, 156, 5, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(235, 156, 5, 0), 0 0 0 0 rgba(235, 156, 5, 0);
+      }
+    }
+
+    input[type="text"] {
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+      background-color: #fff;
+      background-clip: padding-box;
+      padding: 0 1em;
+      font-weight: 600;
+      height: 2rem;
+    }
+  </style>
+</div>

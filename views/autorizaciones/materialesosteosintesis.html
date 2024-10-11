@@ -1,0 +1,3114 @@
+<div id="pantalla" class="white newdesing">
+  <!-- configuracion de los tabs principales -->
+  <div class="row section-header" style="margin-top:7px">
+    <ul class="left mailbox-custom-search list-inline"
+      style="width: 100%;display: flex;justify-content: space-between;align-items: center;">
+      <li id="inicio">
+        <i ng-click="Refrescar_Inicio()"></i>
+        <h5 onclick="location.reload();" class="cursor-pointer">MODULO MATERIALES OSTEOSINTESIS</h5>
+      </li>
+      <li>
+        <ul class="tabs transparent" style="overflow:hidden;">
+          <!-- <li class="tab col w-auto" ng-class="{subraya : Tabs == 1}" ng-show="show_tabs_nuevaSolicitud">
+            <a ng-click="function_set_Tab(1);" id="tabs_1" href>NUEVA SOLICITUD<i class="icon-clipboard"></i></a>
+          </li> -->
+          <li class="tab col w-auto" ng-class="{subraya : Tabs == 3}" ng-show="show_tabs_Solicitudes">
+            <a ng-click="function_set_Tab(3);" id="tabs_3" href class="active">SOLICITUDES<i class="icon-book-2"></i></a>
+          </li>
+          <li class="tab col w-auto" ng-class="{subraya : Tabs == 4}" ng-show="show_Administrador">
+            <a ng-click="function_set_Tab(4);cierreuserMotivo();" id="tabs_4" href>ADMINISTRADOR<i class="icon-police"></i></a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <!-- LISTA DE SOLICITUDES  -->
+  <div ng-show="show_tablaSolicitud">
+    <div class="row dashboard-wrapper content-container white"
+      style="padding-bottom: 20px;margin-bottom: 0;zoom:80%;margin-left: -20px;">
+      <div class="row" style="margin-bottom: 0;">
+        <div class="col s12">
+          <div class="row">
+            <h6 style="color: #8898aa !important;font-weight: 600 !important;font-size: 1.8125rem;text-align: center">
+              LISTA DE SOLICITUDES</h6>
+          </div>
+          <div class="col s1 no-padding label-new m-b left">
+            <select class="select-new gray-input" style="box-shadow: none;" material-select watch
+              ng-model="Vista1.Mostrar_Sol" ng-change="init_pag_cant_Mostrar(Vista1.Mostrar_Sol)">
+              <option value="10" selected>10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+            <label style="font-size: .8rem;top: -1.5rem;">Mostrar</label>
+            <div style="line-height: 2;">
+              <i class="icon-arrows-cw-2 default-color cursor-pointer" style="margin-left: 4px;"
+                title="Actualizar Tabla" ng-click="function_pobternersSolicitudes(filterEstado)"></i>
+            </div>
+          </div>
+          <form ng-submit="chg_filtrar('Filtrar_tprincipal');">
+            <div class="col s4 no-padding label-new m-b right" style="margin-right: .5rem !important;margin-top: 30px;">
+              <label style="padding-left: 2%;font-size: inherit;">Buscar:</label>
+              <div class="input-field-ps col s12">
+                <input id="Var_Seccional_Filtrar_Sol" class="margin border-none input-text-new gray-input w-100 m-l"
+                  ng-model="Vista1.Filtrar_tprincipal" type="text" placeholder="..." style="cursor: pointer;text-transform: uppercase;" 
+                  autocomplete="off">
+                <a><i style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                    class="material-icons prefix default-color"
+                    ng-click="chg_filtrar('Filtrar_tprincipal');">search</i></a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col s12">
+          <button ng-show="show_nueva_solicitud_Regional" class="icon-user-plus  white-text default-background btn_2 "
+            type="button" ng-click="function_nuevaSolicitud('R');"
+            style="zoom:100% default-background;border-top-left-radius: 10px 10px;border-top-right-radius: 10px 10px;box-shadow: 0px 0px 14px 0px gainsboro;">
+            Nueva Solicitud</button>
+            <button ng-show="show_nueva_solicitud_Prestador" class="icon-user-plus  white-text default-background btn_2 "
+            type="button" ng-click="function_nuevaSolicitud('P');"
+            style="zoom:100% default-background;border-top-left-radius: 10px 10px;border-top-right-radius: 10px 10px;box-shadow: 0px 0px 14px 0px gainsboro;">
+            Nueva Solicitud</button>
+        </div>
+        <div style="width:100%;">
+          <table id="H1_Tabla" class="bordered table_center_align" style="width:100%;font-size:6px !important;">
+            <thead class="center-align default-background default-border white-text">
+              <tr>
+                <th class="center">CONSECUTIVO</th>
+                <th class="center">FECHA</th>
+                <th class="center">NRO DOC</th>
+                <th class="center">NOMBRE PACIENTE</th>
+                <th class="center">UBICACION</th>
+                <th class="center">RESPONSABLE</th>
+                <th class="center">ESTADO</th>
+                <th class="center">GESTION</th>
+                <th class="center">ACCION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                ng-repeat="infoSolicitud in list_DatosTemp | inicio: currentPage * pageSize | limitTo: pageSize | orderBy:propertyName:reverse"
+                style="color: black;">
+                <td class="center">{{infoSolicitud.CONSECUTIVO}}</td>
+                <td class="center">{{infoSolicitud.FECHA_SOLICITUD}}</td>
+                <td class="center">{{infoSolicitud.AFILIADO}}</td>
+                <td class="center">{{infoSolicitud.NOMBRE_AFILIADO}}</td>
+                <td class="center">{{infoSolicitud.UBICACION}}</td>
+                <td class="center">{{infoSolicitud.RESPONSABLE}}</td>
+                <td class="center"><strong>{{infoSolicitud.ESTADO_PR}}</strong><br>
+                  <i class="icon-circle" style="color: transparent;font-size: 9px;" ng-class="{
+                    'Con_pulse_VERDE' : (infoSolicitud.ESTADO_PR == 'APROBADO') ? 'rgba(3, 197, 20)' : '',
+                    'Con_pulse_ROJO' : (infoSolicitud.ESTADO_PR == 'ANULADA') ? 'rgba(245, 75, 75)' : '',
+                    'Con_pulse_AZUL' : (infoSolicitud.ESTADO_PR == 'ACTIVA') ? 'rgba(51, 70, 255)' : '',
+                    'Con_pulse_AMARILLO' : (infoSolicitud.ESTADO_PR == 'EN DEVOLUCION') ? 'rgba(255, 235, 59)' : '',
+                    'Con_pulse_AMARILLO_OSCURO' : (infoSolicitud.ESTADO_PR == 'PROCESADA') ? 'rgba(255, 191, 0)' : ''}"
+                    ng-style="{'background-color' : infoSolicitud.ESTADO_PR == 'APROBADO' ? 'rgba(3, 197, 20)' :
+                              infoSolicitud.ESTADO_PR == 'ACTIVA' ? 'rgba(51, 70, 255)' :
+                              infoSolicitud.ESTADO_PR == 'ANULADA' ? 'rgba(245, 75, 75)' :
+                              infoSolicitud.ESTADO_PR == 'EN DEVOLUCION' ? 'rgba(255, 235, 59)':
+                              infoSolicitud.ESTADO_PR == 'PROCESADA' ? 'rgba(255, 191, 0)' : ''}">
+                </td>
+                <td class="center">{{infoSolicitud.TIPO_SOLICITUD}}</td>
+                <td>
+                    <i ng-show="rolObtenido == 'REGIONAL' && (infoSolicitud.ESTADO_PR == 'ACTIVA' || infoSolicitud.ESTADO_PR == 'EN DEVOLUCION') " ng-click="function_editarSolicitud(infoSolicitud,'R');" class="icom icon-edit-3 fs-20 cursor-pointer" title="Editar"></i>
+                    <i ng-show="rolObtenido == 'PRESTADOR' && (infoSolicitud.ESTADO_PR == 'ACTIVA' || infoSolicitud.ESTADO_PR == 'EN DEVOLUCION') " ng-click="function_editarSolicitud(infoSolicitud,'P');" class="icom icon-edit-3 fs-20 cursor-pointer" title="Editar"></i> 
+                    <i ng-click="function_p_listaSoporte(infoSolicitud)" class="icom icon-eye fs-20 cursor-pointer" title="Soportes"></i>
+                    <!-- <i class="icom   icon-error fs-20 cursor-pointer" title="Anular"></i> -->
+                </td> 
+              </tr>
+              <tr ng-show="list_DatosTemp.length == 0">
+                <td class="center-align" colspan="20" style="font-weight: bolder;">No se encontraron resultados.</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="width: 75%;display: flex;">
+            <div style="width: 50%;">
+              <label for="normal">Total encontrados:
+                {{list_DatosTemp.length}}</label>
+            </div>
+            <div class="col s12 center">
+              <i class="icon-circle" style="color:rgba(51, 70, 255);"></i><strong style="cursor: pointer;"
+                ng-click="function_pobternersSolicitudes('T');">ACTIVA</strong>
+              <i class="icon-circle" style="color:rgba(255, 235, 59)"></i><strong style="cursor: pointer;"
+                ng-click="function_pobternersSolicitudes('D');">EN DEVOLUCION</strong>
+              <i class="icon-circle" style="color:rgba(3, 197, 20)"></i><strong style="cursor: pointer;"
+                ng-click="function_pobternersSolicitudes('A');">APROBADO</strong>
+              <i class="icon-circle" style="color:rgba(255, 191, 0)"></i><strong style="cursor: pointer;"
+                ng-click="function_pobternersSolicitudes('P');">PROCESADA</strong>
+              <i class="icon-circle" style="color:rgba(245, 75, 75)"></i><strong style="cursor: pointer;"
+                ng-click="function_pobternersSolicitudes('X');">ANULADA</strong>
+            </div>
+          </div>
+
+          <ul style="text-align: center;padding-top: 0px;" class="pagination">
+            <li><button ng-disabled='currentPage == 0' class="btn-floating default-background"
+                ng-click="paso('back')">&laquo;</button></li>
+            <li ng-repeat='page in pages'><button ng-disabled='currentPage == page.no - 1'
+                class="btn-floating default-background" ng-click='setPage(page.no)'>{{page.no}}</button>
+            </li>
+            <li><button ng-disabled='currentPage >= list_DatosTemp.length/pageSize - 1'
+                class="btn-floating default-background" ng-click="paso('next')">&raquo;</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Formulario nueva solicitud y editar solicitud-->
+  <div class="col s12" ng-show="show_formulariodatosBasicos">
+    <div class="card ng-scope" style="margin: 38px; bottom: 10px ;zoom:75%;">
+      <div class="row">
+          <div class="col s12">
+            <!-- Informacion del Paciente -->
+            <blockquote>
+              <strong style="font-size: x-large;" class=" icon-doc-new">{{tituloFormulario}} {{editartituloGestion}}<a class="red-text">{{consecutivotituloGestion}}</a></strong>
+            </blockquote>
+              <div class="col l12 m12 s12">
+                <div class="col l3 m3 s3">
+                  <label style="padding-left: 4%;font-size: inherit;">Fecha de Solicitud:</label>
+                  <div class="col s12 ">
+                    <input id="id_form1_fechaSolicitud" ng-model="form1.fechaSolicitud" type="text"
+                      style="color: #000000c7;background-color: gainsboro;"  disabled>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3">
+                  <label id="id_form1_selecctipoDocumento_label" style="padding-left: 4%;font-size: inherit;"></span>Tipo dcto:<span class="red-text">*</label>
+                  <div class="col s12 ">
+                    <select id="id_form1_selecctipoDocumento" class="select-new-ps cursor-pointer" ng-model="form1.selecctipoDocumento" ng-change="validarVacio('id_form1_selecctipoDocumento','id_form1_selecctipoDocumento_label');" required>
+                      <option value="">SELECCIONAR</option>
+                      <option ng-repeat="x in Tipos_Documentos" value="{{x.CODIGO}}" ng-selected="x.CODIGO == form1.selecctipoDocumento">{{x.NOMBRE}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3">
+                  <form ng-submit="function_buscarAfiliado();">
+                    <label id="id_form1_numeroDocumento_label" style="padding-left: 4%;font-size: inherit;">N° Documento:<span class="red-text">*</span></label>
+                    <div class="input-field-ps col s12 ">
+                      <input id="id_form1_numeroDocumento" ng-model="form1.numeroDocumento" type="text" style="cursor: pointer;"
+                        autocomplete="off" maxlength="15" ng-change="validarVacio('id_form1_numeroDocumento','id_form1_numeroDocumento_label');" >
+                      <a><i style="margin-right: -26px;position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                          class="material-icons prefix default-color" ng-click="function_buscarAfiliado();">search</i></a>
+                    </div>
+                  </form>
+                </div>
+                <div class="col l3 m3 s3">
+                  <label style="padding-left: 4%;font-size: inherit;">Nombre completo:</label>
+                  <div class="col s12">
+                    <input ng-model="form1.nombrePaciente" type="text" style="color: #000000c7;background: #f1f3f4;" disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="col l12 m12 s12">
+                <div class="col l3 m3 s3">
+                  <label style="padding-left: 4%;font-size: inherit;">Genero:</label>
+                  <div class="col s12 ">
+                    <input ng-model="form1.generoPaciente" type="text" style="color: #000000c7;background: #f1f3f4;" disabled>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3">
+                  <label style="padding-left: 4%;font-size: inherit;">Edad:</label>
+                  <div class="col s12 ">
+                    <input ng-model="form1.edadPaciente" type="text" style="color: #000000c7;background: #f1f3f4;" disabled>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3">
+                  <label style="padding-left: 4%;font-size: inherit;">Nivel sisben:</label>
+                  <div class="col s12 ">
+                    <input ng-model="form1.nivelSisben" type="text" style="color: #000000c7;background: #f1f3f4;" disabled>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3">
+                  <label style="padding-left: 4%;font-size: inherit;">Regimen:</label>
+                  <div class="col s12 ">
+                    <input ng-model="form1.regimenPaciente" type="text" style="color: #000000c7;background: #f1f3f4;" disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="col l12 m12 s12">
+                <div class="col l3 m3 s3">
+                  <label style="padding-left: 4%;font-size: inherit;">Seccional:</label>
+                  <div class="col s12 ">
+                    <input ng-model="form1.seccionalPaciente" type="text" style="color: #000000c7;background: #f1f3f4;" disabled>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3" ng-click="function_openmodals('diagnostico','1')">
+                  <label id="id_form1_diagnosticoPrincipal_label" style="padding-left: 4%;font-size: inherit;">Diagóstico principal:<span class="red-text">*</span></label>
+                  <div class="input-field-ps col s12 ">
+                    <input id="id_form1_diagnosticoPrincipal" ng-model="form1.diagnosticoPrincipal" type="text" style="cursor: pointer;"
+                      autocomplete="off" ng-change="validarVacio('id_form1_diagnosticoPrincipal','id_form1_diagnosticoPrincipal_label');">{{x.NOMBRE}}
+                    <a><i style="margin-right: -26px;position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                        class="material-icons prefix default-color">search</i></a>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3" ng-click="function_openmodals('diagnostico','1')">
+                  <label style="padding-left: 4%;font-size: inherit;">Diagóstico secundarios:</label>
+                  <div class="col s12 ">
+                    <input ng-model="form1.diagnosticoSegundario" type="text" style="color: #000000c7;background: #f1f3f4;" disabled>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3">
+                  <label id="id_form1_oficinaSeccional_label" style="padding-left: 4%;font-size: inherit;"></span>Oficina seccional:<span class="red-text">*</label>
+                  <div class="col s12">
+                    <select id="id_form1_oficinaSeccional" class="select-new-ps cursor-pointer" ng-model="form1.oficinaSeccional"
+                      ng-change="validarVacio('id_form1_oficinaSeccional','id_form1_oficinaSeccional_label');"  required>
+                      <option value="">SELECCIONAR</option>
+                      <option ng-repeat="x in listOficinas" value="{{x.Codigo}}" ng-selected="x.Codigo == form1.oficinaSeccional" >{{x.Nombre}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col l12 m12 s12">
+                <div class="col l2 m2 s2">
+                  <label id="id_form1_numerodocumentoMedico_label" style="padding-left: 4%;font-size: inherit;">N° doc. médico:<span class="red-text">*</label>
+                  <div class="col s12 ">
+                    <input ng-model="form1.numerodocumentoMedico" id="id_form1_numerodocumentoMedico" type="text" style="text-transform: uppercase;"
+                      ng-change="validarVacio('id_form1_numerodocumentoMedico','id_form1_numerodocumentoMedico_label');" required>
+                  </div>
+                </div>
+                <div class="col l2 m2 s2">
+                  <label id="id_form1_nombreMedico_label" style="padding-left: 4%;font-size: inherit;">Nombre del medico tratante:<span class="red-text">*</label>
+                  <div class="col s12 ">
+                    <input ng-model="form1.nombreMedico" id="id_form1_nombreMedico" type="text" style="text-transform: uppercase;"
+                      ng-change="validarVacio('id_form1_nombreMedico','id_form1_nombreMedico_label');" required>
+                  </div>
+                </div>
+                  <div ng-show="show_ipsSolicitante" class="col l2 m2 s2"  ng-keyup="function_openmodals('ips','1')" ng-click="function_openmodals('ips','1')">
+                    <label id="id_form1_ipsSolicitante_label" style="padding-left: 4%;font-size: inherit;">Ips solicitante:<span
+                        class="red-text">*</span></label>
+                    <div class="input-field-ps col s12">
+                      <input id="id_form1_ipsSolicitante" ng-model="form1.ipsSolicitante" type="text" style="cursor: pointer;"
+                        autocomplete="off" autocomplete="off" maxlength="15"
+                        ng-keyup="FormatSoloNumero('id_form1_ipsSolicitante')"
+                        ng-change="validarVacio('id_form1_ipsSolicitante','id_form1_ipsSolicitante_label');" placeholder="Ingrese nit" required>
+                      <a><i style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                          class="material-icons prefix default-color" ng-click="function_p_listaIps_solicitante();">search</i></a>
+                    </div>
+                  </div>
+                <div ng-show="show_nombreIps"  class="col l3 m3 s3">
+                  <label id="id_label_nombreIps" style="padding-left: 4%;font-size: inherit;">Nombre Ips:</label>
+                  <div class="col s12 ">
+                    <input ng-model="form1.nombreIps" id="nombreIps" type="text" style="color: #000000c7;background: #f1f3f4;" disabled>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3" ng-click="function_openmodals('procedimiento','1')">
+                  <label id="id_form1_procedimiento_label" style="padding-left: 4%;font-size: inherit;">Especialidad:<span class="red-text">*</span></label>
+                  <div class="input-field-ps col s12 ">
+                    <input id="id_form1_procedimiento" ng-model="form1.procedimiento" type="text" style="cursor: pointer;"
+                      autocomplete="off" ng-change="validarVacio('id_form1_procedimiento','id_form1_procedimiento_label');">{{x.NOMBRE}}
+                    <a><i style="margin-right: -26px;position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                        class="material-icons prefix default-color">search</i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col l12 m12 s12">
+                <div class="col l3 m3 s3" >
+                  <label id="id_form1_cuentaconCotizacion_label" style="padding-left: 4%;font-size: inherit;">Cuenta con alguna
+                    cotizacion:<span class="red-text">*</span></label>
+                  <div class="col s12 " type="text">
+                    <select class="select-new-ps cursor-pointer" type="text" ng-model="form1.cuentaconCotizacion"
+                      id="id_form1_cuentaconCotizacion"
+                      ng-change="function_validarsirequiereSoporte(form1.cuentaconCotizacion);validarVacio('id_form1_cuentaconCotizacion','id_form1_cuentaconCotizacion_label');"
+                      required>
+                      <option value="" disabled>SELECCIONAR</option>
+                      <option value="S">SI</option>
+                      <option value="N">NO</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3" ng-show="show_tipoSolicitud">
+                  <label id="id_form1_tipoSolicitud_label" style="padding-left: 4%;font-size: inherit;">Tipo de solicitud:<span
+                      class="red-text">*</span></label>
+                  <div class="col s12 " type="text">
+                    <select id="id_form1_tipoSolicitud" class="select-new-ps cursor-pointer" type="text" ng-model="form1.tipoSolicitud" 
+                      ng-change="fuction_validartipoSolicitud(form1.tipoSolicitud);validarVacio('id_form1_tipoSolicitud','id_form1_tipoSolicitud_label');" required>
+                      <option value="" disabled>SELECCIONAR</option>
+                      <option value="A">AMBULATORIO</option>
+                      <!-- <option value="H">HOSPITALARIO</option> -->
+                      <option value="N">NO PBS</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3" ng-show="fechaCirugia">
+                  <label for="id_fechaCirugia" id="id_form1_fechaCirugia_label"
+                      style="padding-left: 4%;font-size: inherit;">Fecha de Cirugia:<span class="red-text">*</span></label>
+                  <div class="col s12 " >
+                      <input type="date" class="input-text-new-ps input-out-new w-100"
+                          id="id_form1_fechaCirugia" ng-model="form1.fechaCirugia"  min="{{fechaActual}}" 
+                          style="font-size: 12px;color: #000000c7;"  onkeydown="return false" ng-change="validarVacio('id_form1_fechaCirugia','id_form1_fechaCirugia_label');"required>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3" ng-show="proceso">
+                  <label id="id_form1_tipoProceso_label" style="padding-left: 4%;font-size: inherit;">Proceso:<span
+                      class="red-text">*</span></label>
+                  <div class="col s12 ">
+                    <select class="select-new-ps cursor-pointer" type="text" ng-model="form1.tipoProceso" id="id_form1_tipoProceso"
+                      ng-change="function_obtenerPqr(form1.tipoProceso);validarVacio('id_form1_tipoProceso','id_form1_tipoProceso_label');">
+                      <option value="" disabled>SELECCIONAR</option>
+                      <option value="T">TUTELA</option>
+                      <option value="M">MEDIDA PROVISIONAL</option>
+                      <option value="I">INCIDENTE DE DESACATO</option>
+                      <option value="D">DEFICIT DE RED</option>
+                      <option value="P">PQR</option>
+                      <option value="A">PQR & TUTELA</option>
+                      <option value="N">NINGUNO</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col l1 m1 s1" ng-show="show_pqr">
+                  <label id="id_label_numeroPqr" style="padding-left: 4%;font-size: inherit;">PQR:</label>
+                  <div class="col s12">
+                    <button class="icon-eye white-text default-background" title="Ver pqr" type="button"
+                    ng-click="function_openmodals('pqr')" style="border-radius: 10px;zoom:130%;"></button>
+                  </div>
+                </div>
+                <div class="col l2 m2 s2" ng-show="show_pqr">
+                  <label style="padding-left: 4%;font-size: inherit;"># Pqr:</label>
+                  <div class="col s12 ">
+                    <input ng-model="form1.numeroPqr" type="text" style="color: #000000c7;background: #f1f3f4;" disabled>
+                  </div>
+                </div>
+              </div>  
+              <div class="col l12 m12 s12" ng-show="show_documentosAdjuntar"> 
+                <blockquote>
+                  <strong style="font-size: x-large;" class=" icon-attach-5">
+                  SOPORTES
+                  </strong>
+                </blockquote>
+                <div class="col l6 m6 s6">
+                  <div class="row">
+                    <div class="col s12">
+                      <div class="margin row">
+                        <div style="padding-left: 0px; padding-right: 0px;">
+                          <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+                            <div class="row">
+                              <div class="col s12">
+                                <div style="width: 100%;overflow-y: auto;">
+                                  <table id="H1_Tabla" class="bordered table_center_align"
+                                    style="width:100%;font-size:6px !important;zoom: 110%;">
+                                    <thead class="center-align default-background default-border white-text">
+                                      <tr>
+                                        <th class="center">DOCUMENTO</th>
+                                        <th class="center">ACCION</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody class="default-border" >
+                                      <tr >
+                                        <td ng-show="soporteCotizacion" style="text-align:center;">CARGAR COTIZACION</td>
+                                        <td ng-show="soporteCotizacion" style="width: 22%;padding-left: 27px;">
+                                          <div style="height: 2.7em; margin: 1em 0!important; position: relative; overflow: hidden; background-color: white; display: flex; align-items: center; justify-content: flex-start; gap: 0.5em;">
+                                              <i ng-show="show_verCotizacion" ng-click="function_openmodals('verSoportes',1)" class="icom icon-eye fs-20 cursor-pointer" title="Ver Soporte"></i>
+                                              <div style="position: relative; display: flex; align-items: center;">
+                                                  <i for="file" class="icon-folder-open-1" style="font-size: 17px;"></i>
+                                                  <input value="1" id="id_cargue_cotizacion" type="file" accept=".pdf" class="cargueArchivo1"
+                                                  ng-model="cargue.cotizacion" 
+                                                  class="margin border-none input-text-new ng-pristine ng-valid ng-touched" style="width: 100%; height: 100%;
+                                                  position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding-left: 100%; outline: transparent; 
+                                                  background-color: transparent; opacity: 0; cursor: pointer;" ng-class="function_cambioiconoCotizacion()">
+                                              </div>
+                                              <i   class="icom {{classcolorCotizacion}} fs-20 cursor-pointer"></i>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td style="text-align:center;">CARGAR ADJUNTO</td>
+                                        <td style="width: 22%;padding-left: 27px;">
+                                          <div style="height: 2.7em; margin: 1em 0!important; position: relative; overflow: hidden; background-color: white; display: flex; align-items: center; justify-content: flex-start; gap: 0.5em;">
+                                              <i ng-show="show_verAdjuntos" ng-click="function_openmodals('verSoportes',2)" class="icom icon-eye fs-20 cursor-pointer" title="Ver Soporte"></i>
+                                              <div style="position: relative; display: flex; align-items: center;">
+                                                  <i for="file" class="icon-folder-open-1" style="font-size: 17px;"></i>
+                                                  <input  value="2" id="id_cargue_soporte" type="file" accept=".pdf" class="cargueArchivo2"
+                                                  ng-model="cargue.soporte" 
+                                                  class="margin border-none input-text-new ng-pristine ng-valid ng-touched" style="width: 100%; height: 100%;
+                                                  position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding-left: 100%; outline: transparent; 
+                                                  background-color: transparent; opacity: 0; cursor: pointer;" ng-class="function_cambioiconoAdjunto()">
+                                              </div>
+                                              <i class="icom {{classcolorAdjunto}} fs-20 cursor-pointer"></i>
+                                          </div>
+                                        </td>
+                                      </tr>
+
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <div class="col l6 m6 s6">
+                  <div class="nota" ng-class="{'normal': form1.tipoSolicitud === 'A', 'importante': form1.tipoSolicitud === 'H', 'informacion': form1.tipoSolicitud === 'N'}">
+                    <h3><strong>{{ tituloSolicitud }}:</strong></h3>
+                    <p>{{ noteContent }}</p>
+                    <p class="icon-ok-6">     {{ text1 }}.</p>
+                    <p class="icon-ok-6">     {{ text2 }}.</p>
+                    <p class="icon-ok-6">     {{ text3 }}.</p>
+                    <p class="icon-ok-6">     {{ text4 }}.</p>
+                    <p class="icon-ok-6" ng-show="form1.tipoSolicitud === 'N'">     {{ text5 }}.</p>
+                    <p class="icon-ok-6" ng-show="form1.tipoSolicitud === 'N'">     {{ text6 }}.</p>
+                    <p class="icon-ok-6" ng-show="form1.tipoSolicitud === 'N'">     {{ text7 }}.</p>
+                  </div>
+              </div>
+            </div>
+            <!-- modal Diagnostico -->
+            <div id="modaldiagnostico" class="modal" style="overflow: hidden;">
+              <div class="modal-content" style="padding: 0px !important;">
+                <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+                  <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+                    <div class="card-content foot4" style="padding: 0;zoom:60%;">
+                      <div class="col s11">
+                        <h5 class="white-text">Diagnosticos</h5>
+                      </div>
+                      <div class="col s1">
+                        <h5 style="text-align: end;"><i style="cursor:pointer;" ng-click="function_closemodals('diagnostico')"
+                            class="material-icons white-text">close</i></h5>
+                      </div>
+                    </div>
+                    <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+                      <div class="row">
+                        <div class="col s12">
+                          <form ng-submit="function_buscarDiagnostico(buscard6,'1')">
+                            <div class="input-field col s6">
+                              <input id="diaginput" type="text" ng-model="buscard6" style="cursor: pointer;"
+                                class="clase-gray">
+                              <label for="diaginput" style="cursor: pointer;">Diagnostico:<span style="color:red;"> *</span></label>
+                              <a href="javascript:void(0)" ng-click="function_buscarDiagnostico(buscard6,'1')"> <i
+                                  style="position: absolute; top: 4px; right: 0px;cursor: pointer;"
+                                  class="material-icons prefix default-color">search</i></a>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="row">
+                          <div style="max-height:70vh;overflow-y:auto;border: 1px solid;overflow-x: hidden">
+                            <table id="tabla_modal_ENTREGA" class="highlight" style="width:100%;color: black;">
+                              <thead>
+                                <tr>
+                                  <th class="center default-background  white-text" style="text-align:center;">CODIGO
+                                  </th>
+                                  <th class="center default-background  white-text">NOMBRE</th>
+                                  <th class="center default-background  white-text" style="text-align:center;">DIAGNOSTICO 1</th>
+                                  <th class="center default-background  white-text" style="text-align:center;">DIAGNOSTICO 2</th>
+                                </tr>
+                              </thead>
+                              <tbody id="idpro">
+                                <tr ng-repeat="diag in listDiagnosticos |  filter:buscard6 as resultdiag1">
+                                  <td style="text-align:center;">{{diag.Codigo}}</td>
+                                  <td style="text-align:center;">{{diag.Nombre}}</td>
+                                  <td>
+                                    <div class="center">
+                                      <i ng-click="function_seleccionardiagnostico(diag,'P','1')" style="cursor:pointer;"class="material-icons prefix">check</i>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="center">
+                                      <i ng-click="function_seleccionardiagnostico(diag,'S','1')" style="cursor:pointer;" class="material-icons prefix">check</i>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr ng-show="resultdiag1.length == 0">
+                                  <td class="center-align" colspan="10" style="font-weight: bolder;">No se encontraron resultados para su revision.</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div style="width: 89%;display: flex;">
+                            <div style="width: 50%;">
+                              <label for="normal">Total encontrados: {{resultdiag1.length}}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+              <!-- modal Especialidad -->
+            <div id="modalespecialidad" class="modal" style="overflow: hidden;">
+              <div class="modal-content" style="padding: 0px !important;">
+                <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+                  <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+                    <div class="card-content foot4" style="padding: 0;zoom:60%;">
+                      <div class="col s11">
+                        <h5 class="white-text">Especialidad</h5>
+                      </div>
+                      <div class="col s1">
+                        <h5 style="text-align: end;"><i style="cursor:pointer;" ng-click="function_closemodals('especialidad')"
+                            class="material-icons white-text">close</i></h5>
+                      </div>
+                    </div>
+                    <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+                      <div class="row">
+                        <div class="col s12">
+                            <div class="input-field col s6">
+                              <input id="input_especialidad" type="text" ng-model="buscard7" style="cursor: pointer;"
+                                class="clase-gray">
+                              <label for="input_especialidad" style="cursor: pointer;">Especialidad:
+                                <span style="color:red;">*</span></label>
+                              <a href="javascript:void(0)"> <i
+                                  style="position: absolute; top: 4px; right: 0px;cursor: pointer;"
+                                  class="material-icons prefix default-color">search</i></a>
+                            </div>
+                        </div>
+                        <div class="row">
+                          <div style="max-height:70vh;overflow-y:auto;border: 1px solid;overflow-x: hidden">
+                            <table id="tabla_modal_ENTREGA" class="highlight" style="width:100%;color: black;">
+                              <thead>
+                                <tr>
+                                  <th class="center default-background  white-text" style="text-align:center;">CODIGO</th>
+                                  <th class="center default-background  white-text">NOMBRE</th>
+                                  <th class="center default-background  white-text" style="text-align:center;">SELECCIONAR</th>
+                                </tr>
+                              </thead>
+                              <tbody id="idpro">
+                                <tr ng-repeat="esp in listEspecialiadad |  filter:buscard7 as resultdiag1">
+                                  <td style="text-align:center;">{{esp.CODIGO}}</td>
+                                  <td style="text-align:center;">{{esp.NOMBRE}}</td>
+                                  <td>
+                                    <div class="center">
+                                      <i ng-click="function_seleccionarEspecialidad(esp)" style="cursor:pointer;" class="material-icons prefix">check</i>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr ng-show="resultdiag1.length == 0">
+                                  <td class="center-align" colspan="10" style="font-weight: bolder;">No se encontraron resultados para su revision.</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div style="width: 89%;display: flex;">
+                            <div style="width: 50%;">
+                              <label for="normal">Total encontrados:
+                                {{resultdiag1.length}}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- boton cancelar y guardar -->
+            <div class="margin row">
+              <div class="center col l12 m12 s12" style="zoom: 123%;">
+                <label><span class="black-text">Por favor tener encuenta que todos los campos marcados con <a style="color:red">*</a>
+                    son obligatorios.</span></label>
+              </div>
+            </div>
+            <div class="row">
+              <div style="background: lightyellow;text-align: right;padding: 1px 0.75px;">
+                <!-- BOTONES VOLVER  -->
+                <button ng-show="show_botonguardarNuevo" class="icon-reply white-text default-background" title="Volver" type="button"
+                ng-click="function_accionVolver('nuevaSolicitud');" style="border-radius: 10px;zoom:130%;"></button>
+
+                <button ng-show="show_botonguardarEditar" class="icon-reply white-text default-background" title="Volver" type="button"
+                  ng-click="function_accionVolver('nuevaSolicitud');" style="border-radius: 10px;zoom:130%;"></button>
+
+                  <button ng-show="show_botoninsertarProveedor" class="icon-reply white-text default-background" title="Volver" type="button"
+                  ng-click="function_accionVolver('nuevaSolicitudes');" style="border-radius: 10px;zoom:130%;"></button>
+
+                  <button ng-show="show_botonactualizarProveedor" class="icon-reply white-text default-background" title="Volver" type="button"
+                  ng-click="function_accionVolver('nuevaSolicitudes');" style="border-radius: 10px;zoom:130%;"></button>
+                <!-- BOTONES GUARDAR -->
+                <button ng-show="show_botonguardarNuevo" class="icon-floppy white-text default-background" title="Guargar" type="button"
+                  ng-click="function_insertarSolicitud()" style="border-radius: 10px;zoom:130%;"></button>
+                  
+                  <button ng-show="show_botonguardarEditar" class="icon-floppy white-text default-background" title="Guargar" type="button"
+                  ng-click="function_actualizarSolicitud('U')" style="border-radius: 10px;zoom:130%;"></button>
+
+
+                  <button ng-show="show_botoninsertarProveedor" class="icon-floppy white-text default-background" title="Guargar" type="button"
+                  ng-click="function_insertar_o_actualizarsolicitudProveedor('I')" style="border-radius: 10px;zoom:130%;"></button>
+
+                  <button ng-show="show_botonactualizarProveedor" class="icon-floppy white-text default-background" title="Guargar" type="button"
+                  ng-click="function_insertar_o_actualizarsolicitudProveedor('U')" style="border-radius: 10px;zoom:130%;"></button>
+
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+   <!-- Vista de soportes cargados-->
+   <div class="col s12" ng-show="show_vistadesoportesCargados">
+    <div class="card ng-scope" style="margin: 38px; bottom: 10px ;zoom:75%;">
+        <div class="row">
+          <div class="row">
+            <div class="center col s12">
+              <strong style="font-size: x-large;">
+                GESTION {{nombredelaGestion}}<a class="red-text"> # {{numconsecutivo}}</a>
+                </strong>
+              <br>
+              <strong style="font-size: x-large;">
+                SOPORTES CARGADOS
+              </strong>
+              <div class="row margin">
+                <div class="right">
+                  <button ng-show="Tabs == 3" class="icon-reply white-text default-background" title="Volver" type="button"
+                  ng-click="function_set_Tab('3');" style="border-radius: 10px;zoom:130%;"></button>
+                  <button ng-show="show_volver_nuevaSolicitud" class="icon-reply white-text default-background" title="Volver" type="button"
+                  ng-click="function_accionVolver('nuevaSolicitud');" style="border-radius: 10px;zoom:130%;"></button>
+                  <button ng-show="show_volver_nuevaSolicitudes" class="icon-reply white-text default-background" title="Volver" type="button"
+                    ng-click="function_accionVolver('nuevaSolicitudes');" style="border-radius: 10px;zoom:130%;"></button>
+                    <button ng-show="sessionNit != 0" class="icon-reply white-text default-background" title="Volver" type="button"
+                    ng-click="function_accionVolver('nuevaSolicitudes');" style="border-radius: 10px;zoom:130%;"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col s12">
+            <div class="margin row">
+              <div style="padding-left: 0px; padding-right: 0px;">
+                <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+                  <div class="row">
+                    <div class="col s12">
+                      <div style="width: 100%;overflow-y: auto;">
+                        <table id="H1_Tabla" class="bordered table_center_align"
+                          style="width:100%;font-size:6px !important;zoom: 110%;">
+                          <thead class="center-align default-background default-border white-text">
+                            <tr>
+                              <th class="center">DOCUMENTO</th>
+                              <th class="center">ACCION</th>
+                            </tr>
+                          </thead>
+                          <tbody class="default-border">
+                            <tr ng-repeat="soportes in listSoportes">
+                              <td style="text-align:center;">{{soportes.Nombre}}</td>
+                              <td class="center">
+                                <i ng-click="function_openmodals('verSoportes',soportes)"
+                                  class="icom icon-eye fs-20 cursor-pointer" title="Ver Soporte"></i>
+                              </td>
+                            </tr>
+                            <tr ng-show="listSoportes.length==0">
+                              <td class="center-align" colspan="10" style="font-weight: bolder;">No se
+                                encontraron
+                                resultados para su revision.</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div style="width: 89%;display: flex;">
+                          <div style="width: 50%;">
+                            <label for="normal">Total encontrados:
+                              {{listSoportes.length}}</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m12 s12">
+                  <div class="col l3 m3 s3" ng-show="show_estadoRevision">
+                    <label id="id_form2_estadoRevision_label" style="padding-left: 4%;font-size: inherit;">Estado de revision de documentos:<span
+                        class="red-text">*</span></label>
+                    <div class="col s12 " type="text">
+                      <select id="id_form2_estadoRevision" class="select-new-ps cursor-pointer" type="text" ng-model="form2.estadoRevision" 
+                        ng-change="function_estadoRevision(form2.estadoRevision);validarVacio('id_form2_estadoRevision','id_form2_estadoRevision_label');" required>
+                        <option value="" disabled>SELECCIONAR</option>
+                        <option value="A">APROBADO</option>
+                        <option value="X">ANULADA</option>
+                        <option value="D">EN DEVOLUCION</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col l4 m4 s4" ng-show="show_disponibiidadMaterial">
+                    <label id="id_form2_disponibiidadMaterial_label" style="padding-left: 4%;font-size: inherit;">¿Cuentas con la disponibilidad de los materiales?:<span
+                        class="red-text">*</span></label>
+                    <div class="col s12 " type="text">
+                      <select id="id_form2_disponibiidadMaterial" class="select-new-ps cursor-pointer" type="text" ng-model="form2.disponibiidadMaterial" 
+                        ng-change="function_estadodisponibilidadMaterial(form2.disponibiidadMaterial);validarVacio('id_form2_disponibiidadMaterial','id_form2_disponibiidadMaterial_label');" required>
+                        <option value="" disabled>SELECCIONAR</option>
+                        <option value="S">SI</option>
+                        <option value="N">NO</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col l6 m6 s6"> 
+                    <div class="col l12 m12 s12" ng-show="show_disponibiidadmaterial_Soporte">
+                      <label id="id_cargue_adjuntoProveedor_label" style="font-size: inherit;"
+                        class="c-pointer ">Soporte:<span class="red-text">*</span></label>
+                      <div class="file-field input-field gray-input  input-file-radiu"
+                        style="margin: 0;width: -webkit-fill-available;" id="adjuntoProveedor">
+                        <div class="right">
+                          <span class="black-text"><i class="icon-file-pdf default-color"
+                              style="line-height: 2rem;"></i></span>
+                          <input value="1" id="id_cargue_adjuntoProveedor" class="cargueArchivo3" ng-modal="cargue.adjuntoProveedor"
+                            type="file" accept=".pdf" style="width: 414px;" ng-blur="validarVacio('id_cargue_adjuntoProveedor','id_cargue_adjuntoProveedor_label');">
+                        </div>
+                        <div class="file-path-wrapper">
+                          <input id="id_adjuntoProveedor_text" class="file-path  ng-untouched ng-valid ng-dirty ng-valid-parse"
+                            type="text" placeholder="Adjunte un archivo (pdf)" readonly=""
+                            style="border-radius: 0;height: 2rem;border-bottom: 0;">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col l4 m4 s4" ng-show="show_motivodeAnulacion">
+                    <label id="id_form2_motivoaAnulacion_label" style="padding-left: 4%;font-size: inherit;">Motivo de anulacion:<span
+                        class="red-text">*</span></label>
+                    <div class="col s12 " type="text">
+                      <select id="id_form2_motivoaAnulacion" class="select-new-ps cursor-pointer" ng-model="form2.motivoaAnulacion"
+                      ng-change="validarVacio('id_form2_motivoaAnulacion','id_form2_motivoaAnulacion_label');"  required>
+                          <option value="">SELECCIONAR</option>
+                          <option value="{{x.Codigo}}" ng-repeat="x in listaMotivos">{{x.Ubicacion}}
+                          </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row" ng-show="show_motivodeAnulacion || show_disponibiidadmaterial_Observacion" >
+                    <div class="col l12 m12 s12">
+                      <label id="id_form2_observacionAnulacion_label" style=" margin-top: -20px; padding-left: 1%;">Observacion - Caracteres:
+                          {{form2.observacionAnulacion.length}} - Máximo: 4000<span class="red-text"> * </span></label>
+                      <div class="col s12">
+                          <div class="form-group shadow-textarea">
+                              <textarea class="form-control z-depth-1" id="id_form2_observacionAnulacion"
+                                  rows="3" 
+                                  ng-model="form2.observacionAnulacion" cols="50" placeholder="Comentario"
+                                  tyle="margin: 0px; height: 123px;" style="margin: 0px;height: 134px;text-transform: uppercase;"
+                                  maxlength="3999"
+                                  ng-keyup="formatTexto('id_form2_observacionAnulacion')" ng-change="validarVacio('id_form2_observacionAnulacion','id_form2_observacionAnulacion_label')"></textarea>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+                  <div class="col l4 m4 s4" ng-show="show_motivodeDevolucion">
+                    <label id="id_form2_motivoDevolucion_label" style="padding-left: 4%;font-size: inherit;">Motivo de devolucion:<span
+                        class="red-text">*</span></label>
+                    <div class="col s12 " type="text">
+                      <select id="id_form2_motivoDevolucion" class="select-new-ps cursor-pointer" ng-model="form2.motivoDevolucion"
+                      ng-change="validarVacio('id_form2_motivoDevolucion','id_form2_motivoDevolucion_label');"  required>
+                          <option value="">SELECCIONAR</option>
+                          <option value="{{x.Codigo}}" ng-repeat="x in listaMotivos">{{x.Ubicacion}}
+                          </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="row" ng-show="show_motivodeDevolucion" >
+                <div class="col l12 m12 s12">
+                  <label id="id_form2_observacionDevolucion_label" style=" margin-top: -20px; padding-left: 1%;">Observacion - Caracteres:
+                      {{form2.observacionDevolucion.length}} - Máximo: 4000<span class="red-text"> * </span></label>
+                  <div class="col s12">
+                      <div class="form-group shadow-textarea">
+                          <textarea class="form-control z-depth-1" id="id_form2_observacionDevolucion"
+                              rows="3" 
+                              ng-model="form2.observacionDevolucion" cols="50" placeholder="Comentario"
+                              tyle="margin: 0px; height: 123px;" style="margin: 0px;height: 134px;text-transform: uppercase;"
+                              maxlength="3999"
+                              ng-keyup="formatTexto('id_form2_observacionDevolucion')" ng-change="validarVacio('id_form2_observacionDevolucion','id_form2_observacionDevolucion_label')"></textarea>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div class="row" ng-show="show_botonguarar_function_cambiarEstado">
+              <div style="background: lightyellow;text-align: right;padding: 1px 0.75px;">
+                <button class="icon-floppy white-text default-background" title="Guargar" type="button"
+                  ng-click="function_cambiarEstado()" style="border-radius: 10px;zoom:130%;"></button>
+              </div>
+            </div>
+            <div class="row" ng-show="show_botonguarar_function_p_u_ips_materiales">
+              <div style="background: lightyellow;text-align: right;padding: 1px 0.75px;">
+                <button class="icon-floppy white-text default-background" title="Guargar" type="button"
+                  ng-click="function_p_u_ips_materiales('G')" style="border-radius: 10px;zoom:130%;"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <!-- Formulario agregar procedimientos-->
+  <div class="col s12" ng-show="show_procesodeasignacionProcedimiento" >
+    <div class="card ng-scope" style="margin: 38px; bottom: 10px ;zoom:75%;">
+      <div class="row">
+        <div class="row">
+          <div class="center col s12">
+            <strong style="font-size: x-large;">
+              PROCESO DE ASIGNACION DE PROCEDIMIENTO
+            </strong>
+          </div>
+        </div>
+        <div class="col s6">
+          <div class="margin row">
+            <div style="padding-left: 0px; padding-right: 0px;">
+              <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+                <div class="row">
+                  <div class="col s12">
+                    <form ng-submit="function_buscarProcedimiento('buscard1')">
+                      <div class="input-field col s6" style="margin-left:-21px;">
+                        <input id="id_service1" type="text" ng-model="buscard1" style="cursor: pointer;"
+                          class="clase-gray" autocomplete="off">
+                        <label for="id_service1" style="cursor: pointer;">Nombre
+                          del servicio o su codigo:
+                          <span style="color:red;"> *</span></label>
+                        <a href="javascript:void(0)" ng-click="function_buscarProcedimiento('buscard1')"> <i
+                            style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                            class="material-icons prefix default-color">search</i></a>
+                      </div>
+                    </form>
+                  </div>
+                  <div style="max-height:70vh;overflow-y:auto;border: 1px solid;overflow-x: hidden">
+                    <table id="tabla_modal_ENTREGA" class="highlight" style="width:100%;color: black;">
+                      <thead>
+                        <tr>
+                          <th class="center default-background  white-text" style="text-align:center;">CODIGO</th>
+                          <th class="center default-background  white-text" style="text-align:center;">NOMBRE</th>
+                          <th class="center default-background  white-text" style="text-align:center;">SELECT</th>
+                        </tr>
+                      </thead>
+                      <tbody class="default-border">
+                        <tr ng-repeat="esp in listProcedimientos  |  filter:buscard1 as resultips">
+                          <td style="text-align:center;">{{esp.Codigo}}</td>
+                          <td style="text-align:center;">{{esp.Nombre}}</td>
+                          <td>
+                            <div class="center">
+                              <i ng-click="function_agregarProcedimiento(esp)" style="cursor:pointer;"
+                                class="material-icons prefix">queue</i>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr ng-show="listProcedimientos.length==0">
+                          <td class="center-align" colspan="10" style="font-weight: bolder;">No se
+                            encontraron
+                            resultados para su revision.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div style="width: 89%;display: flex;">
+                    <div style="width: 50%;">
+                      <label for="normal">Total de de contratos:
+                        {{listProcedimientos.length}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s6" style="margin-top: 85px;">
+          <div class="margin row">
+            <div style="padding-left: 0px; padding-right: 0px;">
+              <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+                <div class="row">
+                  <div class="col s12">
+                    <div style="width: 100%;overflow-y: auto;max-height: 300px;">
+                      <table id="H1_Tabla" class="bordered table_center_align"
+                        style="width:100%;font-size:6px !important;zoom: 130%;">
+                        <thead class="center-align default-background default-border white-text">
+                          <tr>
+                            <th>Codigo</th>
+                            <th>Nombre</th>
+                            <th>Accion</th>
+                          </tr>
+                        </thead>
+                        <tbody class="default-border">
+                          <tr ng-repeat="p in procedimientoSeleccionados ">
+                            <td style="text-align:center;">{{p.CODIGO_PRDUCTO}}</td>
+                            <td style="text-align:center;">{{p.NOMBRE}}</td>
+                            <td>
+                              <div class="center">
+                                <i ng-click="function_quitarProcedimiento(p)" style="cursor:pointer;"
+                                  class=" icon-trash prefix"></i>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr ng-show="procedimientoSeleccionados.length==0">
+                            <td class="center-align" colspan="10" style="font-weight: bolder;">No se
+                              encontraron
+                              resultados para su revision.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div style="width: 89%;display: flex;">
+                        <div style="width: 50%;">
+                          <label for="normal">Total encontrados:
+                            {{procedimientoSeleccionados.length}}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="margin row">
+          <div class="center col l12 m12 s12" style="zoom: 123%;">
+            <label><span class="black-text">Por favor tener encuenta que todos los campos marcados con *
+                son obligatorios.</span></label>
+          </div>
+        </div>
+        <div class="row">
+          <div style="background: lightyellow;text-align: right;padding: 1px 0.75px;">
+            <button class="icon-reply white-text default-background" title="Volver" type="button" ng-click="function_accionVolver('nuevaSolicitudes',1);"
+            style="border-radius: 10px;zoom:130%;"></button>
+   
+            <button class="icon-right-bold white-text default-background" title="Siguiente" type="button"
+              ng-click="function_siguiente('1')" style="border-radius: 10px;zoom:130%;"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Formulario agregar materiales-->
+  <div class="col s12" ng-show="show_formularioinformacionMedica" >
+    <div class="card ng-scope" style="margin: 38px; bottom: 10px ;zoom:75%;">
+      <div class="row">
+        <div class="row">
+          <div class="center col s12">
+            <strong style="font-size: x-large;">
+              PROCESO DE ASIGNACION DE MATERIALES
+            </strong>
+          </div>
+        </div>
+        <div class="col s6">
+          <div class="margin row">
+            <div style="padding-left: 0px; padding-right: 0px;">
+              <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+                <div class="row">
+                  <div class="col s12">
+                    <form ng-submit="function_buscarEspecialidades('buscard3')">
+                      <div class="input-field col s6" style="margin-left:-21px;">
+                        <input id="id_service2" type="text" ng-model="buscard3" style="cursor: pointer;"
+                          class="clase-gray" autocomplete="off">
+                        <label for="id_service2" style="cursor: pointer;">Nombre
+                          del servicio o su codigo:
+                          <span style="color:red;"> *</span></label>
+                        <a href="javascript:void(0)" ng-click="function_buscarEspecialidades('buscard3')"> <i
+                            style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                            class="material-icons prefix default-color">search</i></a>
+                      </div>
+                    </form>
+                  </div>
+                  <div style="max-height:26vh;overflow-y:auto;border: 1px solid;overflow-x: hidden">
+                    <table id="tabla_modal_ENTREGA" class="highlight" style="width:100%;color: black;">
+                      <thead>
+                        <tr>
+                          <th class="center default-background  white-text" style="text-align:center;">CODIGO</th>
+                          <th class="center default-background  white-text" style="text-align:center;">NOMBRE</th>
+                          <th class="center default-background  white-text" style="text-align:center;">SELECT</th>
+                        </tr>
+                      </thead>
+                      <tbody class="default-border">
+                        <tr ng-repeat="esp in listEspecialidades  |  filter:buscard3 as resultips">
+                          <td style="text-align:center;">{{esp.Codigo}}</td>
+                          <td style="text-align:center;">{{esp.Nombre}}</td>
+                          <td>
+                            <div class="center">
+                              <i ng-click="function_seleccionarEspecialidad(esp)" style="cursor:pointer;"
+                                class="material-icons prefix">check</i>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr ng-show="listEspecialidades.length==0">
+                          <td class="center-align" colspan="10" style="font-weight: bolder;">No se
+                            encontraron
+                            resultados para su revision.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div style="width: 89%;display: flex;">
+                    <div style="width: 50%;">
+                      <label for="normal">Total de de contratos:
+                        {{listEspecialidades.length}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s6">
+          <div class="margin row">
+            <div style="padding-left: 0px; padding-right: 0px;">
+              <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+                <div class="row">
+                  <div class="col s12">
+                    <div class="col l3 m3 s3">
+                      <label for="material" style="padding-left: 4%;font-size: inherit;">Referencia:</label>
+                      <div class="col s12">
+                        <input ng-model="material.referencia" type="text"
+                          style="color: #000000c7;background-color: gainsboro;" disabled>
+                      </div>
+                    </div>
+                    <div class="col l3 m3 s3">
+                      <label for="material" style="padding-left: 4%;font-size: inherit;">Pbs:</label>
+                      <div class="col s12">
+                        <input ng-model="material.pos" type="text" style="color: #000000c7;background-color: gainsboro;"
+                          disabled>
+                      </div>
+                    </div>
+                    <div class="col l3 m3 s3" ng-show="material.pos != 'S'">
+                      <label for="material" style="padding-left: 4%;font-size: inherit;">Numero de mipres:</label>
+                      <div class="col s12">
+                        <input ng-model="material.mipres" type="text" style="color: #000000c7;">
+                      </div>
+                    </div>
+                    <div class="col l2 m2 s2">
+                      <label for="material" style="padding-left: 4%;font-size: inherit;">Cantidad:</label>
+                      <div class="col s12">
+                        <input ng-model="material.cantidad" type="text" style="color: #000000c7;">
+                      </div>
+                    </div>
+                    <button class="icon-plus-circled white-text default-background" title="Agregar" type="button"
+                      ng-click="function_agregarMaterial()"
+                      style="border-radius: 3px;zoom: 130%;margin-top: 16px;margin-left: 8px;"></button>
+                    <div style="width: 100%;overflow-y: auto;max-height: 300px;">
+                      <table id="H1_Tabla" class="bordered table_center_align"
+                        style="width:100%;font-size:6px !important;zoom: 130%;">
+                        <thead class="center-align default-background default-border white-text">
+                          <tr>
+                            <th>Referencia</th>
+                            <th>Descripcion</th>
+                            <th>Pbs</th>
+                            <th>Numero de Mipres</th>
+                            <th>Cantidad</th>
+                            <th>Accion</th>
+                          </tr>
+                        </thead>
+                        <tbody class="default-border">
+                          <tr ng-repeat="material in materialesSeleccionados ">
+                            <td style="text-align:center;">{{material.CODIGO_PRDUCTO}}</td>
+                            <td style="text-align:center;">{{material.NOMBRE}}</td>
+                            <td style="text-align:center;">{{material.POS}}</td>
+                            <td ng-if="material.MIPRES == ''" style="text-align:center;">No aplica</td>
+                            <td ng-if="material.MIPRES != ''" style="text-align:center;">{{material.MIPRES}}</td>
+                            <td style="text-align:center;">{{material.CANTIDAD}}</td>
+                            <td>
+                              <div class="center">
+                                <i ng-click="function_quitarMaterial(material)" style="cursor:pointer;"
+                                  class=" icon-trash prefix"></i>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr ng-show="materialesSeleccionados.length==0">
+                            <td class="center-align" colspan="10" style="font-weight: bolder;">No se
+                              encontraron
+                              resultados para su revision.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div style="width: 89%;display: flex;">
+                        <div style="width: 50%;">
+                          <label for="normal">Total encontrados:
+                            {{materialesSeleccionados.length}}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="margin center row">
+          <div class="col l12 m12 s12">
+            <div class="col s12">
+              <div class="card-content foot4" style="padding: 0;zoom:60%;">
+                <div class="col s12">
+                  <h5 style="padding-left: 23px" class="white-text"><strong>GASTOS QX</strong>
+                  </h5>
+                </div>
+              </div>
+              <div class="card-action" style="padding-bottom: 3px;border-top: 0;padding-top: 0px;">
+                <div class="row">
+                  <div class="col s12">
+                    <iframe src="{{documentoaVisualizarQX}}" width="800" height="650" style="zoom:150%" frameborder="0"></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="margin row">
+          <div class="center col l12 m12 s12" style="zoom: 123%;">
+            <label><span class="black-text">Por favor tener encuenta que todos los campos marcados con *
+                son obligatorios.</span></label>
+          </div>
+        </div>
+        <div class="row">
+          <div style="background: lightyellow;text-align: right;padding: 1px 0.75px;">
+            <button class="icon-reply white-text default-background" title="Volver" type="button" ng-click="function_accionVolver('nuevaSolicitudes',2);"
+            style="border-radius: 10px;zoom:130%;"></button>
+            <button class="icon-floppy white-text default-background" title="Guardar" type="button"
+              ng-click="function_guardarcupsMateriales()" style="border-radius: 10px;zoom:130%;"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!-- Formulario agregar procedimientos-->
+  <div class="col s12" ng-show="show_procesodeasignacionProveedor" >
+    <div class="card ng-scope" style="margin: 38px; bottom: 10px ;zoom:75%;">
+      <div class="row">
+        <div class="row">
+          <div class="center col s12">
+            <strong style="font-size: x-large;">
+              PROCESO DE SELECCION DE PROVEEDOR
+            </strong>
+          </div>
+        </div>
+        <div class="col s6">
+          <div class="margin row">
+            <div style="padding-left: 0px; padding-right: 0px;">
+              <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+                <div class="row">
+                  <div style="max-height:70vh;overflow-y:auto;border: 1px solid;overflow-x: hidden">
+                    <table id="tabla_modal_ENTREGA" class="highlight" style="width:100%;color: black;">
+                      <thead>
+                        <tr>
+                          <th class="center default-background  white-text" style="text-align:center;">CODIGO</th>
+                          <th class="center default-background  white-text" style="text-align:center;">NOMBRE</th>
+                          <th class="center default-background  white-text" style="text-align:center;">SELECT</th>
+                        </tr>
+                      </thead>
+                      <tbody class="default-border">
+                        <tr ng-repeat="proveedor in listProveedor  |  filter:buscarProveedor">
+                          <td style="text-align:center;">{{proveedor.CODIGO}}</td>
+                          <td style="text-align:center;">{{proveedor.NOMBRE}}</td>
+                          <td>
+                            <div class="center">
+                              <i ng-click="function_agregarProveedor(proveedor)" style="cursor:pointer;"
+                                class="material-icons prefix">queue</i>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr ng-show="listProveedor.length==0">
+                          <td class="center-align" colspan="10" style="font-weight: bolder;">No se
+                            encontraron
+                            resultados para su revision.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div style="width: 89%;display: flex;">
+                    <div style="width: 50%;">
+                      <label for="normal">Total de de contratos:
+                        {{listProveedor.length}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s6">
+          <div class="margin row">
+            <div style="padding-left: 0px; padding-right: 0px;">
+              <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+                <div class="row">
+                  <div class="col s12">
+                    <div style="width: 100%;overflow-y: auto;max-height: 345px;">
+                      <table id="H1_Tabla" class="bordered table_center_align"
+                        style="width:100%;font-size:6px !important;zoom: 120%;">
+                        <thead class="center-align default-background default-border white-text">
+                          <tr>
+                            <th>Codigo</th>
+                            <th>Nombre</th>
+                            <th>Accion</th>
+                          </tr>
+                        </thead>
+                        <tbody class="default-border">
+                          <tr ng-repeat="p in proveedoresSeleccionados ">
+                            <td style="text-align:center;">{{p.NIT}}</td>
+                            <td style="text-align:center;">{{p.NOMBRE}}</td>
+                            <td>
+                              <div class="center">
+                                <i ng-click="function_quitarProveedor(p)" style="cursor:pointer;"
+                                  class=" icon-trash prefix"></i>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr ng-show="proveedoresSeleccionados.length==0">
+                            <td class="center-align" colspan="10" style="font-weight: bolder;">No se
+                              encontraron
+                              resultados para su revision.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div style="width: 89%;display: flex;">
+                        <div style="width: 50%;">
+                          <label for="normal">Total encontrados:
+                            {{proveedoresSeleccionados.length}}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="margin row">
+          <div class="center col l12 m12 s12" style="zoom: 123%;">
+            <label><span class="black-text">Por favor tener encuenta que todos los campos marcados con *
+                son obligatorios.</span></label>
+          </div>
+        </div>
+        <div class="row">
+          <div style="background: lightyellow;text-align: right;padding: 1px 0.75px;">
+            <button class="icon-reply white-text default-background" title="Volver" type="button" ng-click="function_accionVolver('nuevaSolicitudes')"
+              style="border-radius: 10px;zoom:130%;"></button>
+              <button class="icon-floppy white-text default-background" title="Guargar" type="button"
+              ng-click="function_p_u_ips_materiales_asignarProveedor('I')" style="border-radius: 10px;zoom:130%;"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal Diagnostico -->
+  <div id="modalsoportes" class="modal" style="overflow: hidden;">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <div class="card-content foot4" style="padding: 0;zoom:60%;">
+            <div class="col s11">
+              <h5 style="padding-left: 23px" class="white-text"><strong>{{titulodelSoporte}}</strong>
+                <i style="padding-right: 17px;cursor:pointer;" ng-click="function_closemodals('verSoportes')"
+                  class="material-icons right white-text">close</i>
+              </h5>
+
+            </div>
+          </div>
+          <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+            <div class="row">
+              <div class="col s12">
+                <!-- <iframe style="width: 100%;"src="{{documentoaVisualizar}}"></iframe> -->
+                <iframe src="{{documentoaVisualizar}}" width="800" height="650" style="zoom:89%" frameborder="0"></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Tabla Principal de solicitudes Ambulatorio  -->
+  <div ng-show="show_tabladeSolicitudes">
+    <div class="row dashboard-wrapper content-container white"
+      style="padding-bottom: 20px;margin-bottom: 0;zoom:80%;margin-left: -20px;">
+      <div class="row">
+        <h6 style="color: #8898aa !important;font-weight: 600 !important;font-size: 1.8125rem;text-align: center">
+          {{tituloTabla}}</h6>
+      </div>
+      <div class="row" style="margin-bottom: 0;">
+        <div class="col s12">
+          <div class="col s1 no-padding label-new m-b left">
+            <select class="select-new gray-input" style="box-shadow: none;" material-select watch
+              ng-model="Vista1.Mostrar_Sol" ng-change="init_pag_cant_Mostrar(Vista1.Mostrar_Sol)">
+              <option value="10" selected>10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+            <label style="font-size: .8rem;top: -1.5rem;">Mostrar</label>
+            <div style="line-height: 2;">
+              <i class="icon-arrows-cw-2 default-color cursor-pointer" style="margin-left: 4px;"
+                title="Actualizar Tabla" ng-click="function_pobternersSolicitudes(filterEstado)"></i>
+            </div>
+          </div>
+          <form ng-submit="chg_filtrar('Filtrar_tprincipal');">
+            <div class="col s4 no-padding label-new m-b right" style="margin-right: .5rem !important;margin-top: 30px;">
+              <label style="padding-left: 2%;font-size: inherit;">Buscar:</label>
+              <div class="input-field-ps col s12">
+                <input id="Var_Seccional_Filtrar_Sol" class="margin border-none input-text-new gray-input w-100 m-l"
+                  ng-model="Vista1.Filtrar_tprincipal" type="text" placeholder="..." style="cursor: pointer;text-transform: uppercase;"
+                  autocomplete="off">
+                <a><i style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                    class="material-icons prefix default-color"
+                    ng-click="chg_filtrar('Filtrar_tprincipal');">search</i></a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div style="width:100%;">
+          <table id="H1_Tabla" class="bordered table_center_align" style="width:100%;font-size:6px !important;">
+            <thead class="center-align default-background default-border white-text">
+              <tr>
+                <th class="center">CONSECUTIVO</th>
+                <th class="center">FECHA</th>
+                <th class="center">NRO DOC</th>
+                <th class="center">NOMBRE PACIENTE</th>
+                <th class="center">UBICACION</th>
+                <th class="center">RESPONSABLE</th>
+                <th class="center">ESTADO</th>
+                <th class="center">GESTION</th>
+                <th class="center">ACCION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                ng-repeat="infoSolicitud in list_DatosTemp | inicio: currentPage * pageSize | limitTo: pageSize | orderBy:propertyName:reverse"
+                style="color: black;">
+                <td class="center">{{infoSolicitud.CONSECUTIVO}}</td>
+                <td class="center">{{infoSolicitud.FECHA_SOLICITUD}}</td>
+                <td class="center">{{infoSolicitud.AFILIADO}}</td>
+                <td class="center">{{infoSolicitud.NOMBRE_AFILIADO}}</td>
+                <td class="center">{{infoSolicitud.UBICACION}}</td>
+                <td class="center">{{infoSolicitud.RESPONSABLE}}</td>
+                <td class="center"><strong>{{infoSolicitud.ESTADO_PR}}</strong><br>
+                  <i class="icon-circle" style="color: transparent;font-size: 9px;" ng-class="{
+                    'Con_pulse_VERDE' : (infoSolicitud.ESTADO_PR == 'APROBADO') ? 'rgba(3, 197, 20)' : '',
+                    'Con_pulse_ROJO' : (infoSolicitud.ESTADO_PR == 'ANULADA') ? 'rgba(245, 75, 75)' : '',
+                    'Con_pulse_AZUL' : (infoSolicitud.ESTADO_PR == 'ACTIVA') ? 'rgba(51, 70, 255)' : '',
+                    'Con_pulse_AMARILLO' : (infoSolicitud.ESTADO_PR == 'EN DEVOLUCION') ? 'rgba(255, 235, 59)' : '',
+                    'Con_pulse_AMARILLO_OSCURO' : (infoSolicitud.ESTADO_PR == 'PROCESADA') ? 'rgba(255, 191, 0)' : ''}"
+                    ng-style="{'background-color' : infoSolicitud.ESTADO_PR == 'APROBADO' ? 'rgba(3, 197, 20)' :
+                              infoSolicitud.ESTADO_PR == 'ACTIVA' ? 'rgba(51, 70, 255)' :
+                              infoSolicitud.ESTADO_PR == 'ANULADA' ? 'rgba(245, 75, 75)' :
+                              infoSolicitud.ESTADO_PR == 'EN DEVOLUCION' ? 'rgba(255, 235, 59)':
+                              infoSolicitud.ESTADO_PR == 'PROCESADA' ? 'rgba(255, 191, 0)' : ''}">
+                </td>
+                <td class="center">{{infoSolicitud.TIPO_SOLICITUD}}</td>
+                <td class="center" >
+                  <i ng-show="infoSolicitud.ESTADO_PR == 'ACTIVA'" class="icom icon-edit-3  fs-20 cursor-pointer" ng-click="function_editarSolicitud(infoSolicitud);""
+                    title="Editar"></i>
+                    <i ng-click="function_p_listaSoporte(infoSolicitud)" class="icom icon-eye  fs-20 cursor-pointer"
+                    title="Ver Soportes"></i>
+                    <i ng-show="infoSolicitud.GASTO_QX.length > 0" ng-click="function_show_control_Vista('cargueCups',infoSolicitud)" class="icom icon-clipboard fs-20 cursor-pointer"
+                    title="Cargar Cups y Materiales"></i>
+                    <i ng-show="infoSolicitud.CANT_PROVEEDORES > 0 && (infoSolicitud.GASTO_QX.length < 0 || infoSolicitud.GASTO_QX.length == null )" ng-click="function_p_lista_gestion_ips(infoSolicitud)"  ng-class="{'icon-list-green': infoSolicitud.GESTIONADO != 0, 'icon-list-red': infoSolicitud.GESTIONADO == 0}"  class="icom fs-20 cursor-pointer"
+                      title="Respuesta del Proveedor"></i>
+                      <i ng-show="infoSolicitud.ESTADO_PR == 'APROBADO'" ng-click="function_asignacionProveedor(infoSolicitud)" class="icom  icon-briefcase-3 fs-20 cursor-pointer"
+                      title="Asignar Proveedores"></i>
+                      <i  ng-click="function_openmodals('observacion',infoSolicitud)" class="icom  icon-error fs-20 cursor-pointer"
+                      title="Anular"></i>
+                </td>
+              </tr>
+              <tr ng-show="list_DatosTemp.length == 0">
+                <td class="center-align" colspan="20" style="font-weight: bolder;">No se encontraron resultados.</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="width: 75%;display: flex;">
+            <div style="width: 50%;">
+              <label for="normal">Total encontrados: {{list_DatosTemp.length}}</label>
+            </div>
+            <div class="col s12 center">
+              <i class="icon-circle" style="color:rgba(51, 70, 255);"></i><strong style="cursor: pointer;"
+                ng-click="function_pobternersSolicitudes('T');">ACTIVA</strong>
+              <i class="icon-circle" style="color:rgba(255, 235, 59)"></i><strong style="cursor: pointer;"
+                ng-click="function_pobternersSolicitudes('D');">EN DEVOLUCION</strong>
+              <i class="icon-circle" style="color:rgba(3, 197, 20)"></i><strong style="cursor: pointer;"
+                ng-click="function_pobternersSolicitudes('A');">APROBADO</strong>
+              <i class="icon-circle" style="color:rgba(255, 191, 0)"></i><strong style="cursor: pointer;"
+                ng-click="function_pobternersSolicitudes('P');">PROCESADA</strong>
+              <i class="icon-circle" style="color:rgba(245, 75, 75)"></i><strong style="cursor: pointer;"
+                ng-click="function_pobternersSolicitudes('X');">ANULADA</strong>
+            </div>
+          </div>
+          <ul style="text-align: center;padding-top: 0px;" class="pagination">
+            <li><button ng-disabled='currentPage == 0' class="btn-floating default-background"
+                ng-click="paso('back')">&laquo;</button></li>
+            <li ng-repeat='page in pages'><button ng-disabled='currentPage == page.no - 1'
+                class="btn-floating default-background" ng-click='setPage(page.no)'>{{page.no}}</button>
+            </li>
+            <li><button ng-disabled='currentPage >= list_DatosTemp.length/pageSize - 1'
+                class="btn-floating default-background" ng-click="paso('next')">&raquo;</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Tabs 4 Tabla Administradora  -->
+  <div ng-show="Tabs == 4 && show_vistaAdministrador">
+    <div class="row dashboard-wrapper content-container white"
+      style="padding-bottom: 20px;margin-bottom: 0;zoom:80%;margin-left: -20px;">
+      <div class="row" style="margin-bottom: 0;">
+        <div class="col s12">
+          <div class="col s1 no-padding label-new m-b left">
+            <select class="select-new gray-input" style="box-shadow: none;" material-select watch
+              ng-model="Vista1.Mostrar_Sol" ng-change="init_pag_cant_Mostrar(Vista1.Mostrar_Sol)">
+              <option value="10" selected>10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+            <label style="font-size: .8rem;top: -1.5rem;">Mostrar</label>
+            <div style="line-height: 2;">
+              <i class="icon-arrows-cw-2 default-color cursor-pointer" style="margin-left: 4px;"
+                title="Actualizar Tabla" ng-click="list_tabla_solicitud()"></i>
+            </div>
+          </div>
+          <form ng-submit="chg_filtrar('Filtrar_tprincipal');">
+            <div class="col s4 no-padding label-new m-b right" style="margin-right: .5rem !important;margin-top: 30px;">
+              <label style="padding-left: 2%;font-size: inherit;">Buscar:</label>
+              <div class="input-field-ps col s12">
+                <input id="Var_Seccional_Filtrar_Sol" class="margin border-none input-text-new gray-input w-100 m-l"
+                  ng-model="Vista1.Filtrar_tprincipal" type="text" placeholder="..." style="cursor: pointer;text-transform: uppercase;"
+                  autocomplete="off">
+                <a><i style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                    class="material-icons prefix default-color"
+                    ng-click="chg_filtrar('Filtrar_tprincipal');">search</i></a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col s12">
+          <button class="icon-user-plus white-text default-background btn_2 " type="button"
+            ng-click="function_openmodals('nuevoUsuario','N');"
+            style="zoom:100% default-background;border-top-left-radius: 10px 10px;border-top-right-radius: 10px 10px;box-shadow: 0px 0px 14px 0px gainsboro;">
+            AGREGAR USUARIO</button>
+        </div>
+        <div style="width:100%;">
+          <table id="H1_Tabla" class="bordered table_center_align" style="width:100%;font-size:6px !important;">
+            <thead class="center-align default-background default-border white-text">
+              <tr>
+                <th class="center">N° DE CEDULA</th>
+                <th class="center">FUNCIONARIO</th>
+                <th class="center">CARGO</th>
+                <th class="center">TIPO DE PERFIL</th>
+                <th class="center">ESTADO</th>
+                <th class="center">ACCION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                ng-repeat="infoSolicitud in list_DatosTemp | inicio: currentPage * pageSize | limitTo: pageSize | orderBy:propertyName:reverse "
+                style="color: black;">
+                <td class="center">{{infoSolicitud.documento}}</td>
+                <td class="center">{{infoSolicitud.nombre}}</td>
+                <td class="center">{{infoSolicitud.cargo}}</td>
+                <td class="center">{{infoSolicitud.tipo}}</td>
+                <td class="center"><strong>{{infoSolicitud.estado}}</strong><br>
+                  <i class="icon-circle" style="color: transparent;font-size: 9px;" ng-class="{
+                      'Con_pulse_VERDE' : (infoSolicitud.estado == 'Activo') ? 'rgba(3, 197, 20)' : '',
+                      'Con_pulse_ROJO' : (infoSolicitud.estado == 'Inactivo') ? 'rgba(245, 75, 75)' : ''}" ng-style="{'background-color' : infoSolicitud.estado == 'Activo' ? 'rgba(3, 197, 20)' :
+                                infoSolicitud.estado == 'Inactivo' ? 'rgba(245, 75, 75)' :''}">
+
+                </td>
+                <td class="center">
+                  <div class="tooltip2">
+                    <i ng-click="function_editaruserMateriales(infoSolicitud)" class="icon-edit-1" style="zoom: 161%;"></i>
+                    <span class="tooltiptext2" style="font-size: 12px;width: 60px;margin-left: -30px;">Editar</span>
+                  </div>
+                </td>
+              </tr>
+              <tr ng-show="list_DatosTemp.length == 0">
+                <td class="center-align" colspan="20" style="font-weight: bolder;">No se
+                  encontraron
+                  resultados.</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="width: 75%;display: flex;">
+            <div style="width: 50%;">
+              <label for="normal">Total encontrados:
+                {{list_DatosTemp.length}}</label>
+            </div>
+            <div class="col s12 center">
+              <i class="icon-circle" style="color:rgba(3, 197, 20)"></i><strong style="cursor: pointer;"
+                ng-click="filtroEstado('APROBADO');">ACTIVO</strong>
+              <i class="icon-circle" style="color:rgba(245, 75, 75)"></i><strong style="cursor: pointer;"
+                ng-click="filtroEstado('ANULADA');">INACTIVO</strong>
+            </div>
+          </div>
+          <ul style="text-align: center;padding-top: 0px;" class="pagination">
+            <li><button ng-disabled='currentPage == 0' class="btn-floating default-background"
+                ng-click="paso('back')">&laquo;</button></li>
+            <li ng-repeat='page in pages'><button ng-disabled='currentPage == page.no - 1'
+                class="btn-floating default-background" ng-click='setPage(page.no)'>{{page.no}}</button>
+            </li>
+            <li><button ng-disabled='currentPage >= list_DatosTemp.length/pageSize - 1'
+                class="btn-floating default-background" ng-click="paso('next')">&raquo;</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Tabla Principal de solicitudes Ambulatorio  -->
+  <div ng-show="show_tablarespuestaProveedores">
+    <div class="row dashboard-wrapper content-container white"
+      style="padding-bottom: 20px;margin-bottom: 0;zoom:80%;margin-left: -20px;">
+      <div class="row">
+        <h6 style="color: #8898aa !important;font-weight: 600 !important;font-size: 1.8125rem;text-align: center">
+          RESPUESTA PROVEEDORES</h6>
+      </div>
+      <div class="row">
+        <div style="text-align: right;padding: 1px 0.75px;">
+          <button class="icon-reply white-text default-background" title="Volver" type="button" ng-click="function_accionVolver('nuevaSolicitudes')"
+            style="border-radius: 10px;zoom:130%;"></button>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom: 0;">
+        <div class="col s12">
+          <div class="col s1 no-padding label-new m-b left">
+            <select class="select-new gray-input" style="box-shadow: none;" material-select watch
+              ng-model="Vista1.Mostrar_Sol" ng-change="init_pag_cant_Mostrar(Vista1.Mostrar_Sol)">
+              <option value="10" selected>10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+            <label style="font-size: .8rem;top: -1.5rem;">Mostrar</label>
+            <div style="line-height: 2;">
+              <i class="icon-arrows-cw-2 default-color cursor-pointer" style="margin-left: 4px;"
+                title="Actualizar Tabla" ng-click="list_tabla_solicitud()"></i>
+            </div>
+          </div>
+          <form ng-submit="chg_filtrar('Filtrar_tprincipal');">
+            <div class="col s4 no-padding label-new m-b right" style="margin-right: .5rem !important;margin-top: 30px;">
+              <label style="padding-left: 2%;font-size: inherit;">Buscar:</label>
+              <div class="input-field-ps col s12">
+                <input id="Var_Seccional_Filtrar_Sol" class="margin border-none input-text-new gray-input w-100 m-l"
+                  ng-model="Vista1.Filtrar_tprincipal" type="text" placeholder="..." style="cursor: pointer;text-transform: uppercase;"
+                  autocomplete="off">
+                <a><i style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                    class="material-icons prefix default-color"
+                    ng-click="chg_filtrar('Filtrar_tprincipal');">search</i></a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div style="width:100%;">
+          <table id="H1_Tabla" class="bordered table_center_align" style="width:100%;font-size:6px !important;">
+            <thead class="center-align default-background default-border white-text">
+              <tr>
+                <th class="center">NIT</th>
+                <th class="center">PROVEEDOR</th>
+                <th class="center">DISPONIBILIDAD</th>
+                <th class="center">OBSERVACION</th>
+                <th class="center">ADJUNTO</th>
+                <th class="center">ACCION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                ng-repeat="prove in list_DatosTemp | inicio: currentPage * pageSize | limitTo: pageSize | orderBy:propertyName:reverse"
+                style="color: black;">
+                <td class="center">{{prove.IPS}}</td>
+                <td class="center">{{prove.NOMBRE_IPS}}</td>
+                <td class="center">{{prove.DISPONIBILIDAD}}</td>
+                <td class="center">{{prove.OBSERVACION}}</td>
+                <td class="center">
+                  <i ng-show="prove.ADJUNTO !=null" ng-click="function_openmodals('verSoportes',prove)" class="icom icon-eye  fs-20 cursor-pointer"
+                    title="Ver Soportes"></i>
+                </td>
+                <td class="center">
+                  <i ng-show="prove.DISPONIBILIDAD == 'SI'" ng-click="function_p_u_ips_materiales('A',prove)"
+                    ng-class="{'icon-check-empty': prove.ESTADO != 'APROBADO', 'icon-check': prove.ESTADO == 'APROBADO'}" class="icom fs-20 cursor-pointer"
+                    title="Aprobar"></i>
+                </td>
+              </tr>
+              <tr ng-show="list_DatosTemp.length == 0">
+                <td class="center-align" colspan="20" style="font-weight: bolder;">No se
+                  encontraron
+                  resultados.</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="width: 75%;display: flex;">
+            <div style="width: 50%;">
+              <label for="normal">Total encontrados:
+                {{list_DatosTemp.length}}</label>
+            </div>
+          </div>
+
+          <ul style="text-align: center;padding-top: 0px;" class="pagination">
+            <li><button ng-disabled='currentPage == 0' class="btn-floating default-background"
+                ng-click="paso('back')">&laquo;</button></li>
+            <li ng-repeat='page in pages'><button ng-disabled='currentPage == page.no - 1'
+                class="btn-floating default-background" ng-click='setPage(page.no)'>{{page.no}}</button>
+            </li>
+            <li><button ng-disabled='currentPage >= list_DatosTemp.length/pageSize - 1'
+                class="btn-floating default-background" ng-click="paso('next')">&raquo;</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Tabla Gestion Proveedor  -->
+  <div ng-show="show_tablaProveedore">
+    <div class="row dashboard-wrapper content-container white"
+      style="padding-bottom: 20px;margin-bottom: 0;zoom:80%;margin-left: -20px;">
+      <div class="row">
+        <h6 style="color: #8898aa !important;font-weight: 600 !important;font-size: 1.8125rem;text-align: center">
+          GESTION PROVEEDOR</h6>
+      </div>
+      <div class="row" style="margin-bottom: 0;">
+        <div class="col s12">
+          <div class="col s1 no-padding label-new m-b left">
+            <select class="select-new gray-input" style="box-shadow: none;" material-select watch
+              ng-model="Vista1.Mostrar_Sol" ng-change="init_pag_cant_Mostrar(Vista1.Mostrar_Sol)">
+              <option value="10" selected>10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+            <label style="font-size: .8rem;top: -1.5rem;">Mostrar</label>
+            <div style="line-height: 2;">
+              <i class="icon-arrows-cw-2 default-color cursor-pointer" style="margin-left: 4px;"
+                title="Actualizar Tabla" ng-click="function_pobternersSolicitudes(filterEstado)"></i>
+            </div>
+          </div>
+          <form ng-submit="chg_filtrar('Filtrar_tprincipal');">
+            <div class="col s4 no-padding label-new m-b right" style="margin-right: .5rem !important;margin-top: 30px;">
+              <label style="padding-left: 2%;font-size: inherit;">Buscar:</label>
+              <div class="input-field-ps col s12">
+                <input id="Var_Seccional_Filtrar_Sol" class="margin border-none input-text-new gray-input w-100 m-l"
+                  ng-model="Vista1.Filtrar_tprincipal" type="text" placeholder="..." style="cursor: pointer;text-transform: uppercase;"
+                  autocomplete="off">
+                <a><i style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                    class="material-icons prefix default-color"
+                    ng-click="chg_filtrar('Filtrar_tprincipal');">search</i></a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div style="width:100%;">
+          <table id="H1_Tabla" class="bordered table_center_align" style="width:100%;font-size:6px !important;">
+            <thead class="center-align default-background default-border white-text">
+              <tr>
+                <th class="center">CONSECUTIVO</th>
+                <th class="center">FECHA</th>
+                <th class="center">NRO DOC</th>
+                <th class="center">NOMBRE PACIENTE</th>
+                <th class="center">UBICACION</th>
+                <th class="center">RESPONSABLE</th>
+                <th class="center">ESTADO</th>
+                <th class="center">DISPONIBILIDAD</th>
+                <th class="center">OBSERVACION</th>
+                <th class="center">GESTION</th>
+                <th class="center">ACCION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                ng-repeat="infoSolicitud in list_DatosTemp | inicio: currentPage * pageSize | limitTo: pageSize | orderBy:propertyName:reverse"
+                style="color: black;">
+                <td class="center">{{infoSolicitud.CONSECUTIVO}}</td>
+                <td class="center">{{infoSolicitud.FECHA_SOLICITUD}}</td>
+                <td class="center">{{infoSolicitud.AFILIADO}}</td>
+                <td class="center">{{infoSolicitud.NOMBRE_AFILIADO}}</td>
+                <td class="center">{{infoSolicitud.UBICACION}}</td>
+                <td class="center">{{infoSolicitud.RESPONSABLE}}</td>
+                <td class="center"><strong>{{infoSolicitud.ESTADO_PR}}</strong><br>
+                  <i class="icon-circle" style="color: transparent;font-size: 9px;" ng-class="{
+                    'Con_pulse_VERDE' : (infoSolicitud.ESTADO_PR == 'APROBADO') ? 'rgba(3, 197, 20)' : '',
+                    'Con_pulse_ROJO' : (infoSolicitud.ESTADO_PR == 'ANULADA') ? 'rgba(245, 75, 75)' : '',
+                    'Con_pulse_AZUL' : (infoSolicitud.ESTADO_PR == 'ACTIVA') ? 'rgba(51, 70, 255)' : '',
+                    'Con_pulse_AMARILLO' : (infoSolicitud.ESTADO_PR == 'EN DEVOLUCION') ? 'rgba(255, 235, 59)' : '',
+                    'Con_pulse_AMARILLO_OSCURO' : (infoSolicitud.ESTADO_PR == 'PROCESADA') ? 'rgba(255, 191, 0)' : ''}"
+                    ng-style="{'background-color' : infoSolicitud.ESTADO_PR == 'APROBADO' ? 'rgba(3, 197, 20)' :
+                              infoSolicitud.ESTADO_PR == 'ACTIVA' ? 'rgba(51, 70, 255)' :
+                              infoSolicitud.ESTADO_PR == 'ANULADA' ? 'rgba(245, 75, 75)' :
+                              infoSolicitud.ESTADO_PR == 'EN DEVOLUCION' ? 'rgba(255, 235, 59)':
+                              infoSolicitud.ESTADO_PR == 'PROCESADA' ? 'rgba(255, 191, 0)' : ''}">
+                </td>
+                <td class="center">{{infoSolicitud.DISPONIBILIDAD}}</td>
+                <td class="center" style="inline-size: 300px;overflow-wrap: break-word;">{{infoSolicitud.OBSERVACION}}
+                </td>
+                <td class="center">{{infoSolicitud.TIPO_SOLICITUD}}</td>
+                <td class="center">
+                  <i ng-click="function_p_listaSoporte(infoSolicitud)" class="icom icon-eye  fs-20 cursor-pointer"
+                    title="Ver Soportes"></i>
+                    <i ng-show="infoSolicitud.ESTADO_PR == 'PROCESADA' && infoSolicitud.DISPONIBILIDAD == 'SI' && infoSolicitud.GASTO_QX == null" ng-click="function_openmodals('gastosQuirurgico',infoSolicitud)" class="icom icon-dollar fs-20 cursor-pointer"
+                    title="Gastos Quirurgico"></i>
+                </td>
+              </tr>
+              <tr ng-show="list_DatosTemp.length == 0">
+                <td class="center-align" colspan="20" style="font-weight: bolder;">No se
+                  encontraron
+                  resultados.</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="width: 75%;display: flex;">
+            <div style="width: 50%;">
+              <label for="normal">Total encontrados:
+                {{list_DatosTemp.length}}</label>
+            </div>
+            <div class="col s12 center">
+              <i class="icon-circle" style="color:rgba(51, 70, 255);"></i><strong style="cursor: pointer;"
+                ng-click="function_pobternersSolicitudes('T');">ACTIVA</strong>
+              <i class="icon-circle" style="color:rgba(3, 197, 20)"></i><strong style="cursor: pointer;"
+                ng-click="function_pobternersSolicitudes('A');">APROBADO</strong>
+              <i class="icon-circle" style="color:rgba(255, 191, 0)"></i><strong style="cursor: pointer;"
+                ng-click="function_pobternersSolicitudes('P');">PROCESADA</strong>
+            </div>
+          </div>
+
+          <ul style="text-align: center;padding-top: 0px;" class="pagination">
+            <li><button ng-disabled='currentPage == 0' class="btn-floating default-background"
+                ng-click="paso('back')">&laquo;</button></li>
+            <li ng-repeat='page in pages'><button ng-disabled='currentPage == page.no - 1'
+                class="btn-floating default-background" ng-click='setPage(page.no)'>{{page.no}}</button>
+            </li>
+            <li><button ng-disabled='currentPage >= list_DatosTemp.length/pageSize - 1'
+                class="btn-floating default-background" ng-click="paso('next')">&raquo;</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal nuevo usuario -->
+  <div id="modalnuevoUser" class="modal" style="overflow: hidden;zoom:80%;width: fit-content;">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <div class="default-background" style="padding: 0;zoom:60%;">
+            <div class="col l12 m12 s12">
+              <div class="row margin">
+                <div class="col s11">
+                  <h5 class="white-text">{{titulo_modal_usuario}}</h5>
+                </div>
+                <div class="col s1">
+                  <h5 style="text-align: end;"><i style="cursor:pointer;" ng-click="function_closemodals('nuevoUsuario')"
+                      class="material-icons white-text">close</i>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+            <div class="row margin">
+              <div class="col 12 m12 s12">
+                <div class="row margin">
+                  <div class="col l3 m3 s3">
+                    <form ng-submit="function_buscarFuncionario();">
+                      <label style="padding-left: 4%;font-size: inherit;">Numero de
+                        documento:<span class="red-text" ng-show="show_modalBuscar"> *</span></label>
+                      <div class="col s12 ">
+                        <input ng-model="modalUsuario.numeroDocumento" id="numeroDocumento" type="text"
+                          ng-keyup="FormatSoloNumero('numeroDocumento')" maxlength="15" style="width: 207px;">
+                        <a ng-show="show_modalBuscar" href="javascript:void(0)" ng-click="function_buscarFuncionario();"> <i
+                            style="position: relative;top: 5px;right: 0px;cursor: pointer;margin-left: -31px;"
+                            class="material-icons prefix default-color">search</i></a>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col l4 m4 s4" style="margin-left: -45px;">
+                    <label style="padding-left: 4%;font-size: inherit;">Nombre:</label>
+                    <div class="col s12 ">
+                      <input id="nombrefunCreado" ng-model="modalUsuario.nombrefunCreado" type="text" disabled>
+                    </div>
+                  </div>
+
+                  <div class="col l3 m3 s3">
+                    <label style="padding-left: 4%;font-size: inherit;">Tipo de perfil: <span class="red-text"> ( *
+                        )</span></label>
+                    <div class="col s12 " type="text">
+                      <select ng-change="Selector()" class="select-new-ps" type="text" ng-model="modalUsuario.tipoUser"
+                        id="form3.aceptacionPaciente">
+                        <option value="" disabled>SELECCIONAR</option>
+                        <option value="1">ASISTENTE</option>
+                        <option value="2">ESPECIALISTA</option>
+                        <option value="3">ADMINISTRADOR</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col l2 m2 s2">
+                    <label style="padding-left: 4%;font-size: inherit;">Estado:<span class="red-text">*</span></label>
+                    <div class="col s12 " type="text">
+                      <select ng-change="Selector()" class="select-new-ps" type="text"
+                        ng-model="modalUsuario.estadoVisible" id="form1.estadoVisible">
+                        <option value="" disabled>SELECCIONAR</option>
+                        <option value="A">ACTIVO</option>
+                        <option value="I">INACTIVO</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="center col l12 m12 s12" style="zoom: 115%;position: absolute;margin-top: -14px;">
+                  <label><span class="black-text">Por favor tener encuenta que todos los campos marcados
+                      con * son obligatorios.</span></label>
+                </div>
+                <!-- boton cancelar y guardar -->
+                <div class="row margin">
+                  <div style="text-align: center; padding: 10px 0.75px;" class="margin">
+                    <button class="icon-cancel-circled-outline white-text default-background" type="button"
+                      ng-click="function_closemodals('nuevoUsuario')" style="border-radius: 10px;zoom:100%;">Cancelar</button>
+                    <button ng-show="show_boton_editar" class="icon-floppy white-text default-background" type="button"
+                      ng-click="function_guardaruserMateriales('U')" style="border-radius: 10px;zoom:100%;">Guardar</button>
+                    <button ng-show="show_boton_guardar" class="icon-floppy white-text default-background" type="button"
+                      ng-click="function_guardaruserMateriales('I')" style="border-radius: 10px;zoom:100%;">Guardar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal listado de ips formulario Principal -->
+  <div id="modalips" class="modal">
+      <div class="modal-content" style="padding: 0px !important;">
+          <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+              <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+                  <div class="card-content foot4" style="padding: 0;zoom:60%;">
+                    <div class="col s11">
+                      <h5 style="padding-left: 23px" class="white-text"><strong>Listado de ips</strong>
+                        <i style="padding-right: 17px;cursor:pointer;" ng-click="function_closemodals('ips')"
+                          class="material-icons right white-text">close</i>
+                      </h5>
+                    </div>
+                  </div>
+                  <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+                      <div class="row">
+                          <div class="col s12">
+                              <form ng-submit="function_p_listaIps_solicitante(buscarIps,'I')">
+                                  <div class="input-field col s6" style="margin-left: -21px;">
+                                      <input id="ipsinput" type="text" ng-model="buscarIps"
+                                          style="cursor: pointer;" class="clase-gray"
+                                          autocomplete="off">
+                                      <label for="ipsinput" style="cursor: pointer;">Ips:
+                                          <span style="color:red;"> * </span></label>
+                                      <a href="javascript:void(0)" ng-click="function_p_listaIps_solicitante(buscarIps,'I')">
+                                          <i style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                                              class="material-icons prefix default-color">search</i></a>
+                                  </div>
+                              </form>
+                          </div>
+                          <div class="row">
+                              <div style="max-height:70vh;overflow-y:auto;border: 1px solid;overflow-x: hidden">
+                                  <table id="tabla_modal_ENTREGA" class="highlight"
+                                      style="width:100%;color: black;">
+                                      <thead>
+                                          <th class="center default-background  white-text">Nit</th>
+                                          <th class="center default-background  white-text">Nombre
+                                          </th>
+                                          <th class="center default-background  white-text">Ips
+                                              asignada</th>
+                                      </thead>
+                                      <tbody id="idpro">
+                                          <tr ng-repeat="ips in listaIpssolicitante |  filter:buscarIps">
+                                              <td style="text-align:center;">{{ips.Codigo}}
+                                              </td>
+                                              <td style="text-align:center;">{{ips.Nombre}}
+                                              </td>
+                                              <td>
+                                                  <div class="center">
+                                                      <i ng-click="function_seleccionarips(ips,'S')"
+                                                          style="cursor:pointer;"
+                                                          class="material-icons prefix">check</i>
+                                                  </div>
+                                              </td>
+                                          </tr>
+                                          <tr ng-show="listaIpssolicitante.length == 0">
+                                              <td class="center-align" colspan="10"
+                                                  style="font-weight: bolder;">No se
+                                                  encontraron
+                                                  resultados para su revision.</td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                              <div style="width: 89%;display: flex;">
+                                  <div style="width: 50%;">
+                                      <label for="normal">Total encontrados:
+                                          {{listaIpssolicitante.length}}</label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- modal Gasto Quirurgico -->
+  <div id="modalgastosQuirurgico" class="modal" style="overflow: hidden;">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <div class="card-content foot4" style="padding: 0;zoom:60%;">
+            <div class="col s11">
+              <h5 style="padding-left: 23px" class="white-text"><strong>GASTOS QUIRURGICO</strong>
+                <i style="padding-right: 17px;cursor:pointer;" ng-click="function_closemodals('gastosQuirurgico')"
+                  class="material-icons right white-text">close</i>
+              </h5>
+            </div>
+          </div>
+          <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+            <div class="row">
+              <div class="col l6 m6 s6" > 
+                <div class="col l12 m12 s12">
+                  <label id="id_cargue_adjuntogastoQuirurgico_label" style="font-size: inherit;padding-left: 12px;"
+                    class="c-pointer "><strong>Adjuntar gasto quirurgico:</strong><span class="red-text">*</span></label>
+                  <div class="file-field input-field gray-input  input-file-radiu"
+                    style="margin: 0;width: -webkit-fill-available;" id="adjuntogastoQuirurgico">
+                    <div class="right">
+                      <span class="black-text"><i class="icon-file-pdf default-color"
+                          style="line-height: 2rem;"></i></span>
+                      <input value="1" id="id_cargue_adjuntogastoQuirurgico" class="cargueArchivo4" ng-modal="form3.adjuntogastoQuirurgico"
+                        type="file" accept=".pdf" style="width: 414px;" ng-blur="validarVacio('id_cargue_adjuntogastoQuirurgico','id_cargue_adjuntogastoQuirurgico_label');">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input id="id_adjuntogastoQuirurgico_text" class="file-path  ng-untouched ng-valid ng-dirty ng-valid-parse"
+                        type="text" placeholder="Adjunte un archivo (pdf)" readonly=""
+                        style="border-radius: 0;height: 2rem;border-bottom: 0;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div style="background: lightyellow;text-align: right;padding: 1px 0.75px;">
+                <button class="icon-floppy white-text default-background" title="Guargar" type="button"
+                  ng-click="function_p_u_ips_materiales('Q')" style="border-radius: 10px;"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal PQR-->
+  <div id="modalPqr" class="modal" style="overflow: hidden;">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <div class="card-content foot4" style="padding: 0;zoom:60%;">
+            <div class="col s11">
+              <h5 style="padding-left: 23px" class="white-text"><strong>PQR</strong>
+                <i style="padding-right: 17px;cursor:pointer;" ng-click="function_closemodals('pqr')"
+                  class="material-icons right white-text">close</i>
+              </h5>
+            </div>
+          </div>
+          <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+            <div class="row">
+                <div class="col l12 m12 s12">
+                  <div class="row" style="margin-bottom: 0;">
+                    <div class="col s12">
+                      <form ng-submit="chg_filtrar('Filtrar_tprincipal');">
+                        <div class="col s4 no-padding label-new m-b right" style="margin-right: .5rem !important;margin-top: 30px;">
+                          <label style="padding-left: 2%;font-size: inherit;">Buscar:</label>
+                          <div class="input-field-ps col s12">
+                            <input id="Var_Seccional_Filtrar_Sol" class="margin border-none input-text-new gray-input w-100 m-l"
+                              ng-model="Vista1.Filtrar_tprincipal" type="text" placeholder="..." style="cursor: pointer;text-transform: uppercase;"
+                              autocomplete="off">
+                            <a><i style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                                class="material-icons prefix default-color"
+                                ng-click="chg_filtrar('Filtrar_tprincipal');">search</i></a>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    
+                    <div class="row">
+                      <div style="max-height:60vh;overflow-y:auto;border: 1px solid;overflow-x: hidden">
+                          <table id="tabla_modal_ENTREGA" class="highlight"
+                              style="width:100%;color: black;">
+                              <thead>
+                                  <th class="center default-background  white-text">#</th>
+                                  <th class="center default-background  white-text">CODIGO PQR</th>
+                                  <th class="center default-background  white-text">SELECCIONAR</th>
+                              </thead>
+                              <tbody id="idpro">
+                                  <tr ng-repeat="p in list_pqr |  filter:Vista1.Filtrar_tprincipal">
+                                    <td class="center">{{($index+1)}}</td>
+                                    <td class="center">{{p.CODIGO_PQR}}</td>
+                                    <td>
+                                      <div class="center">
+                                        <i ng-click="function_seleccionarPqr(p)" style="cursor:pointer;" class="material-icons prefix">check</i>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  <tr ng-show="list_pqr.length == 0">
+                                      <td class="center-align" colspan="10"
+                                          style="font-weight: bolder;">No se
+                                          encontraron
+                                          resultados para su revision.</td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal de observacion -->
+  <div id="modalObservacion" class="modal" style="overflow: hidden;zoom:80%;width: fit-content;">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <div class="default-background" style="padding: 0;zoom:60%;">
+            <div class="col l12 m12 s12">
+              <div class="row margin">
+                <div class="col s11">
+                  <h5 class="white-text">PROCESO DE ANULACION DE SOLICITUD</h5>
+                </div>
+                <div class="col s1">
+                  <h5 style="text-align: end;"><i style="cursor:pointer;" ng-click="function_closemodals('observacion')"
+                      class="material-icons white-text">close</i>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+              <div class="col 12 m12 s12">
+                <div class="row">
+                  <div class="col l4 m4 s4">
+                    <label id="id_form3_motivoaAnulacion_label" style="padding-left: 4%;font-size: inherit;">Motivo de anulacion:<span
+                        class="red-text">*</span></label>
+                    <div class="col s12 " type="text">
+                      <select id="id_form3_motivoaAnulacion" class="select-new-ps cursor-pointer" ng-model="form3.motivoaAnulacion"
+                      ng-change="validarVacio('id_form3_motivoaAnulacion','id_form3_motivoaAnulacion_label');"  required>
+                          <option value="">SELECCIONAR</option>
+                          <option value="{{x.Codigo}}" ng-repeat="x in listaMotivos">{{x.Ubicacion}}
+                          </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row" >
+                    <div class="col l12 m12 s12">
+                      <label id="id_form3_observacionAnulacion_label" style=" margin-top: -20px; padding-left: 1%;">Observacion Anulacion - Caracteres:
+                          {{form3.observacionAnulacion.length}} - Máximo: 4000<span class="red-text"> * </span></label>
+                      <div class="col s12">
+                          <div class="form-group shadow-textarea">
+                              <textarea class="form-control z-depth-1" id="id_form3_observacionAnulacion"
+                                  rows="3" 
+                                  ng-model="form3.observacionAnulacion" cols="50" placeholder="Comentario"
+                                  tyle="margin: 0px; height: 123px;" style="margin: 0px;height: 134px;text-transform: uppercase;"
+                                  maxlength="3999"
+                                  ng-keyup="formatTexto('id_form3_observacionAnulacion')" ng-change="validarVacio('id_form3_observacionAnulacion','id_form3_observacionAnulacion_label')"></textarea>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div style="background: lightyellow;text-align: right;padding: 1px 0.75px;">
+                      <button class="icon-floppy white-text default-background" title="Guargar" type="button"
+                        ng-click="function_p_u_anula_materiales()" style="border-radius: 10px;zoom:130%;"></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+  <!-- Modal Perimisos-->
+  <div id="modalpermisos" class="modal">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <div class="card-content foot4">
+            <div class="s12">
+              <h5 class="white-text">Coordial salud.
+            </div>
+            <div class="center s12">
+              <h5 class="white-text">En estos momentos no tienes permisos para trabajar en el modulo de: <br>MATERIALES
+                OSTEOSINTESISTENES<br></h5>
+              <h6 class="white-text">Si deseas trabajar en el modulo debes solicitar los permisos al área de
+                Autorizaciones.</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .icon-x-red:before {
+    content: '\eb43';
+    color: red;
+    }
+    .icon-ok-green:before {
+    content: '\eb41';
+    color:rgba(3, 197, 20);
+    }
+    .icon-list-red:before {
+    content: '\efa3';
+    color: red;
+    }
+    .icon-list-green:before {
+    content: '\efa3';
+    color:rgba(3, 197, 20);
+    }
+     /* Este ccs funciona para hacer un menu de control en una tabla INICIO*/
+     .dropdown {
+        display: inline-block;
+        position: relative;
+    }
+    #btn{
+        border:none;
+        border-radius:5px;
+        padding: 8px 24px;
+        font-size:8px;
+        cursor:pointer;
+    }
+    #btn:hover{
+        background-color:#ddd;
+    }
+    .dropdown-options {
+          display: none;
+          position: absolute;
+          overflow: auto;
+          background-color: #fff;
+          border-radius: 5px;
+          box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+
+          z-index: 7;
+          font-size: 17px;
+          width: 195px;
+    } 
+    .dropdown-options {
+    display: none;
+    position: absolute;
+    overflow: auto;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px -8px rgba(4, 38, 233, 0.466);
+    right: 0;
+    z-index: 7;
+    font-size: 15px;
+    width: 236px;
+    }
+    .dropdown:hover .dropdown-options {
+        display: block;
+    }
+    .dropdown-options a {
+        display: block;
+        color: #000000;
+        padding: 5px;
+        text-decoration: none;
+        padding: 20px 40px;
+    }
+    .dropdown-options a:hover {
+        color: #0a0a23;
+        background-color: #ddd;
+        border-radius: 5px; 
+    }
+    /* Este ccs funciona para hacer un menu de control en una tabla FIN*/
+
+    .nota {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .nota h3 {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .importante {
+      background-color: #FFCDD2; /* Color de fondo para nota importante */
+    }
+
+    .normal {
+      background-color: #C8E6C9; /* Color de fondo para nota normal */
+    }
+
+    .informacion {
+      background-color: #BBDEFB; /* Color de fondo para nota de información */
+    }
+    
+    input.input-text-new-ps {
+    background-color: white;
+    width: 240px;
+    height: 30px;
+    padding: 0 1em;
+}
+      /* input[type="date"] {
+      pointer-events: none;
+      touch-action: none;
+    } */
+    .error-label {
+      color: red !important;
+    }
+
+    .error-input {
+      border-color: red !important;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      /* margin-top: 20px; */
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #ddd;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    input {
+      margin-bottom: 10px;
+    }
+
+    #tabla_scroll th {
+      padding: 3px 10px;
+    }
+
+    #tabla_scroll li>button.btn {
+      font-size: small;
+      height: auto;
+      line-height: inherit;
+      padding: 0 1rem;
+    }
+
+    .table_border,
+    .table_border th,
+    .table_border td {
+      border: 1px solid #c2c2c2;
+    }
+
+    .table_center_align,
+    .table_center_align th,
+    .table_center_align td {
+      text-align: center;
+    }
+
+    .swal-wide {
+      width: 850px !important;
+    }
+
+    .yellow-text {
+      color: #e9d312;
+    }
+
+    .Con_pulse_VERDE {
+      /* background: #FF6D4A; */
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_V 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_V {
+      0% {
+        box-shadow: 0 0 0 0 rgba(43, 255, 36, 0.7), 0 0 0 0 rgba(43, 255, 36, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(43, 255, 36, 0.0), 0 0 0 0 rgba(43, 255, 36, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(43, 255, 36, 0.0), 0 0 0 15px rgba(43, 255, 36, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(43, 255, 36, 0.0), 0 0 0 0 rgba(43, 255, 36, 0);
+      }
+    }
+    .Con_pulse_ROJO {
+      /* background: #e21308; */
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_ROJO 5s linear infinite;
+      cursor: pointer;
+    }
+    @keyframes animate-pulse_ROJO {
+      0% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.7), 0 0 0 0 rgba(245, 75, 75, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(245, 75, 75, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 15px rgba(245, 75, 75, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(245, 75, 75, 0);
+      }
+    }
+    .Con_pulse_AZUL {
+      /* background: #1138d4; */
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_AZUL 5s linear infinite;
+      cursor: pointer;
+    }
+    @keyframes animate-pulse_AZUL {
+      0% {
+        box-shadow: 0 0 0 0 rgba(51, 70, 255, 0.7), 0 0 0 0 rgba(51, 70, 255, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(51, 70, 255, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 15px rgba(245, 75, 75, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(245, 75, 75, 0);
+      }
+    }
+    .Con_pulse_AMARILLO {
+      /* background: #e4e009; */
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_AMARILLO 5s linear infinite;
+      cursor: pointer;
+    }
+    @keyframes animate-pulse_AMARILLO {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 235, 59, 0.7), 0 0 0 0 rgba(255, 235, 59, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(255, 235, 59, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 15px rgba(245, 75, 75, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(245, 75, 75, 0);
+      }
+    }
+    .Con_pulse_AMARILLO_OSCURO {
+      /* background: #e4e009; */
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_AMARILLO_OSCURO 5s linear infinite;
+      cursor: pointer;
+    }
+    @keyframes animate-pulse_AMARILLO_OSCURO {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 191, 0), 0 0 0 0 rgba(255, 191, 0);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(255, 191, 0);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 15px rgba(245, 75, 75, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(245, 75, 75, 0);
+      }
+    }
+    .color-verde {
+      color: #0e8d01;
+      background: #3cc32163;
+    }
+    .color-amarillo {
+      color: #e6f205;
+      background: #f5f90e63;
+    }
+    .color-rojo {
+      color: #8d0202;
+      background: #ff435045;
+    }
+    .subraya {
+      border-bottom-style: ridge !important;
+      border-color: #1a2e63 !important;
+      margin: 0px 9px !important;
+    }
+    .ps-light-blue {
+      background-color: #0000FF !important;
+    }
+    .ps-light-yellow {
+      background-color: #f7fb00de !important;
+    }
+    .ps-light-green {
+      background-color: rgb(3, 197, 20) !important;
+    }
+    .ps-light-orange {
+      background-color: rgb(255, 191, 0) !important;
+    }
+    .ps-light-red {
+      background-color: #f75050 !important;
+    }
+    #tabla_modal_ENTREGA th {
+      position: sticky;
+      top: 0;
+      z-index: 9;
+    }
+    .btn_2 {
+      border: none;
+      border-radius: 2px;
+      display: inline-block;
+      height: 36px;
+      line-height: 36px;
+      outline: 0;
+      padding: 0 2rem;
+      text-transform: uppercase;
+      vertical-align: middle;
+      -webkit-tap-highlight-color: transparent;
+      background-color: #1a2e63;
+    }
+    .light-red {
+      background-color: palevioletred !important;
+    }
+    .input-field-ps {
+      position: relative;
+      margin-top: 1px;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+    .select-new-ps {
+      outline: none !important;
+      height: 34px;
+      background-color: white;
+      display: block;
+      border: 1px solid #8a88865e;
+      border-radius: 0.25rem;
+      border-bottom: 1px solid #8a88865e;
+      box-shadow: none !important;
+    }
+    .btn-new-ps {
+      border: none;
+      border-radius: 2px;
+      display: inline-block;
+      height: 32px;
+      line-height: 36px;
+      outline: 0;
+      padding: 0 2rem;
+      text-transform: uppercase;
+      vertical-align: middle;
+      background-color: #1a2e63;
+      -webkit-tap-highlight-color: transparent
+    }
+    .border_bottom_LR {
+      border-bottom-left-radius: 0px !important;
+      border-bottom-right-radius: 0px !important;
+    }
+    .Green_Est {
+      background-color: green !important;
+    }
+    .Red_Est {
+      background-color: red !important;
+    }
+    .buena {
+      color: rgb(3, 197, 20) !important;
+    }
+    .poca {
+      color: rgb(235, 156, 5) !important;
+    }
+    .baja {
+      color: rgb(245, 75, 75) !important;
+    }
+    .teal.activo {
+      background-color: rgb(3, 197, 20) !important;
+    }
+    .teal.procesado {
+      background-color: rgb(71, 71, 165) !important;
+    }
+    .yellow {
+      background-color: #b7a60f !important;
+    }
+    #IMG_Secc {
+      cursor: pointer;
+    }
+    #IMG_Secc:hover .tooltip-css3 {
+      display: block;
+    }
+    .tooltip-css3:before {
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 20px solid #6c63ff;
+      bottom: -15px;
+      content: "";
+      height: 0;
+      left: 50%;
+      margin-left: -30px;
+      position: absolute;
+      transform: skew(-45deg);
+      width: 0;
+    }
+    .tooltip-css3 {
+      background-color: #6c63ff;
+      border-radius: 100% 100% 100% 100%;
+      box-shadow: 0 0 5px 0 rgb(108 99 255 / 49%);
+      color: #FFFFFF;
+      display: none;
+      left: 70%;
+      padding: 20px 30px;
+      position: absolute;
+      top: 23%;
+    }
+    .Btn_Secc_Pen {
+      background-color: #afaaff;
+      box-shadow: 0 0 5px 0 rgb(108 99 255 / 49%);
+      color: #FFFFFF;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .Btn_Secc_New {
+      background-color: #afaaff;
+      box-shadow: 0 0 5px 0 rgb(108 99 255 / 49%);
+      color: #FFFFFF;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .Con_pulse_P {
+      /* background: #FF6D4A; */
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_P 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_P {
+      0% {
+        box-shadow: 0 0 0 0 rgba(71, 71, 165, 0.7), 0 0 0 0 rgba(71, 71, 165, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(71, 71, 165, 0.0), 0 0 0 0 rgba(71, 71, 165, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(71, 71, 165, 0.0), 0 0 0 15px rgba(71, 71, 165, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(71, 71, 165, 0.0), 0 0 0 0 rgba(71, 71, 165, 0);
+      }
+    }
+
+
+    .Con_pulse_G {
+
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_G 3s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_G {
+      0% {
+        box-shadow: 0 0 0 0 rgba(162, 162, 175, 0.7), 0 0 0 0 rgba(162, 162, 175, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(71, 71, 165, 0.0), 0 0 0 0 rgba(162, 162, 175, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(71, 71, 165, 0.0), 0 0 0 15px rgba(71, 71, 165, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(71, 71, 165, 0.0), 0 0 0 0 rgba(71, 71, 165, 0);
+      }
+    }
+
+
+    .Con_pulse_V {
+      /* background: #FF6D4A; */
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_V 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_V {
+      0% {
+        box-shadow: 0 0 0 0 rgba(43, 255, 36, 0.7), 0 0 0 0 rgba(43, 255, 36, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(43, 255, 36, 0.0), 0 0 0 0 rgba(43, 255, 36, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(43, 255, 36, 0.0), 0 0 0 15px rgba(43, 255, 36, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(43, 255, 36, 0.0), 0 0 0 0 rgba(43, 255, 36, 0);
+      }
+    }
+
+    /* /// */
+    .Animacion_HojaForm {
+      animation: 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s 1 normal both running swing-in-top-fwd;
+    }
+
+    @keyframes swing-in-top-fwd {
+      0% {
+        /* -webkit-transform: rotateX(-100deg);
+          transform: rotateX(-100deg);
+          -webkit-transform-origin: top;
+          transform-origin: top; */
+        opacity: 0;
+      }
+
+      100% {
+        /* -webkit-transform: rotateX(0deg);
+          transform: rotateX(0deg);
+          -webkit-transform-origin: top;
+          transform-origin: top; */
+        opacity: 1;
+      }
+    }
+
+    .BgColor_A {
+      background: linear-gradient(to bottom left, #37daf0, #00acc1, #37daf0);
+    }
+
+    .BgColor_R {
+      background: linear-gradient(to bottom left, #f1ad5a, #fb8c00, #f1ad5a);
+    }
+
+    .BgColor_C {
+      background: linear-gradient(to bottom left, #e65b8e, #d81b60, #e65b8e);
+    }
+
+    .BgColor_O {
+      background: linear-gradient(to bottom left, #d7d9db, #6A6D71, #d7d9db);
+    }
+
+    .BgColor_N {
+      background: linear-gradient(to bottom left, #63f193, #25D962, #63f193);
+    }
+
+    .Color_A {
+      color: #00acc1 !important;
+      border-left: 5px solid #00acc1;
+    }
+
+    .Color_R {
+      color: #fb8c00 !important;
+      border-left: 5px solid #fb8c00;
+    }
+
+
+
+    .Color_C {
+      color: #d81b60 !important;
+      border-left: 5px solid #d81b60;
+    }
+
+    .Color_O {
+      color: #6A6D71 !important;
+      border-left: 5px solid #6A6D71;
+    }
+
+    .Color_N {
+      color: #25D962 !important;
+      border-left: 5px solid #25D962;
+    }
+
+    .textarea2 {
+      padding: 0.5rem !important;
+      width: calc(100% - 0rem) !important;
+      /* background-color: #cbcdce; */
+      background-color: #f1f3f4;
+      resize: none;
+      height: 7rem;
+    }
+
+    .gray-input {
+      background-color: #f1f3f4 !important;
+    }
+
+    .Tarjeta_Titulo {
+      -webkit-transition: all .8s cubic-bezier(.34, 1.61, .7, 1);
+      transition: all .8s cubic-bezier(.34, 1.61, .7, 1);
+      position: relative;
+      z-index: 3;
+    }
+
+    .Tarjeta_Titulo:hover {
+      transform: translate3d(0, -25px, 0);
+    }
+
+    .Tarjeta_Titulo>.card {
+      border-radius: .375rem;
+      z-index: 2;
+    }
+
+    .Tarjeta_Titulo .card-content {
+      padding: 0.6rem 0.8rem;
+      display: flex;
+    }
+
+    .Tarjeta_Titulo h6 {
+      color: #FFFFFF !important;
+      font-weight: 600 !important;
+      font-size: 0.8125rem;
+    }
+
+    .Tarjeta_Texto {
+      z-index: -1;
+      margin-top: -3.7em;
+      width: calc(100% - 30px);
+      left: 15px;
+      /* text-align: center; */
+      width: auto;
+      border-radius: .375rem;
+      height: 41px;
+      padding: 0.9rem 0.8rem;
+    }
+
+    .Tarjeta_Texto>span {
+      position: relative;
+      font-size: 0.8em;
+      font-weight: 700;
+    }
+
+    #H1_Tabla>thead,
+    #H1_Tabla>tbody {
+      font-size: 1em;
+      /* border: 3px; */
+      border-width: medium;
+      border-style: solid;
+      border-radius: .375rem;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .Class_Tabla_Btn_Gestionar {
+      border-radius: .375rem;
+      width: 30%;
+      margin: auto;
+      border-width: medium;
+    }
+
+    .Class_Tabla_Btn_Gestionar h6 {
+      font-weight: 700 !important;
+      font-size: 0.8125rem;
+    }
+
+    .animated {
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+    }
+
+    .switch label .lever.check-c:after {
+      background-color: #ffffff;
+    }
+
+    .switch label input[type=checkbox]:checked+.lever:after {
+      background-color: #ffffff;
+    }
+
+    .dropdown-content li {
+      min-height: 23px;
+    }
+
+    .select_maxheigth ul {
+      max-height: 125px;
+    }
+
+    .dropdown-content li>span {
+      line-height: 32px;
+      padding: 0px 16px;
+    }
+
+    .currency-input {
+      position: relative;
+    }
+
+    .currency {
+      padding-left: -22px;
+    }
+
+    .currency-symbol {
+      position: absolute;
+      left: 8px;
+      font-size: 21px;
+    }
+
+    #toast-container .toast {
+      border-radius: 10px !important;
+      font-weight: 600;
+      text-align: center !important;
+      word-break: keep-all;
+      padding: 10px 25px;
+      width: auto;
+      background: linear-gradient(to bottom left, #e04242, #8b0000, #e04242);
+    }
+
+    blockquote {
+      font-weight: 700;
+      background-color: #f1f3f4;
+    }
+
+    .VistaFile .Iframe {
+      visibility: hidden;
+      height: 50vh;
+      color: #fff;
+      text-align: center;
+      margin-bottom: -0.6rem;
+      border-top-right-radius: 6px;
+      border-top-left-radius: 6px;
+      position: absolute;
+      z-index: 1;
+      bottom: calc(100% + 6px);
+      right: 0;
+      opacity: 0;
+      transition: opacity 1s;
+      border: 3px solid #333333;
+    }
+
+    .VistaFile:hover .Iframe {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .Iframe:hover {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .input-file-radius-cargado {
+      /* border-top-right-radius: 0 !important; */
+      /* border-bottom-right-radius: 0 !important; */
+      background-color: #03c5146e !important;
+    }
+
+    .input-file-radius-cargado2 {
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+      background-color: #03c5146e !important;
+    }
+
+    .input-file-radius-opcional {
+      background-color: #0000004f !important;
+    }
+
+    .input-file-radius-obligatorio {
+      background-color: #f54b4bb0 !important;
+    }
+
+    .input-file-radiu {
+      border-radius: 10px;
+    }
+
+    .input-file-radius {
+      border-radius: 10px;
+    }
+
+    .select-wrapper input.select-dropdown:disabled {
+      color: black;
+    }
+
+    .list-group-item:last-child {
+      margin-bottom: 0;
+      border-bottom-right-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+
+    .list-group-item:first-child {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    .list-group-item:hover {
+      color: #1a2e63;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .list-group-item.hover {
+      color: #1a2e63;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .list-group-item {
+      position: relative;
+      display: block;
+      padding: 10px 15px;
+      margin-bottom: -1px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+    }
+
+    .list-group {
+      font-size: 14px;
+    }
+
+    .class_upper td,
+    .class_upper th {
+      text-transform: uppercase;
+    }
+
+    .class_gris {
+      color: rgba(0, 0, 0, 0.26) !important;
+    }
+
+    .class_label {
+      color: #80868b;
+    }
+
+    /*******************/
+
+    .switch label .lever {
+      background-color: #1a2e63;
+      width: 60px;
+      height: 29px;
+    }
+
+    .switch label .lever:after {
+      left: 4px;
+      top: 4px;
+      background-color: #fff !important;
+    }
+
+    .switch label .lever.check-c {
+      background-color: #1a2e63 !important;
+    }
+
+    .switch label input[type=checkbox]:checked+.lever:after {
+      left: 35px;
+    }
+
+    /* // */
+    .lever.check-c:hover span.lever.check-c:after {
+      width: 100px !important;
+    }
+
+    /**/
+    [type="checkbox"].filled-in:not(:checked)+label:after {
+      border: 3px solid #1a2e63;
+    }
+
+    [type="checkbox"].filled-in:checked+label:after {
+      border: 3px solid #1a2e63;
+      background-color: #1a2e63;
+    }
+
+    .modal {
+      border-radius: 10px;
+      overflow: hidden;
+      max-height: 88%;
+      z-index: 1003;
+      display: none;
+      opacity: 0;
+      transform: scaleX(0.7);
+      top: 4%;
+    }
+
+    .pagination {
+      text-align: center;
+      padding-top: 0px;
+      font-weight: 800;
+    }
+
+    /* --------------------------------------------------------------------------------------------- */
+    @keyframes Anim_Show {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .Anim_Show {
+      animation-name: Anim_Show;
+      animation-duration: 1s;
+    }
+
+    .Con_pulse_A {
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_A 5s linear infinite;
+    }
+
+    @keyframes animate-pulse_A {
+      0% {
+        box-shadow: 0 0 0 0 #f7fb00de, 0 0 0 0 #f7fb00de;
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(3, 197, 20, 0.0), 0 0 0 0 #f7fb00de;
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(3, 197, 20, 0.0), 0 0 0 15px rgba(3, 197, 20, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(3, 197, 20, 0.0), 0 0 0 0 rgba(3, 197, 20, 0);
+      }
+    }
+
+    .Con_pulse_X {
+      /* background: #FF6D4A; */
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_X 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_X {
+      0% {
+        box-shadow: 0 0 0 0 #f75050, 0 0 0 0 #f75050;
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(245, 75, 75, 0.0), 0 0 0 0 #f75050;
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 15px rgba(245, 75, 75, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(245, 75, 75, 0);
+      }
+    }
+
+    .Con_pulse_D {
+      /* background: #FF6D4A; */
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_D 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_D {
+      0% {
+        box-shadow: 0 0 0 0 rgba(235, 156, 5, 0.7), 0 0 0 0 rgba(235, 156, 5, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(235, 156, 5, 0.0), 0 0 0 0 rgba(235, 156, 5, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(235, 156, 5, 0.0), 0 0 0 15px rgba(235, 156, 5, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(235, 156, 5, 0.0), 0 0 0 0 rgba(235, 156, 5, 0);
+      }
+    }
+    input[type=text] {
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+      background-color: #fff;
+      background-clip: padding-box;
+      padding: 0 1em;
+      font-weight: 600;
+      height: 2rem;
+    }
+  </style>
+</div>

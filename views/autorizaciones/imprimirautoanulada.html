@@ -1,0 +1,147 @@
+<div class="row margin">
+  <div class="col s12 m12 l12">
+    <div class="card">
+      <div class="card-content" style="padding:10px">
+        <div class="row" style="margin-bottom: 0">
+          <div id="inicio" class="col s6">
+            <h5><strong>IMPRIMIR AUTORIZACIONES ANULADA</strong></h5>
+          </div>
+          <div class="col right">
+            <div class="row section-header ng-scope">
+              <ul class="left mailbox-custom-search list-inline"
+                style="width: 100%;display: flex;justify-content: space-between;align-items: center;">
+                <div class="switch">
+                  <label>
+                    <span ng-class="{'activo':switch_view}">AFILIADO</span>
+                    <input type="checkbox" ng-init="switch_view = false" ng-model="switch_view"
+                      class="ng-valid ng-touched ng-dirty ng-valid-parse">
+                    <span class="lever check-c" ng-click="controSwitch()"></span>
+                    <span ng-class="{'activo':!switch_view}" class="spinner activo">AUTORIZACION</span>
+                  </label>
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-action">
+        <div class="card-content clearfix">
+          <div class="col s12">
+            <form id="busafi" class="row" ng-submit="buscarAutPrint()" style="margin-bottom: 10px !important;">
+              <div class="row" ng-show="!switch_view">
+                <form class="col s12">
+                  <div class="row" style="margin-bottom: 0;">
+                    <div class="input-field col s5 offset-s1">
+                      <i class="material-icons prefix" style="margin-top: 10px;">view_list</i>
+                      <select id="simple-select chosen" ng-model="temptipoDoc" material-select watch>
+                        <option value="" disabled>SELECCIONAR</option>
+                        <option value="{{x.CODIGO}}" ng-repeat="x in Tipos_Documentos">{{x.NOMBRE}}</option>
+                      </select>
+                      <label for="simple-select hide-on-med-and-down">Tipo de Documento</label>
+                    </div>
+                    <div class="input-field col s5">
+                      <i class="material-icons prefix" style="margin-top: 10px;">account_circle</i>
+                      <input id="with_icon" type="text" ng-model="tempdocumento"
+                        ng-keyup="FormatSoloNumero('with_icon')" maxlength="15">
+                      <label for="with_icon">Documento</label>
+                    </div>
+                  </div>
+              </div>
+              <div class="row" ng-show="switch_view" style="margin-bottom: 0;">
+                <form class="col s12">
+                  <div class="row">
+                    <div class="input-field col s5 offset-s1">
+                      <i class="material-icons prefix" style="margin-top: 10px;">dialpad</i>
+                      <input id="with_icon2" type="text" ng-model="tempnumero" ng-keyup="FormatSoloNumero('with_icon2')"
+                        maxlength="15">
+                      <label for="simple-select hide-on-med-and-down">Numero</label>
+                    </div>
+                    <div class="input-field col s5">
+                      <i class="material-icons prefix" style="margin-top: 10px;">location_on</i>
+                      <input id="with_icon3" type="text" ng-model="tempubicacion"
+                        ng-keyup="FormatSoloNumero('with_icon3')">
+                      <label id="ubi" for="with_icon3">Ubicación</label>
+                    </div>
+                  </div>
+              </div>
+              <!-- boton cancelar y guardar -->
+              <div class="row margin">
+                <div style="text-align: center; padding: 10px 0.75px;" class="margin">
+                  <button class="icon-cancel-circled-outline waves-effect white-text red  " type="button"
+                    ng-click="limpiar()" style="border-color: #f44336;border-radius: 10px;zoom:100%;">Limpiar</button>
+                  <button class="icon-floppy white-text default-background " type="submit"
+                    style="border-radius: 10px;zoom:100%;">Buscar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col s12" ng-hide="inactive1">
+            <div class="row">
+              <div class="input-field col s3">
+                <i class="material-icons prefix">search</i>
+                <input id="with_icon" type="text" ng-model="filter" class="validate">
+                <label for="with_icon">Filtro</label>
+              </div>
+              <div class="input-field col s5">
+                <i class="material-icons prefix">face</i>
+                <input style="color: black !important;" id="with_icon" type="text" ng-model="Nombre" disabled
+                  class="validate">
+                <label for="with_icon">Nombre</label>
+              </div>
+              <div class="input-field col s3">
+                <i class="material-icons prefix">swap_vert</i>
+                <input id="with_icon" type="number" ng-model="quantity" class="validate">
+                <label for="with_icon">Limite <strong>{{quantity}}</strong> de <strong>{{total}}</strong></label>
+              </div>
+            </div>
+
+          </div>
+          <table class="responsive-table striped table-bordered" ng-hide="inactive1">
+            <thead>
+              <tr>
+                <th class="center-align" data-field="Codigo">Codigo</th>
+                <th class="center-align" data-field="Fecha">Fecha</th>
+                <th data-field="Ubicación">Ubicación</th>
+                <th data-field="Servicio">Servicio</th>
+                <th data-field="Prestador">Prestador</th>
+                <th class="center-align" data-field="Estado">Estado</th>
+                <th class="center-align" data-field="Altocosto">Altocosto</th>
+                <th class="center-align" style="width: 70px;" data-field="Clase">Clase</th>
+                <th class="center-align" data-field="Acción">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="aut in Autorizaciones | limitTo:quantity | filter:filter">
+                <td class="center-align">{{aut.Numero}}</td>
+                <td class="center-align">{{aut.Fecha}}</td>
+                <td class="center-align">{{aut.Ubicacion}}</td>
+                <td>{{aut.Servicio}}</td>
+                <td>{{aut.Prestador}}</td>
+                <td class="center-align"><span style="width: 70px;"
+                    class="{{aut.COLOR}}"><strong>{{aut.Estado}}</strong>
+                    </spam>
+                </td>
+                <td class="center-align">
+                  <center><i class="material-icons">{{aut.Altocosto}}</i></center>
+                </td>
+                <td class="center-align">{{aut.Clase}}</td>
+                <td>
+                  <i style="cursor: pointer;" class="material-icons fs-20" title="Detalles observaciones"
+                    ng-click="print(aut,aut.EVENTO)">print</i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .mouse {
+      cursor: pointer;
+    }
+
+    .mouse2 {
+      cursor: pointer;
+    }
+  </style>

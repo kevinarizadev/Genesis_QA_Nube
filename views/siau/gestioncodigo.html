@@ -1,0 +1,524 @@
+<div class="white newdesing" id="pantalla">
+  <style>
+    .newdesing .content-container {
+      min-height: 0;
+    }
+  </style>
+  <div class="row section-header margin">
+    <ul class="left mailbox-custom-search list-inline w-100 d-flex justify-content-between align-items-center">
+      <li id="inicio">
+        <h5 class="cursor-pointer"
+          style="font-family: 'Product Sans',Arial,sans-serif;font-size: 22px;line-height: 22px;opacity: .54;margin: 9px 0"
+          onclick="location.reload();">
+          <spam>
+              <h5 class="fontello-icon"><i class=" icon-file-excel"></i>Gestion De Codigo
+              </h5>
+          </spam>
+        </h5>
+      </li>
+    </ul>
+  </div>
+
+  <div id="Form" class="card-content clearfix card"
+  style="width: 95%;margin: 1rem auto auto auto;border-radius: 15px;">
+<!-- //////////////////////////////////////////////////Seleccionar TAB //////////////////////////////// -->
+<div class="Hoja_2">
+<div class="row" style="width: 100%;">
+  <ul class="tabs nav" style="background-color: transparent;margin: .5vh;width: 99%;overflow: hidden;">
+    <li class="tab col w-auto active"><a id="tab_numero1" href ng-click="setTab(1)" class="active"><strong
+          style=" font-weight: bold;">GESTION CODIGO</strong></a>
+    </li>
+    <li ng-show="cedulaautorizada" class="tab col w-auto"><a id="tab_numero2" href ng-click="setTab(2)"><strong
+          style="font-weight: bold;">GESTION UNICO</strong></a></li>
+  </ul>
+</div>
+</div>
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+  <div ng-show="Tap == '1'">
+    <div class="row" style="margin-bottom: 13;width: 98%;margin-top: 1rem;">
+      <div style="padding:0px">
+          <div class="card-content clearfix" style="padding-bottom:0px">
+              <div class="col s12">
+                <div ng-show="versiguiente" class="card-action">
+                  <div class="row">
+                    <div id="visitchart">
+                        <div >
+                          <div class="row">
+                            <div class="col s8">
+                              <div style="display: flex;align-items: center;justify-content: center;">
+                                <img src="./images/no_autorizaciones.png" style="height: 40vh;">
+                              </div>
+                            </div>
+                            <div class="col s4 mt-50">
+                              <div class="card-content-wrapper" style="border: 1px solid #dddd;">
+                                <span class="check-icon"></span>
+                                <div class="card-content text-center">
+                                    <img src="images/undraw_Online_calendar_re_wk3t.svg" style="height: 50px;">
+                                    <h4 style="margin-top: 0;margin-bottom: 5px;">Codigos Pendientes</h4>
+                                    <h4 class="blue" style="color: white;">{{cantidadpendientes}}</h4>
+                                </div>
+                            </div>
+                            </div>
+                          </div>
+                          <div style="display: flex;align-items: center;justify-content: center;">
+                            <a class="waves-effect waves-light trial  btn center-block valign" 
+                              ng-click="llamargestion();">Llamar Siguiente
+                            </a>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="col s12" ng-show="verdatoscodigo">
+      <i ng-show="verdatoscodigo" class="icon-left-open-2" ng-click="retroceder();"
+      style="cursor: pointer">Atras</i>
+      <table class="striped  responsive-table table-bordered" style="height:100px;">
+          <thead>
+            <tr>
+              <th style="text-align:center;">FECHA INGRESO</th>
+              <th style="text-align:center;">TIPO Y NUMERO</th>
+              <th style="text-align:center;">AFILIADO</th>
+              <th style="text-align:center;">REGIMEN</th>
+              <th style="text-align:center;">IPS</th>
+              <th style="text-align:center;">TIPO</th>
+              <th style="text-align:center;">DIAGNOSTICO</th>
+              <th style="text-align:center;">ESTADO</th>
+              <th style="text-align:center;">ACCIÓN</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align:center;">{{datosdelcodico.FECHA_INGRESO}} {{datosdelcodico.HORA_INGRESO}}</td>
+                <td style="text-align:center;">{{datosdelcodico.DOCUMENTO_AFILIADO}}</td>
+              <td style="text-align:center;">{{datosdelcodico.NOMBRE_AFILIADO}}</td>
+              <td style="text-align:center;">{{datosdelcodico.REGIMEN}}</td>
+              <td style="text-align:center;">{{datosdelcodico.IPS_SOLICITANTE}}</td>
+              <td style="text-align:center;">{{datosdelcodico.RED}}</td>
+              <td style="text-align:center;">{{datosdelcodico.CODDX}}</td>
+              <td style="text-align:center;">
+                <span class="status {{datosdelcodico.CLASE_ESTADO}} white-text">{{datosdelcodico.ESTADO}}</span>
+              </td>
+              <td style="text-align:center;">
+                <div class="tooltip">
+                  <i style="cursor:pointer;font-size: 20px!important;"
+                    ng-click="abrirmodalgestion();sumPrint = 0;"
+                    class="material-icons">
+                    info_outline</i>
+                  <span class="tooltiptext">Gestionar</span>
+                </div>                                
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <div class="ma-3 center">
+          <h5>Historico Urgencia</h5>
+        </div>
+        <table class="responsive-table striped table-bordered" ng-hide="inactive1">
+          <thead>
+            <tr>
+              <th class="center-align" data-field="Codigo">Codigo</th>
+              <th class="center-align" data-field="Fecha">Tipo Doc</th>
+              <th data-field="Ubicación">Documento</th>
+              <th data-field="Servicio">Funcionario que solicita</th>
+              <th data-field="Servicio">Estado</th>
+              <th data-field="Motivorechazo">Motivo rechazo</th>
+              <th data-field="Prestador">Ingreso</th>
+              <th data-field="Adjunto">Adjunto</th>
+                  <!-- <th class="center-align" data-field="Acción">Mas Información</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="urg in HistoricoUrgencia | limitTo:quantity | filter:filter">
+              <td class="center-align">{{urg.Codigo}}</td>
+              <td class="center-align">{{urg.Tipo_documento}}</td>
+              <td>{{urg.Documento}}</td>
+              <td>{{urg.Atendido}}</td>
+              <td>{{urg.estado}}</td>
+              <td>{{urg.motivo_rechazo}}</td>
+              <td>{{urg.Fecha_Ingreso}}</td>
+              <td class="center-align"> <i ng-show=(urg.Ruta) class="icon-folder-open" ng-click="descargar(urg.Ruta)" ></i></td>
+                  <!-- <td class="all order-th"><center><a class="waves-effect waves-light modal-trigger" ng-click="abrirmodal(urg)" href="#/historicourgencia"><i class="material-icons">more_horiz</i></a></center></td> -->
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+  <div ng-show="Tap == '2'">
+    <div class="row" style="margin-bottom: 13;width: 98%;margin-top: 1rem;">
+      <div style="padding:0px">
+          <div class="card-content clearfix" style="padding-bottom:0px">
+              <div class="col s12">
+                  <form id="busafi1" class="row" ng-submit="obtenerunico()"
+                      style="margin-bottom: 10px !important;">
+                      <div class="row">
+                          <form class="col s12">
+                              <div class="row" style="margin:0px">
+                                <div class="col l4 m4 s4">
+                                  <div class="input-field col s12 ">
+                                      <input id="codigobuscar" ng-model="codigobuscar" type="text" style="border: 1px solid #dee2e6;
+                                      border-radius: 0.25rem;
+                                      background-color: #fff;
+                                      background-clip: padding-box;
+                                      padding: 0 1em;">
+                                      <label for="codigobuscar" class="search-label" style=" padding: 0 1em;">Codigo o Documento</label>
+                                  </div>
+                              </div>
+                                  <div class="col l2 m2 s2">
+                                      <div class="input-field col s12">
+                                          <button class="btn white-text blue"
+                                          style="background:linear-gradient(to bottom left,#5870ae,#1a2e63,#5870ae);
+                                              height: 50%;width: 90%;padding: 3%;"
+                                              type="submit">Buscar</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </form>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="col s12" ng-show="verdatoscodigounico">
+      <table class="striped  responsive-table table-bordered" style="height:100px;">
+          <thead>
+            <tr>
+              <th style="text-align:center;">FECHA INGRESO</th>
+              <th style="text-align:center;">TIPO Y NUMERO</th>
+              <th style="text-align:center;">AFILIADO</th>
+              <th style="text-align:center;">REGIMEN</th>
+              <th style="text-align:center;">IPS</th>
+              <th style="text-align:center;">DIAGNOSTICO</th>
+              <th style="text-align:center;">ESTADO</th>
+              <th style="text-align:center;">ACCIÓN</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align:center;">{{datosdelcodico.FECHA_INGRESO}} {{datosdelcodico.HORA_INGRESO}}</td>
+                <td style="text-align:center;">{{datosdelcodico.DOCUMENTO_AFILIADO}}</td>
+              <td style="text-align:center;">{{datosdelcodico.NOMBRE_AFILIADO}}</td>
+              <td style="text-align:center;">{{datosdelcodico.REGIMEN}}</td>
+              <td style="text-align:center;">{{datosdelcodico.IPS_SOLICITANTE}}</td>
+              <td style="text-align:center;">{{datosdelcodico.CODDX}}</td>
+              <td style="text-align:center;">
+                <span class="status {{datosdelcodico.CLASE_ESTADO}} white-text">{{datosdelcodico.ESTADO}}</span>
+              </td>
+              <td style="text-align:center;">
+                <div class="tooltip">
+                  <i style="cursor:pointer;font-size: 20px!important;"
+                    ng-click="abrirmodalgestion();sumPrint = 0;"
+                    class="material-icons">
+                    info_outline</i>
+                  <span class="tooltiptext">Gestionar</span>
+                </div>                                
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+
+  <div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" id="Modal_Detalle" role="dialog" style="overflow: hidden;width: 75%;">
+    <div class="modal-content" style="padding: 0px !important;">
+        <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+            <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+                <div class="col s12 m12 l12 card margin" style="padding-right: 0px; padding-left: 0px;">
+                    <div class="foot4 divcardcustom default-linear-gradient" style="border-radius: 0px;">
+                        <div class="text-al divcardcustom2">
+                            <strong class="switch" style="font-weight:600">Gestionar Codigo</strong>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="center col s12">
+                      <h4>{{datosdelcodico.NOMBRE_AFILIADO}}</h4>
+                      <table class="responsive-table table-bordered" style="height:100px;">
+                        <thead>
+                          <tr>
+                            <!-- <th style="text-align:center;">AFILIADO</th> -->
+                            <th style="text-align:center;">TIPO Y NUMERO</th>
+                            <th style="text-align:center;">REGIONAL</th>
+                            <th style="text-align:center;">IPS</th>
+                          <th style="text-align:center;">REGIMEN</th>
+                          <th style="text-align:center;">SEXO</th>
+                          <th style="text-align:center;">EDAD</th>
+                          <th style="text-align:center;">ESTADO</th>
+                          <th style="text-align:center;">ADJUNTO</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <!-- <td style="text-align:center;">{{datosdelcodico.NOMBRE_AFILIADO}}</td> -->
+                            <td style="text-align:center;">{{datosdelcodico.DOCUMENTO_AFILIADO}}</td>
+                            <td style="text-align:center;">{{datosdelcodico.REGIONAL}}</td>
+                            <td style="text-align:center;">{{datosdelcodico.IPS_SOLICITANTE}}</td>
+                      <td style="text-align:center;">{{datosdelcodico.REGIMEN}}</td>
+                      <td style="text-align:center;">{{datosdelcodico.SEXO}}</td>
+                      <td style="text-align:center;">{{datosdelcodico.EDAD}}</td>
+                      <td style="text-align:center;">
+                        <span class="status {{datosdelcodico.CLASE_ESTADO}} white-text">{{datosdelcodico.ESTADO_AFILIADO}}</span>
+                      </td>
+                            <td class="center-align"> <center>
+                              <i title="Visualizar Soporte" ng-click="viewDocument(1)"
+                                style="cursor:pointer;font-size: 20px;" class="icon-file-pdf prefix"></i>
+                            </center></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <br>
+                      <table class="responsive-table table-bordered" style="height:100px;">
+                        <thead>
+                          <tr>
+                            <th style="text-align:center;">PORTABILIDAD</th>
+                            <th ng-if="datosdelcodico.PORTABILIDAD=='S'"  style="text-align:center;">MUNICIPO PORTABILIDAD</th>
+                            <th style="text-align:center;">GESTION_RIESGO</th>
+                            <th style="text-align:center;">ALTOCOSTO</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td style="text-align:center;">{{datosdelcodico.PORTABILIDAD}}</td>
+                            <td ng-if="datosdelcodico.PORTABILIDAD=='S'" style="text-align:center;">{{datosdelcodico.MUNICIPO_PORTABILIDAD}}</td>
+                            <td style="text-align:center;">{{datosdelcodico.GESTION_RIESGO}}</td>
+                            <td style="text-align:center;">{{datosdelcodico.ALTOCOSTO}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="row">
+                            <div class="col s6">
+                                <button class="btn white-text blue"
+                                style="background:linear-gradient(to bottom left,#5870ae,#1a2e63,#5870ae);width: 100%;margin-top: 26px;"
+                                   ng-click="guardargestionaprobar('modalgestionpro')" >Aprobar</button>
+                            </div>
+                            <div class="col s6">
+                                <button class="btn white-text blue"
+                                style="background:linear-gradient(to bottom left,#ae5858,#631a1a,#ae5858);width: 100%;margin-top: 26px;"
+                                   ng-click="guardargestionrechazo('modaldetalleprograma')" >Denegar</button>
+                            </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+  <style>
+      /* td, th {
+      font-size: 15px;
+  } */
+  
+  #licenciamiento td,
+  th,
+  .newdesing td,
+  th {
+      font-size: 15px;
+  }
+  
+      th.default-linear-gradient {
+        background-image: linear-gradient(0deg, #5870ae, #1a2e63, #5870ae) !important;
+      }
+      
+      .default-linear-gradient {
+        border-radius: 0px !important;
+      }
+  
+      .Valid_Campo {
+        border: 1px solid red !important;
+      }
+  
+  
+      @keyframes Anim_Show {
+        0% {
+          opacity: 0;
+        }
+  
+        100% {
+          opacity: 1;
+        }
+      }
+  
+      .Anim_Show {
+        animation-name: Anim_Show;
+        animation-duration: 1s;
+      }
+  
+      #Imagen_back {
+        cursor: pointer;
+        width: 50vw;
+        margin: auto;
+        opacity: .4;
+      }
+  
+      .card-panel,
+      .card,
+      .btn {
+        box-shadow: 0 2px 5px 0 rgb(197 208 239), 0 2px 10px 0 rgb(197 208 239) !important;
+      }
+  
+      .tabs {
+        height: 30px !important;
+      }
+  
+      .tabs .tab {
+        line-height: 30px !important;
+        height: 30px !important;
+      }
+  
+  
+      /* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+  
+      .list-group-item:last-child {
+        margin-bottom: 0;
+        border-bottom-right-radius: 4px;
+        border-bottom-left-radius: 4px;
+      }
+  
+      .list-group-item:first-child {
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+      }
+  
+      .list-group-item:hover {
+        color: #1a2e63;
+        cursor: pointer;
+        font-weight: bold;
+      }
+  
+      .list-group-item.hover {
+        color: #1a2e63;
+        cursor: pointer;
+        font-weight: bold;
+      }
+  
+      .list-group-item {
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+        margin-bottom: -1px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        font-size: 0.7em;
+      }
+  
+      .list-group {
+        font-size: 14px;
+        overflow: auto;
+        max-height: 13vh;
+        position: absolute;
+        margin: 0;
+        width: inherit;
+        margin-top: 2.2em;
+        z-index: 3;
+      }
+  
+      .tabla_estilo_0 th {
+        position: sticky;
+        top: 0;
+        z-index: 9;
+      }
+  
+      .label-new>label {
+        display: table;
+      }
+  
+      input.input-text-new {
+        background-color: #f1f3f4 !important;
+      }
+  
+      .gray-input {
+        background-color: #f1f3f4 !important;
+      }
+  
+  
+      .select_maxheigth ul {
+        max-height: 125px;
+      }
+  
+      .dropdown-content li {
+        min-height: 23px;
+      }
+  
+      .dropdown-content li>span {
+        line-height: 32px;
+        padding: 0px 16px;
+      }
+  
+      #toast-container .toast {
+        border-radius: 10px !important;
+        font-weight: 600;
+        text-align: center !important;
+        word-break: keep-all;
+        padding: 10px 25px;
+        width: auto;
+        background: linear-gradient(to bottom left, #e04242, #8b0000, #e04242);
+      }
+  
+  
+      ul::-webkit-scrollbar {
+        width: 6px;
+        background-color: #F5F5F5;
+      }
+  
+      .select-wrapper input.select-dropdown:disabled {
+        color: black;
+      }
+  
+      .Green_Est {
+        background-color: green !important;
+      }
+  
+      .Red_Est {
+        background-color: red !important;
+      }
+      
+      .form-control {
+  font-size: .875rem;
+  height: calc(1.5em + 1.25rem + 5px);
+  transition: all .15s ease-in-out;
+}
+
+.form-control {
+  font-size: .875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 1.25rem + 2px);
+  padding: 0.625rem 0.75rem;
+  transition: all .15s cubic-bezier(.68, -.55, .265, 1.55);
+  color: #8898aa;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  background-clip: padding-box;
+  box-shadow: 0 3px 2px rgb(233 236 239 / 5%);
+}
+input, button, select, optgroup, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+}
+  
+      /* //////////////////////////////////////////////////////////////////////////////// */
+    </style>
+  </div>
+
+
+
+
+
+
+
+
+ 

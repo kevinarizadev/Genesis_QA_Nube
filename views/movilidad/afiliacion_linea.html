@@ -1,0 +1,2923 @@
+<div id="afiliacion_linea" class="grey-new newdesing desing-small collapsible-new w-100 {{resize_screen}}">
+  <style>
+    .select2>.select2-choice.ui-select-match {
+      height: 29px;
+    }
+
+    .selectize-control>.selectize-dropdown {
+      top: 36px;
+    }
+
+    .grey-new {
+      background-color: #f1f3f4;
+    }
+
+
+    blockquote.default-border {
+      border-top: none !important;
+      border-right: none !important;
+      border-bottom: none !important;
+      border-left-width: 5px !important;
+      margin-top: 0;
+    }
+
+    .screen_full {
+      position: absolute !important;
+      left: 0 !important;
+      top: 0 !important;
+      z-index: 1000 !important;
+      min-height: 100% !important;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+
+    input[type="date"]::-webkit-inner-spin-button,
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      -webkit-appearance: none;
+    }
+
+
+    .alert_info::after {
+      left: -100% !important;
+      background: #2196F3;
+    }
+
+    .alert_info::before {
+      left: 0% !important;
+      border-left-color: #2196F3;
+    }
+
+    #afiliacion_linea select,
+    #afiliacion_linea input[type="text"],
+    #afiliacion_linea input[type="number"],
+    #afiliacion_linea input[type="date"],
+    #afiliacion_linea input[type="email"],
+    #afiliacion_linea [data-file]:before {
+      font-size: 12px;
+    }
+
+    .style-modal-default {
+      width: 50%;
+      margin: 0 auto;
+    }
+
+    .style-btn-close {
+      float: right;
+      font-size: 50px;
+      padding-right: 20px;
+    }
+
+    i.cursor-pointer.default-background.icon-edit.position-absolute.white-text {
+      right: 5px;
+      top: 1px;
+      height: 100%;
+      width: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    select:disabled+label {
+      color: rgba(0, 0, 0, 0.26);
+    }
+
+    .tabs .tab a {
+      font-size: 11px;
+    }
+
+    li.tab.col.w-auto {
+      line-height: 28px;
+      height: 28px;
+    }
+
+    ul.tabs.transparent {
+      height: 28px;
+    }
+
+    select.select-default-new:focus:not([readonly]) {
+      box-shadow: 0 1px 0 0 #1a2e63 !important;
+    }
+
+    .label-new>select:focus:not([readonly])~label {
+      color: #1a2e63;
+    }
+
+
+    .desing-small .card-action.col.s12.m12.l12 {
+      padding: 9px 10px 0px;
+      font-size: 12px;
+    }
+
+    .desing-small .label-new {
+      margin: 1.4rem 0 .8rem;
+      height: 2rem;
+    }
+
+    .desing-small input.input-text-new,
+    .desing-small input.input-date-new {
+      height: 2rem;
+    }
+
+    .desing-small .label-new>label {
+      font-size: .8rem;
+      top: -17px;
+      font-weight: 600;
+    }
+
+    .desing-small blockquote.default-border {
+      margin-bottom: 11px;
+    }
+
+    .desing-small [type="radio"]:not(:checked)+label,
+    .desing-small [type="radio"]:checked+label {
+      font-size: 0.7rem;
+    }
+
+   
+    #tabs-list {
+      overflow-x: hidden;
+      padding-bottom: 5px;
+      margin-bottom: 7px;
+    }
+
+    #tabs-list:hover {
+      overflow-x: auto;
+      margin-bottom: 0;
+    }
+
+    .label-text {
+      min-height: 2rem !important;
+      height: auto !important;
+    }
+
+   
+  </style>
+  <div class="row section-header margin white">
+    <ul id="tabs-list" class="align-items-center d-flex justify-content-between left list-inline w-100">
+     
+      <li style="margin: 6px 0">
+        <ul class="tabs transparent">
+          <li class="tab col w-auto">
+            <a id="tab_1" ng-click="seleccionar(1)" ng-class="{'active':tabs.select==1}"
+              href="javascript:void(0)">Historia de solicitudes <i class="icon-history"></i></a>
+          </li>
+          <li class="tab col w-auto">
+            <a ng-click="seleccionar(2)" ng-class="{'active':tabs.select==2}" href="javascript:void(0)">Afiliación en
+              Línea <i class="icon-money"></i></a>
+          </li>
+         
+        </ul>
+      </li>
+      <li>
+        <i ng-click="resize_screen=='screen_full'?resize_screen='':resize_screen='screen_full';"
+          ng-class="{'icon-resize-small-alt':resize_screen=='screen_full','icon-resize-full-alt':resize_screen==''}"
+          title="Redimensionar Contenido" class="cursor-pointer fa-1x icon-resize-full-alt"></i>
+      </li>
+    </ul>
+  </div>
+  <div class="row dashboard-wrapper content-container">
+    <!-- ------------------------------------------------------------------------------------------------------------- tab.1 -->
+    <div ng-show="tabs.select==1" id="historial_solicitud">
+      <div class="card col s12 no-padding margin">
+        <div class="card-action col s12 m12 l12">
+          <i>
+            Señor Aportante en este acceso usted podrá disfrutar de nuestro servicio virtual de afiliación para
+            movilidad
+            régimen contributivo que hemos diseñado especialmente para usted.
+            <br>
+            <br>
+            La información que diligencie en los datos del cotizante y los beneficiarios debe ser acorde a los
+            documentos de identidad de cada uno. Si se
+            presentan inconsistencias en la información ingresada y los documentos anexos, el formulario será rechazado.
+            <br>
+            <br>
+          </i>
+        </div>
+        <div class="card-action col s12 m12 l12">
+          <blockquote class="grey-new default-border default-color">
+            <b>Solicitudes de Afiliacion e Inclusión de Beneficiarios
+              ({{historial.listado.length}})</b>
+        
+          </blockquote>
+          <div class="align-items-center black-text col d-flex justify-content-between s12 title-panel no-padding"
+            style="margin-bottom: 15px;">
+            <select ng-model="historial.estado" id="historial_estado" class="select-default-new input-out-new"
+              style="box-shadow: none;width: 120px;">
+              <option value="M">MIS REGISTROS</option>
+              <option value="S">PENDIENTES</option>
+              <option value="P">PROCESADOS</option>
+              <option value="R">RECHAZADOS</option>
+              <option value="D">DEVOLUCION</option>
+              <option value="T">TODOS</option>
+            </select>
+            <input ng-model="q" ng-change="filter();" id="search" type="text" autocomplete="off"
+              class="border-none input-text-new margin input-out-new white" placeholder="Filtrar tabla"
+              style="width: 120px;">
+            <div>
+              <small>Fecha Inicio:</small>
+              <input ng-model="historial.fecha_inicio" id="fecha_mes" type="date"
+                class="border-none input-date-new input-out-new margin white m-l"
+                style="width: 120px!important;outline: none;">
+            </div>
+            <div>
+              <small>Fecha Fin:</small>
+              <input ng-model="historial.fecha_fin" id="fecha_mes" type="date"
+                class="border-none input-date-new input-out-new margin white m-l"
+                style="width: 120px!important;outline: none;">
+            </div>
+            <i ng-click="lista_solicitud_afiliacion()" class="btn btn-small cursor-pointer green icon-filter-1">
+              Filtrar</i>
+         
+          </div>
+          <div class="col s12 m12 l12 no-padding">
+            <div class="table-over-box m-b" style="max-height: calc(100vh - 262px);overflow: auto;">
+              <table class="striped table-bordered white">
+                <thead>
+                  <tr>
+                    <th>Radicado</th>
+                    <th>Tipo Solicitud</th>
+                    <th>Cantidad Beneficiarios</th>
+                    <th>Condición</th>
+                    <th>Aportante</th>
+                    <th>Documento Cotizante</th>
+                    <th>Nombre Cotizante</th>
+                    <th>Responsable</th>
+                    <th>Fecha Solicitud</th>
+                    <th>Estado</th>
+                    <th class="center-align">Opciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-if="historial.listado.length==0">
+                    <td colspan="13">No hay contenido.</td>
+                  </tr>
+                  <tr
+                    ng-repeat="solicitud in historial.listado | filter:q | startFrom:currentPage*pageSize | limitTo:pageSize track by $index">
+                    <td>{{solicitud.RADICADO}}</td>
+                    <td>{{solicitud.TIPO}}</td>
+                    <td class="center-align">{{solicitud.CANT_BENEFICIARIOS}}</td>
+                    <td>{{solicitud.CONDICION}}</td>
+                    <td>{{solicitud.APORTANTE}}</td>
+                    <td>{{solicitud.COTIZANTE}}</td>
+                    <td>{{solicitud.AFILIADO}}</td>
+                    <td>{{solicitud.SMVV_RESPONSABLE}}</td>
+                    <td>{{solicitud.FECHA_SOLICITUD}}</td>
+                    <td class="center-align black-text c-{{solicitud.ESTADO}}">{{solicitud.ESTADO_NOMBRE}}</td>
+                 
+                    <td class="center-align">
+                      <i ng-click="imprimir_solicitud(solicitud);" title="Imprimir Formulario"
+                        class="icon-print-3 cursor-pointer" style="font-size: 16px;"></i>
+                      <i ng-click="ver_detalle_solicitud(solicitud)" title="Ver detalle de la solicitud"
+                        class="{{solicitud.RADICADO!=historial.detalle?'icon-clipboard-2':'icon-cancel'}} cursor-pointer"
+                        style="font-size: 16px;"></i>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="13" class="border-none no-padding" style="user-select: none">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <p style="font-size: 12px">Registros Filtrados: {{listDatosTemp.length}}</p>
+                        <p style="font-size: 12px">Registros Totales: {{historial.listado.length}}</p>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="13" class="border-none no-padding" style="user-select: none">
+                      <div class="black-text title-panel d-flex justify-content-between align-items-center"
+                        style="margin-top: 15px;">
+                        <select id="pageSize" ng-model="pageSize" class="gray-input select-default-new border-none"
+                          ng-change="currentPage=0" style="width: auto;max-width: 100px;">
+                          <option value="10">10</option>
+                          <option value="15">15</option>
+                          <option value="20">20</option>
+                        </select>
+                      
+                        <div>
+                          <button class="btn btn-small border-radius-none no-padding" ng-disabled="currentPage == 0"
+                            ng-click="btns_paginacion(currentPage-1)" style="box-shadow: none;">
+                            <i class="icon-left-small"></i>
+                          </button>
+                          <small style="min-width: 90px;display: inline-block;text-align: center;padding: 0 1rem;">
+                            Página {{currentPage+1}} de {{numberOfPages()}}
+                          </small>
+                          <button class="btn btn-small border-radius-none no-padding"
+                            ng-disabled="currentPage >= getData().length/pageSize - 1"
+                            ng-click="btns_paginacion(currentPage+1)" style="box-shadow: none;">
+                            <i class="icon-right-small"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div id="detalle_solicitud" ng-show="historial.detalle>-1 && editarafiliacion == false" class="card-action col s12 m12 l12">
+          <blockquote class="grey-new default-border default-color">
+            <b>Detalle de la solicitud: {{historial.tipo_solicitud}}</b>
+            <i ng-click="permitireditar()" title="Editar afiliado" class="icon-edit cursor-pointer" style="font-size: 16px;"></i>
+           <h6 style="color: red;">{{editarafiobservaciondev}}</h6>
+          </blockquote>
+          <div ng-if="historial.vista_aportante" class="col s12 no-padding">
+            <strong class="m-l">Tipo de Afiliado</strong>
+          </div>
+          <div ng-if="historial.vista_aportante" class="col s12 no-padding m-b h-auto input-out-new">
+            <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+              <label class="default-color">Condición de la persona:</label>
+              <span class="m-l">{{historial.condicion}}</span>
+            </div>
+            <div class="col s12 m9 l9 label-new m-b label-text no-padding">
+              <label class="default-color">Tipo de cotizante:</label>
+              <span class="m-l">{{historial.tipo_cotizante}}</span>
+            </div>
+          </div>
+          <div ng-if="historial.vista_aportante && historial.condicion!='INDEPENDIENTE'" class="col s12 no-padding">
+            <strong class="m-l">Datos del Aportante</strong>
+          </div>
+          <div ng-if="historial.vista_aportante && historial.condicion!='INDEPENDIENTE'"
+            class="col s12 no-padding m-b h-auto input-out-new">
+            <div class="row margin">
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Tipo documento:</label>
+                <span class="m-l">{{historial.tipo_documento_aportante}}</span>
+              </div>
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Número de documento:</label>
+                <span class="m-l">{{historial.numero_documento_aportante}}</span>
+              </div>
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Nombre o razón social:</label>
+                <span class="m-l">{{historial.nombre_aportante}}</span>
+              </div>
+              <div ng-if="historial.direccion_aportante!='NULL'"
+                class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Dirección:</label>
+                <span class="m-l">{{historial.direccion_aportante}}</span>
+              </div>
+            </div>
+            <div class="row margin">
+              <div ng-if="historial.departamento_aportante!='NULL'"
+                class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Departamento:</label>
+                <span class="m-l">{{historial.departamento_aportante}}</span>
+              </div>
+              <div ng-if="historial.municipio_aportante!='NULL'"
+                class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Municipio:</label>
+                <span class="m-l">{{historial.municipio_aportante}}</span>
+              </div>
+              <div ng-if="historial.telefono_aportante!='NULL'"
+                class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Teléfono Celular:</label>
+                <span class="m-l">{{historial.telefono_aportante}}</span>
+              </div>
+              <div ng-if="historial.correo_aportante!='NULL'" class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Correo electrónico:</label>
+                <span class="m-l">{{historial.correo_aportante}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col s12 no-padding">
+            <strong class="m-l">Datos del Cotizante</strong>
+          </div>
+          <div class="col s12 no-padding m-b h-auto input-out-new">
+            <div class="row margin">
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Tipo documento:</label>
+                <span class="m-l">{{historial.tipo_documento}}</span>
+              </div>
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Número de documento:</label>
+                <span class="m-l">{{historial.numero_documento}}</span>
+              </div>
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Nombre Diligenciado:</label>
+                <span class="m-l">{{historial.nombre}}</span>
+              </div>
+            </div>
+        
+            <div class="row margin">
+              <div ng-if="historial.vista_aportante && historial.condicion!='INDEPENDIENTE'"
+                class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Fecha de Nacimiento:</label>
+                <span class="m-l">{{historial.fecha_nacimiento}}</span>
+              </div>
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Sexo:</label>
+                <span class="m-l">{{historial.sexo}}</span>
+              </div>
+              <div ng-if="historial.vista_aportante && historial.condicion!='INDEPENDIENTE'"
+                class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Estado Civil:</label>
+                <span class="m-l">{{historial.estado_civil_cotizante}}</span>
+              </div>
+              <div ng-if="historial.vista_aportante && historial.condicion!='INDEPENDIENTE'"
+                class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Dirección:</label>
+                <span class="m-l">{{historial.direccion_cotizante}}</span>
+              </div>
+            </div>
+            <div class="row margin">
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Departamento:</label>
+                <span class="m-l">{{historial.departamento_cotizante}}</span>
+              </div>
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Municipio:</label>
+                <span class="m-l">{{historial.municipio_cotizante}}</span>
+              </div>
+              <div ng-if="historial.vista_aportante && historial.condicion!='INDEPENDIENTE'"
+                class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Zona:</label>
+                <span class="m-l">{{historial.zona_cotizante}}</span>
+              </div>
+              <div ng-if="historial.vista_aportante && historial.condicion!='INDEPENDIENTE'"
+                class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">IPS de atención:</label>
+                <span class="m-l">{{historial.ips_atencion}}</span>
+              </div>
+            </div>
+            <div class="row margin">
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Teléfono Fijo:</label>
+                <span class="m-l">{{historial.telefono_f_cotizante}}</span>
+              </div>
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Teléfono Celular:</label>
+                <span class="m-l">{{historial.telefono_c_cotizante}}</span>
+              </div>
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Correo electrónico:</label>
+                <span class="m-l">{{historial.correo_cotizante}}</span>
+              </div>
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Fondo de Pensiones AFP:</label>
+                <span class="m-l">{{historial.penciones_afp}}</span>
+              </div>
+            </div>
+            <div class="row margin">
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Riesgos Laborales ARL:</label>
+                <span class="m-l">{{historial.riesgos_laborales_arl}}</span>
+              </div>
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Salario Basico Mensual:</label>
+                <span class="m-l">{{historial.salario_basico_mensual}}</span>
+              </div>
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding">
+                <label class="default-color">Fecha Ingreso:</label>
+                <span class="m-l">{{historial.fecha_ingreso}}</span>
+              </div>
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding"
+                ng-if="historial.vista_aportante && historial.condicion=='INDEPENDIENTE'">
+                <label class="default-color">Actividad Económica:</label>
+                <span class="m-l">{{historial.actividad_economica}}</span>
+              </div>
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding" ng-if="historial.estado_detalle=='R'">
+                <label class="default-color">Motivo Rechazo:</label>
+                <span class="m-l">{{historial.motivo_rechazo}}</span>
+              </div>
+              <div class="col s12 m3 l3 label-new m-b label-text no-padding"
+                ng-if="historial.estado_detalle=='R' || historial.estado_detalle=='P'">
+                <label class="default-color">Usuario Procesa:</label>
+                <span class="m-l">{{historial.usuario_procesa_nal}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col s12 no-padding">
+            <strong class="m-l">Listado de Beneficiarios ({{historial.listado_beneficiarios.length}})</strong>
+          </div>
+          <div id="historial_listado_beneficiarios" style="overflow: auto;max-height: calc(80vh - 260px);"
+            class="col s12 no-padding m-b">
+            <table class="striped table-bordered white">
+              <thead>
+                <tr>
+                
+                  <th>#</th>
+                  <th>Tipo DOC</th>
+                  <th>Documento</th>
+                  <th>Nombre</th>
+          
+                  <th>Nacimiento</th>
+                  <th>Sexo</th>
+                  <th>Direccion</th>
+                  <th>Departamento</th>
+                  <th>Municipio</th>
+                  <th>Zona</th>
+                  <th>IPS Atencion</th>
+                  <th>Telefono</th>
+                  <th>Celular</th>
+                  <th>Correo</th>
+                  <th>EPS Anterior</th>
+                  <th>Parentesco</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-if="historial.listado_beneficiarios.length==0">
+                  <td colspan="16">
+                    No hay beneficiarios agregados para mostrar.
+                  </td>
+                </tr>
+                <tr class="cursor-pointer hover-blue" ng-repeat="beneficiario in historial.listado_beneficiarios">
+                  <td>{{($index+1)}}</td>
+                  <td>{{beneficiario.BEN_TIPO_DOC}}</td>
+                  <td>{{beneficiario.BEN_DOCUMENTO}}</td>
+                  <td>{{beneficiario.BEN_NOMBRE}}</td>
+                  <td>{{beneficiario.BEN_FECHA_NACIMIENTO}}</td>
+                  <td>{{beneficiario.GENERO}}</td>
+                  <td>{{beneficiario.BEN_DIRECCION}}</td>
+                  <td>{{beneficiario.UBICACION}}</td>
+                  <td>{{beneficiario.UBICACION}}</td>
+                  <td>{{beneficiario.BEN_ZONA}}</td>
+                  <td>{{beneficiario.BEN_IPS_ATENCION}}</td>
+                  <td>{{beneficiario.TELEFONO}}</td>
+                  <td>{{beneficiario.CELULAR}}</td>
+                  <td>{{beneficiario.CORREO}}</td>
+                  <td>{{beneficiario.EPS_ANTERIOR}}</td>
+                  <td>{{beneficiario.PARENTESCO}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col s12 no-padding">
+            <strong class="m-l">Listado de Soportes de los Beneficiarios
+              ({{historial.listado_soportes_beneficiarios.length}})</strong>
+          </div>
+          <div id="historial_listado_soportes_beneficiarios" style="overflow: auto;max-height: calc(80vh - 260px);"
+            class="col s12 no-padding m-b">
+            <table class="striped table-bordered white">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Documento</th>
+                  <th>Nombre</th>
+                  <th class="center-align">Ver soporte</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-if="historial.listado_soportes.length==0">
+                  <td colspan="22">
+                    No hay soportes para mostrar.
+                  </td>
+                </tr>
+                <tr class="cursor-pointer hover-blue"
+                  ng-repeat="soporte_beneficiarios in historial.listado_soportes_beneficiarios">
+                  <td>{{($index+1)}}</td>
+                  <td>{{soporte_beneficiarios.documento}}</td>
+                  <td>{{soporte_beneficiarios.TIPO_ARCHIVO}}</td>
+                  <td class="center-align">
+                    <i ng-click="descargar_archivo(soporte_beneficiarios.RUTA, soporte_beneficiarios.FTP);"
+                      title="Vista previa" class="icon-file-pdf red-text" style="font-size: 16px;"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col s12 no-padding">
+            <strong class="m-l">Listado de Soportes del Cotizante ({{historial.listado_soportes.length}})</strong>
+          </div>
+          <div id="historial_listado_soportes" style="overflow: auto;max-height: calc(80vh - 260px);"
+            class="col s12 no-padding m-b">
+            <table class="striped table-bordered white">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Tipo</th>
+                  <th class="center-align">Vista previa</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-if="historial.listado_soportes.length==0">
+                  <td colspan="22">
+                    No hay soportes para mostrar.
+                  </td>
+                </tr>
+                <tr class="cursor-pointer hover-blue" ng-repeat="soporte in historial.listado_soportes">
+                  <td>{{($index+1)}}</td>
+                  <td>{{soporte.TIPO_ARCHIVO}}</td>
+                  <td class="center-align">
+                    <i ng-click="descargar_archivo(soporte.RUTA, soporte.FTP);" title="Vista previa"
+                      class="icon-file-pdf red-text" style="font-size: 16px;"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-action col s12 m12 l12" ng-show="historial.estado_detalle=='Z'">
+            <i>
+              Señor usuario, recuerde que para finalizar su solicitud, debe descargar el formulario diligenciado en el
+              botón GENERAR FORMULARIO. Este debe ser firmado y escaneado y debe ser cargado en la siguiente opción.
+            </i>
+            <br>
+            <br>
+            <div class="col s12 no-padding m-b">
+              <div class="col s6 m12 l4 no-padding m-b">
+                <input ng-click="imprimir_solicitud(historial.solicitud);"
+                  class="border-radius-none btn center-align cursor-pointer green m-t" type="button"
+                  value="GENERAR FORMULARIO">
+              </div>
+              <div class="col s12 m6 l4 no-padding label-new m-b">
+                <div data-file="Seleccionar Formato" class="gray-input input-file-new">
+                  <i class="icon-folder-open-1"></i>
+                  <input input-ng-file id="formato" data-index="0" data-name_default="Seleccionar Formato" type="file"
+                    class="margin border-none">
+                </div>
+                <label for="formato">Archivo:</label>
+              </div>
+              <div class="col s6 m12 l4 right-align  no-padding m-b">
+                <input ng-click="subir_formato();" ng-disabled="dsb.btnSubirForm"
+                  class="border-radius-none btn center-align cursor-pointer blue m-t" type="button"
+                  value="SUBIR FORMULARIO">
+              </div>
+            </div>
+            <br>
+            <br>
+            <i>
+              Al cargar el formulario firmado realizaremos el trámite y las validaciones necesarias y le daremos
+              respuesta
+              a través de este medio y por correo electrónico.
+            </i>
+            <br>
+            <br>
+          </div>
+        </div>
+         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@inicio control de cambio Yordis@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+  <div ng-show="editarafiliacion" class="card-action col s12 m12 l12">
+    <div class="card-action col s12 m12 l12 no-padding">
+            <blockquote class="grey-new default-border default-color">
+              <b>Editar Datos de Afiliado</b>
+              <!-- <i ng-click="permitireditaratras()" title="Editar Formulario" class="icon-print-3 cursor-pointer" style="font-size: 16px;"></i> -->
+            </blockquote>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select id="edit_condicion" name="edit_condicion" ng-model="editarafi.condicion"
+                ng-change="lista_tipo_cotizante(editarafi.condicion)"
+                 class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-repeat="conedi in afiliacion.options_condicion" value="{{conedi.codigo}}"  ng-selected="conedi.codigo == editarafi.condicion">
+                  {{conedi.codigo}}-{{conedi.nombre}}
+                </option>
+              </select>
+              <label for="edit_condicion">Condición de la persona *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select id="edit_tipo_cotizante" name="edit_tipo_cotizante" ng-model="editarafi.tipo_cotizante"
+                 class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-repeat="tc in afiliacion.options_tipo_cotizante" value="{{tc.codigo}}" ng-selected="tc.codigo == editarafi.tipo_cotizante">
+                  {{tc.codigo}}-{{tc.nombre}}</option>
+              </select>
+              <label for="edit_tipo_cotizante">Tipo de cotizante *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="11" ng-model="editarafi.tipo_documento" id="editarafi_tipo_documento"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;" ng-blur="validarLongitudTipoDoc()" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option value="{{x.CODIGO}}" ng-selected="x.CODIGO == editarafi.tipo_documento" ng-repeat="x in Tipos_Documentos">
+                  {{x.NOMBRE}}</option>
+              </select>
+              <label for="editarafi_tipo_documento">Tipo documento *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="editarafi.numero" id="editarafi_numero" type="number"
+                autocomplete="new-text" class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                 ng-blur="validarLongitudTipoDoc()" maxlength="20" required>
+              <label for="editarafi_numero">Número de documento *</label>
+            </div>
+          </div>
+          <div class="col s12 no-padding">
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="13" ng-model="editarafi.primer_nombre"
+                ng-change="editarafi.primer_nombre=editarafi.primer_nombre.toUpperCase()"
+                id="editarafi_primer_nombre" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" required>
+              <label for="editarafi_primer_nombre">Primer Nombre *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="14" ng-model="editarafi.segundo_nombre"
+                ng-change="editarafi.segundo_nombre=editarafi.segundo_nombre.toUpperCase()"
+                id="editarafi_segundo_nombre" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l">
+              <label for="editarafi_segundo_nombre">Segundo Nombre</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="15" ng-model="editarafi.primer_apellido"
+                ng-change="editarafi.primer_apellido=editarafi.primer_apellido.toUpperCase()"
+                id="editarafi_primer_apellido" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" required>
+              <label for="editarafi_primer_apellido">Primer Apellido *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="16" ng-model="editarafi.segundo_apellido"
+                ng-change="editarafi.segundo_apellido=editarafi.segundo_apellido.toUpperCase()"
+                id="editarafi_segundo_apellido" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l">
+              <label for="editarafi_segundo_apellido">Segundo Apellido *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="17" ng-model="editarafi.fecha_nacimiento" id="editarafi_fecha_nacimiento" type="date"
+                class="border-none input-date-new input-out-new white m-l" required>
+              <label for="editarafi_fecha_nacimiento">Fecha de Nacimiento *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="18" ng-model="editarafi.sexo" id="editarafi_sexo_cotizante"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option value="F">F-Femenino</option>
+                <option value="M">M-Masculino</option>
+              </select>
+              <label for="editarafi_sexo_cotizante">Sexo *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="21" ng-model="editarafi.direccion_cotizante" ng-keydown="($event.keyCode == 13) && generar_direccion('editarafi','direccion_cotizante','editarafi_barrio_cotizante');
+                ($event.keyCode == 9) && formatcurrency(6)"
+                ng-click="generar_direccion('editarafi','direccion_cotizante','editarafi_barrio_cotizante')"
+                onkeypress="return false;" id="afiliacion_direccion_cotizante" type="text" autocomplete="new-text"
+                class="border-none input-text-new input-w-p input-out-new w-100 white m-l" placeholder="Enter [↲]"
+                required>
+             
+              <label for="afiliacion_direccion_cotizante">Dirección *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="22" ng-model="editarafi.barrio_cotizante" id="editarafi_barrio_cotizante"
+                name="editarafi_barrio_cotizante" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 white m-l" required>
+              <label for="editarafi_barrio_cotizante">Barrio *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select id="edita_departamento_cotizante" name="edita_departamento_cotizante" ng-model="editarafi.departamento_cotizante"
+              ng-change="lista_municipio_cambiar('D',editarafi.departamento_cotizante)"
+                 class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-repeat="td in afiliacion.options_departamento_cotizante | orderBy:'NOMBRE'" value="{{td.CODIGO}}" ng-selected="td.CODIGO == editarafi.departamento_cotizante">
+                  {{td.CODIGO}}-{{td.NOMBRE}}</option>
+              </select>
+              <label for="edita_departamento_cotizante">Departamento *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select id="edita_municipio_cotizante" name="edita_municipio_cotizante" ng-model="editarafi.municipio_cotizante"
+              ng-change="lista_ips_cambiar_cotizante(editarafi.municipio_cotizante)"
+                 class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-repeat="tm in afiliacionlistodomuni | orderBy:'NOMBRE'" value="{{tm.CODIGO}}" ng-selected="editarafi.municipio_cotizante == tm.CODIGO">
+                  {{tm.CODIGO}}-{{tm.NOMBRE}}</option>
+              </select>
+              <label for="edita_municipio_cotizante">Municipio *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="28" ng-model="editarafi.zona_cotizante" id="editarafi_zona_cotizante"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option value="R">R-Rural</option>
+                <option value="U">U-Urbana</option>
+              </select>
+              <label for="editarafi_zona_cotizante">Zona *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="29" ng-model="editarafi.ips_atencion" id="editarafi_ips_atencion"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;"
+                ng-required="editarafi.options_ips_atencion.length>0">
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-repeat="td in listaipscotizante | orderBy:'NOMBRE'" value="{{td.CODIGO}}"
+                  ng-selected="td.CODIGO == editarafi.ips_atencion">{{td.NOMBRE}}
+                </option>
+              </select>
+              <label for="editarafi_ips_atencion">IPS de atención *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="23" ng-model="editarafi.telefono_f_cotizante" id="editarafi_telefono_f_cotizante"
+                type="number" autocomplete="new-text" min="0"
+                class="m-l border-none white input-text-new input-w-p input-out-new w-100"
+                onKeyPress="if(this.value.length==7) return false;" maxlength="7">
+              <label for="editarafi_telefono_f_cotizante">Teléfono Fijo <small class="maxlength-new"
+                  style="color:red;">(Max
+                  7
+                  caracteres)</small></label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="24" ng-model="editarafi.telefono_c_cotizante" id="editarafi_telefono_c_cotizante"
+                name="editarafi_telefono_c_cotizante" type="number" autocomplete="new-text" min="0"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" required
+                onKeyPress="if(this.value.length==10) return false;" maxlength="10">
+              <label for="editarafi_telefono_c_cotizante">Teléfono Celular * <small class="maxlength-new"
+                  style="color:red;">(Max
+                  10
+                  caracteres)</small></label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="20" ng-model="editarafi.estado_civil_cotizante" id="editarafi_estado_civil_cotizante"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-repeat="td in afiliacion.options_estado_civil_cotizante | orderBy:'NOMBRE'"
+                ng-selected="td.CODIGO == editarafi.estado_civil_cotizante"
+                  value="{{td.CODIGO}}">{{td.NOMBRE}}
+                </option>
+              </select>
+              <label for="editarafi_estado_civil_cotizante">Estado Civil *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="25" ng-model="editarafi.correo_cotizante" id="editarafi_correo_cotizante" type="email"
+                autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l">
+              <label for="editarafi_correo_cotizante">Correo electrónico</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select id="edita_penciones_afp" name="edita_penciones_afp" ng-model="editarafi.penciones_afp"
+                 class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-repeat="td in afiliacion.options_penciones_afp | orderBy:'NOMBRE'" value="{{td.CODIGO}}" ng-selected="td.CODIGO == editarafi.penciones_afp">
+                  {{td.NOMBRE}}</option>
+              </select>
+              <label for="edita_penciones_afp">Fondo de Pensiones AFP *</label>
+            </div>
+             
+            <!-- <div ng-if="afiliacion.condicion!='P'" class="col s12 m3 l3 no-padding label-new m-b"> -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select id="edita_coti_arl" name="edita_coti_arl" ng-model="editarafi.coti_arl"
+                 class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-repeat="tr in afiliacion.options_riesgos_laborales_arl" value="{{tr.CODIGO}}" ng-selected="tr.CODIGO == editarafi.coti_arl">
+                  {{tr.NOMBRE}}</option>
+              </select>
+              <label for="edita_coti_arl">Riesgos Laborales ARL *</label>
+            </div>
+              <div class="col s12 m3 l3 no-padding label-new m-b">
+                <input tabindex="32" ng-model="editarafi.salario_basico_mensual" id="editarafi_salario_basico_mensual"
+                  type="text" autocomplete="new-text" min="0" ng-keyup="formatcurrency(1)"
+                  class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" required>
+                <label for="editarafi_salario_basico_mensual">Salario Basico Mensual *</label>
+              </div>
+              <div class="col s12 m3 l3 no-padding label-new m-b">
+                <input tabindex="33" ng-model="editarafi.fecha_ingreso" id="editarafi_fecha_ingreso"
+                  type="date" class="border-none input-date-new input-out-new white m-l"
+                  required>
+                <label for="editarafi_fecha_ingreso">Fecha Ingreso *</label>
+              </div>
+          </div>
+          <div class="col s12 no-padding">
+            <strong class="m-l">Listado de Beneficiarios ({{historial.listado_beneficiarios.length}})</strong>
+          </div>
+          <div id="historial_listado_beneficiarios" style="overflow: auto;max-height: calc(80vh - 260px);"
+            class="col s12 no-padding m-b">
+            <table class="striped table-bordered white">
+              <thead>
+                <tr>
+                
+                  <th>Editar</th>
+                  <th>Tipo DOC</th>
+                  <th>Documento</th>
+                  <th>Nombre</th>
+          
+                  <th>Nacimiento</th>
+                  <th>Sexo</th>
+                  <th>Direccion</th>
+                  <th>Departamento</th>
+                  <th>Municipio</th>
+                  <th>Zona</th>
+                  <th>IPS Atencion</th>
+                  <th>Telefono</th>
+                  <th>Celular</th>
+                  <th>Correo</th>
+                  <th>EPS Anterior</th>
+                  <th>Parentesco</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-if="editarafi.listado_beneficiarios.length==0">
+                  <td colspan="16">
+                    No hay beneficiarios agregados para mostrar.
+                  </td>
+                </tr>
+                <tr class="cursor-pointer hover-blue" ng-repeat="beneficiario in editarafi.listado_beneficiarios">
+                  <td><i ng-click="Editarbeneficiario(beneficiario)" title="Editar Beneficiario"
+                    class="icon-edit cursor-pointer"
+                    style="font-size: 16px;"></i></td>
+                  <td>{{beneficiario.BEN_TIPO_DOC}}</td>
+                  <td>{{beneficiario.BEN_DOCUMENTO}}</td>
+                  <td>{{beneficiario.BEN_PRI_NOMBRE}} {{beneficiario.BEN_SEG_NOMBRE}} {{beneficiario.BEN_PRI_APELLIDO}} {{beneficiario.BEN_SEG_APELLIDO}}</td>
+                  <td>{{beneficiario.BEN_FECHA_NACIMIENTO}}</td>
+                  <td>{{beneficiario.GENERO}}</td>
+                  <td>{{beneficiario.BEN_DIRECCION}}</td>
+                  <td>{{beneficiario.COD_DEPARTAMENTO}}</td>
+                  <td>{{beneficiario.UBICACION}}</td>
+                  <td>{{beneficiario.BEN_ZONA}}</td>
+                  <td>{{beneficiario.BEN_IPS_ATENCION}}</td>
+                  <td>{{beneficiario.TELEFONO}}</td>
+                  <td>{{beneficiario.CELULAR}}</td>
+                  <td>{{beneficiario.CORREO}}</td>
+                  <td>{{beneficiario.EPS_ANTERIOR}}</td>
+                  <td>{{beneficiario.PARENTESCO}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- inicio formulario  editar beneficiario afiliado -->
+          <div ng-show="vereditarbene" class="card-action col s12 m12 l12 no-padding">
+            <blockquote class="grey-new default-border default-color">
+              <b>Editar Datos de Beneficiario</b>
+            </blockquote>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="11" ng-model="editarbene.ben_tipo_doc" id="ben_tipo_doc"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;" ng-blur="validarLongitudTipoDoc()" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option value="{{x.CODIGO}}" ng-selected="x.CODIGO == editarbene.ben_tipo_doc" ng-repeat="x in Tipos_Documentos">
+                  {{x.NOMBRE}}</option>
+              </select>
+              <label for="ben_tipo_doc">Tipo documento *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="editarbene.ben_documento" id="ben_documento" type="number"
+                autocomplete="new-text" class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                 ng-blur="validarLongitudTipoDoc()" maxlength="20" required>
+              <label for="ben_documento">Número de documento *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="editarbene.ben_documento_anterio" id="ben_documento_anterio" type="number"
+                autocomplete="new-text" class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                 ng-blur="validarLongitudTipoDoc()" maxlength="20" readonly>
+              <label for="ben_documento_anterio">Número de documento *</label>
+            </div>
+          </div>
+          <div ng-show="vereditarbene" class="col s12 no-padding">
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="13" ng-model="editarbene.ben_pri_nombre"
+                ng-change="editarestebene.ben_pri_nombre=editarestebene.ben_pri_nombre.toUpperCase()"
+                id="ben_pri_nombre" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" required>
+              <label for="ben_pri_nombre">Primer Nombre *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="14" ng-model="editarbene.ben_seg_nombre"
+                ng-change="editarestebene.ben_seg_nombre=editarestebene.ben_seg_nombre.toUpperCase()"
+                id="ben_seg_nombre" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l">
+              <label for="ben_seg_nombre">Segundo Nombre</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="15" ng-model="editarbene.ben_pri_apellido"
+                ng-change="editarestebene.ben_pri_apellido=editarestebene.ben_pri_apellido.toUpperCase()"
+                id="ben_pri_apellido" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" required>
+              <label for="ben_pri_apellido">Primer Apellido *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="16" ng-model="editarbene.ben_seg_apellido"
+                ng-change="editarestebene.ben_seg_apellido=editarestebene.ben_seg_apellido.toUpperCase()"
+                id="ben_seg_apellido" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l">
+              <label for="ben_seg_apellido">Segundo Apellido *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="17" ng-model="editarbene.ben_fecha_nacimiento" id="ben_fecha_nacimiento" type="date"
+                class="border-none input-date-new input-out-new white m-l" required>
+              <label for="ben_fecha_nacimiento">Fecha de Nacimiento *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="18" ng-model="editarbene.genero" id="bengenero"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option value="F">F-Femenino</option>
+                <option value="M">M-Masculino</option>
+              </select>
+              <label for="bengenero">Sexo *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="21" ng-model="editarbene.ben_direccion" ng-keydown="($event.keyCode == 13) && generar_direccion('editarbene','ben_direccion','ben_barrio');
+                ($event.keyCode == 9) && formatcurrency(6)"
+                ng-click="generar_direccion('editarbene','ben_direccion','ben_barrio')"
+                onkeypress="return false;" id="editarbene_ben_direccion" type="text" autocomplete="new-text"
+                class="border-none input-text-new input-w-p input-out-new w-100 white m-l" placeholder="Enter [↲]"
+                required>
+             
+              <label for="editarbene_ben_direccion">Dirección *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="22" ng-model="editarbene.ben_barrio" id="ben_barrio"
+                name="ben_barrio" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 white m-l" required>
+              <label for="ben_barrio">Barrio *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select id="bencod_departamento" name="bencod_departamento" ng-model="editarbene.cod_departamento"
+              ng-change="lista_municipio_cambiar('B',editarbene.cod_departamento)"
+                 class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-repeat="td in afiliacion.options_departamento_cotizante | orderBy:'NOMBRE'" value="{{td.CODIGO}}" ng-selected="td.CODIGO == editarbene.cod_departamento">
+                  {{td.CODIGO}}-{{td.NOMBRE}}</option>
+              </select>
+              <label for="bencod_departamento">Departamento *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select id="bencod_municipio" name="bencod_municipio" ng-model="editarbene.cod_municipio"
+                 class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-repeat="tmb in beneficialistodomuni | orderBy:'NOMBRE'" value="{{tmb.CODIGO}}" ng-selected="tmb.CODIGO == editarbene.cod_municipio">
+                  {{tmb.CODIGO}}-{{tmb.NOMBRE}}</option>
+              </select>
+              <label for="bencod_municipio">Municipio *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="23" ng-model="editarbene.telefono" id="bentelefono"
+                type="number" autocomplete="new-text" min="0"
+                class="m-l border-none white input-text-new input-w-p input-out-new w-100"
+                onKeyPress="if(this.value.length==7) return false;" maxlength="7">
+              <label for="bentelefono">Teléfono Fijo <small class="maxlength-new"
+                  style="color:red;">(Max 7 caracteres)</small></label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="24" ng-model="editarbene.celular" id="bencelular"
+                name="bencelular" type="number" autocomplete="new-text" min="0"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" required
+                onKeyPress="if(this.value.length==10) return false;" maxlength="10">
+              <label for="bencelular">Teléfono Celular * <small class="maxlength-new"
+                  style="color:red;">(Max 10 caracteres)</small></label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="29" ng-model="editarbene.eps_anterior" id="beneps_anterior"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;">
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-repeat="td in afiliacion.options_eps_anterior | orderBy:'NOMBRE'" value="{{td.CODIGO}}"
+                  ng-selected="td.CODIGO == editarbene.eps_anterior">{{td.NOMBRE}}
+                </option>
+              </select>
+              <label for="beneps_anterior">EPS Anterior *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select id="benparentesco" name="benparentesco" ng-model="editarbene.parentesco"
+                 class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-repeat="tmb in afiliacion.options_parentesco | orderBy:'NOMBRE'" value="{{tmb.CODIGO}}" ng-selected="tmb.CODIGO == editarbene.parentesco">
+                  {{tmb.CODIGO}}-{{tmb.NOMBRE}}</option>
+              </select>
+              <label for="benparentesco">Parentesco *</label>
+            </div>
+            <div class="center-align col no-padding s12">
+              <input tabindex="56" ng-click="cargarbeneficiario()" class="border-radius-none btn btn-small center-align blue cursor-pointer m-b" type="button" value="Incluir Beneficiario">
+            </div>
+          </div>
+          <!-- fin formulario  editar beneficiario afiliado -->
+        </div>
+         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@fin control de cambio Yordis@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@inicio control de cambio yordis@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+         <div ng-show="editarafiliacion" class="card-action col s12 m12 l12">
+          <div class="col s12 no-padding">
+            <strong class="m-l">Listado de Soportes de los Beneficiarios
+              ({{historial.listado_soportes_beneficiarios.length}})</strong>
+          </div>
+          <div id="historial_listado_soportes_beneficiarios" style="overflow: auto;max-height: calc(80vh - 260px);"
+            class="col s12 no-padding m-b">
+            <table class="striped table-bordered white">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Documento</th>
+                  <th>Nombre</th>
+                  <th class="center-align">Ver soporte</th>
+                  <th ng-show="editarafiestadodeafiliacion == 'D'" class="center-align">Eliminar Soporte</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-if="historial.listado_soportes.length==0">
+                  <td colspan="22">
+                    No hay soportes para mostrar.
+                  </td>
+                </tr>
+                <tr class="cursor-pointer hover-blue"
+                  ng-repeat="soporte_beneficiarios in historial.listado_soportes_beneficiarios">
+                  <td>{{($index+1)}}</td>
+                  <td>{{soporte_beneficiarios.documento}}</td>
+                  <td>{{soporte_beneficiarios.TIPO_ARCHIVO}}</td>
+                  <td class="center-align">
+                    <i ng-click="descargar_archivo(soporte_beneficiarios.RUTA, soporte_beneficiarios.FTP);"
+                      title="Vista previa" class="icon-file-pdf red-text" style="font-size: 16px;"></i>
+                  </td>
+                  <td ng-show="editarafiestadodeafiliacion == 'D'" class="center-align">
+                    <i ng-click="eliminararchivo(soporte_beneficiarios);"
+                      title="Borrar soporte Beneficiario" class="icon-trash-empty red-text" style="font-size: 16px;"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col s12 no-padding">
+            <strong class="m-l">Listado de Soportes del Cotizante ({{historial.listado_soportes.length}})</strong>
+          </div>
+          <div id="historial_listado_soportes" style="overflow: auto;max-height: calc(80vh - 260px);"
+            class="col s12 no-padding m-b">
+            <table class="striped table-bordered white">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Tipo</th>
+                  <th class="center-align">Vista previa</th>
+                  <th ng-show="editarafiestadodeafiliacion == 'D'" class="center-align">Eliminar Soporte</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-if="historial.listado_soportes.length==0">
+                  <td colspan="22">
+                    No hay soportes para mostrar.
+                  </td>
+                </tr>
+                <tr class="cursor-pointer hover-blue" ng-repeat="soporte in historial.listado_soportes">
+                  <td>{{($index+1)}}</td>
+                  <td>{{soporte.TIPO_ARCHIVO}}</td>
+                  <td class="center-align">
+                    <i ng-click="descargar_archivo(soporte.RUTA, soporte.FTP);" title="Vista previa"
+                      class="icon-file-pdf red-text" style="font-size: 16px;"></i>
+                  </td>
+                  <td ng-show="editarafiestadodeafiliacion == 'D'" class="center-align">
+                    <i ng-click="eliminararchivo(soporte);"
+                      title="Borrar soporte Beneficiario" class="icon-trash-empty red-text" style="font-size: 16px;"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+           <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@inicio control de cambio yordis@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+           <div ng-show="editarafiestadodeafiliacion == 'D'">
+           <div class="col s12 m6 l6 no-padding label-new m-b">
+            <div ng-init="valorlistadocoti_bene='00'">
+            <select id="valorlistadocoti_bene" name="valorlistadocoti_bene" ng-model="valorlistadocoti_bene"
+               class="select-default-new input-out-new m-l" style="box-shadow: none;"  ng-change="changeItem(valorlistadocoti_bene)" required>
+              <option value="00" >SELECCIONAR</option>
+              <option ng-repeat="lt in listadocoti_bene" value="{{lt}}">
+                {{lt.nombres}} -- {{lt.parentesco}}</option>
+            </select>
+          </div>
+            <label for="valorlistadocoti_bene">Afiliado Cargar *</label>
+          </div>
+          <div class="col s12 m6 l6 no-padding label-new m-b">
+            <div ng-init="selectedDocumentType='00'">
+            <select id="selectedDocumentType" name="selectedDocumentType" ng-model="selectedDocumentType"
+             class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+            <option value="00">SELECCIONAR</option>
+            <option ng-repeat="conedi in listadotipo_doc_cargar" value="{{conedi.codigo}}">
+              {{conedi.codigo}}-{{conedi.nombre}}
+            </option>
+          </select>
+        </div>
+            <!-- <select tabindex="28" ng-model="selectedDocumentType" id="selectedDocumentType"
+              class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+              <option value="" disabled>SELECCIONAR</option>
+              <option value="R">R-Rural</option>
+              <option value="U">U-Urbana</option>
+            </select> -->
+            <label for="selectedDocumentType">Tipo de Soporte *</label>
+          </div>
+          <div  class="row">
+            <div class="col s8">
+                <div class="file-field input-field">
+                    <div class="btn btn-primary" style="border-radius:5px;height: 45px;">
+                      <span class="white-text">ARCHIVO</span>
+                      <input id="anexo2adj1" name="adjunto" accept=".pdf" type="file">
+                    </div>
+                  <div class="file-path-wrapper">
+                    <input  class="file-path validate" ng-model="nombrearchivo1" ng-change="validararchivo1()" type="text" id="textadj1" placeholder="Subir Archivo">
+                  </div>
+                </div>
+              </div>
+              <div class="col s4">
+                  <div class="input-field">
+                    <center>
+                      <button class="btn btn-primary" ng-click="uploadFile()"
+                        style="border-radius:5px;height: 45px;">Cargar Archivo</button>
+                    </center>
+                  </div>
+                  </div>
+        </div>
+        <div ng-show="versubirsoportes" id="listadosoportesactualizar" style="overflow: auto;max-height: calc(80vh - 260px);"
+        class="col s12 no-padding m-b">
+        <table class="striped table-bordered white">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Documento</th>
+              <th>Nombre Afiliado</th>
+              <th>Parantezco</th>
+              <th>Tipo Archivo</th>
+              <th class="center-align">Eliminar Soporte</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="cursor-pointer hover-blue" ng-repeat="file in uploadedFiles">
+              <td>{{($index+1)}}</td>
+              <td>{{file.tipo_documento}}-{{file.numero_doc}}</td>
+              <td>{{file.nombreafi}}</td>
+              <td>{{file.parentezco}}</td>
+              <td>{{file.tipo}}</td>
+              <td class="center-align">
+                <i ng-click="eliminarsoportetemp(file);"
+                  title="Borrar soporte Cargar" class="icon-trash-empty red-text" style="font-size: 16px;"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- <div ng-show="versubirsoportes" class="center-align col no-padding s12">
+        <input tabindex="56" ng-click="subirdocumentos()" class="border-radius-none btn btn-small center-align blue cursor-pointer m-b" type="button" value="Cargar soporte">
+      </div> -->
+    
+   </div>
+   </div>
+         <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@fin control de cambio yordis@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@fin control de cambio Yordis@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+      </div>
+      <div ng-hide="editarafiliacion" class="center-align col no-padding s12">
+        <input ng-click="aprobar()" class="border-radius-none btn center-align cursor-pointer green m-t m-r"
+          ng-if="historial.detalle>-1 && (historial.estado_detalle=='A')" type="button" value="Aprobar">
+        <input ng-click="cerrar_detalle()" class="border-radius-none btn center-align cursor-pointer orange m-t m-r m-l"
+          ng-if="historial.detalle>-1 && (historial.estado_detalle=='S' || historial.estado_detalle=='R' || historial.estado_detalle=='N' || historial.estado_detalle=='P'|| historial.estado_detalle=='Z')"
+          type="button" value="CERRAR DETALLE DE LA SOLICITUD">
+        <input ng-click="rechazar()" class="border-radius-none btn center-align cursor-pointer red m-t m-l"
+          ng-if="historial.detalle>-1 && (historial.estado_detalle=='A')" type="button" value="Rechazar">
+      </div>
+      <div ng-show="editarafiliacion" class="center-align col no-padding s12">
+        <input ng-click="actualizarcotizante()" class="border-radius-none btn center-align cursor-pointer green m-t m-r"
+          type="button" value="Actualizar">
+        <input ng-click="permitireditaratras()" class="border-radius-none btn center-align cursor-pointer orange m-t m-r m-l"
+          type="button" value="CERRAR DETALLE ACTUALIZAR">
+      </div>
+    </div>
+    <!-- ------------------------------------------------------------------------------------------------------------- tab.2 -->
+    <form ng-submit="formulario_afiliacion.$valid && insertar_solicitud()" ng-show="tabs.select==2"
+      id="formulario_afiliacion" name="formulario_afiliacion">
+      <div class="card col s12 no-padding margin">
+        <div class="card-action col s12 m12 l12">
+          <blockquote class="grey-new default-border default-color">
+            <b>Tipo de Afiliado</b>
+          </blockquote>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <select tabindex="1" ng-model="afiliacion.condicion"
+              ng-change="lista_tipo_cotizante(afiliacion.condicion);afiliacion.tipo_cotizante=''"
+              id="afiliacion_condicion" class="select-default-new input-out-new" style="box-shadow: none;" required>
+              <option value="" disabled>SELECCIONAR</option>
+              <option ng-repeat="con in afiliacion.options_condicion" value="{{con.codigo}}">
+                {{con.nombre}}
+              </option>
+            </select>
+            <label for="afiliacion_condicion">Condición de la persona *</label>
+          </div>
+          <!-- CNVU -->
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <input tabindex="2" ng-model="afiliacion.tipo_cotizante" list="afiliacion_tipo_cotizante"
+              name="afiliacion_tipo_cotizante" type="text"
+              class="m-l border-none input-text-new input-w-p input-out-new w-100 white" style="box-shadow: none;"
+              ng-change="lista_tipo_cotizante_change(afiliacion.tipo_cotizante)"
+              ng-keydown="($event.keyCode == 9 && formatcurrency(2, afiliacion.tipo_cotizante, afiliacion.options_tipo_cotizante))"
+              required autocomplete="off">
+            <datalist id="afiliacion_tipo_cotizante">
+              <option ng-repeat="tc in afiliacion.options_tipo_cotizante | orderBy:'nombre'" data-codigo="{{tc.codigo}}"
+                value="{{tc.codigo}}-{{tc.nombre}}"></option>
+            </datalist>
+            <label for="afiliacion_tipo_cotizante">Tipo de cotizante *</label>
+          </div>
+          <!-- CNVU -->
+
+          <i class="col m-t s12 m6 l6">Tenga en cuenta que el tipo de
+            cotizante que seleccione en esta opción debe coincidir con el tipo de cotizante que elija al
+            momento de realizar los aportes a travéz de PILA
+          </i>
+        </div>
+        <div ng-if="afiliacion.vista_aportante==true" class="card-action col s12 m12 l12">
+          <blockquote class="grey-new default-border default-color">
+            <b>Datos del Aportante</b>
+            <i ng-click="limpiar_datos_aportante();" class="icon-erase right cursor-pointer m-r"
+              title="Limpiar campos del aportante"> Limpiar</i>
+          </blockquote>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <select tabindex="3" ng-model="afiliacion.tipo_documento_aportante_v"
+              id="afiliacion_tipo_documento_aportante_v" class="select-default-new input-out-new"
+              style="box-shadow: none;" ng-required="afiliacion.vista_aportante==true"  ng-blur="validarLongitudTipoDoc_2()">
+              <option value="" disabled>SELECCIONAR</option>
+          
+              <option value="{{x.CODIGO}}" ng-selected="x.CODIGO == afiliacion.tipo_documento_aportante_v"
+                ng-repeat="x in Tipos_Documentos2 | orderBy:'NOMBRE'">{{x.NOMBRE}}</option>
+            </select>
+            <label for="afiliacion_tipo_documento_aportante_v">Tipo documento *</label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b align-items-center">
+            <input tabindex="4" ng-keydown="($event.keyCode == 9) && buscar_aportante()"
+              ng-model="afiliacion.numero_documento_aportante_v" id="afiliacion_numero_documento_aportante_v"
+              type="number" autocomplete="new-text"
+              class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+              placeholder="Tabular [↹]" ng-required="afiliacion.vista_aportante==true"
+              ng-blur="validarLongitudTipoDoc_2()"
+              >
+            <label for="afiliacion_numero_documento_aportante_v">Número de documento *</label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <input tabindex="5" ng-model="afiliacion.nombre_aportante"
+              ng-change="afiliacion.nombre_aportante=afiliacion.nombre_aportante.toUpperCase()"
+              id="afiliacion_nombre_aportante" type="text" autocomplete="new-text"
+              class="margin border-none input-text-new input-w-p input-out-new w-100 m-l" disabled>
+            <label for="afiliacion_nombre_aportante">Nombre o razón social</label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+     
+            <input tabindex="6" ng-model="afiliacion.direccion_aportante" id="afiliacion_direccion_aportante"
+              type="text" autocomplete="new-text"
+              class="margin border-none input-text-new input-w-p input-out-new w-100 m-l" disabled>
+            <label for="afiliacion_direccion_aportante">Dirección</label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <input tabindex="7" ng-model="afiliacion.departamento_aportante" type="text"
+              class="margin border-none input-text-new input-w-p input-out-new w-100" style="box-shadow: none;"
+              disabled>
+        
+            <label for="afiliacion_departamento_aportante">Departamento</label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <input tabindex="8" ng-model="afiliacion.municipio_aportante" type="text"
+              class="margin border-none input-text-new input-w-p input-out-new w-100 m-l" style="box-shadow: none;"
+              disabled>
+          
+            <label for="afiliacion_municipio_aportante">Municipio</label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <input tabindex="9" ng-model="afiliacion.telefono_aportante" id="afiliacion_telefono_aportante"
+              name="afiliacion_telefono_aportante" type="number" autocomplete="new-text" min="0"
+              class="margin border-none input-text-new input-w-p input-out-new w-100 m-l" disabled maxlength="10">
+            <label for="afiliacion_telefono_aportante">Teléfono Celular <small class="maxlength-new"
+                style="color:red;">(Max 10
+                caracteres)</small></label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <input tabindex="10" ng-model="afiliacion.correo_aportante" id="afiliacion_correo_aportante" type="email"
+              autocomplete="new-text" class="margin border-none input-text-new input-w-p input-out-new w-100 m-l"
+              disabled>
+            <label for="afiliacion_correo_aportante">Correo electrónico</label>
+          </div>
+        </div>
+        <div class="card-action col s12 m12 l12">
+          <blockquote class="grey-new default-border default-color">
+            <b>Datos del Cotizante</b>
+            <i ng-click="limpiar_datos_cotizante();" class="icon-erase right cursor-pointer m-r"
+              title="Limpiar campos del cotizante"> Limpiar</i>
+          </blockquote>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <select tabindex="11" ng-model="afiliacion.tipo_documento" id="afiliacion_tipo_documento"
+              class="select-default-new input-out-new" style="box-shadow: none;" ng-blur="validarLongitudTipoDoc()" required>
+              <option value="" disabled>SELECCIONAR</option>
+              <option value="{{x.CODIGO}}" ng-selected="x.CODIGO == afiliacion.tipo_documento"
+                ng-disabled="(x.CODIGO=='')?true:false" ng-repeat="x in Tipos_Documentos | orderBy:'NOMBRE'">
+                {{x.NOMBRE}}</option>
+            </select>
+            <label for="afiliacion_tipo_documento">Tipo documento *</label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <input tabindex="12" ng-keydown="($event.keyCode == 9) && buscar_cotizante()"
+              ng-model="afiliacion.numero_documento" id="afiliacion_numero_documento" type="number"
+              autocomplete="new-text" class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+              placeholder="Tabular [↹]" ng-blur="validarLongitudTipoDoc()" maxlength="20" required>
+            <label for="afiliacion_numero_documento">Número de documento *</label>
+          </div>
+          <div class="col s12 no-padding">
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="13" ng-model="afiliacion.primer_nombre"
+                ng-change="afiliacion.primer_nombre=afiliacion.primer_nombre.toUpperCase()"
+                id="afiliacion_primer_nombre" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100" required>
+              <label for="afiliacion_primer_nombre">Primer Nombre *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="14" ng-model="afiliacion.segundo_nombre"
+                ng-change="afiliacion.segundo_nombre=afiliacion.segundo_nombre.toUpperCase()"
+                id="afiliacion_segundo_nombre" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l">
+              <label for="afiliacion_segundo_nombre">Segundo Nombre</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="15" ng-model="afiliacion.primer_apellido"
+                ng-change="afiliacion.primer_apellido=afiliacion.primer_apellido.toUpperCase()"
+                id="afiliacion_primer_apellido" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" required>
+              <label for="afiliacion_primer_apellido">Primer Apellido *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="16" ng-model="afiliacion.segundo_apellido"
+                ng-change="afiliacion.segundo_apellido=afiliacion.segundo_apellido.toUpperCase()"
+                id="afiliacion_segundo_apellido" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l">
+              <label for="afiliacion_segundo_apellido">Segundo Apellido *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="17" ng-model="afiliacion.fecha_nacimiento" id="afiliacion_fecha_nacimiento" type="date"
+                class="border-none input-date-new input-out-new white" required>
+              <label for="afiliacion_fecha_nacimiento">Fecha de Nacimiento *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="18" ng-model="afiliacion.sexo" id="afiliacion_sexo_cotizante"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option value="F">F-Femenino</option>
+                <option value="M">M-Masculino</option>
+              </select>
+              <label for="afiliacion_sexo_cotizante">Sexo *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="20" ng-model="afiliacion.estado_civil_cotizante" id="afiliacion_estado_civil_cotizante"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-repeat="td in afiliacion.options_estado_civil_cotizante | orderBy:'NOMBRE'"
+                  value="{{td.CODIGO}}" ng-disabled="(td.CODIGO=='')?true:false">{{td.NOMBRE}}
+                </option>
+              </select>
+              <label for="afiliacion_estado_civil_cotizante">Estado Civil *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+    
+              <input tabindex="21" ng-model="afiliacion.direccion_cotizante" ng-keydown="($event.keyCode == 13) && generar_direccion('afiliacion','direccion_cotizante','afiliacion_barrio_cotizante');
+                ($event.keyCode == 9) && formatcurrency(6)"
+                ng-click="generar_direccion('afiliacion','direccion_cotizante','afiliacion_barrio_cotizante')"
+                onkeypress="return false;" id="afiliacion_direccion_cotizante" type="text" autocomplete="new-text"
+                class="border-none input-text-new input-w-p input-out-new w-100 white m-l" placeholder="Enter [↲]"
+                required>
+             
+              <label for="afiliacion_direccion_cotizante">Dirección *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="22" ng-model="afiliacion.barrio_cotizante" id="afiliacion_barrio_cotizante"
+                name="afiliacion_barrio_cotizante" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 white" required>
+              <label for="afiliacion_barrio_cotizante">Barrio *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="23" ng-model="afiliacion.telefono_f_cotizante" id="afiliacion_telefono_f_cotizante"
+                type="number" autocomplete="new-text" min="0"
+                class="m-l border-none white input-text-new input-w-p input-out-new w-100"
+                onKeyPress="if(this.value.length==7) return false;" maxlength="7">
+              <label for="afiliacion_telefono_f_cotizante">Teléfono Fijo <small class="maxlength-new"
+                  style="color:red;">(Max
+                  7
+                  caracteres)</small></label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="24" ng-model="afiliacion.telefono_c_cotizante" id="afiliacion_telefono_c_cotizante"
+                name="afiliacion_telefono_c_cotizante" type="number" autocomplete="new-text" min="0"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" required
+                onKeyPress="if(this.value.length==10) return false;" maxlength="10">
+              <label for="afiliacion_telefono_c_cotizante">Teléfono Celular * <small class="maxlength-new"
+                  style="color:red;">(Max
+                  10
+                  caracteres)</small></label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="25" ng-model="afiliacion.correo_cotizante" id="afiliacion_correo_cotizante" type="email"
+                autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l">
+              <label for="afiliacion_correo_cotizante">Correo electrónico</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="26" ng-model="afiliacion.departamento_cotizante" list="afiliacion_departamento_cotizante"
+                name="afiliacion_departamento_cotizante" type="text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 white" style="box-shadow: none;"
+                ng-change="lista_municipio_change(afiliacion.departamento_cotizante,'options_municipio_cotizante', 'municipio_cotizante');afiliacion.municipio_cotizante=''"
+                ng-keydown="($event.keyCode == 9 && formatcurrency(3, afiliacion.departamento_cotizante, afiliacion.options_departamento_cotizante))"
+                required>
+              <datalist id="afiliacion_departamento_cotizante">
+                <option ng-repeat="td in afiliacion.options_departamento_cotizante | orderBy:'NOMBRE'"
+                  data-codigo="{{td.CODIGO}}" value="{{td.CODIGO}}-{{td.NOMBRE}}"></option>
+              </datalist>
+              <label for="afiliacion_departamento_cotizante">Departamento *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="27" ng-model="afiliacion.municipio_cotizante" list="afiliacion_municipio_cotizante"
+                name="afiliacion_municipio_cotizante" type="text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 white m-l"
+                style="box-shadow: none;"
+                ng-change="lista_ips_change('afiliacion',afiliacion.municipio_cotizante,'options_ips_atencion','ips_atencion');afiliacion.ips_atencion=''"
+                ng-keydown="($event.keyCode == 9 && formatcurrency(3, afiliacion.municipio_cotizante, afiliacion.options_municipio_cotizante))"
+                required>
+              <datalist id="afiliacion_municipio_cotizante">
+                <option ng-repeat="td in afiliacion.options_municipio_cotizante | orderBy:'NOMBRE'"
+                  data-codigo="{{td.CODIGO}}" value="{{td.CODIGO}}-{{td.NOMBRE}}-[{{td.COBERTURA}}]">
+                </option>
+              </datalist>
+              <label for="afiliacion_municipio_cotizante">Municipio *</label>
+            </div>
+          
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="28" ng-model="afiliacion.zona_cotizante" id="afiliacion_zona_cotizante"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option value="R">R-Rural</option>
+                <option value="U">U-Urbana</option>
+              </select>
+              <label for="afiliacion_zona_cotizante">Zona *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="29" ng-model="afiliacion.ips_atencion" id="afiliacion_ips_atencion"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;"
+                ng-required="afiliacion.options_ips_atencion.length>0">
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-repeat="td in afiliacion.options_ips_atencion | orderBy:'NOMBRE'" value="{{td.CODIGO}}"
+                  ng-disabled="(td.CODIGO=='')?true:false">{{td.CODIGO}}-{{td.NOMBRE}}
+                </option>
+              </select>
+              <label for="afiliacion_ips_atencion">IPS de atención *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="30" ng-model="afiliacion.penciones_afp" list="afiliacion_penciones_afp"
+                name="afiliacion_penciones_afp" type="text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 white" style="box-shadow: none;"
+                ng-keydown="($event.keyCode == 9 && formatcurrency(5, afiliacion.penciones_afp, afiliacion.options_penciones_afp))"
+                required>
+             
+              <datalist id="afiliacion_penciones_afp">
+                <option ng-repeat="td in afiliacion.options_penciones_afp | orderBy:'NOMBRE'"
+                  data-codigo="{{td.CODIGO}}" value="{{td.NOMBRE}}" ng-disabled="(td.CODIGO=='')?true:false"></option>
+              </datalist>
+              <label for="afiliacion_penciones_afp">Fondo de Pensiones AFP *</label>
+            </div>
+            <!-- CNVU -->
+            <div ng-if="afiliacion.condicion!='P'" class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="31" ng-model="afiliacion.riesgos_laborales_arl" list="afiliacion_riesgos_laborales_arl"
+                name="afiliacion_riesgos_laborales_arl" type="text"
+                class="m-l border-none input-text-new input-w-p input-out-new w-100 white" style="box-shadow: none;"
+                ng-keydown="($event.keyCode == 9 && afiliacion.condicion == 'E' && formatcurrency(3, afiliacion.riesgos_laborales_arl, afiliacion.options_riesgos_laborales_arl))"
+                ng-required="afiliacion.condicion=='E'" required>
+              <datalist id="afiliacion_riesgos_laborales_arl">
+                <option ng-repeat="td in afiliacion.options_riesgos_laborales_arl | orderBy:'NOMBRE'"
+                  data-codigo="{{td.CODIGO}}" value="{{td.CODIGO}}-{{td.NOMBRE}}"
+                  ng-disabled="(td.CODIGO=='')?true:false"></option>
+              </datalist>
+              <label for="afiliacion_riesgos_laborales_arl">Riesgos Laborales ARL *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="32" ng-model="afiliacion.salario_basico_mensual" id="afiliacion_salario_basico_mensual"
+                type="text" autocomplete="new-text" min="0" ng-keyup="formatcurrency(1)" ng-change="formatcurrency(7)"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" required>
+              <label for="afiliacion_salario_basico_mensual">Salario Basico Mensual *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="33" ng-model="afiliacion.fecha_ingreso" id="afiliacion_fecha_ingreso"
+                ng-change="validadion_2()" type="date" class="border-none input-date-new input-out-new white m-l"
+                required>
+              <label for="afiliacion_fecha_ingreso">Fecha Ingreso *</label>
+            </div>
+            <div ng-if="afiliacion.condicion=='I'" class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="34" ng-model="afiliacion.actividad" list="afiliacion_actividad"
+                name="afiliacion_actividad" type="text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 white" style="box-shadow: none;"
+                ng-required="afiliacion.condicion=='I'">
+              <datalist id="afiliacion_actividad">
+                <option ng-repeat="td in afiliacion.options_actividad | orderBy:'NOMBRE'" data-codigo="{{td.CODIGO}}"
+                  value="{{td.CODIGO}} - {{td.NOMBRE}}"></option>
+              </datalist>
+              <label for="afiliacion_actividad">Actividad Economica</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <div class="m-l d-flex justify-content-around align-items-center w-100">
+                <div>
+                  <input tabindex="35" ng-model="afiliacion.vista_beneficiario" id="SI_B_2"
+                    name="group_radio_beceficiarios_2" type="radio" value="SI" required />
+                  <label for="SI_B_2" style="height: 25px!important;">SI</label>
+                </div>
+                <div>
+                  <input tabindex="35" ng-model="afiliacion.vista_beneficiario" id="NO_B_2"
+                    name="group_radio_beceficiarios_2" type="radio" value="NO" required />
+                  <label for="NO_B_2" style="height: 25px!important;">NO</label>
+                </div>
+              </div>
+              <label for="afiliacion_vista_beneficiario">Incluir Beneficiarios:</label>
+            </div>
+          </div>
+        </div>
+        <div ng-if="afiliacion.vista_beneficiario=='SI'" class="card-action col s12 m12 l12">
+          <blockquote class="grey-new default-border default-color">
+            <b>Datos del Beneficiario</b>
+            <i ng-click="limpiar_datos_beneficiario();" class="icon-erase right cursor-pointer m-r"
+              title="Limpiar campos del beneficiario">
+              Limpiar</i>
+          </blockquote>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <select tabindex="36" ng-model="afiliacion.tipo_documento_beneficiario"
+              id="afiliacion_tipo_documento_beneficiario" class="select-default-new input-out-new"
+              style="box-shadow: none;"
+              ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0"
+              ng-blur="validarLongitudTipoDoc_Ben()">
+              <option value="" disabled>SELECCIONAR</option>
+              <option value="{{x.CODIGO}}" ng-selected="x.CODIGO == afiliacion.tipo_documento_beneficiario"
+                ng-repeat="x in Tipos_Documentos | orderBy:'NOMBRE'">{{x.NOMBRE}}</option>
+            </select>
+            <label for="afiliacion_tipo_documento_beneficiario">Tipo documento *</label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b align-items-center">
+            <input tabindex="37" ng-keydown="($event.keyCode == 9) && buscar_beneficiario()"
+              ng-model="afiliacion.numero_documento_beneficiario" id="afiliacion_numero_documento_beneficiario"
+              type="text" autocomplete="new-text"
+              class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+              placeholder="Tabular [↹]"
+              ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0"
+              maxlength="15"
+              ng-blur="validarLongitudTipoDoc_Ben()">
+            <label for="afiliacion_numero_documento_beneficiario">Número de documento *</label>
+          </div>
+          <!--  -->
+          <div class="col s12 m3 l3 no-padding label-new m-b"
+            ng-show="afiliacion.tipo_documento_beneficiario == 'RC' && afiliacion.numero_documento_beneficiario.length > 5">
+            <select tabindex="366" ng-model="afiliacion.tipo_documento_beneficiario_CN"
+              id="afiliacion_tipo_documento_beneficiario_CN" class="select-default-new input-out-new m-l"
+              style="box-shadow: none;"
+              ng-required="afiliacion.tipo_documento_beneficiario == 'RC' && afiliacion.numero_documento_beneficiario.length > 5"
+              >
+              <option value="CN">CERTIFICADO NACIDO VIVO</option>
+            </select>
+            <label for="afiliacion_tipo_documento_beneficiario_CN">Tipo documento CN*</label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b align-items-center"
+            ng-show="afiliacion.tipo_documento_beneficiario == 'RC' && afiliacion.numero_documento_beneficiario.length > 5">
+            <input tabindex="377" ng-model="afiliacion.numero_documento_beneficiario_CN"
+              id="afiliacion_numero_documento_beneficiario_CN" type="text" autocomplete="new-text"
+              class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+              ng-required="afiliacion.tipo_documento_beneficiario == 'RC' && afiliacion.numero_documento_beneficiario.length > 5"
+              numbers-only maxlength="14" ng-keydown="Event_key($event)"
+              >
+            <label for="afiliacion_numero_documento_beneficiario_CN">Número de documento CN*</label>
+          </div>
+          <div class="col s12 no-padding m-b">
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="38" ng-model="afiliacion.primer_nombre_beneficiario"
+                ng-change="afiliacion.primer_nombre_beneficiario=afiliacion.primer_nombre_beneficiario.toUpperCase()"
+                id="afiliacion_primer_nombre_beneficiario" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0">
+              <label for="afiliacion_primer_nombre_beneficiario">Primer Nombre *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="39" ng-model="afiliacion.segundo_nombre_beneficiario"
+                ng-change="afiliacion.segundo_nombre_beneficiario=afiliacion.segundo_nombre_beneficiario.toUpperCase()"
+                id="afiliacion_segundo_nombre_beneficiario" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l">
+              <label for="afiliacion_segundo_nombre_beneficiario">Segundo Nombre</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="40" ng-model="afiliacion.primer_apellido_beneficiario"
+                ng-change="afiliacion.primer_apellido_beneficiario=afiliacion.primer_apellido_beneficiario.toUpperCase()"
+                id="afiliacion_primer_apellido_beneficiario" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0">
+              <label for="afiliacion_primer_apellido_beneficiario">Primer Apellido *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="41" ng-model="afiliacion.segundo_apellido_beneficiario"
+                ng-change="afiliacion.segundo_apellido_beneficiario=afiliacion.segundo_apellido_beneficiario.toUpperCase()"
+                id="afiliacion_segundo_apellido_beneficiario" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0">
+              <label for="afiliacion_segundo_apellido_beneficiario">Segundo Apellido *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="42" ng-model="afiliacion.fecha_nacimiento_beneficiario"
+                id="afiliacion_fecha_nacimiento_beneficiario" type="date"
+                class="border-none input-date-new input-out-new white"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0">
+              <label for="afiliacion_fecha_nacimiento_beneficiario">Fecha de Nacimiento *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="43" ng-model="afiliacion.sexo_beneficiario" id="afiliacion_sexo_beneficiario"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0">
+                <option value="" disabled>SELECCIONAR</option>
+                <option value="F">F-Femenino</option>
+                <option value="M">M-Masculino</option>
+              </select>
+              <label for="afiliacion_sexo_beneficiario">Sexo *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <div class="d-flex justify-content-around align-items-center w-100 m-l">
+                <div>
+                  <input tabindex="44" ng-model="afiliacion.ubicacion_beneficiario"
+                    ng-change="ubicacion_beneficiario(afiliacion.ubicacion_beneficiario)" id="SI_U_2"
+                    name="group_radio_ubicacion_beneficiario_2" type="radio" value="SI"
+                    ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0" />
+                  <label for="SI_U_2" style="height: 25px!important;">SI</label>
+                </div>
+                <div>
+                  <input tabindex="44" ng-model="afiliacion.ubicacion_beneficiario"
+                    ng-change="ubicacion_beneficiario(afiliacion.ubicacion_beneficiario)" id="NO_U_2"
+                    name="group_radio_ubicacion_beneficiario_2" type="radio" value="NO" />
+                  <label for="NO_U_2" style="height: 25px!important;">NO</label>
+                </div>
+              </div>
+              <label for="afiliacion_ubicacion_beneficiario">Misma ubicacion del cotizante:</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="45" ng-model="afiliacion.direccion_beneficiario"
+                ng-keydown="($event.keyCode == 13) && generar_direccion('afiliacion','direccion_beneficiario','afiliacion_barrio_beneficiario')"
+                onkeypress="return false;" id="afiliacion_direccion_beneficiario" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 white m-l"
+                placeholder="Enter [↲]" ng-disabled="afiliacion.ubicacion_beneficiario=='SI'"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0">
+              <label for="afiliacion_direccion_beneficiario">Dirección *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="46" ng-model="afiliacion.barrio_beneficiario" id="afiliacion_barrio_beneficiario"
+                name="afiliacion_barrio_beneficiario" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 white"
+                ng-disabled="afiliacion.ubicacion_beneficiario=='SI'"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0">
+              <label for="afiliacion_barrio_beneficiario">Barrio *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="47" ng-model="afiliacion.departamento_beneficiario"
+                list="afiliacion_departamento_beneficiario" name="afiliacion_departamento_beneficiario" type="text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 white m-l"
+                style="box-shadow: none;" ng-disabled="afiliacion.ubicacion_beneficiario=='SI'"
+                ng-change="lista_municipio_change(afiliacion.departamento_beneficiario, 'options_municipio_beneficiario', 'municipio_beneficiario');afiliacion.municipio_beneficiario=''"
+                ng-keydown="($event.keyCode == 9 && formatcurrency(3, afiliacion.departamento_beneficiario, afiliacion.options_departamento_beneficiario))"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0">
+              <datalist id="afiliacion_departamento_beneficiario">
+                <option ng-repeat="td in afiliacion.options_departamento_beneficiario | orderBy:'NOMBRE'"
+                  data-codigo="{{td.CODIGO}}" value="{{td.CODIGO}}-{{td.NOMBRE}}">
+                </option>
+              </datalist>
+              <label for="afiliacion_departamento_beneficiario">Departamento *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="48" ng-model="afiliacion.municipio_beneficiario" list="afiliacion_municipio_beneficiario"
+                name="afiliacion_municipio_beneficiario" type="text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 white m-l"
+                style="box-shadow: none;" ng-disabled="afiliacion.ubicacion_beneficiario=='SI'"
+                ng-change="lista_ips_change('afiliacion',afiliacion.municipio_beneficiario,'options_ips_atencion_beneficiario','ips_atencion_beneficiario');afiliacion.ips_atencion_beneficiario=''"
+                ng-keydown="($event.keyCode == 9 && formatcurrency(3, afiliacion.municipio_beneficiario, afiliacion.options_municipio_beneficiario))"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0">
+              <datalist id="afiliacion_municipio_beneficiario">
+                <option ng-repeat="td in afiliacion.options_municipio_beneficiario | orderBy:'NOMBRE'"
+                  data-codigo="{{td.CODIGO}}" value="{{td.CODIGO}}-{{td.NOMBRE}}-[{{td.COBERTURA}}]">
+                </option>
+              </datalist>
+              <label for="afiliacion_municipio_beneficiario">Municipio *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="49" ng-model="afiliacion.zona_beneficiario" id="afiliacion_zona_beneficiario"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;"
+                ng-disabled="afiliacion.ubicacion_beneficiario=='SI'"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0">
+                <option value="" disabled>SELECCIONAR</option>
+                <option value="R">R-Rural</option>
+                <option value="U">U-Urbana</option>
+              </select>
+              <label for="afiliacion_zona_beneficiario">Zona *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="50" ng-model="afiliacion.ips_atencion_beneficiario"
+                id="afiliacion_ips_atencion_beneficiario" class="select-default-new input-out-new"
+                style="box-shadow: none;"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0">
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-selected="td.CODIGO == afiliacion.ips_atencion_beneficiario"
+                  ng-repeat="td in afiliacion.options_ips_atencion_beneficiario | orderBy:'NOMBRE'"
+                  value="{{td.CODIGO}}" ng-disabled="(td.CODIGO=='')?true:false">{{td.CODIGO}}-{{td.NOMBRE}}
+                </option>
+              </select>
+              <label for="afiliacion_ips_atencion_beneficiario">IPS de atención *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="51" ng-model="afiliacion.telefono_f_beneficiario" id="afiliacion_telefono_f_beneficiario"
+                type="number" autocomplete="new-text" min="0"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0"
+                onKeyPress="if(this.value.length==7) return false;" maxlength="7">
+              <label for="afiliacion_telefono_f_beneficiario">Teléfono Fijo <small class="maxlength-new"
+                  style="color:red;">(Max
+                  7
+                  caracteres)</small></label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="52" ng-model="afiliacion.telefono_c_beneficiario" id="afiliacion_telefono_c_beneficiario"
+                type="number" autocomplete="new-text" min="0"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0"
+                onKeyPress="if(this.value.length==10) return false;" maxlength="10">
+              <label for="afiliacion_telefono_c_beneficiario">Teléfono Celular * <small class="maxlength-new"
+                  style="color:red;">(Max 10
+                  caracteres)</small></label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="53" ng-model="afiliacion.correo_beneficiario" id="afiliacion_correo_beneficiario"
+                type="email" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0">
+              <label for="afiliacion_correo_beneficiario">Correo electrónico *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="54" ng-model="afiliacion.eps_anterior" list="afiliacion_eps_anterior"
+                name="afiliacion_eps_anterior" type="text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 white" style="box-shadow: none;"
+                ng-keydown="($event.keyCode == 9 && formatcurrency(4, afiliacion.eps_anterior, afiliacion.options_eps_anterior))"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0"
+                ng-blur="validarLongitudTipoDoc_Ben_CN()">
+              <datalist id="afiliacion_eps_anterior">
+                <option ng-repeat="td in afiliacion.options_eps_anterior | orderBy:'NOMBRE'" data-codigo="{{td.CODIGO}}"
+                  value="{{td.CODIGO}}-{{td.NOMBRE}}">
+                </option>
+              </datalist>
+              <label for="afiliacion_eps_anterior">EPS Anterior *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="55" ng-model="afiliacion.parentesco" list="afiliacion_parentesco"
+                name="afiliacion_parentesco" type="text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 white m-l"
+                style="box-shadow: none;" ng-change="lista_parentesco_change(afiliacion.parentesco)"
+                ng-keydown="($event.keyCode == 9 && formatcurrency(3, afiliacion.parentesco, afiliacion.options_parentesco))"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0">
+              <datalist id="afiliacion_parentesco">
+                <option ng-repeat="td in afiliacion.options_parentesco | orderBy:'NOMBRE'" data-codigo="{{td.CODIGO}}"
+                  value="{{td.CODIGO}}-{{td.NOMBRE}}" ng-disabled="(td.CODIGO=='')?true:false">
+                </option>
+              </datalist>
+              <label for="afiliacion_parentesco">Parentesco *</label>
+            </div>
+            <div ng-if="afiliacion.hde_fecha_sgsss" class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="56" ng-model="afiliacion.fecha_sgsss" id="afiliacion_fecha_sgsss" type="date"
+                class="margin border-none input-date-new input-out-new white m-l"
+                ng-required="afiliacion.vista_beneficiario=='SI' && afiliacion.listado_beneficiarios.length==0">
+              <label for="afiliacion_fecha_sgsss">Fecha SGSSS *</label>
+            </div>
+            <!-- CNVU -->
+          </div>
+          <div class="center-align col no-padding s12">
+            <input tabindex="56" ng-click="incluir_beneficiario()"
+              class="border-radius-none btn btn-small center-align blue cursor-pointer m-b" type="button"
+              value="Incluir Beneficiario">
+          </div>
+          <div class="card-action border-none col s12 m12 l12" style="padding: 9px 0px 0px;">
+            <blockquote class="grey-new default-border default-color">
+              <b>Listado de Beneficiarios - ({{afiliacion.listado_beneficiarios.length}})</b>
+            </blockquote>
+            <div id="listado_beneficiarios" style="overflow: auto;max-height: calc(80vh - 260px);"
+              class="col s12 no-padding m-b">
+              <table class="striped table-bordered white">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Tipo DOC</th>
+                    <th>Documento</th>
+                    <th>Consecutivo Bdua</th>
+                    <th>Primer Apellido</th>
+                    <th>Segundo Apellido</th>
+                    <th>Primer Nombre</th>
+                    <th>Segundo Nombre</th>
+                    <th>Nacimiento</th>
+                    <th>Sexo</th>
+                    <th>Direccion</th>
+                    <th>Barrio</th>
+                    <th>Departamento</th>
+                    <th>Municipio</th>
+                    <th>Zona</th>
+                    <th>IPS Atencion</th>
+                    <th>Telefono</th>
+                    <th>Celular</th>
+                    <th>Correo</th>
+                    <th>EPS Anterior</th>
+                    <th>Parentesco</th>
+                    <th>Fecha SGSSS</th>
+                    <th colspan="2">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-if="afiliacion.listado_beneficiarios.length==0">
+                    <td colspan="23">
+                      No hay beneficiarios agregados para mostrar.
+                    </td>
+                  </tr>
+                  <tr class="cursor-pointer hover-blue" ng-repeat="beneficiario in afiliacion.listado_beneficiarios">
+                    <td>{{($index+1)}}</td>
+                    <td>{{beneficiario.tipo_documento}}</td>
+                    <td>{{beneficiario.documento}}</td>
+                    <td>{{beneficiario.consecutivo_bdua}}</td>
+                    <td>{{beneficiario.primer_apellido}}</td>
+                    <td>{{beneficiario.segundo_apellido}}</td>
+                    <td>{{beneficiario.primer_nombre}}</td>
+                    <td>{{beneficiario.segundo_nombre}}</td>
+                    <td>{{beneficiario.fecha_nacimiento}}</td>
+                    <td>{{beneficiario.sexo}}</td>
+                    <td>{{beneficiario.direccion}}</td>
+                    <td>{{beneficiario.barrio}}</td>
+                    <td>{{beneficiario.departamento}}</td>
+                    <td>{{beneficiario.ubicacion}}</td>
+                    <td>{{beneficiario.zona}}</td>
+                    <td>{{beneficiario.ips}}</td>
+                    <td>{{beneficiario.telefono}}</td>
+                    <td>{{beneficiario.celular}}</td>
+                    <td>{{beneficiario.correo}}</td>
+                    <td>{{beneficiario.eps_ant}}</td>
+                    <td>{{beneficiario.parentesco}}</td>
+                    <td>{{beneficiario.fecha_sgsss}}</td>
+                    <td class="center-align">
+                      <i ng-click="editar_beneficiario(beneficiario);" title="Editar Beneficiario"
+                        class="icon-edit blue-text" style="font-size: 16px;"></i>
+                    </td>
+                    <td class="center-align">
+                      <i ng-click="borrar_beneficiario(beneficiario);borrar_soportes_beneficiario(beneficiario);"
+                        title="Borrar Beneficiario" class="icon-trash-empty red-text" style="font-size: 16px;"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-action border-none col s12 m12 l12" style="padding: 9px 0px 0px;">
+            <blockquote class="grey-new default-border default-color">
+              <b>Listado de Soportes de Beneficiarios - ({{afiliacion.listado_soportes_beneficiarios.length}})</b>
+            </blockquote>
+            <div id="listado_soportes_beneficiarios" style="overflow: auto;max-height: calc(80vh - 260px);"
+              class="col s12 no-padding m-b">
+              <table class="striped table-bordered white">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Documento</th>
+                    <th>Nombre</th>
+                    <th class="center-align">Vista previa</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-if="afiliacion.listado_soportes_beneficiarios.length==0">
+                    <td colspan="4" class="center-align">
+                      No hay soportes para mostrar.
+                    </td>
+                  </tr>
+                  <tr class="cursor-pointer hover-blue"
+                    ng-repeat="soporte in afiliacion.listado_soportes_beneficiarios">
+                    <td>{{($index+1)}}</td>
+                    <td>{{soporte.documento}}</td>
+                    <td>{{soporte.nombre_archivo}}</td>
+                    <td class="center-align">
+                      <i ng-click="descargar_archivo(soporte.ruta_archivo, soporte.FTP);" title="Vista previa"
+                        class="icon-file-pdf red-text" style="font-size: 16px;"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card-action col s12 m12 l12">
+          <blockquote class="grey-new default-border default-color">
+            <b>Elegir los Soportes del Cotizante</b>
+          </blockquote>
+          <i class="center-align col m-b s12" style="padding: 0 15em;">Señor usuario, debe diligenciar los soportes
+            requeridos para realizar la solicitud, de clic en la opción CARGAR SOPORTES y adjunte todos los documentos
+            obligatorios para finalizar el proceso.
+          </i>
+          <div class="col s12 center-align">
+            <input tabindex="57" ng-click="cargar_soportes()"
+              class="border-radius-none btn btn-small center-align cursor-pointer blue m-b" type="button"
+              value="Cargar los Soportes del Cotizante">
+          </div>
+          <div class="card-action border-none col s12 m12 l12" style="padding: 9px 0px 0px;">
+            <blockquote class="grey-new default-border default-color">
+              <b>Listado de Soportes del Cotizante - ({{afiliacion.listado_soportes.length}})</b>
+            </blockquote>
+            <div id="listado_soportes" style="overflow: auto;max-height: calc(80vh - 260px);"
+              class="col s12 no-padding m-b">
+              <table class="striped table-bordered white">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th class="center-align">Vista previa</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-if="afiliacion.listado_soportes.length==0">
+                    <td colspan="3" class="center-align">
+                      No hay soportes para mostrar.
+                    </td>
+                  </tr>
+                  <tr class="cursor-pointer hover-blue" ng-repeat="soporte in afiliacion.listado_soportes">
+                    <td>{{($index+1)}}</td>
+                    <td>{{soporte.nombre}}</td>
+                    <td class="center-align">
+                      <i ng-click="descargar_archivo(soporte.ruta, soporte.FTP);" title="Vista previa"
+                        class="icon-file-pdf red-text" style="font-size: 16px;"></i>
+                    </td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="center-align col no-padding s12">
+        <input tabindex="58" class="border-radius-none btn center-align cursor-pointer green m-t" type="submit"
+          value="Crear solicitud de Afiliación">
+      </div>
+    </form>
+    <!-- ------------------------------------------------------------------------------------------------------------- tab.3 -->
+    <form ng-submit="formulario_afi_beneficiarios.$valid && insertar_solicitud_inclucion_beneficiarios()"
+      ng-show="tabs.select==3" id="formulario_afi_beneficiarios" name="formulario_afi_beneficiarios">
+      <div class="card col s12 no-padding margin">
+        <div class="card-action col s12 m12 l12">
+          <blockquote class="grey-new default-border default-color">
+            <b>Datos del Cotizante</b>
+            <i ng-click="limpiar_datos_cotizante_inclusion();" class="icon-erase right cursor-pointer m-r"
+              title="Limpiar campos del cotizante"> Limpiar</i>
+          </blockquote>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <select tabindex="11" ng-model="afi_beneficiarios.tipo_documento" id="afi_beneficiarios_tipo_documento"
+              class="select-default-new input-out-new" style="box-shadow: none;" required>
+              <option value="" disabled>SELECCIONAR</option>
+              <option ng-repeat="td in afi_beneficiarios.options_tipo_documento" value="{{td.Codigo}}"
+                ng-disabled="(td.Codigo=='')?true:false">{{td.Nombre}}
+              </option>
+            </select>
+            <label for="afi_beneficiarios_tipo_documento">Tipo documento</label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <input tabindex="12" ng-keydown="($event.keyCode == 9) && buscar_cotizante_beneficiario()"
+              ng-model="afi_beneficiarios.numero_documento" id="afi_beneficiarios_numero_documento" type="number"
+              autocomplete="new-text" class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+              placeholder="Tabular [↹]" required>
+            <label for="afi_beneficiarios_numero_documento">Número de documento</label>
+          </div>
+          <div class="col s12 no-padding">
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_beneficiarios.primer_nombre"
+                ng-change="afi_beneficiarios.primer_nombre=afi_beneficiarios.primer_nombre.toUpperCase()"
+                id="afi_beneficiarios_primer_nombre" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100" disabled>
+              <label for="afi_beneficiarios_primer_nombre">Primer Nombre</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_beneficiarios.segundo_nombre"
+                ng-change="afi_beneficiarios.segundo_nombre=afi_beneficiarios.segundo_nombre.toUpperCase()"
+                id="afi_beneficiarios_segundo_nombre" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 m-l" disabled>
+              <label for="afi_beneficiarios_segundo_nombre">Segundo Nombre</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_beneficiarios.primer_apellido"
+                ng-change="afi_beneficiarios.primer_apellido=afi_beneficiarios.primer_apellido.toUpperCase()"
+                id="afi_beneficiarios_primer_apellido" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 m-l" disabled>
+              <label for="afi_beneficiarios_primer_apellido">Primer Apellido</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_beneficiarios.segundo_apellido"
+                ng-change="afi_beneficiarios.segundo_apellido=afi_beneficiarios.segundo_apellido.toUpperCase()"
+                id="afi_beneficiarios_segundo_apellido" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 m-l" disabled>
+              <label for="afi_beneficiarios_segundo_apellido">Segundo Apellido</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_beneficiarios.fecha_nacimiento" id="afi_beneficiarios_fecha_nacimiento" type="date"
+                class="border-none input-date-new input-out-new" disabled>
+              <label for="afi_beneficiarios_fecha_nacimiento">Fecha de Nacimiento</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <div class="m-l d-flex justify-content-around align-items-center w-100">
+                <div>
+                  <input ng-model="afi_beneficiarios.sexo" id="M_3" name="group_radio_sexo_3" type="radio" value="M"
+                    disabled />
+                  <label for="M_3" style="height: 25px!important;">Masculino</label>
+                </div>
+                <div>
+                  <input ng-model="afi_beneficiarios.sexo" id="F_3" name="group_radio_sexo_3" type="radio" value="F"
+                    disabled />
+                  <label for="F_3" style="height: 25px!important;">Femenino</label>
+                </div>
+              </div>
+              <label for="afi_beneficiarios_sexo">Sexo:</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_beneficiarios.departamento_nombre" id="afi_beneficiarios_departamento_nombre"
+                type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 m-l" disabled>
+              <label for="afi_beneficiarios_departamento_nombre">Departamento</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_beneficiarios.municipio_nombre" id="afi_beneficiarios_municipio_nombre" type="text"
+                autocomplete="new-text" class="margin border-none input-text-new input-w-p input-out-new w-100 m-l"
+                disabled>
+              <label for="afi_beneficiarios_municipio_nombre">Municipio</label>
+            </div>
+          </div>
+        </div>
+        <div class="card-action col s12 m12 l12">
+          <blockquote class="grey-new default-border default-color">
+            <b>Datos del Beneficiario</b>
+            <i ng-click="limpiar_datos_beneficiario_inclusion();" class="icon-erase right cursor-pointer m-r"
+              title="Limpiar campos del beneficiario">
+              Limpiar</i>
+          </blockquote>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <select tabindex="34" ng-model="afi_beneficiarios.tipo_documento_beneficiario"
+              id="afi_beneficiarios_tipo_documento_beneficiario" class="select-default-new input-out-new"
+              style="box-shadow: none;" ng-required="afi_beneficiarios.listado_beneficiarios.length==0">
+              <option value="" disabled>SELECCIONAR</option>
+              <option ng-repeat="otc in afi_beneficiarios.options_tipo_documento" value="{{otc.Codigo}}">
+                {{otc.Nombre}}</option>
+            </select>
+            <label for="afi_beneficiarios_tipo_documento_beneficiario">Tipo documento *</label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b align-items-center">
+            <input tabindex="35" ng-keydown="($event.keyCode == 9) && buscar_afi_beneficiario()"
+              ng-model="afi_beneficiarios.numero_documento_beneficiario"
+              id="afi_beneficiarios_numero_documento_beneficiario" type="number" autocomplete="new-text"
+              class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+              placeholder="Tabular [↹]" ng-required="afi_beneficiarios.listado_beneficiarios.length==0">
+            <label for="afi_beneficiarios_numero_documento_beneficiario">Número de documento *</label>
+          </div>
+          <div class="col s12 m6 l6 no-padding label-new m-b"></div>
+          <div class="col s12 no-padding m-b">
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="36" ng-model="afi_beneficiarios.primer_nombre_beneficiario"
+                ng-change="afi_beneficiarios.primer_nombre_beneficiario=afi_beneficiarios.primer_nombre_beneficiario.toUpperCase()"
+                id="afi_beneficiarios_primer_nombre_beneficiario" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100"
+                ng-required="afi_beneficiarios.listado_beneficiarios.length==0">
+              <label for="afi_beneficiarios_primer_nombre_beneficiario">Primer Nombre *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="37" ng-model="afi_beneficiarios.segundo_nombre_beneficiario"
+                ng-change="afi_beneficiarios.segundo_nombre_beneficiario=afi_beneficiarios.segundo_nombre_beneficiario.toUpperCase()"
+                id="afi_beneficiarios_segundo_nombre_beneficiario" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l">
+              <label for="afi_beneficiarios_segundo_nombre_beneficiario">Segundo Nombre</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="38" ng-model="afi_beneficiarios.primer_apellido_beneficiario"
+                ng-change="afi_beneficiarios.primer_apellido_beneficiario=afi_beneficiarios.primer_apellido_beneficiario.toUpperCase()"
+                id="afi_beneficiarios_primer_apellido_beneficiario" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                ng-required="afi_beneficiarios.listado_beneficiarios.length==0">
+              <label for="afi_beneficiarios_primer_apellido_beneficiario">Primer Apellido *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="39" ng-model="afi_beneficiarios.segundo_apellido_beneficiario"
+                ng-change="afi_beneficiarios.segundo_apellido_beneficiario=afi_beneficiarios.segundo_apellido_beneficiario.toUpperCase()"
+                id="afi_beneficiarios_segundo_apellido_beneficiario" type="text" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                ng-required="afi_beneficiarios.listado_beneficiarios.length==0">
+              <label for="afi_beneficiarios_segundo_apellido_beneficiario">Segundo Apellido *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="40" ng-model="afi_beneficiarios.fecha_nacimiento_beneficiario"
+                id="afi_beneficiarios_fecha_nacimiento_beneficiario" type="date"
+                class="border-none input-date-new input-out-new white"
+                ng-required="afi_beneficiarios.listado_beneficiarios.length==0">
+              <label for="afi_beneficiarios_fecha_nacimiento_beneficiario">Fecha de Nacimiento *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="41" ng-model="afi_beneficiarios.sexo_beneficiario" id="afi_beneficiarios_sexo"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;">
+                <option value="" disabled>SELECCIONAR</option>
+                <option value="F">F-Femenino</option>
+                <option value="M">M-Masculino</option>
+              </select>
+              <label for="afi_beneficiarios_sexo">Sexo *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <div class="d-flex justify-content-around align-items-center w-100 m-l">
+                <div>
+                  <input tabindex="42" ng-model="afi_beneficiarios.ubicacion_beneficiario"
+                    ng-change="ubicacion_beneficiario_inclusion(afi_beneficiarios.ubicacion_beneficiario)" id="SI_U_3"
+                    name="group_radio_ubicacion_beneficiario_3" type="radio" value="SI"
+                    ng-required="afi_beneficiarios.listado_beneficiarios.length==0" />
+                  <label for="SI_U_3" style="height: 25px!important;">SI</label>
+                </div>
+                <div>
+                  <input tabindex="42" ng-model="afi_beneficiarios.ubicacion_beneficiario"
+                    ng-change="ubicacion_beneficiario(afi_beneficiarios.ubicacion_beneficiario)" id="NO_U_3"
+                    name="group_radio_ubicacion_beneficiario_3" type="radio" value="NO" />
+                  <label for="NO_U_3" style="height: 25px!important;">NO</label>
+                </div>
+              </div>
+              <label for="afi_beneficiarios_ubicacion_beneficiario">Misma ubicacion del cotizante:</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="43" ng-model="afi_beneficiarios.direccion_beneficiario"
+                ng-click="generar_direccion('afi_beneficiarios','direccion_beneficiario','afi_beneficiarios_barrio_beneficiario')"
+                ng-keydown="($event.keyCode == 13) && generar_direccion('afi_beneficiarios','direccion_beneficiario','afi_beneficiarios_barrio_beneficiario')"
+                onkeypress="return false;" id="afi_beneficiarios_direccion_beneficiario" type="text"
+                autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 white m-l"
+                placeholder="Enter [↲]" ng-disabled="afi_beneficiarios.ubicacion_beneficiario=='SI'"
+                ng-required="afi_beneficiarios.listado_beneficiarios.length==0">
+              <label for="afi_beneficiarios_direccion_beneficiario">Dirección *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="44" ng-model="afi_beneficiarios.barrio_beneficiario"
+                id="afi_beneficiarios_barrio_beneficiario" name="afi_beneficiarios_barrio_beneficiario" type="text"
+                autocomplete="new-text" class="margin border-none input-text-new input-w-p input-out-new w-100 white"
+                ng-disabled="afiliacion.ubicacion_beneficiario=='SI'" required>
+              <label for="afi_beneficiarios_barrio_beneficiario">Barrio *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="45" ng-model="afi_beneficiarios.departamento_beneficiario"
+                list="afi_beneficiarios_departamento_beneficiario" name="afi_beneficiarios_departamento_beneficiario"
+                type="text" class="margin border-none input-text-new input-w-p input-out-new w-100 white m-l"
+                style="box-shadow: none;" ng-disabled="afi_beneficiarios.ubicacion_beneficiario=='SI'"
+                ng-change="lista_municipio_change_beneficiario(afi_beneficiarios.departamento_beneficiario, 'options_municipio_beneficiario', 'municipio_beneficiario');afi_beneficiarios.municipio_beneficiario=''"
+                ng-keydown="($event.keyCode == 9 && formatcurrency(3, afi_beneficiarios.departamento_beneficiario, afi_beneficiarios.options_departamento_aportante))"
+                ng-required="afi_beneficiarios.listado_beneficiarios.length==0">
+              <datalist id="afi_beneficiarios_departamento_beneficiario">
+                <option ng-repeat="td in afi_beneficiarios.options_departamento_aportante | orderBy:'NOMBRE'"
+                  data-codigo="{{td.CODIGO}}" value="{{td.CODIGO}}-{{td.NOMBRE}}">
+                </option>
+              </datalist>
+              <label for="afi_beneficiarios_departamento_beneficiario">Departamento *
+                {{afi_beneficiarios.departamento_beneficiario.CODIGO}}</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="46" ng-model="afi_beneficiarios.municipio_beneficiario"
+                list="afi_beneficiarios_municipio_beneficiario" name="afi_beneficiarios_municipio_beneficiario"
+                type="text" class="margin border-none input-text-new input-w-p input-out-new w-100 white m-l"
+                style="box-shadow: none;" ng-disabled="afi_beneficiarios.ubicacion_beneficiario=='SI'"
+                ng-change="lista_ips_change('afi_beneficiarios',afi_beneficiarios.municipio_beneficiario,'options_ips_atencion_beneficiario','ips_atencion_beneficiario');afi_beneficiarios.ips_atencion_beneficiario=''"
+                ng-keydown="($event.keyCode == 9 && formatcurrency(3, afi_beneficiarios.municipio_beneficiario, afi_beneficiarios.options_municipio_beneficiario))"
+                ng-required="afi_beneficiarios.listado_beneficiarios.length==0">
+              <datalist id="afi_beneficiarios_municipio_beneficiario">
+                <option ng-repeat="td in afi_beneficiarios.options_municipio_beneficiario | orderBy:'NOMBRE'"
+                  data-codigo="{{td.CODIGO}}" value="{{td.CODIGO}}-{{td.NOMBRE}}-[{{td.COBERTURA}}]">
+                </option>
+              </datalist>
+              <label for="afi_beneficiarios_municipio_beneficiario">Municipio *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="47" ng-model="afi_beneficiarios.zona_beneficiario" id="afi_beneficiarios_zona"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;">
+                <option value="" disabled>SELECCIONAR</option>
+                <option value="R">R-Rural</option>
+                <option value="U">U-Urbana</option>
+              </select>
+              <label for="afi_beneficiarios_zona">Zona *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="48" ng-model="afi_beneficiarios.ips_atencion_beneficiario"
+                id="afi_beneficiarios_ips_atencion_beneficiario" class="margin select-default-new input-out-new"
+                style="box-shadow: none;" ng-required="afi_beneficiarios.listado_beneficiarios.length==0">
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-selected="td.CODIGO == afi_beneficiarios.ips_atencion_beneficiario"
+                  ng-repeat="td in afi_beneficiarios.options_ips_atencion_beneficiario | orderBy:'NOMBRE'"
+                  value="{{td.CODIGO}}" ng-disabled="(td.CODIGO=='')?true:false">{{td.CODIGO}}-{{td.NOMBRE}}
+                </option>
+              </select>
+              <label for="afi_beneficiarios_ips_atencion_beneficiario">IPS de atención *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="49" ng-model="afi_beneficiarios.eps_anterior" list="afi_beneficiarios_eps_anterior"
+                name="afi_beneficiarios_eps_anterior" type="text"
+                class="border-none input-text-new input-w-p input-out-new w-100 white m-l" style="box-shadow: none;"
+                ng-keydown="($event.keyCode == 9 && formatcurrency(4, afi_beneficiarios.eps_anterior, afi_beneficiarios.options_eps_anterior))"
+                ng-required="afi_beneficiarios.listado_beneficiarios.length==0">
+              <datalist id="afi_beneficiarios_eps_anterior">
+                <option ng-repeat="td in afi_beneficiarios.options_eps_anterior | orderBy:'NOMBRE'"
+                  data-codigo="{{td.CODIGO}}" value="{{td.CODIGO}}-{{td.NOMBRE}}">
+                </option>
+              </datalist>
+              <label for="afi_beneficiarios_eps_anterior">EPS Anterior *</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="50" ng-model="afi_beneficiarios.telefono_f_beneficiario"
+                id="afi_beneficiarios_telefono_f_beneficiario" type="number" autocomplete="new-text" min="0"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                ng-required="afi_beneficiarios.listado_beneficiarios.length==0"
+                onKeyPress="if(this.value.length==7) return false;" maxlength="7">
+              <label for="afi_beneficiarios_telefono_f_beneficiario">Teléfono Fijo <small class="maxlength-new"
+                  style="color:red;">(Max
+                  7
+                  caracteres)</small></label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="51" ng-model="afi_beneficiarios.telefono_c_beneficiario"
+                id="afi_beneficiarios_telefono_c_beneficiario" type="number" autocomplete="new-text" min="0"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+                ng-required="afi_beneficiarios.listado_beneficiarios.length==0"
+                onKeyPress="if(this.value.length==10) return false;" maxlength="10">
+              <label for="afi_beneficiarios_telefono_c_beneficiario">Teléfono Celular * <small class="maxlength-new"
+                  style="color:red;">(Max
+                  10
+                  caracteres)</small></label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="52" ng-model="afi_beneficiarios.correo_beneficiario"
+                id="afi_beneficiarios_correo_beneficiario" type="email" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100"
+                ng-required="afi_beneficiarios.listado_beneficiarios.length==0">
+              <label for="afi_beneficiarios_correo_beneficiario">Correo electrónico *</label>
+            </div>
+            <!-- CNVU -->
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="53" ng-model="afi_beneficiarios.parentesco" list="afi_beneficiarios_parentesco"
+                name="afi_beneficiarios_parentesco" type="text"
+                class="border-none input-text-new input-w-p input-out-new w-100 white m-l" style="box-shadow: none;"
+                ng-keydown="($event.keyCode == 9 && formatcurrency(3, afi_beneficiarios.parentesco, afi_beneficiarios.options_parentesco))"
+                ng-required="afiempresa.vista_beneficiario=='SI' && afiempresa.listado_beneficiarios.length==0">
+              <datalist id="afi_beneficiarios_parentesco">
+                <option ng-repeat="td in afi_beneficiarios.options_parentesco | orderBy:'NOMBRE'"
+                  data-codigo="{{td.CODIGO}}" value="{{td.CODIGO}}-{{td.NOMBRE}}"
+                  ng-disabled="(td.CODIGO=='')?true:false">
+                </option>
+              </datalist>
+              <label for="afiliacion_parentesco">Parentesco *</label>
+            </div>
+            <div ng-if="afi_beneficiarios.hde_fecha_sgsss" class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="54" ng-model="afi_beneficiarios.fecha_sgsss" id="afi_beneficiarios_fecha_sgsss"
+                type="date" class="margin border-none input-date-new input-out-new white m-l"
+                ng-required="afi_beneficiarios.listado_beneficiarios.length==0">
+              <label for="afiliacion_fecha_sgsss">Fecha SGSSS *</label>
+            </div>
+            <!-- CNVU -->
+          </div>
+          <div class="center-align col no-padding s12">
+            <input tabindex="53" ng-click="incluir_beneficiario_inclusion()"
+              class="border-radius-none btn btn-small center-align blue cursor-pointer m-b" type="button"
+              value="Incluir Beneficiario">
+          </div>
+          <div class="card-action border-none col s12 m12 l12" style="padding: 9px 0px 0px;">
+            <blockquote class="grey-new default-border default-color">
+              <b>Listado de Beneficiarios ({{afi_beneficiarios.listado_beneficiarios.length}})</b>
+            </blockquote>
+            <div id="listado_beneficiarios_inclusion" style="overflow: auto;max-height: calc(80vh - 260px);"
+              class="col s12 no-padding m-b">
+              <table class="striped table-bordered white">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Tipo DOC</th>
+                    <th>Documento</th>
+                    <th>Consecutivo Bdua</th>
+                    <th>Primer Apellido</th>
+                    <th>Segundo Apellido</th>
+                    <th>Primer Nombre</th>
+                    <th>Segundo Nombre</th>
+                    <th>Nacimiento</th>
+                    <th>Sexo</th>
+                    <th>Direccion</th>
+                    <th>Barrio</th>
+                    <th>Departamento</th>
+                    <th>Municipio</th>
+                    <th>Zona</th>
+                    <th>IPS Atencion</th>
+                    <th>Telefono</th>
+                    <th>Celular</th>
+                    <th>Correo</th>
+                    <th>EPS Anterior</th>
+                    <th>Parentesco</th>
+                    <th colspan="2">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-if="afi_beneficiarios.listado_beneficiarios.length==0">
+                    <td colspan="22">
+                      No hay beneficiarios agregados para mostrar.
+                    </td>
+                  </tr>
+                  <tr class="cursor-pointer hover-blue"
+                    ng-repeat="beneficiario in afi_beneficiarios.listado_beneficiarios">
+                    <td>{{($index+1)}}</td>
+                    <td>{{beneficiario.tipo_documento}}</td>
+                    <td>{{beneficiario.documento}}</td>
+                    <td>{{beneficiario.consecutivo_bdua}}</td>
+                    <td>{{beneficiario.primer_nombre}}</td>
+                    <td>{{beneficiario.segundo_nombre}}</td>
+                    <td>{{beneficiario.primer_apellido}}</td>
+                    <td>{{beneficiario.segundo_apellido}}</td>
+                    <td>{{beneficiario.fecha_nacimiento}}</td>
+                    <td>{{beneficiario.sexo}}</td>
+                    <td>{{beneficiario.direccion}}</td>
+                    <td>{{beneficiario.barrio}}</td>
+                    <td>{{beneficiario.departamento}}</td>
+                    <td>{{beneficiario.ubicacion}}</td>
+                    <td>{{beneficiario.zona}}</td>
+                    <td>{{beneficiario.ips}}</td>
+                    <td>{{beneficiario.telefono}}</td>
+                    <td>{{beneficiario.celular}}</td>
+                    <td>{{beneficiario.correo}}</td>
+                    <td>{{beneficiario.eps_ant}}</td>
+                    <td>{{beneficiario.parentesco}}</td>
+                    <td class="center-align">
+                      <i ng-click="editar_beneficiario_inclusion(beneficiario);" title="Editar Beneficiario"
+                        class="icon-edit blue-text" style="font-size: 16px;"></i>
+                    </td>
+                    <td class="center-align">
+                      <i ng-click="borrar_beneficiario_inclusion(beneficiario);" title="Borrar Beneficiario"
+                        class="icon-trash-empty red-text" style="font-size: 16px;"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card-action border-none col s12 m12 l12" style="padding: 9px 0px 0px;">
+          <blockquote class="grey-new default-border default-color">
+            <b>Listado de Soportes de Beneficiarios - ({{afiliacion.listado_soportes_beneficiarios.length}})</b>
+          </blockquote>
+          <div id="listado_soportes_beneficiarios_inclusion" style="overflow: auto;max-height: calc(80vh - 260px);"
+            class="col s12 no-padding m-b">
+            <table class="striped table-bordered white">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Documento</th>
+                  <th>Nombre</th>
+                  <th class="center-align">Vista previa</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-if="afiliacion.listado_soportes_beneficiarios.length==0">
+                  <td colspan="4" class="center-align">
+                    No hay soportes para mostrar.
+                  </td>
+                </tr>
+                <tr class="cursor-pointer hover-blue" ng-repeat="soporte in afiliacion.listado_soportes_beneficiarios">
+                  <td>{{($index+1)}}</td>
+                  <td>{{soporte.documento}}</td>
+                  <td>{{soporte.nombre_archivo}}</td>
+                  <td class="center-align">
+                    <i ng-click="descargar_archivo(soporte.ruta_archivo, soporte.FTP);" title="Vista previa"
+                      class="icon-file-pdf red-text" style="font-size: 16px;"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="center-align col no-padding s12">
+        <input tabindex="55" class="border-radius-none btn center-align cursor-pointer green m-t" type="submit"
+          value="Crear solicitud de inclusión de beneficiarios">
+      </div>
+    </form>
+    <!-- ------------------------------------------------------------------------------------------------------------- tab.4 -->
+    <form ng-submit="formulario_cambio_ips.$valid && inserta_solicitud_cambio_ips()" ng-show="tabs.select==4"
+      id="formulario_cambio_ips" name="formulario_cambio_ips">
+      <div class="card col s12 no-padding margin">
+        <div class="card-action col s12 m12 l12">
+          <blockquote class="grey-new default-border default-color">
+            <b>Cambio de IPS de Atención del Cotizante</b>
+          </blockquote>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <select tabindex="3" ng-model="afi_cambio_ips.tipo_documento" id="afi_cambio_ips_tipo_documento"
+              class="select-default-new input-out-new" style="box-shadow: none;" required>
+              <option value="" disabled>SELECCIONAR</option>
+              <option ng-repeat="otc in afi_cambio_ips.options_tipo_documento" value="{{otc.Codigo}}">
+                {{otc.Nombre}}</option>
+            </select>
+            <label for="afi_cambio_ips_tipo_documento">Tipo documento</label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b align-items-center">
+            <input tabindex="4" ng-keydown="($event.keyCode == 9) && buscar_cotizante_cambio_ips()"
+              ng-model="afi_cambio_ips.numero_documento" id="afi_cambio_ips_numero_documento" type="number"
+              autocomplete="new-text" min="0"
+              class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+              placeholder="Tabular [↹]" required maxlength="10">
+            <label for="afi_cambio_ips_numero_documento">Número de documento <small class="maxlength-new"
+                style="color:red;">(Max 10
+                caracteres)</small></label>
+          </div>
+          <div class="col s12 m6 l6 no-padding label-new m-b"></div>
+          <div class="col s12 no-padding">
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_cambio_ips.primer_nombre"
+                ng-change="afi_cambio_ips.primer_nombre=afi_cambio_ips.primer_nombre.toUpperCase()"
+                id="afi_cambio_ips_primer_nombre" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100" disabled>
+              <label for="afi_cambio_ips_primer_nombre">Primer Nombre</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_cambio_ips.segundo_nombre"
+                ng-change="afi_cambio_ips.segundo_nombre=afi_cambio_ips.segundo_nombre.toUpperCase()"
+                id="afi_cambio_ips_segundo_nombre" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 m-l" disabled>
+              <label for="afi_cambio_ips_segundo_nombre">Segundo Nombre</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_cambio_ips.primer_apellido"
+                ng-change="afi_cambio_ips.primer_apellido=afi_cambio_ips.primer_apellido.toUpperCase()"
+                id="afi_cambio_ips_primer_apellido" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 m-l" disabled>
+              <label for="afi_cambio_ips_primer_apellido">Primer Apellido</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_cambio_ips.segundo_apellido"
+                ng-change="afi_cambio_ips.segundo_apellido=afi_cambio_ips.segundo_apellido.toUpperCase()"
+                id="afi_cambio_ips_segundo_apellido" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 m-l" disabled>
+              <label for="afi_cambio_ips_segundo_apellido">Segundo Apellido</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_cambio_ips.fecha_nacimiento" id="afi_cambio_ips_fecha_nacimiento" type="date"
+                class="border-none input-date-new input-out-new" disabled>
+              <label for="afi_cambio_ips_fecha_nacimiento">Fecha de Nacimiento</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <div class="m-l d-flex justify-content-around align-items-center w-100">
+                <div>
+                  <input ng-model="afi_cambio_ips.sexo" id="M_4" name="group_radio_sexo_4" type="radio" value="M"
+                    disabled />
+                  <label for="M_4" style="height: 25px!important;">Masculino</label>
+                </div>
+                <div>
+                  <input ng-model="afi_cambio_ips.sexo" id="F_4" name="group_radio_sexo_4" type="radio" value="F"
+                    disabled />
+                  <label for="F_4" style="height: 25px!important;">Femenino</label>
+                </div>
+              </div>
+              <label for="afi_cambio_ips_sexo">Sexo:</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_cambio_ips.departamento_nombre" id="afi_cambio_ips_departamento_nombre" type="text"
+                autocomplete="new-text" class="margin border-none input-text-new input-w-p input-out-new w-100 m-l"
+                disabled>
+              <label for="afi_cambio_ips_departamento_nombre">Departamento</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_cambio_ips.municipio_nombre" id="afi_cambio_ips_municipio_nombre" type="text"
+                autocomplete="new-text" class="margin border-none input-text-new input-w-p input-out-new w-100 m-l"
+                disabled>
+              <label for="afi_cambio_ips_municipio_nombre">Municipio</label>
+            </div>
+          </div>
+          <div class="col s12 m12 l12 no-padding label-new m-b h-auto">
+            <div id="listado_beneficiarios_cambio_ips" style="overflow: auto;max-height: calc(80vh - 260px);"
+              class="col s12 no-padding m-b">
+              <table class="striped table-bordered white">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Tipo DOC</th>
+                    <th>Documento</th>
+                    <th>Primer Nombre</th>
+                    <th>Segundo Nombre</th>
+                    <th>Primer Apellido</th>
+                    <th>Segundo Apellido</th>
+                    <th>Nacimiento</th>
+                    <th>Sexo</th>
+                    <th class="center-align">Agregar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-if="afi_cambio_ips.listado_beneficiarios.length==0">
+                    <td colspan="10">
+                      No hay beneficiarios para mostrar.
+                    </td>
+                  </tr>
+                  <tr ng-repeat="beneficiario in afi_cambio_ips.listado_beneficiarios">
+                    <td>{{($index+1)}}</td>
+                    <td>{{beneficiario.TIPO_DOCUMENTO_BEN}}</td>
+                    <td>{{beneficiario.DOCUMENTO_BEN}}</td>
+                    <td>{{beneficiario.PRIMER_NOMBRE}}</td>
+                    <td>{{beneficiario.SEGUNDO_NOMBRE}}</td>
+                    <td>{{beneficiario.PRIMER_APELLIDO}}</td>
+                    <td>{{beneficiario.SEGUNDO_APELLIDO}}</td>
+                    <td>{{beneficiario.FECHA_NACIMIENTO}}</td>
+                    <td>{{beneficiario.GENERO_HOM}}</td>
+                    <td class="center-align" style="line-height: 10px;">
+                      <input type="checkbox" class="filled-in" name="user" id="chk-{{beneficiario.DOCUMENTO_BEN}}"
+                        ng-model="check_user[$index]" ng-value="beneficiario"
+                        ng-change="agregar_beneficiarios($index,check_user[$index],beneficiario);">
+                      <label title="Seleccionar" for="chk-{{beneficiario.DOCUMENTO_BEN}}"
+                        style="padding-left: 20px;height: 20px;transform: scale(.8);"></label>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <label for="afi_cambio_ips_listado_beneficiarios">Listado de beneficiarios</label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <select tabindex="25" ng-model="afi_cambio_ips.ips_atencion" id="afi_cambio_ips_ips_atencion"
+              class="select-default-new input-out-new" style="box-shadow: none;" required>
+              <option value="" disabled>SELECCIONAR</option>
+              <option ng-repeat="td in afi_cambio_ips.options_ips_atencion | orderBy:'NOMBRE'" value="{{td.CODIGO}}"
+                ng-disabled="(td.CODIGO=='')?true:false">{{td.NOMBRE}}
+              </option>
+            </select>
+            <label for="afi_cambio_ips_ips_atencion">IPS de atención</label>
+          </div>
+          <div class="col s12 m3 l3  no-padding label-new m-b">
+            <select tabindex="25" ng-model="afi_cambio_ips.motivo" id="afi_cambio_ips_motivo"
+              class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+              <option value="" disabled>SELECCIONAR</option>
+              <option ng-repeat="td in afi_cambio_ips.options_motivo | orderBy:'NOMBRE'" value="{{td.CODIGO}}"
+                ng-disabled="(td.CODIGO=='')?true:false">{{td.NOMBRE}}
+              </option>
+            </select>
+            <label for="afi_cambio_ips_motivo">Motivo</label>
+          </div>
+          <div class="col s12 m6 l6  no-padding label-new m-b h-auto">
+            <input ng-model="afi_cambio_ips.descripcion" id="afi_cambio_ips_descripcion" type="text"
+              autocomplete="new-text" class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l">
+            <label for="afi_cambio_ips_descripcion">Descripción</label>
+          </div>
+          <i class="center-align col m-b s12" style="padding: 0 5em;">La novedad aplicará a partir del primer
+            día hábil
+            del siguiente mes, donde podrá continuar con la prestación de sus servicios.</i>
+        </div>
+      </div>
+      <div class="center-align col no-padding s12">
+        <input tabindex="54" class="border-radius-none btn center-align cursor-pointer green m-t" type="submit"
+          value="Crear solicitud de Cambio de IPS">
+      </div>
+    </form>
+    <!-- ------------------------------------------------------------------------------------------------------------- tab.5 -->
+    <form ng-submit="formulario_cambio_municipio.$valid && inserta_solicitud_cambio_municipio()"
+      ng-show="tabs.select==5" id="formulario_cambio_municipio" name="formulario_cambio_municipio">
+      <div class="card col s12 no-padding margin">
+        <div class="card-action col s12 m12 l12">
+          <blockquote class="grey-new default-border default-color">
+            <b>Cambio Municipio de Atención del Cotizante</b>
+          </blockquote>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <select tabindex="3" ng-model="afi_cambio_municipio.tipo_documento" id="afi_cambio_municipio_tipo_documento"
+              class="select-default-new input-out-new" style="box-shadow: none;" required>
+              <option value="" disabled>SELECCIONAR</option>
+              <option ng-repeat="otc in afi_cambio_municipio.options_tipo_documento" value="{{otc.Codigo}}">
+                {{otc.Nombre}}</option>
+            </select>
+            <label for="afi_cambio_municipio_tipo_documento">Tipo documento</label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b align-items-center">
+            <input tabindex="4" ng-keydown="($event.keyCode == 9) && buscar_cotizante_cambio_municipio()"
+              ng-model="afi_cambio_municipio.numero_documento" id="afi_cambio_municipio_numero_documento" type="number"
+              autocomplete="new-text" min="0"
+              class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+              placeholder="Tabular [↹]" required maxlength="10">
+            <label for="afi_cambio_municipio_numero_documento">Número de documento <small class="maxlength-new"
+                style="color:red;">(Max 10
+                caracteres)</small></label>
+          </div>
+          <div class="col s12 m6 l6 no-padding label-new m-b"></div>
+          <div class="col s12 no-padding">
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_cambio_municipio.primer_nombre"
+                ng-change="afi_cambio_municipio.primer_nombre=afi_cambio_municipio.primer_nombre.toUpperCase()"
+                id="afi_cambio_municipio_primer_nombre" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100" disabled>
+              <label for="afi_cambio_municipio_primer_nombre">Primer Nombre</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_cambio_municipio.segundo_nombre"
+                ng-change="afi_cambio_municipio.segundo_nombre=afi_cambio_municipio.segundo_nombre.toUpperCase()"
+                id="afi_cambio_municipio_segundo_nombre" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 m-l" disabled>
+              <label for="afi_cambio_municipio_segundo_nombre">Segundo Nombre</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_cambio_municipio.primer_apellido"
+                ng-change="afi_cambio_municipio.primer_apellido=afi_cambio_municipio.primer_apellido.toUpperCase()"
+                id="afi_cambio_municipio_primer_apellido" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 m-l" disabled>
+              <label for="afi_cambio_municipio_primer_apellido">Primer Apellido</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_cambio_municipio.segundo_apellido"
+                ng-change="afi_cambio_municipio.segundo_apellido=afi_cambio_municipio.segundo_apellido.toUpperCase()"
+                id="afi_cambio_municipio_segundo_apellido" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 m-l" disabled>
+              <label for="afi_cambio_municipio_segundo_apellido">Segundo Apellido</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input ng-model="afi_cambio_municipio.fecha_nacimiento" id="afi_cambio_municipio_fecha_nacimiento"
+                type="date" class="border-none input-date-new input-out-new" disabled>
+              <label for="afi_cambio_municipio_fecha_nacimiento">Fecha de Nacimiento</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <div class="m-l d-flex justify-content-around align-items-center w-100">
+                <div>
+                  <input ng-model="afi_cambio_municipio.sexo" id="M_5" name="group_radio_sexo_5" type="radio" value="M"
+                    disabled />
+                  <label for="M_5" style="height: 25px!important;">Masculino</label>
+                </div>
+                <div>
+                  <input ng-model="afi_cambio_municipio.sexo" id="F_5" name="group_radio_sexo_5" type="radio" value="F"
+                    disabled />
+                  <label for="F_5" style="height: 25px!important;">Femenino</label>
+                </div>
+              </div>
+              <label for="afi_cambio_municipio_sexo">Sexo:</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="25" ng-model="afi_cambio_municipio.departamento" id="afi_cambio_municipio_departamento"
+                ng-change="municipio_atencion(afi_cambio_municipio.departamento)"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-repeat="td in afi_cambio_municipio.options_departamento | orderBy:'NOMBRE'"
+                  value="{{td.CODIGO}}" ng-disabled="(td.CODIGO=='')?true:false">{{td.NOMBRE}}
+                </option>
+              </select>
+              <label for="afi_cambio_municipio_departamento">Departamento {{afi_cambio_municipio.departamento}}</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <select tabindex="25" ng-model="afi_cambio_municipio.municipio" id="afi_cambio_municipio_municipio"
+                ng-change="cambiar_ips_atencion(afi_cambio_municipio.municipio)"
+                class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+                <option value="" disabled>SELECCIONAR</option>
+                <option ng-repeat="td in afi_cambio_municipio.options_municipio | orderBy:'NOMBRE'"
+                  value="{{td.CODIGO}}" ng-disabled="(td.CODIGO=='')?true:false">{{td.NOMBRE}}
+                </option>
+              </select>
+              <label for="afi_cambio_municipio_municipio">Municipio {{afi_cambio_municipio.municipio}}</label>
+            </div>
+          </div>
+          <div class="col s12 m12 l12 no-padding label-new m-b h-auto">
+            <div id="listado_beneficiarios_cambio_ips" style="overflow: auto;max-height: calc(80vh - 260px);"
+              class="col s12 no-padding m-b">
+              <table class="striped table-bordered white">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Tipo DOC</th>
+                    <th>Documento</th>
+                    <th>Primer Nombre</th>
+                    <th>Segundo Nombre</th>
+                    <th>Primer Apellido</th>
+                    <th>Segundo Apellido</th>
+                    <th>Nacimiento</th>
+                    <th>Sexo</th>
+                    <th class="center-align">Agregar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-if="afi_cambio_municipio.listado_beneficiarios.length==0">
+                    <td colspan="10">
+                      No hay beneficiarios para mostrar.
+                    </td>
+                  </tr>
+                  <tr ng-repeat="beneficiario in afi_cambio_municipio.listado_beneficiarios">
+                    <td>{{($index+1)}}</td>
+                    <td>{{beneficiario.TIPO_DOCUMENTO_BEN}}</td>
+                    <td>{{beneficiario.DOCUMENTO_BEN}}</td>
+                    <td>{{beneficiario.PRIMER_NOMBRE}}</td>
+                    <td>{{beneficiario.SEGUNDO_NOMBRE}}</td>
+                    <td>{{beneficiario.PRIMER_APELLIDO}}</td>
+                    <td>{{beneficiario.SEGUNDO_APELLIDO}}</td>
+                    <td>{{beneficiario.FECHA_NACIMIENTO}}</td>
+                    <td>{{beneficiario.GENERO_HOM}}</td>
+                    <td class="center-align" style="line-height: 10px;">
+                      <input type="checkbox" class="filled-in" name="user" id="chk2-{{beneficiario.DOCUMENTO_BEN}}"
+                        ng-model="check_user2[$index]" ng-value="beneficiario"
+                        ng-change="agregar_beneficiarios_cambio_municipio($index,check_user2[$index],beneficiario);">
+                      <label title="Seleccionar" for="chk2-{{beneficiario.DOCUMENTO_BEN}}"
+                        style="padding-left: 20px;height: 20px;transform: scale(.8);"></label>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <label for="afi_cambio_municipio_listado_beneficiarios">Listado de beneficiarios</label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <select tabindex="25" ng-model="afi_cambio_municipio.ips_atencion" id="afi_cambio_municipio_ips_atencion"
+              class="select-default-new input-out-new" style="box-shadow: none;" required>
+              <option value="" disabled>SELECCIONAR</option>
+              <option ng-repeat="td in afi_cambio_municipio.options_ips_atencion | orderBy:'NOMBRE'"
+                value="{{td.CODIGO}}" ng-disabled="(td.CODIGO=='')?true:false">{{td.NOMBRE}}
+              </option>
+            </select>
+            <label for="afi_cambio_municipio_ips_atencion">IPS de atención</label>
+          </div>
+          <div class="col s12 m3 l3  no-padding label-new m-b">
+            <select tabindex="25" ng-model="afi_cambio_municipio.motivo" id="afi_cambio_municipio_motivo"
+              class="select-default-new input-out-new m-l" style="box-shadow: none;" required>
+              <option value="" disabled>SELECCIONAR</option>
+              <option ng-repeat="td in afi_cambio_municipio.options_motivo | orderBy:'NOMBRE'" value="{{td.CODIGO}}"
+                ng-disabled="(td.CODIGO=='')?true:false">{{td.NOMBRE}}
+              </option>
+            </select>
+            <label for="afi_cambio_municipio_motivo">Motivo</label>
+          </div>
+          <div class="col s12 m6 l6  no-padding label-new m-b h-auto">
+            <input ng-model="afi_cambio_municipio.descripcion" id="afi_cambio_municipio_descripcion" type="text"
+              autocomplete="new-text" class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l">
+            <label for="afi_cambio_municipio_descripcion">Descripción</label>
+          </div>
+          <i class="center-align col m-b s12" style="padding: 0 5em;">La novedad aplicará a partir del primer
+            día hábil
+            del siguiente mes, donde podrá continuar con la prestación de sus servicios.</i>
+        </div>
+      </div>
+      <div class="center-align col no-padding s12">
+        <input tabindex="54" class="border-radius-none btn center-align cursor-pointer green m-t" type="submit"
+          value="Crear solicitud de Cambio de municipio">
+      </div>
+    </form>
+    <!-- ------------------------------------------------------------------------------------------------------------- tab.6 -->
+    <form ng-submit="formulario_cambio_datos.$valid && inserta_solicitud_actualizar_datos()" ng-show="tabs.select==6"
+      id="formulario_cambio_datos" name="formulario_cambio_datos">
+      <div class="card col s12 no-padding margin">
+        <div class="card-action col s12 m12 l12">
+          <blockquote class="grey-new default-border default-color">
+            <b>Cambio de Direccion, Correo, Telefonos</b>
+            <i ng-click="limpiar_datos_cotizante();" class="icon-erase right cursor-pointer m-r"
+              title="Limpiar campos del cotizante"> Limpiar</i>
+          </blockquote>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <select tabindex="11" ng-model="afi_cambio_datos.tipo_documento" id="afi_cambio_datos_tipo_documento"
+              class="select-default-new input-out-new" style="box-shadow: none;" required>
+              <option value="" disabled>SELECCIONAR</option>
+              <option ng-repeat="td in afi_cambio_datos.options_tipo_documento" value="{{td.Codigo}}"
+                ng-disabled="(td.Codigo=='')?true:false">{{td.Nombre}}
+              </option>
+            </select>
+            <label for="afi_cambio_datos_tipo_documento">Tipo documento</label>
+          </div>
+          <div class="col s12 m3 l3 no-padding label-new m-b">
+            <input tabindex="12" ng-keydown="($event.keyCode == 9) && buscar_cotizante_cambio_datos()"
+              ng-model="afi_cambio_datos.numero_documento" id="afi_cambio_datos_numero_documento" type="number"
+              autocomplete="new-text" min="0"
+              class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l"
+              placeholder="Tabular [↹]" required maxlength="10">
+            <label for="afi_cambio_datos_numero_documento">Número de documento <small class="maxlength-new"
+                style="color:red;">(Max
+                10
+                caracteres)</small></label>
+          </div>
+          <div class="col s12 no-padding">
+            <div class="col s12 m2 l2 no-padding label-new m-b">
+              <input tabindex="26" ng-model="afi_cambio_datos.telefono_f_cotizante"
+                id="afi_cambio_datos_telefono_f_cotizante" type="number" autocomplete="new-text" min="0"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100" required maxlength="7">
+              <label for="afi_cambio_datos_telefono_f_cotizante">Teléfono Fijo <small class="maxlength-new"
+                  style="color:red;">(Max
+                  7
+                  caracteres)</small></label>
+            </div>
+            <div class="col s12 m2 l2 no-padding label-new m-b">
+              <input tabindex="27" ng-model="afi_cambio_datos.telefono_c_cotizante"
+                id="afi_cambio_datos_telefono_c_cotizante" name="afi_cambio_datos_telefono_c_cotizante" type="number"
+                autocomplete="new-text" min="0"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" required
+                maxlength="10">
+              <label for="afi_cambio_datos_telefono_c_cotizante">Teléfono Celular <small class="maxlength-new"
+                  style="color:red;">(Max
+                  10
+                  caracteres)</small></label>
+            </div>
+            <div class="col s12 m2 l2 no-padding label-new m-b">
+              <input tabindex="27" ng-model="afi_cambio_datos.telefono_c2_cotizante"
+                id="afi_cambio_datos_telefono_c2_cotizante" name="afi_cambio_datos_telefono_c2_cotizante" type="number"
+                autocomplete="new-text" min="0"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" required
+                maxlength="10">
+              <label for="afi_cambio_datos_telefono_c2_cotizante">2do Teléfono Celular <small class="maxlength-new"
+                  style="color:red;">(Max
+                  10
+                  caracteres)</small></label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="28" ng-model="afi_cambio_datos.correo_cotizante" id="afi_cambio_datos_correo_cotizante"
+                type="email" autocomplete="new-text"
+                class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l" required>
+              <label for="afi_cambio_datos_correo_cotizante">Correo electrónico</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="21" ng-model="afi_cambio_datos.direccion_cotizante"
+                ng-keydown="($event.keyCode == 9) && generar_direccion('afi_cambio_datos','direccion_cotizante','afiliacion_departamento_cotizante')"
+                onkeypress="return false;" id="afi_cambio_datos_direccion_cotizante" type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 white m-l"
+                placeholder="Tabular [↹]" required>
+              <label for="afi_cambio_datos_direccion_cotizante">Dirección</label>
+            </div>
+            <div class="col s12 m3 l3 no-padding label-new m-b">
+              <input tabindex="21" ng-model="afi_cambio_datos.barrio_cotizante" id="afi_cambio_datos_barrio_cotizante"
+                type="text" autocomplete="new-text"
+                class="margin border-none input-text-new input-w-p input-out-new w-100 white" required>
+              <label for="afi_cambio_datos_barrio_cotizante">Barrio</label>
+            </div>
+            <i class="center-align col m-b s12" style="padding: 0 5em;">Lorem ipsum es el texto que se usa
+              habitualmente en diseño gráfico en demostraciones de tipografías o de borradores de diseño
+              para probar el diseño visual antes de insertar el texto final.</i>
+          </div>
+        </div>
+      </div>
+      <div class="center-align col no-padding s12">
+        <input tabindex="54" class="border-radius-none btn center-align cursor-pointer green m-t" type="submit"
+          value="Crear solicitud de Actualización de datos">
+      </div>
+    </form>
+  </div>
+</div>

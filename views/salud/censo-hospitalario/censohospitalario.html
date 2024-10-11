@@ -1,0 +1,2053 @@
+<div id="pantalla" class="white newdesing">
+  <style>
+    .badge-custom-d {
+      display: inline-block;
+      padding: 5px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      line-height: 1;
+      color: white;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: baseline;
+      border-radius: 5px;
+      background-color: #1a2e63;
+    }
+
+    table thead {
+      position: sticky !important;
+      top: 0 !important;
+      background-color: #f9f9f9;
+      z-index: 1 !important;
+    }
+
+    .select-new-ps {
+      outline: none !important;
+      height: 34px;
+      background-color: white;
+      display: block;
+      border: 1px solid #8a88865e;
+      border-radius: 0.25rem;
+      border-bottom: 1px solid #8a88865e;
+      box-shadow: none !important;
+    }
+
+    .dropdown {
+      display: inline-block;
+      position: relative;
+    }
+
+    #btn {
+      border: none;
+      border-radius: 5px;
+      padding: 8px 24px;
+      font-size: 8px;
+      cursor: pointer;
+    }
+
+    #btn:hover {
+      background-color: #ddd;
+    }
+
+    .button-custom-d {
+      position: relative;
+      overflow: hidden;
+      color: #1a2e63;
+      transition: background 400ms;
+      background-color: white;
+      font-weight: 600;
+      outline: 0;
+      border: 2px solid;
+      border-radius: 0.3rem;
+      box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      padding: 0.2em;
+    }
+
+    /* Ripple effect */
+    .ripple-custom-d {
+      background-position: center;
+      transition: background 0.8s;
+    }
+
+    .button-custom-d:hover {
+      color: white;
+    }
+
+    .ripple-custom-d:hover {
+      background: #1a2e63 radial-gradient(circle, transparent 1%, #1a2e63 1%) center/15000%;
+    }
+
+    .dropdown-options {
+      display: none;
+      position: absolute;
+      overflow: auto;
+      background-color: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0px 0px 20px -8px rgba(4, 38, 233, 0.466);
+      right: 0;
+      z-index: 7;
+      font-size: 12px;
+      width: 236px;
+    }
+
+    .dropdown:hover .dropdown-options {
+      display: block;
+    }
+
+    .dropdown-options a {
+      display: block;
+      color: #000000;
+      padding: 5px;
+      text-decoration: none;
+      padding: 20px 40px;
+    }
+
+    .dropdown-options a:hover {
+      color: #0a0a23;
+      background-color: #ddd;
+      border-radius: 5px;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      /* Ajusta la opacidad según tus preferencias */
+      z-index: 998;
+      /* Asegúrate de que esté detrás del modal */
+    }
+
+    body {
+      overflow: hidden;
+    }
+
+    .modal {
+      position: fixed;
+      /* O relative si prefieres otra posición */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      /* ... otros estilos ... */
+    }
+
+    .center-div-customd {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+
+    .boder-aut-detalle-button {
+      border-right: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+
+    .pointer {
+      display: block;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #f49d16;
+      cursor: pointer;
+      box-shadow: 0 0 0 rgb(244, 157, 22);
+      animation: pulse 2s infinite;
+    }
+
+    .pointer span {
+      color: #fff;
+      text-align: center;
+      display: block;
+      width: 31px;
+      padding: 5px 0px;
+    }
+
+    @-webkit-keyframes pulse {
+      0% {
+        -webkit-box-shadow: 0 0 0 0 rgba(244, 157, 22, 0.4);
+      }
+
+      70% {
+        -webkit-box-shadow: 0 0 0 10px rgba(244, 157, 22, 0);
+      }
+
+      100% {
+        -webkit-box-shadow: 0 0 0 0 rgba(244, 157, 22, 0);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        -moz-box-shadow: 0 0 0 0 rgba(244, 157, 22, 0.4);
+        box-shadow: 0 0 0 0 rgba(244, 157, 22, 0.4);
+      }
+
+      70% {
+        -moz-box-shadow: 0 0 0 10px rgba(244, 157, 22, 0);
+        box-shadow: 0 0 0 10px rgba(244, 157, 22, 0);
+      }
+
+      100% {
+        -moz-box-shadow: 0 0 0 0 rgba(244, 157, 22, 0);
+        box-shadow: 0 0 0 0 rgba(244, 157, 22, 0);
+      }
+    }
+
+    .card_custom_d {
+      display: grid;
+      place-items: center;
+      width: 40vw;
+      max-width: 25vw;
+      height: 30vh;
+      overflow: hidden;
+      border-radius: 0.625rem;
+      box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+      background-color: #2d5786;
+      cursor: pointer;
+      zoom: 75%;
+      color: white;
+      margin-top: 10px;
+    }
+
+    .card_custom_d>* {
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+    }
+
+    .card__background {
+      object-fit: cover;
+      max-width: 100%;
+      height: 100%;
+    }
+
+    .card__content {
+      --flow-space: 0.9375rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-self: flex-end;
+      height: 55%;
+      /* padding: 0% 7.25rem 3.875rem; */
+      background: linear-gradient(180deg,
+          hsla(0, 0%, 0%, 0) 0%,
+          hsla(0, 0%, 0%, 0.3) 10%,
+          hsl(0, 0%, 0%) 100%);
+      padding-left: 100%;
+      padding-right: 100%;
+    }
+
+    .card__content--container {
+      --flow-space: 1.25rem;
+    }
+
+    .card__title {
+      position: relative;
+      width: 24vw;
+      font-size: 23px;
+      text-align: center;
+      width: -moz-fit-content;
+      /* Prefijo necesario para Firefox  */
+    }
+
+    .card__title::after {
+      content: "";
+      font-size: 23px;
+      text-align: center;
+      position: absolute;
+      height: 0.3125rem;
+      width: calc(100% + 24.25rem);
+      bottom: calc((4.25rem - 1.5rem) * -1);
+      left: -11.25rem;
+      background-color: var(--brand-color);
+    }
+
+    .card__button {
+      padding: 10px 28px;
+      width: fit-content;
+      width: -moz-fit-content;
+      /* Prefijo necesario para Firefox  */
+      /* font-weight: bold; */
+      border-radius: 0.45em;
+      border: none;
+      background-color: var(--brand-color);
+      font-family: var(--font-title);
+      font-size: 18px;
+      color: var(--black);
+    }
+
+    .card__button:focus {
+      outline: 2px solid black;
+      outline-offset: -5px;
+    }
+
+    @media (any-hover: hover) and (any-pointer: fine) {
+
+      .card_custom_d:hover,
+      .card_custom_d:focus-within {
+        transform: scale(1.05);
+        transition: transform 500ms ease-in;
+      }
+
+      .card_custom_d:hover .card__background,
+      .card_custom_d:focus-within .card__background {
+        transform: scale(1.3);
+      }
+
+      .card_custom_d:hover .card_content--container> :not(.card_title),
+      .card_custom_d:hover,
+      .card_custom_d:focus-within .card_content--container> :not(.card_title),
+      .card_custom_d:focus-within {
+        opacity: 1;
+        transition: opacity 500ms ease-in;
+        transition-delay: 1000ms;
+      }
+
+      .card_custom_d:hover .card__title::after,
+      .card_custom_d:focus-within .card__title::after {
+        opacity: 1;
+        transform: scaleX(1);
+        transform-origin: left;
+        transition: opacity 500ms ease-in, transform 500ms ease-in;
+        transition-delay: 500ms;
+      }
+
+    }
+
+    .autoscrollable-wrapper {
+      
+      flex-direction: column-reverse;
+    }
+  </style>
+  <div class="row section-header">
+    <ul class="left mailbox-custom-search list-inline"
+      style="width: 100%;display: flex;justify-content: space-between;align-items: center;">
+      <li>
+        <ul class="tabs transparent" style="overflow: hidden">
+          <li class="tab col w-auto">
+            <a ng-click="currentView = 'pendientes'; chg_filtrar('',''); filtro.pendientes = ''" href>Pendientes
+            </a>
+          </li>
+          <!-- <li class="tab col w-auto">
+            <a ng-click="showModals('modalNuevoCenso')" href>Nuevo Censo</a>
+          </li>
+          <li class="tab col w-auto">
+            <a ng-click="currentView = 'reporte'" href>Reporte </a>
+          </li> -->
+          <li class="tab col w-auto" ng-show="rol.Nombre == 'AD'">
+            <a ng-click="currentView = 'admin'" href>Administracion </a>
+          </li>
+          <li class="tab col w-auto" ng-show="prestador != '' && rol.Nombre == 'AD'">
+            <a ng-click="currentView = 'factura'; obtenerCensosCerrados()" href>Cargue Factura</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div style="margin: 10px 5px">
+    <div class="row card-content clearfix">
+      <div class="col s12 m12 l12" style="justify-content: center">
+        <!-- LISTA CENSOS PENDIENTES -->
+        <div class="row" style="margin-bottom: 0px" ng-show="currentView == 'pendientes'">
+          <div ng-show="gestion == 'ver'">
+            <div class="divcardcustom default-linear-gradient border_bottom_LR">
+              <div class="col s12">
+                <div class="text-al divcardcustom2">
+                  <div class="tooltip" style="margin: 0px 25px 0px 5px">
+                    <i class="icon-left-outline cursor-pointer" ng-click="atras('pendientes','prestadores')"></i>
+                    <span class="tooltiptext" style="font-size: 12px; width: 80px; margin-left: -40px">Atras</span>
+                  </div>
+                  <strong class="switch" style="font-weight: 600; font-size: 0.9rem">CENSOS PENDIENTES POR
+                    EVOLUCION</strong>
+                  <div class="col s3 no-padding label-new right"
+                    style="width: 25%;display: inline-flex;margin-right: -5px;margin-top: -2px;">
+                    <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                      style="text-align: right; text-transform:uppercase" autocomplete="off" placeholder="Filtrar..."
+                      ng-model="filtro.pendientes" ng-change="chg_filtrar(filtro.pendientes, 'pendientes')" />
+                  </div>
+                </div>
+              </div>
+              <div class="card-content clearfix card"
+                style="width: 100%;margin: 1rem auto auto auto;border-radius: 15px;">
+                <div class="row"
+                  style="margin-bottom: 0;margin-top: 1rem;height: 60vh; max-height: 70vh; overflow-x: auto;">
+                  <div class="col s12">
+                    <table class="bordered table_center_align" style="width: 100%; font-size: 6px !important">
+                      <thead class="default-border default-color">
+                        <tr>
+                          <!-- <th class="center">NO. CENSO</th> -->
+                          <th class="center">IDENTIFICACIÓN</th>
+                          <th class="center">AFILIADO</th>
+                          <th class="center">TIPO HOSPITALIZACIÓN</th>
+                          <th class="center">PRESTADOR</th>
+                          <!-- <th class="center">SECCIONAL</th> -->
+                          <th class="center">FECHA INGRESO</th>
+                          <th class="center">DÍAS ESTANCIA</th>
+                          <th class="center">TOTAL GLOSA</th>
+                          <th class="center">RED</th>
+                          <th class="center">STATUS</th>
+                          <th class="center">DETALLE</th>
+                        </tr>
+                      </thead>
+                      <tbody class="default-border">
+                        <tr
+                          ng-repeat="d in Lista_Tabla_Temp | inicio: currentPage * pageSize | limitTo: pageSize | orderBy:propertyName:reverse | filter:filtro.pendientes"
+                          style="color: black; cursor: pointer">
+                          <!-- <td class="center">{{d.CENN_NUMERO}}</td> -->
+                          <td class="center">{{d.CENC_TIPO_DOCUMENTO}} - {{d.CENC_AFILIADO}}
+                          </td>
+                          <td class="center">{{d.NOMBRE_AFILIADO}}</td>
+                          <td class="center">{{d.CONC_NOMBRE}}</td>
+                          <td class="center">{{d.PRESTADOR}}</td>
+                          <!-- <td class="center">{{d.SECCIONAL}}</td> -->
+                          <td class="center">{{d.CENF_FECHA_INGRESO}}</td>
+                          <td class="center">{{d.DIAESTANCIA}} Días</td>
+                          <td class="center">{{d.CENV_TOTAL != null ? d.CENV_TOTAL : '0' | currency:"$":0}}</td>
+                          <td class="center"><span class="badge-custom-d" style="width: 40px;"
+                              ng-style="{'background-color': d.COLOR}">{{d.COLOR ==
+                              'green' ? 'SI' : 'NO'}}</span></td>
+                          <td class="center">
+                            <span class="pointer" ng-style="{'background': d.STATUS}" style="margin-left: 50%;"></span>
+                          </td>
+                          <td class="center" ng-show="rol.Nombre == 'AD'">
+                            <div class="dropdown autoscrollable-wrapper">
+                              <i id="btn"><i style="font-size: 16px;"
+                                  class="icom icon-cog-5 fs-15 cursor-pointer"></i></i>
+                              <div class="dropdown-options">
+                                <a href="" ng-click="showModals('modalDetalleCenso', d)"><i
+                                    class="icom icon-eye fs-15 cursor-pointer" title="Direccionamiento"></i>
+                                  Ver Detalle</a>
+                                <a href="" ng-click="censoDetalle(d)"><i class="icom icon-cog-alt fs-15 cursor-pointer"
+                                    title="Gestion"></i> Ver
+                                  Evoluciones</a>
+                                <a href="" ng-click="showModals('modalNuevaGlosa',d)"><i
+                                    class="icon-plus-outline fs-15 cursor-pointer" title="Cierre"></i> Agregar
+                                  Glosa</a>
+                                <a href="" ng-click="verGlosas('',d.CENN_NUMERO,d.CENN_UBICACION)"><i
+                                    class="icom icon-clipboard-2 fs-15 cursor-pointer" title="Cierre"></i> Ver
+                                  Glosa</a>
+                                <a href="" ng-click="autorizaciones(d)"><i
+                                    class="icom icon-ok-outline fs-15 cursor-pointer" title="Cancelar"></i> Ver
+                                  Autorizaciones</a>
+                                <a ng-if="rolseleccionadoConsulta" href="" ng-click="vistacontroldeGestion(persona)"
+                                  class="ng-scope"><i class="icom icon-key-3 fs-15 cursor-pointer"
+                                    title="Control de gestion"></i> Control
+                                  de gestion</a>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="center" ng-show="rol.Nombre == 'AU'">
+                            <i class="icom icon-cog-5 fs-15 cursor-pointer default-color" ng-click="autorizaciones(d)"
+                              title="Control de gestion"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div style="width: 95%; display: flex; margin-left: 2%">
+                  <div style="width: 50%">
+                    <label for="normal">{{Lista_Tabla_Temp.length}} de {{listaCensosPendientes.length}} Documentos
+                      encontrados
+                    </label>
+                  </div>
+                </div>
+                <div style="width: 100%; display: flex" class="center">
+                  <div style="width: 100%">
+                    <ul class="pagination">
+                      <li>
+                        <button ng-disabled="currentPage == 0" class="btn-floating white-text default-linear-gradient"
+                          ng-click="paso('back')">
+                          &laquo;
+                        </button>
+                      </li>
+                      <li ng-repeat="page in pages">
+                        <button ng-disabled="currentPage == page.no - 1"
+                          class="btn-floating white-text default-linear-gradient" ng-click="setPage(page.no)">
+                          {{page.no}}
+                        </button>
+                      </li>
+                      <li>
+                        <button ng-disabled="currentPage >= Lista_Tabla_Temp.length/pageSize - 1"
+                          class="btn-floating white-text default-linear-gradient" ng-click="paso('next')">
+                          &raquo;
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div ng-show="gestion == 'prestadores'">
+            <div class="row center-div-customd">
+              <div class="col s3" ng-repeat="x in tipoUsuario" style="margin: auto;">
+                <article class="card_custom_d" ng-click="selectPrestador(x, 'censos_pendientes')">
+                  <i class="large material-icons"
+                    style="color: white;position: relative;bottom: 55px; size: b5;">assignment_ind</i>
+                  <div class="card__content">
+                    <div class="card__content--container">
+                      <h2 class="card__title m-t ng-binding">{{x.NOMBRE}}</h2>
+                    </div>
+                    <p style="font-weight: bold;text-align: center;">{{x.NIT}}</p>
+                    <div class="center white-text">
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- LISTA EVOLUCIONES -->
+        <div class="row" ng-show="currentView == 'evolucion'">
+          <div class="divcardcustom default-linear-gradient border_bottom_LR">
+            <div class="col s12">
+              <div class="text-al divcardcustom2">
+                <div class="tooltip" style="margin: 0px 25px 0px 5px">
+                  <i class="icon-left-outline cursor-pointer" ng-click="currentView = 'pendientes'"></i>
+                  <span class="tooltiptext" style="font-size: 12px; width: 80px; margin-left: -40px">Atras</span>
+                </div>
+                <strong class="switch" style="font-weight: 600; font-size: 0.9rem">LISTADO EVOLUCIONES DE:
+                  {{censo.NOMBRE_AFILIADO}}</strong>
+                <div class="tooltip" style="margin: 0px 5px 0px 5px">
+                  <i class="icon-plus-outline cursor-pointer" ng-click="showModals('modalNuevaEvolucion', censo)"></i>
+                  <span class="tooltiptext" style="font-size: 12px; width: 80px; margin-left: -40px">Nueva
+                    Evolucion</span>
+                </div>
+                <div class="col s3 no-padding label-new right"
+                  style="width: 25%;display: inline-flex;margin-right: -5px;margin-top: -2px;">
+                  <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                    style="text-align: right; text-transform:uppercase" autocomplete="off" placeholder="Filtrar..."
+                    ng-model="filtro.evoluciones" />
+                </div>
+              </div>
+            </div>
+            <div class="col s12 l12 m12">
+              <div style="max-height: 75vh; min-height: 75vh ; overflow-x: auto; text-align: center">
+                <table class="bordered table_center_align" style="width: 100%; font-size: 6px !important">
+                  <thead class="default-border default-color">
+                    <tr>
+                      <th>DIAGNOSTICO</th>
+                      <th>CLASIFICACION</th>
+                      <th>GLOSA</th>
+                      <th>FECHA</th>
+                      <th>OBSERVACION</th>
+                    </tr>
+                  </thead>
+                  <tbody class="default-border">
+                    <tr ng-repeat="X in listaEvoluciones | filter:filtro.evoluciones track by $index">
+                      <td>
+                        <label>{{ X.DIAGNOSTICO}}</label>
+                      </td>
+                      <td>
+                        <label>{{X.CLASIFICACION}}</label>
+                      </td>
+                      <td>
+                        <label>{{X.GLOSA == 'S' ? 'SI' : 'NO'}}</label>
+                      </td>
+                      <td>
+                        <label>{{X.FECHA}}</label>
+                      </td>
+                      <td class="center">
+                        <i class="icom icon-eye fs-15 cursor-pointer default-color" title="Observacion Evolucion"
+                          ng-click="ObservacionEvolucion(X)"></i>
+                        <i class="icom icon-clipboard-2 fs-15 cursor-pointer default-color" title="Ver Glosas"
+                          ng-click="verGlosas('evoluciones', X.NUMERO, X.UBICACION, X.RENGLON)"
+                          ng-if="X.GLOSA == 'S'"></i>
+                      </td>
+                    </tr>
+                    <tr ng-if="listaEvoluciones.length == 0">
+                      <td class="center-align" colspan="3" style="font-weight: bolder">
+                        <label>NO SE ENCONTRARON REGISTROS</label>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- LISTA AUTORIZACIONES -->
+        <div class="row" ng-if="currentView == 'autorizaciones'">
+          <div class="divcardcustom default-linear-gradient border_bottom_LR">
+            <div class="col s12">
+              <div class="text-al divcardcustom2">
+                <div class="tooltip" style="margin: 0px 25px 0px 5px">
+                  <i class="icon-left-outline cursor-pointer" ng-click="atras('AUT')"></i>
+                  <span class="tooltiptext" style="font-size: 12px; width: 80px; margin-left: -40px">Atras</span>
+                </div>
+                <strong class="switch" style="font-weight: 600; font-size: 0.9rem">{{titulo_autorizaciones}}</strong>
+                <div class="col s3 no-padding label-new right"
+                  style="width: 25%;display: inline-flex;margin-right: -5px;margin-top: -2px;">
+                </div>
+              </div>
+            </div>
+            <div class="col s12 l12 m12 center-div-customd" ng-show="gestion == 'ver'">
+              <div class="col s6 m6 l6 card m-r center" style="height: 500px;padding: revert;overflow: auto;">
+                <div class="default-background" style="padding: 0;">
+                  <h6 class="white-text">AUTORIZACIONES PENDIENTES POR GESTION</h6>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    <table class="bordered table_center_align" style="width: 100%; font-size: 6px !important">
+                      <thead class="default-border default-color">
+                        <tr>
+                          <th class="center">N° SOLICITUD</th>
+                          <th class="center">UBICACION</th>
+                          <th class="center">SERVICIO</th>
+                          <th class="center">FECHA SOLICITUD</th>
+                          <th class="center">ACCION</th>
+                        </tr>
+                      </thead>
+                      <tbody class="default-border">
+                        <tr ng-repeat="AUT in AutorizacionesPendientes | filter:filtro.autorizaciones_pendientes"
+                          style="color: black; cursor: pointer">
+                          <td class="center">{{AUT.SOAN_NUMERO}}</td>
+                          <td class="center">{{AUT.SOAN_UBICACION}}</td>
+                          <td class="center">{{AUT.NOMBRE_SERVICIO}}</td>
+                          <td class="center">{{AUT.SOAF_INGRESO}}</td>
+                          <td class="center">
+                            <i class="icom icon-cog-5 fs-15 cursor-pointer default-color"
+                              ng-click="gestionarAutorizacion(AUT)" title="Control de gestion"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col s6 m6 l6 card center" style="height: 500px;padding: revert;overflow: auto;">
+                <div class="default-background" style="padding: 0;">
+                  <h6 class="white-text">AUTORIZACIONES GESTIONADAS</h6>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    <table class="bordered table_center_align" style="width: 100%; font-size: 6px !important">
+                      <thead class="default-border default-color">
+                        <tr>
+                          <th class="center">N° SOLICITUD</th>
+                          <th class="center">N° AUTORIZACION</th>
+                          <th class="center">UBICACION</th>
+                          <th class="center">SERVICIO</th>
+                          <th class="center">FECHA SOLICITUD</th>
+                          <th class="center">ACCION</th>
+                        </tr>
+                      </thead>
+                      <tbody class="default-border">
+                        <tr ng-repeat="AUT in AutorizacionesGestionadas | filter:filtro.autorizaciones_gestionadas"
+                          style="color: black; cursor: pointer">
+                          <td class="center">{{AUT.SOAN_NUMERO}}</td>
+                          <td class="center">{{AUT.NUMERO_AUTORIZACION}}</td>
+                          <td class="center">{{AUT.SOAN_UBICACION}}</td>
+                          <td class="center">{{AUT.NOMBRE_SERVICIO}}</td>
+                          <td class="center">{{AUT.SOAF_INGRESO}}</td>
+                          <td class="center">
+                            <i class="icom icon-eye fs-15 cursor-pointer default-color" title="Control de gestion"
+                              ng-click="gestionarAutorizacion(AUT)"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 l12 m12 center-div-customd" ng-show="gestion == 'gestion_pendientes'">
+              <div class="card card-info row">
+                <div class="card-header white-text default-background col s12"><b>CODIGO
+                    ESOA {{autDetalle.NUMERO}}</b></div>
+                <div class="card-content col s12 black-text">
+                  <div class="row">
+                    <div class="col s12">
+                      <div class="row margin">
+                        <div class="col s2 boder-aut-detalle-button" style="font-size: 12px;">
+                          <b><i class="icon-calendar"></i> FECHA INGRESO</b>
+                          <span> {{autDetalle.FECHA_INGRESO}}</span>
+                        </div>
+                        <div class="col s3 boder-aut-detalle-button" style="font-size: 12px;">
+                          <div>
+                            <b><i class="icon-calendar"></i> FECHA MODIFICADO</b>
+                          </div>
+                          <div>
+                            <span> {{autDetalle.FECHA_MODIFICADO}}</span>
+                          </div>
+                        </div>
+                        <div class="col s3 boder-aut-detalle-button" style="font-size: 12px;">
+                          <div>
+                            <b><i class=" icon-pin-outline"></i>FUNCIONARIO RESPONSABLE</b>
+                          </div>
+                          <div>
+                            <span> {{autDetalle.RESPONSABLE}}</span>
+                          </div>
+                        </div>
+                        <div class="col s2 boder-aut-detalle-button" style="font-size: 12px;">
+                          <div>
+                            <b><i class="icon-location-3"></i> UBICACION</b>
+                          </div>
+                          <div>
+                            <span> {{autDetalle.UBICACION}}</span>
+                          </div>
+                        </div>
+                        <div class="col s2 boder-aut-detalle-button" style="font-size: 12px">
+                          <div>
+                            <b><i class=" icon-pin-outline"></i>ESTADO</b>
+                          </div>
+                          <div>
+                            <span style="font-weight: 700;" ng-style="{color:autDetalle.ESTADO_CLASE}">
+                              {{autDetalle.NOMBRE_ESTADO}}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" style="margin-bottom: 0">
+                        <div class="col s5 boder-aut-detalle-button" style="font-size: 12px;">
+                          <div>
+                            <b> <i class="icon-vcard"></i> AFILIADO</b>
+                          </div>
+                          <div>
+                            <span>{{autDetalle.DOCUMENTO}}-{{autDetalle.NOMBRE_AFILIADO}}</span>
+                          </div>
+                        </div>
+                        <div class="col s5 boder-aut-detalle-button" style="font-size: 12px">
+                          <div>
+                            <b><i class="icon-hospital"></i> NIT IPS</b>
+                          </div>
+                          <div>
+                            <span>{{autDetalle.NIT}}-{{autDetalle.IPS}}</span>
+                          </div>
+                        </div>
+                        <div class="col s2 boder-aut-detalle-button" style="font-size: 12px;">
+                          <div>
+                            <b><i class="icon-docs"></i>CONTRATO</b>
+                          </div>
+                          <div>
+                            <span>{{autDetalle.CONTRATO}}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" style="margin-bottom: 0">
+                        <div class="col s5 boder-aut-detalle-button" style="font-size: 12px;">
+                          <div>
+                            <b> <i class="icon-stethoscope"></i> SERVICIO</b>
+                          </div>
+                          <div>
+                            <span>{{autDetalle.COD_CLASI}}-{{autDetalle.NOMBRE_CLASIFICACION}}</span>
+                          </div>
+                        </div>
+                        <div class="col s5 boder-aut-detalle-button" style="font-size: 12px;">
+                          <div>
+                            <b> <i class="icon-stethoscope"></i> DIAGNOSTICO</b>
+                          </div>
+                          <div>
+                            <span>{{autDetalle.COD_DX}}-{{autDetalle.NOMBRE_DX}}</span>
+                          </div>
+                        </div>
+                        <div class="col s2 boder-aut-detalle-button" ng-click="download(autDetalle.ADJUNTO);"
+                          style="font-size: 12px; cursor: pointer;">
+                          <div>
+                            <b> ANEXO</b>
+                          </div>
+                          <div>
+                            <span><i style="font-size: 20px" class=" icon-doc-text-inv"></i></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" style="margin-bottom: 0">
+                        <div class="col s12 boder-aut-detalle-button" style="font-size: 12px;">
+                          <div>
+                            <b><i class=" icon-align-justify"></i> OBSERVACION</b>
+                          </div>
+                          <div>
+                            <span>{{autDetalle.JUSTIFICACION}}</span>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col s12">
+                        <div class="row">
+                          <div class="col l12 m12 s12" style="max-height: 30vh; overflow: auto;">
+                            <table style="cursor:pointer;" id="listar_detalles"
+                              class=" responsive-table table-bordered table-striped">
+                              <thead style="background: #ecebf6;">
+                                <tr>
+                                  <th><b>PRODUCTO</b></th>
+                                  <th style="width: 8em;"><b>CANTIDAD</b></th>
+                                  <th style="width: 8em;"><b>VALOR</b></th>
+                                  <th style="width: 8em;"><b>TOTAL</b></th>
+                                  <th style="width: 8em;" ng-if="autDetalle.ESTADO == 'A' && rol.Nombre == 'AD'">
+                                    <b>PERTINENTE</b>
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody ng-hide="autDetalle.DETALLES.length==0">
+                                <tr ng-repeat="ld in autDetalle.DETALLES track by $index">
+                                  <td style="width:250px">{{ld.cod_producto}}-{{ld.nombre_producto}}
+                                    {{ld.subclasn=='S' ? '-' :''}} {{ld.subclasnom}} </td>
+                                  <td>{{ld.cantidad}}</td>
+                                  <td>{{ld.valor}}</td>
+                                  <td>{{ld.total}}</td>
+                                  <td ng-if="autDetalle.ESTADO == 'A' && rol.Nombre == 'AD'">
+                                    <select class="select-new-ps" id="{{'pertinencia_'+$index}}" ng-model="pertinencia"
+                                      ng-change="selectPertinencia(ld.renglon, 'pertinencia_'+$index)" watch>
+                                      <option value="" disabled>SELECCIONAR</option>
+                                      <option value="S">SI</option>
+                                      <option value="N">NO</option>
+                                    </select>
+                                  </td>
+                                </tr>
+                              </tbody>
+                              <tfoot>
+                                <tr style="background: #ecebf6;" ng-hide="autDetalle.DETALLES.length==0">
+                                  <td><strong style="font-weight: 700;">TOTAL: </strong></td>
+                                  <td>-</td>
+                                  <td>-</td>
+                                  <td><strong style="font-weight: 700;"> {{autDetalle.VALOR_AUT}}</strong></td>
+                                  <td ng-if="autDetalle.ESTADO == 'A'&& rol.Nombre == 'AD'"></td>
+                                </tr>
+                                <tr ng-show="autDetalle.DETALLES.length==0">
+                                  <td colspan="7"><strong style="font-weight: 700;color: #dc2c2c;">NO SE
+                                      ENCONTRARON
+                                      DETALLES</strong>
+                                  </td>
+                                </tr>
+                              </tfoot>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer  text-center col s12">
+                    <button class="btn row" ng-show="autDetalle.ESTADO == 'A' && rol.Nombre == 'AD'"
+                      ng-click="gestionarPertinencia(autDetalle)">
+                      <i class="icon-cog-alt" style="margin-top: -1px;font-size: 13px"></i> GESTIONAR
+                      PERTINENCIA
+                    </button>
+                    <button class="btn row" ng-show="rol.Nombre == 'AU'" ng-click="ui_vobo_aut(autDetalle,'S')">
+                      <i class="icon-ok-outline" style="margin-top: -1px;font-size: 13px"></i>APROBAR</button>
+                    <button class="btn row" ng-show="rol.Nombre == 'AU'" ng-click="ui_vobo_aut(autDetalle,'N')">
+                      <i class="icon-cancel-outline" style="margin-top: -1px;font-size: 13px"></i>RECHAZAR</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- REPORTE -->
+        <div class="row" ng-if="currentView == 'reporte'">
+          <h2>Reportes</h2>
+        </div>
+        <!-- LISTA GLOSAS -->
+        <div class="row" ng-if="currentView == 'glosas'">
+          <div class="divcardcustom default-linear-gradient border_bottom_LR">
+            <div class="col s12">
+              <div class="text-al divcardcustom2">
+                <div class="tooltip" style="margin: 0px 25px 0px 5px">
+                  <i class="icon-left-outline cursor-pointer" ng-click="atras('GLOSAS')"></i>
+                  <span class="tooltiptext" style="font-size: 12px; width: 80px; margin-left: -40px">Atras</span>
+                </div>
+                <strong class="switch" style="font-weight: 600; font-size: 0.9rem">LISTADO GlOSAS PARA:
+                  {{censo.NOMBRE_AFILIADO}}</strong>
+                <div class="col s3 no-padding label-new right"
+                  style="width: 25%;display: inline-flex;margin-right: -5px;margin-top: -2px;">
+                  <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                    style="text-align: right; text-transform:uppercase" autocomplete="off" placeholder="Filtrar..."
+                    ng-model="filtro.glosas" />
+                </div>
+              </div>
+            </div>
+            <div class="col s12 l12 m12">
+              <div style="max-height: 75vh; min-height: 75vh ; overflow-x: auto; text-align: center">
+                <table class="bordered table_center_align" style="width: 100%; font-size: 6px !important">
+                  <thead class="default-border default-color">
+                    <tr>
+                      <th>N°</th>
+                      <th>MOTIVO</th>
+                      <th>PRODUCTO</th>
+                      <th>VALOR CONTRATO</th>
+                      <th>VALOR GLOSADO</th>
+                      <th>FECHA</th>
+                      <th>OBSERVACION</th>
+                    </tr>
+                  </thead>
+                  <tbody class="default-border">
+                    <tr ng-repeat="X in listaGlosas | filter:filtro.glosas track by $index">
+                      <td>
+                        <label>{{ $index +1}}</label>
+                      </td>
+                      <td>
+                        <label>{{X.MOTIVO_GLOSA}}</label>
+                      </td>
+                      <td>
+                        <label>{{X.NOMBRE_CUPS}}</label>
+                      </td>
+                      <td>
+                        <label>{{X.VALOR_CONTRATO | currency:"$":0}}</label>
+                      </td>
+                      <td>
+                        <label>{{X.VALOR_GLOSA | currency:"$":0}}</label>
+                      </td>
+                      <td>
+                        <label>{{X.FECHA}}</label>
+                      </td>
+                      <td>
+                        <label>{{X.FECHA}}</label>
+                      </td>
+                      <td class="center">
+                        <i class="icom icon-eye fs-15 cursor-pointer default-color" title="Observacion Glosa"
+                          ng-click="ObservacionGlosa(X)"></i>
+                      </td>
+                    </tr>
+                    <tr ng-if="listaGlosas.length == 0">
+                      <td class="center-align" colspan="3" style="font-weight: bolder">
+                        <label>NO SE ENCONTRARON REGISTROS</label>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ADMINISTRACION -->
+        <div class="row" ng-if="currentView == 'admin'">
+          <div class="card-content clearfix card center"
+            style="width: 60%;margin: 1rem auto auto auto;border-radius: 5px; padding: 2%;"
+            ng-show="listaPrestadores.length == 0">
+            <h5><strong>CONSULTAR PRESTADOR</strong></h5>
+            <div class="row m-t">
+              <div class="col s12 card-content">
+                <div class="col s11">
+                  <label class="m-l">NIT</label>
+                  <input class="margin border-none input-text-new black-text gray-input w-100"
+                    style="text-transform:uppercase" autocomplete="off" ng-model="prestadorQuery" />
+                </div>
+              </div>
+            </div>
+            <div class="row m-t">
+              <div class="col s12 l12 center">
+                <button class="btn waves-effect waves-light m-l" ng-click="consultar_prestador_auditor(prestadorQuery,'I')">
+                  <i class="icon-paper-plane" style="font-size: 1rem;">CONSULTAR</i></button>
+              </div>
+            </div>
+          </div>
+          <div class="row center-div-customd" ng-show="ips_selected == undefined">
+            <div class="s12" style="max-height: 75vh;overflow: auto;">
+              <div class="col s3" ng-repeat="x in listaPrestadores track by $index" style="margin: auto;">
+                <article class="card_custom_d" ng-click="selectPrestador(x,'agregar_funcionarios')">
+                  <i class="large material-icons"
+                    style="color: white;position: relative;bottom: 55px; size: b5;">assignment_ind</i>
+                  <div class="card__content">
+                    <div class="card__content--container">
+                      <h2 class="card__title m-t ng-binding">{{x.NOMBRE}}</h2>
+                    </div>
+                    <p style="font-weight: bold;text-align: center;">{{x.NIT}}</p>
+                    <div class="center white-text">
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+          <div class="card-content clearfix card center" ng-show="listaPrestadores.length == 1" style="height: 75vh;">
+            <div class="row">
+              <div class="col s12">
+                <h5>{{listaPrestadores[0].NOMBRE}}</h5>
+                <p>{{listaPrestadores[0].NIT}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s5 card m-l" style="height: 58vh;overflow: auto;">
+                <div class="col s11">
+                  <label class="m-l">FUNCIONARIO</label>
+                  <input class="margin border-none input-text-new black-text gray-input w-100"
+                    style="text-transform:uppercase" autocomplete="off" ng-model="funcionario_query" />
+                </div>
+                <div class="row m-t">
+                  <div class="col s12 l12 center m-t">
+                    <button class="btn waves-effect waves-light m-l"
+                      ng-click="consultar_prestador_auditor(funcionario_query,'')">
+                      <i class="icon-paper-plane" style="font-size: 1rem;">CONSULTAR</i></button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12" style="overflow: auto; height: 38vh;">
+                    <table class="bordered table_center_align" style="width: 100%; font-size: 6px !important">
+                      <thead class="default-border default-color">
+                        <tr>
+                          <th class="center">DOCUMENTO</th>
+                          <th class="center">NOMBRE</th>
+                          <th class="center">ACCION</th>
+                        </tr>
+                      </thead>
+                      <tbody class="default-border">
+                        <tr ng-repeat="AU in listaFuncionarios" style="color: black; cursor: pointer">
+                          <td class="center">{{AU.NIT}}</td>
+                          <td class="center">{{AU.NOMBRE}}</td>
+                          <td class="center">
+                            <i class="icon-plus-outline fs-15 cursor-pointer default-color"
+                              ng-click="agregarFuncionario(AU)" title="Control de gestion"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col s6 card m-l" style="width: 45vw;height: 58vh;overflow: auto;">
+                <div class="default-background center m-b" style="padding: 0; height: 50px;align-content: center;">
+                  <h6 class="white-text">FUNCIONARIOS ACTUALES</h6>
+                </div>
+                <div class="col s12" style="overflow: auto; height: 38vh;">
+                  <table class="bordered table_center_align" style="width: 100%; font-size: 6px !important">
+                    <thead class="default-border default-color">
+                      <tr>
+                        <th class="center">N°</th>
+                        <th class="center">DOCUMENTO</th>
+                        <th class="center">NOMBRE</th>
+                        <th class="center">ESTADO</th>
+                        <th class="center">ACCION</th>
+                      </tr>
+                    </thead>
+                    <tbody class="default-border">
+                      <tr ng-repeat="AU in adminAuditores.auditores track by $index"
+                        style="color: black; cursor: pointer">
+                        <td class="center">{{$index+1}}</td>
+                        <td class="center">{{AU.NIT}}</td>
+                        <td class="center">{{AU.NOMBRE}}</td>
+                        <!-- <td class="center">{{AU.ESTADO}}</td> -->
+                        <td class="center"><span class="badge-custom-d">{{AU.ESTADO == 'A' ?
+                            'ACTIVO' : 'INACTIVO'}}</span></td>
+                        <td class="center">
+                          <i class="icon-minus-outline fs-15 cursor-pointer default-color"
+                            ng-click="removerFuncionario(AU)" title="Control de gestion"></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="row m-t">
+                    <div class="col s12 l12 center m-t">
+                      <button class="btn waves-effect waves-light m-l" ng-click="guardarFuncionariosAdmin()">
+                        <i class="icon-paper-plane" style="font-size: 1rem;">GUARDAR</i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12 l12 center m-t">
+                <button class="btn waves-effect waves-light m-l" ng-click="cancelar_admin()">
+                  <i class="icon-cancel-outline" style="font-size: 1rem;">CANCELAR</i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- CARGUE FACTURA -->
+        <div class="row" ng-if="currentView == 'factura'">
+          <div class="divcardcustom default-linear-gradient border_bottom_LR">
+            <div class="col s12">
+              <div class="text-al divcardcustom2">
+                <strong class="switch" style="font-weight: 600; font-size: 0.9rem">CENSOS CERRADOS</strong>
+                <div class="col s3 no-padding label-new right"
+                  style="width: 25%;display: inline-flex;margin-right: -5px;margin-top: -2px;">
+                  <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                    style="text-align: right; text-transform:uppercase" autocomplete="off" placeholder="Filtrar..."
+                    ng-model="filtro.cerrados" ng-change="chg_filtrar(filtro.cerrados, 'cerrados')" />
+                </div>
+              </div>
+            </div>
+            <div class="card-content clearfix card"
+              style="width: 100%;margin: 1rem auto auto auto;border-radius: 15px;">
+              <div class="row"
+                style="margin-bottom: 0;margin-top: 1rem;height: 475px; max-height: 475px; overflow-x: auto;">
+                <div class="col s12">
+                  <table class="bordered table_center_align" style="width: 100%; font-size: 6px !important">
+                    <thead class="default-border default-color">
+                      <tr>
+                        <th class="center">NO. CENSO</th>
+                        <th class="center">AFILIADO</th>
+                        <th class="center">PRESTADOR</th>
+                        <th class="center">FECHA INGRESO</th>
+                        <th class="center">FECHA DE EGRESO</th>
+                        <th class="center">AGREGAR FACTURA</th>
+                      </tr>
+                    </thead>
+                    <tbody class="default-border">
+                      <tr
+                        ng-repeat="d in Lista_Tabla_Temp_Cerrados | inicio: currentPage_cerrados * pageSize_cerrados | limitTo: pageSize_cerrados | orderBy:propertyName:reverse | filter:filtro.pendientes"
+                        style="color: black; cursor: pointer">
+                        <td class="center">{{d.CENN_NUMERO}}</td>
+                        <td class="center">{{d.NOMBRE_AFILIADO}}</td>
+                        <td class="center">{{d.PRESTADOR}}</td>
+                        <td class="center">{{d.CENF_FECHA_INGRESO}}</td>
+                        <td class="center">{{d.CENF_FECHA_EGRESO}}</td>
+                        <td class="center">
+                          <div class="tooltip" style="margin: 0px 25px 0px 5px">
+                            <i class="icon-plus-outline cursor-pointer"
+                              style="font-size: 12px; width: 80px; margin-left: -40px" ng-click="agregarFactura(d)"></i>
+                            <span class="tooltiptext" style="font-size: 12px; width: 80px; margin-left: -40px">Agregar
+                              Factura</span>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div style="width: 95%; display: flex; margin-left: 2%">
+                <div style="width: 50%">
+                  <label for="normal">{{Lista_Tabla_Temp_Cerrados.length}} de {{Lista_Tabla_Temp_Cerrados.length}}
+                    Documentos
+                    encontrados
+                  </label>
+                </div>
+              </div>
+              <div style="width: 100%; display: flex" class="center">
+                <div style="width: 100%">
+                  <ul class="pagination">
+                    <li>
+                      <button ng-disabled="currentPage == 0" class="btn-floating white-text default-linear-gradient"
+                        ng-click="paso('back')">
+                        &laquo;
+                      </button>
+                    </li>
+                    <li ng-repeat="page in pages_cerrados">
+                      <button ng-disabled="currentPage == page.no - 1"
+                        class="btn-floating white-text default-linear-gradient" ng-click="setPage(page.no)">
+                        {{page.no}}
+                      </button>
+                    </li>
+                    <li>
+                      <button ng-disabled="currentPage >= Lista_Tabla_Temp_Cerrados.length/pageSize_cerrados - 1"
+                        class="btn-floating white-text default-linear-gradient" ng-click="paso('next')">
+                        &raquo;
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CENSO DETALLE 2.0 -->
+  <div id="modalDetalleCenso" class="modal" data-controls-modal="your_div_id" data-backdrop="static"
+    data-keyboard="false" style="width: 50vw;overflow: hidden;z-index: 1000;">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <!-- title -->
+          <div class="default-background" style="zoom: 60%;padding: 0">
+            <div class="col l12 m12 s12">
+              <div class="row">
+                <div class="col s11 white-text">
+                  <h5 class="white-text">DETALLE DE CENSO</h5>
+                </div>
+                <div class="col s1">
+                  <h5 style="text-align: end;"><i style="cursor:pointer;" ng-click="closeModal('modalDetalleCenso')"
+                      class="material-icons white-text">close</i>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-action" style="zoom:70%;padding-bottom: 3px;border-top: 0">
+            <div class="row" style="margin-bottom: unset;">
+              <div class="card-panel col no-padding grid-list m-r" style="width: 33vw; height: 50vh">
+                <ul class="collection border-none margin">
+                  <li class="collection-item">
+                    <div class="col">
+                      <h6><b>{{fichaPaciente.NOMBRE}}</b></h6>
+                      <div>
+                        <p><b>EDAD: {{censo.EDAD}}</b></p>
+                        <P><b>REGIMEN:</b> <span class="badge-custom-d">
+                            {{censo.REGIMEN}}
+                          </span></P>
+                        <P><b>ESTADO:</b> <span class="badge-custom-d">
+                            {{fichaPaciente.ESTADO}}
+                          </span></P>
+                        <P><b>SEXO:</b> {{fichaPaciente.SEXO}}</P>
+                        <P><b>ALTOCOSTO:</b> <span class="badge-custom-d">
+                            {{fichaPaciente.ALTOCOSTO}}
+                          </span></P>
+                        <P><b>RIESGO:</b> {{fichaPaciente.RIESGO}}</P>
+                        <P><b>DIAGNOSTICO:</b> {{fichaPaciente.DIAGNOSTICO}}</P>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-panel col no-padding grid-list" style="width: 35vw;height: 50vh">
+                <ul class="collection border-none margin">
+                  <li class="collection-item">
+                    <div class="col">
+                      <div>
+                        <P><b>TIPO ESTANCIA:</b> {{censo.CONC_NOMBRE}}</P>
+                        <P><b>DIAS DE ESTANCIA:</b> {{censo.DIAESTANCIA}} Dias</P>
+                        <P><b>EVOLUCIONES:</b> {{censo.NUMERO_EVOLUCION}}</P>
+                        <P><b>DX_NOMBRE:</b> {{censo.DX_NOMBRE}}</P>
+                        <P><b>PRESTADOR:</b> {{censo.PRESTADOR}}</P>
+                        <P><b>UBICACION:</b> {{censo.UBGC_NOMBRE}}</P>
+                        <P><b>TOTAL GLOSA:</b> <span class="badge-custom-d">
+                            {{censo.CENV_TOTAL}}
+                          </span></P>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="row" ng-show="fichaPaciente.OBSERVACION != '' && fichaPaciente.OBSERVACION != null">
+              <div class="card-panel col s12 no-padding grid-list">
+                <ul class="collection border-none margin">
+                  <li class="collection-item">
+                    <div class="col">
+                      <div>
+                        <P><b>OBSERVACION:</b> {{fichaPaciente.OBSERVACION}}</P>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL AGREGAR EVOLUCION -->
+  <div id="modalNuevaEvolucion" class="modal" style="width: 50vw;overflow: hidden;z-index: 1000; max-height: 90vh;">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;max-height: 80vh;overflow: auto;">
+          <div class="default-background" style="zoom: 60%;padding: 0">
+            <div class="col l12 m12 s12">
+              <div class="row">
+                <div class="col s11 white-text">
+                  <h5 class="white-text">REGISTRAR EVOLUCION A ({{censo.NOMBRE_AFILIADO}})</h5>
+                </div>
+                <div class="col s1">
+                  <h5 style="text-align: end;"><i style="cursor:pointer;" ng-click="closeModal('modalNuevaEvolucion')"
+                      class="material-icons white-text">close</i>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-action" style="zoom:70%;padding-bottom: 3px;border-top: 0">
+            <div class="row">
+              <div class="col l12 m12 s12">
+                <div class="row">
+                  <div class="col l6 m6 s6">
+                    <label style="padding-left: 5%;font-size: inherit;">TIPO HOSPITALIZACION</label>
+                    <div class="col s12 " type="text">
+                      <select class="select-new-ps" type="text" ng-model="evolucion.hospitalizacion">
+                        <option value="" disabled>SELECCIONAR</option>
+                        <option ng-repeat="x in listaHospitalizacion" ng-value="x.CODIGO">{{x.NOMBRE}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col l6 m6 s6">
+                    <label style="padding-left: 5%;font-size: inherit;">DIAGNOSTICO</label>
+                    <div class="col s12" type="text">
+                      <input class="select-new-ps" list="diagnosticos" ng-model="evolucion.diagnostico"
+                        ng-change="consultarDiagnostico(evolucion.diagnostico)" />
+                      <datalist id="diagnosticos">
+                        <option ng-repeat="x in listaDiagnosticos" value="{{x.CODIGO}} - {{x.NOMBRE}}"></option>
+                      </datalist>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col l6 m6 s6">
+                    <label style="padding-left: 5%;font-size: inherit;">PENDIENTE ADMINISTRATIVO</label>
+                    <div class="col s12 " type="text">
+                      <!-- <select class="select-new-ps" type="text" ng-model="evolucion.remision">
+                        <option value="" disabled>SELECCIONAR</option>
+                        <option value="S">PENDIENTE REMISION</option>
+                        <option value="N">NO</option>
+                      </select> -->
+                      <select class="select-new-ps" type="text" ng-model="evolucion.pendientes">
+                        <option value="" disabled>SELECCIONAR</option>
+                        <option ng-repeat="x in listaPendientesAdm" value="{{x.NUMERO}}">{{x.NOMBRE}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col l3 m3 s3" style="padding-top: 2%;">
+                    <div class="col s12 input-padding">
+                      <input type="checkbox" id="check_adverso" ng-model="evolucion.adverso"
+                        ng-change="check_adverso_glosa(evolucion.adverso)" />
+                      <label for="check_adverso" style="font-size: inherit;">ADVERSO</label>
+                    </div>
+                  </div>
+                  <div class="col l3 m3 s3" style="padding-top: 2%;">
+                    <div class="col s12 input-padding">
+                      <input type="checkbox" id="check_glosa" ng-model="evolucion.glosa" />
+                      <label for="check_glosa" style="font-size: inherit;">GLOSA</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    <div class="form-group shadow-textarea">
+                      <label style="font-size: inherit;">DESCRIPCION DE EVOLUCION</label>
+                      <textarea class="form-control z-depth-1" rows="5" ng-model="evolucion.descripcion" cols="50"
+                        style="margin: 0px;min-height: 200px ; text-transform:uppercase" maxlength="4000"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" ng-if="evolucion.adverso">
+                  <div class="col l6 m6 s6">
+                    <label style="padding-left: 5%;font-size: inherit;">EVENTO ADVERSO</label>
+                    <div class="col s12 " type="text">
+                      <select class="select-new-ps" type="text" ng-model="evolucion.evento_adverso"
+                        ng-change="obtenerEventosAdvDeta(evolucion.evento_adverso)">
+                        <option value="" disabled>SELECCIONAR</option>
+                        <option ng-repeat="x in listaEventosAdversos track by $index" ng-value="x.CODIGO">{{x.NOMBRE}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col l6 m6 s6" ng-if="evolucion.adverso">
+                    <label style="padding-left: 5%;font-size: inherit;">RELACION</label>
+                    <div class="col s12 " type="text">
+                      <select class="select-new-ps" type="text" ng-model="evolucion.evento_adverso_detalle">
+                        <option value="" disabled>SELECCIONAR</option>
+                        <option ng-repeat="x in listaEventosAdversosDeta" ng-value="x.EADN_CODIGO">{{x.EADC_NOMBRE}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" ng-if="(evolucion.glosa && evolucion.glosas.length == 0) || btn_nueva_glosa == true">
+                  <div class="col l12 m12 s12">
+                    <label style="padding-left: 5%;font-size: inherit;">PRODUCTO</label>
+                    <!-- <input class="select-new-ps" list="productos_eventos" ng-model="glosa_evento.cups"
+                      ng-change="consultarProducto(glosa_evento.cups, censo)" />
+                    <datalist id="productos_eventos">
+                      <option ng-repeat="x in listaProductos" value="{{x.CODIGO}} - {{x.NOMBRE}}"></option>
+                    </datalist> -->
+                    <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                      style="text-transform:uppercase;width: 63vw !important;" autocomplete="off"
+                      ng-model="glosa_evolucion.cups_nombre" ng-click="showModals('modalAgregarProducto', censo)" />
+                  </div>
+                  <div class="col l6 m6 s6">
+                    <label style="padding-left: 5%;font-size: inherit;">CANTIDAD</label>
+                    <div class="col s12 " type="text">
+                      <input class="margin border-none input-text-new black-text gray-input w-100" autocomplete="off"
+                        ng-model="glosa_evolucion.cantidad" id="valorGlosa" />
+                    </div>
+                  </div>
+                  <div class="col l6 m6 s6">
+                    <label style="padding-left: 5%;font-size: inherit;">VALOR</label>
+                    <div class="col s12" type="text">
+                      <input class="margin border-none input-text-new black-text gray-input w-100" autocomplete="off"
+                        ng-model="glosa_evolucion.valor_con" id="valorProdutoEvolucion" readonly />
+                    </div>
+                  </div>
+                  <div class="col l6 m6 s6">
+                    <label style="padding-left: 5%;font-size: inherit;">VALOR GLOSA</label>
+                    <div class="col s12" type="text">
+                      <input class="margin border-none input-text-new black-text gray-input w-100" autocomplete="off"
+                        ng-model="glosa_evolucion.valor_glosa" id="valorGlosaEvento"
+                        ng-change="FormatPeso('valorGlosaEvento')" />
+                    </div>
+                  </div>
+                  <div class="col l6 m6 s6">
+                    <label style="padding-left: 5%;font-size: inherit;">MOTIVO</label>
+                    <div class="col s12" type="text">
+                      <select class="select-new-ps" type="text" ng-model="glosa_evolucion.motivo_glosa">
+                        <option value="" disabled>SELECCIONAR</option>
+                        <option ng-repeat="x in listaMotivoGlosa track by $index" value="{{x.CODIGO}}">
+                          {{x.GLMC_NOMBRE}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col s12 center m-t" style="align-items: center;display: flex;justify-content: center;">
+                      <div class="button-custom-d ripple-custom-d" style="width: 10vw;"
+                        ng-click="agregar_glosa_evolucion(glosa_evolucion, 'glosa_evolucion')">
+                        <strong>AGREGAR</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row center" ng-if="evolucion.glosas.length > 0">
+                  <ul class="center">
+                    <div class="col s12 center m-t" style="align-items: center;display: flex;justify-content: center;"
+                      ng-repeat="x in evolucion.glosas">
+                      <il>
+                        <span>{{x.cups_nombre}} - {{x.valor_glosa}} </span><i
+                          class="icon-cancel-outline fs-15 cursor-pointer default-color" title="Remover Glosa"
+                          ng-click="remover_glosa_evolucion(x, 'evolucion')"></i>
+                      </il>
+                    </div>
+                    <li><i class="icon-plus-outline fs-15 cursor-pointer default-color" title="Agregar Glosa"
+                        ng-click="agregar_nueva_glosa_evolucion()"></i></li>
+                  </ul>
+                </div>
+                <div class="row">
+                  <div class="col l3 m3 s3" style="padding-top: 3%;">
+                    <div class="col s12 input-padding">
+                      <input type="checkbox" id="check_cierre" ng-model="evolucion.cierre" />
+                      <label for="check_cierre" style="font-size: inherit;">CERRAR CENSO</label>
+                    </div>
+                  </div>
+                  <div class="col l5 m5 s5" ng-if="evolucion.cierre">
+                    <label style="padding-left: 5%;font-size: inherit;">MOTIVO EGRESO</label>
+                    <div class="col s12 " type="text">
+                      <select class="select-new-ps" type="text" ng-model="evolucion.motivo_cierre">
+                        <option value="" disabled>SELECCIONAR</option>
+                        <option ng-repeat="x in listaMotivoEgreso track by $index" ng-value="x.CODIGO">{{x.NOMBRE}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col l4 m4 s4" ng-if="evolucion.cierre">
+                    <label style="padding-left: 5%;font-size: inherit;">FECHA EGRESO</label>
+                    <div class="col s12 " type="text">
+                      <input type="date" max="{{maxDate | date:'yyyy-MM-dd'}}" ng-model="evolucion.fecha_cierre_temp"
+                        class="margin border-none input-text-new w-100 m-l" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- boton cancelar y guardar -->
+              <div class="row">
+                <div class="col s12 center" style="align-items: center;display: flex;justify-content: center;">
+                  <div class="button-custom-d ripple-custom-d" style="width: 10vw;" ng-click="nuevaEvolucion()">
+                    <strong>GUARDAR</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL AGREGAR GLOSA -->
+  <div id="modalNuevaGlosa" class="modal" style="width: 50vw;overflow: hidden;z-index: 1000;">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <div class="default-background" style="zoom: 60%;padding: 0">
+            <div class="col l12 m12 s12">
+              <div class="row">
+                <div class="col s11 white-text">
+                  <h5 class="white-text">REGISTRAR GLOSA - CENSO ({{censo.CENN_NUMERO}}) - {{censo.NOMBRE_AFILIADO}}
+                  </h5>
+                </div>
+                <div class="col s1">
+                  <h5 style="text-align: end;"><i style="cursor:pointer;" ng-click="closeModal('modalNuevaGlosa')"
+                      class="material-icons white-text">close</i>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-action" style="zoom:70%;padding-bottom: 3px;border-top: 0">
+            <div class="row">
+              <div class="col l9 m9 s9">
+                <label style="padding-left: 5%;font-size: inherit;">PRODUCTO</label>
+                <input class="margin border-none input-text-new black-text gray-input w-100 m-l" autocomplete="off"
+                  list="productos_eventos" ng-model="glosa_evento.cod_cups" id="cups_glosa" />
+                <datalist id="productos_eventos">
+                  <option ng-repeat="x in listaProductos" value="{{x.CODIGO}} - {{x.NOMBRE}}"></option>
+                </datalist>
+                <!-- <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                  style="text-transform:uppercase;width: 63vw !important;" autocomplete="off"
+                  ng-model="glosa_evento.cups_nombre" ng-click="showModals('modalAgregarProducto', censo)" /> -->
+              </div>
+              <div class="col s2 center"
+                style="align-items: center;display: flex;justify-content: center;height: 70px;margin-left: 40px;">
+                <div class="button-custom-d ripple-custom-d" style="width: 10vw;"
+                  ng-click="consultarProducto(glosa_evento.cod_cups, 'cups_glosa')">
+                  <strong>CONSULTAR</strong>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col l6 m6 s6">
+                  <label style="padding-left: 5%;font-size: inherit;">CANTIDAD</label>
+                  <div class="col s12 " type="text">
+                    <input class="margin border-none input-text-new black-text gray-input w-100" autocomplete="off"
+                      ng-model="glosa_evento.cantidad" id="valorGlosa" />
+                  </div>
+                </div>
+                <div class="col l6 m6 s6">
+                  <label style="padding-left: 5%;font-size: inherit;">VALOR</label>
+                  <div class="col s12" type="text">
+                    <input class="margin border-none input-text-new black-text gray-input w-100" autocomplete="off"
+                      readonly ng-model="productoSelect.VALORP" id="valorProdutoEvolucion" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col l6 m6 s6">
+                  <label style="padding-left: 5%;font-size: inherit;">VALOR GLOSA</label>
+                  <div class="col s12" type="text">
+                    <input class="margin border-none input-text-new black-text gray-input w-100" autocomplete="off"
+                      ng-model="glosa_evento.valor_glosa" id="valorGlosaEvento"
+                      ng-change="FormatPeso('valorGlosaEvento')" />
+                  </div>
+                </div>
+                <div class="col l6 m6 s6">
+                  <label style="padding-left: 5%;font-size: inherit;">MOTIVO</label>
+                  <div class="col s12" type="text">
+                    <select class="select-new-ps" type="text" ng-model="glosa_evento.motivo_glosa">
+                      <option value="" disabled>SELECCIONAR</option>
+                      <option ng-repeat="x in listaMotivoGlosa track by $index" value="{{x.CODIGO}}">
+                        {{x.GLMC_NOMBRE}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col s12 center m-t" style="align-items: center;display: flex;justify-content: center;">
+                  <div class="button-custom-d ripple-custom-d" style="width: 10vw;"
+                    ng-click="agregar_glosa_evolucion(glosa_evento, 'glosa')">
+                    <strong>AGREGAR</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="row center" ng-if="glosa.glosas.length > 0">
+                <ul class="center">
+                  <div class="col s12 center m-t" style="align-items: center;display: flex;justify-content: center;"
+                    ng-repeat="x in glosa.glosas">
+                    <il>
+                      <span>{{x.cod_cups}} - {{x.cups_nombre}} - {{x.valor_glosa}} </span>
+                      <il class="icon-cancel-outline fs-15 cursor-pointer default-color" title="Remover Glosa"
+                        ng-click="remover_glosa_evolucion(x, 'glosas')"></i>
+                      </il>
+                  </div>
+                </ul>
+              </div>
+              <div class="row">
+                <div class="col s12">
+                  <div class="form-group shadow-textarea">
+                    <label style="font-size: inherit;">OBSERVACION GLOSA</label>
+                    <textarea class="form-control z-depth-1" rows="5" ng-model="glosa_evento.observacion" cols="50"
+                      style="margin: 0px;min-height: 200px ; text-transform:uppercase" maxlength="4000"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12 center" style="align-items: center;display: flex;justify-content: center;">
+                <div class="button-custom-d ripple-custom-d" style="width: 10vw;" ng-click="guardarGlosa()">
+                  <strong>GUARDAR</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL AGREGAR QUEJA -->
+  <div id="modalNuevaQueja" class="modal" style="width: 50vw;overflow: hidden;z-index: 1000;">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <div class="default-background" style="zoom: 60%;padding: 0">
+            <div class="col l12 m12 s12">
+              <div class="row">
+                <div class="col s11 white-text">
+                  <h5 class="white-text">REGISTRAR QUEJA - CENSO ({{censo.CENN_NUMERO}})</h5>
+                </div>
+                <div class="col s1">
+                  <h5 style="text-align: end;"><i style="cursor:pointer;" ng-click="closeModal('modalNuevaQueja')"
+                      class="material-icons white-text">close</i>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-action" style="zoom:70%;padding-bottom: 3px;border-top: 0">
+            <div class="row">
+              <div class="col l12 m12 s12">
+                <div class="row">
+                  <div class="col s12">
+                    <label style="padding-left: 5%;font-size: inherit;">MOTIVO</label>
+                    <div class="col s12 " type="text">
+                      <select class="select-new-ps" type="text" ng-model="queja.motivo"
+                        ng-change="obtenerEventosAdvDeta(evolucion.evento_adverso)">
+                        <option value="" disabled>SELECCIONAR</option>
+                        <option ng-repeat="x in listaMotivosEspecificos track by $index" ng-value="x.CODIGO">
+                          {{x.NOMBRE}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    <div class="form-group shadow-textarea">
+                      <label style="font-size: inherit;">DESCRIPCION</label>
+                      <textarea class="form-control z-depth-1" rows="5" ng-model="queja.descripcion" cols="50"
+                        style="margin: 0px;min-height: 200px ; text-transform:uppercase" maxlength="4000"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- boton cancelar y guardar -->
+              <div class="row">
+                <div class="col s12 center" style="align-items: center;display: flex;justify-content: center;">
+                  <div class="button-custom-d ripple-custom-d" style="width: 10vw;" ng-click="nuevaQueja(censo)">
+                    <strong>Guardar</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL AGREGAR ENTREVISTA MEDICO -->
+  <div id="modalNuevaEntrevistaMedico" class="modal" style="width: 50vw;overflow: hidden;z-index: 1000;">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <div class="default-background" style="zoom: 60%;padding: 0">
+            <div class="col l12 m12 s12">
+              <div class="row">
+                <div class="col s11 white-text">
+                  <h5 class="white-text">REGISTRAR ENTREVISTA CON MEDICO - CENSO ({{censo.CENN_NUMERO}})</h5>
+                </div>
+                <div class="col s1">
+                  <h5 style="text-align: end;"><i style="cursor:pointer;"
+                      ng-click="closeModal('modalNuevaEntrevistaMedico')" class="material-icons white-text">close</i>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-action" style="zoom:70%;padding-bottom: 3px;border-top: 0">
+            <div class="row">
+              <div class="col l12 m12 s12">
+                <div class="row">
+                  <div class="col s11">
+                    <label style="padding-left: 5%;font-size: inherit;">MOTIVO</label>
+                    <input class="margin border-none input-text-new black-text gray-input w-100 m-l" autocomplete="off"
+                      ng-model="entrevistaMedico.motivo" style="text-transform:uppercase" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12">
+                    <div class="form-group shadow-textarea">
+                      <label style="font-size: inherit;">DESCRIPCION</label>
+                      <textarea class="form-control z-depth-1" rows="5" ng-model="entrevistaMedico.descripcion"
+                        cols="50" style="margin: 0px;min-height: 200px ; text-transform:uppercase"
+                        maxlength="4000"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- boton cancelar y guardar -->
+              <div class="row">
+                <div class="col s12 center" style="align-items: center;display: flex;justify-content: center;">
+                  <div class="button-custom-d ripple-custom-d" style="width: 10vw;" ng-click="nuevaQueja(censo)">
+                    <strong>Guardar</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL NUEVO CENSO -->
+  <div id="modalNuevoCenso" class="modal" data-controls-modal="modalNuevoCenso" data-backdrop="static"
+    data-keyboard="false" style="width: 50vw;overflow: hidden;z-index: 1000;">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <!-- title -->
+          <div class="default-background" style="zoom: 60%;padding: 0">
+            <div class="col l12 m12 s12">
+              <div class="row">
+                <div class="col s11 white-text">
+                  <h5 class="white-text">REGISTRAR NUEVO CENSO</h5>
+                </div>
+                <div class="col s1">
+                  <h5 style="text-align: end;"><i style="cursor:pointer;" ng-click="closeModal('modalNuevoCenso')"
+                      class="material-icons white-text">close</i>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-action" style="zoom:70%;padding-bottom: 3px;border-top: 0">
+            <i class="icon-left-3 default-color" ng-click="volverNuevoCenso(pasosNuevoCenso)"
+              ng-if="pasosNuevoCenso > 1"></i>
+            <div class="row">
+              <div class="col l12 m12 s12" ng-show="pasosNuevoCenso == 1">
+                <div class="row">
+                  <div class="col l6 m6 s6">
+                    <label style="padding-left: 5%;font-size: inherit;">TIPO DOCUMENTO</label>
+                    <div class="col s12 " type="text">
+                      <select class="select-new-ps" type="text" ng-model="nuevoCenso.tipo_doc">
+                        <option value="" disabled>SELECCIONAR</option>
+                        <option ng-repeat="x in Tipos_Documentos" ng-value="x.CODIGO">{{x.NOMBRE}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col l6 m6 s6">
+                    <label style="padding-left: 5%;font-size: inherit;">DOCUMENTO</label>
+                    <div class="col s12" type="text">
+                      <input class="select-new-ps" ng-model="nuevoCenso.documento" />
+                      <datalist id="diagnosticos">
+                        <option ng-repeat="x in listaDiagnosticos" value="{{x.CODIGO}} - {{x.NOMBRE}}"></option>
+                      </datalist>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12 center" style="align-items: center;display: flex;justify-content: center;">
+                    <div class="button-custom-d ripple-custom-d" style="width: 10vw;" ng-click="consultarAfiliado()">
+                      <strong>CONSULTAR</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col l12 m12 s12" ng-show="pasosNuevoCenso == 2">
+                <div class="row">
+                  <!-- Informacion del Paciente -->
+                  <div class="col s12">
+                    <blockquote>
+                      <b>
+                        <h6>Informacion del Paciente</h6>
+                      </b>
+                    </blockquote>
+                    <div class="row">
+                      <div class="col l3 m3 s3">
+                        <label style="padding-left: 4%;font-size: inherit;">Tipo Dcto:</label>
+                        <div class="col s12">
+                          <span>{{nuevoCenso.tipo_doc}}</span>
+                        </div>
+                      </div>
+                      <div class="col l3 m3 s3">
+                        <label style="padding-left: 4%;font-size: inherit;">N° Documento:</label>
+                        <div class="col s12 ">
+                          <span>{{nuevoCenso.documento}}</span>
+                        </div>
+                      </div>
+                      <div class="col l6 m6 s6">
+                        <label style="padding-left: 4%;font-size: inherit;">Nombre Completo:</label>
+                        <div class="col s12 ">
+                          <span>{{afiliado.NOMBRE_COMPLETO}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col l3 m3 s3">
+                        <label style="padding-left: 4%;font-size: inherit;">Genero:</label>
+                        <div class="col s12 ">
+                          <span>{{afiliado.SEXO == 'F' ? 'FEMENINO' : 'MASCULINO'}}</span>
+                        </div>
+                      </div>
+                      <div class="col l3 m3 s3">
+                        <label style="padding-left: 4%;font-size: inherit;">Edad:</label>
+                        <div class="col s12 ">
+                          <span>{{afiliado.EDAD}}</span>
+                        </div>
+                      </div>
+                      <div class="col l3 m3 s3">
+                        <label style="padding-left: 4%;font-size: inherit;">Alto Costo:</label>
+                        <div class="col s12 ">
+                          <span class="badge-custom-d">{{afiliado.AFIC_ALTO_COSTO == 'S' ? 'SI' : 'NO'}}</span>
+                        </div>
+                      </div>
+                      <div class="col l3 m3 s3">
+                        <label style="padding-left: 4%;font-size: inherit;">Gestion del Riesgo:</label>
+                        <div class="col s12 ">
+                          <span class="badge-custom-d">{{afiliado.GESTION_RIESGO == 'S' ? 'SI' : 'NO'}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col l3 m3 s3">
+                        <label style="padding-left: 4%;font-size: inherit;">Regimen:</label>
+                        <div class="col s12 ">
+                          <span class="badge-custom-d">{{afiliado.REGIMEN == 'S' ? 'SUBSIDIADO' :
+                            'CONTRIBUTIVO'}}</span>
+                        </div>
+                      </div>
+                      <div class="col l3 m3 s3">
+                        <label style="padding-left: 4%;font-size: inherit;">Departamento:</label>
+                        <div class="col s12 ">
+                          <span>{{afiliado.NOMUBICGEO}}</span>
+                        </div>
+                      </div>
+                      <div class="col l3 m3 s3">
+                        <label style="padding-left: 4%;font-size: inherit;">Municipio:</label>
+                        <div class="col s12 ">
+                          <span>{{afiliado.MUNICIPIO}}</span>
+                        </div>
+                      </div>
+                      <div class="col l3 m3 s3">
+                        <label style="padding-left: 4%;font-size: inherit;">Portabilidad:</label>
+                        <div class="col s12 ">
+                          <span class="badge-custom-d">{{afiliado.PORTABILIDAD == 'N' ? 'NO' :
+                            afiliado.PORTABILIDAD}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col 12 m12 s12">
+                    <blockquote>
+                      <label>
+                        <h6>Información de la IPS</h6>
+                      </label>
+                    </blockquote>
+                    <div class="row">
+                      <div class="col l10 m10 s10">
+                        <label style="padding-left: 5%;font-size: inherit;">Ips</label>
+                        <div class="col s12" type="text" ng-if="listaIps.length == 0">
+                          <input class="select-new-ps" list="lista_ips" ng-model="ips_query" />
+                        </div>
+                        <div class="col s12" type="text" ng-if="listaIps.length != 0">
+                          <input class="select-new-ps" list="lista_ips" ng-model="nuevoCenso.ips"
+                            placeholder="SELECCIONAR PRESTADOR" />
+                          <datalist id="lista_ips" ng-model="ips">
+                            <option ng-repeat="x in listaIps" value="{{x.CODIGO}} - {{x.NOMBRE}}"></option>
+                          </datalist>
+                        </div>
+                      </div>
+                      <div class="col s2 center"
+                        style="align-items: center;display: flex;justify-content: center;height: 70px;">
+                        <div class="button-custom-d ripple-custom-d" style="width: 10vw;"
+                          ng-click="consultaIps(ips_query)">
+                          <strong>CONSULTAR</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col s12 center" style="align-items: center;display: flex;justify-content: center;">
+                        <div class="button-custom-d ripple-custom-d" style="width: 10vw;"
+                          ng-click="setPasoCensoNuevo(3)">
+                          <strong>CONTINUAR</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col l12 m12 s12" ng-show="pasosNuevoCenso == 3">
+                <div class="row">
+                  <div class="col 12 m12 s12">
+                    <blockquote>
+                      <label>
+                        <h6>Informacion Censo</h6>
+                      </label>
+                    </blockquote>
+                    <div class="row">
+                      <div class="col l12 m12 s12">
+                        <label style="padding-left: 5%;font-size: inherit;">DIAGNOSTICO PRINCIPAL</label>
+                        <div class="col s12" type="text">
+                          <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                            style="text-transform:uppercase" autocomplete="off"
+                            ng-model="nuevoCenso.diagnostico_principal"
+                            ng-click="showModals('modalAgregarDiagnostico', 'diagnostico_principal')" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col l12 m12 s12">
+                        <label style="padding-left: 5%;font-size: inherit;">DIAGNOSTICO ALTERNO</label>
+                        <div class="col s12" type="text">
+                          <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                            style="text-transform:uppercase" autocomplete="off"
+                            ng-model="nuevoCenso.diagnostico_alterno"
+                            ng-click="showModals('modalAgregarDiagnostico', 'diagnostico_alterno')" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col l12 m12 s12">
+                        <label style="padding-left: 5%;font-size: inherit;">DIAGNOSTICO ALTERNO 2</label>
+                        <div class="col s12" type="text">
+                          <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                            style="text-transform:uppercase" autocomplete="off"
+                            ng-model="nuevoCenso.diagnostico_alterno_2"
+                            ng-click="showModals('modalAgregarDiagnostico', 'diagnostico_alterno_2')" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col l4 m4 s4">
+                        <label style="padding-left: 5%;font-size: inherit;">TIPO ESTANCIA</label>
+                        <div class="col s12" type="text">
+                          <select class="select-new-ps" type="text" ng-model="nuevoCenso.tipo_estancia">
+                            <option value="" disabled>SELECCIONAR</option>
+                            <option ng-repeat="x in listaTiposEstancia" ng-value="x.CODIGO">{{x.NOMBRE}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col l4 m4 s4">
+                        <label style="padding-left: 5%;font-size: inherit;">FECHA INGRESO</label>
+                        <div class="col s12" type="text">
+                          <input type="date" max="{{maxDate | date:'yyyy-MM-dd'}}" ng-model="nuevoCenso.fecha_ingreso"
+                            class="margin border-none input-text-new w-100 m-l" autocomplete="off" />
+                        </div>
+                      </div>
+                      <div class="col l4 m4 s4">
+                        <label style="padding-left: 5%;font-size: inherit;">PROTOCOLO</label>
+                        <div class="col s12" type="text">
+                          <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                            style="text-transform:uppercase" autocomplete="off"
+                            ng-model="nuevoCenso.protocolo_manejo" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col s12 center" style="align-items: center;display: flex;justify-content: center;">
+                        <div class="button-custom-d ripple-custom-d" style="width: 10vw;"
+                          ng-click="guardarCensoNuevo()">
+                          <strong>GUARDAR</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL AGREGAR DIAGNOSTICO -->
+  <div id="modalAgregarDiagnostico" class="modal" style="width: 50vw;overflow: hidden;z-index: 1000;">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <div class="default-background" style="zoom: 60%;padding: 0">
+            <div class="col l12 m12 s12">
+              <div class="row">
+                <div class="col s11 white-text">
+                  <h5 class="white-text">CONSULTAR DIAGNOSTICO</h5>
+                </div>
+                <div class="col s1">
+                  <h5 style="text-align: end;"><i style="cursor:pointer;"
+                      ng-click="closeModal('modalAgregarDiagnostico')" class="material-icons white-text">close</i>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-action" style="zoom:70%;padding-bottom: 3px;border-top: 0">
+            <div class="row">
+              <div class="col l12 m12 s12">
+                <div class="row">
+                  <div class="col s10">
+                    <label style="padding-left: 5%;font-size: inherit;">DIGNOSTICO</label>
+                    <input class="margin black-text  w-100 m-l" autocomplete="off" ng-model="diagnostico"
+                      style="text-transform:uppercase" />
+                  </div>
+                  <div class="col s2 center"
+                    style="align-items: center;display: flex;justify-content: center;height: 70px;">
+                    <div class="button-custom-d ripple-custom-d" style="width: 10vw;"
+                      ng-click="consultaDiagnostico(diagnostico)">
+                      <strong>CONSULTAR</strong>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12" style="max-height: 50vh; overflow: auto;">
+                    <ul>
+                      <li class="m-b" ng-repeat="x in listaDiagnosticos">
+                        <span class="default-color" ng-click="seleccionarDiagnostico(x, scope)"
+                          style="cursor: pointer;">{{x.CODIGO}} -
+                          {{x.NOMBRE}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- boton cancelar y guardar -->
+              <div class="row">
+                <div class="col s12 center" style="align-items: center;display: flex;justify-content: center;">
+                  <div class="button-custom-d ripple-custom-d" style="width: 10vw;" ng-click="consultaDiagnostico()">
+                    <strong>Guardar</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL AGREGAR PRODUCTO -->
+  <div id="modalAgregarProducto" class="modal" style="width: 50vw;overflow: hidden;z-index: 1000;">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <div class="default-background" style="zoom: 60%;padding: 0">
+            <div class="col l12 m12 s12">
+              <div class="row">
+                <div class="col s11 white-text">
+                  <h5 class="white-text">CONSULTAR PRODUCTO</h5>
+                </div>
+                <div class="col s1">
+                  <h5 style="text-align: end;"><i style="cursor:pointer;" ng-click="closeModal('modalAgregarProducto')"
+                      class="material-icons white-text">close</i>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-action" style="zoom:70%;padding-bottom: 3px;border-top: 0">
+            <div class="row">
+              <div class="col l12 m12 s12">
+                <div class="row">
+                  <div class="col s10">
+                    <label style="padding-left: 5%;font-size: inherit;">CODIGO CUPS</label>
+                    <input class="margin black-text  w-100 m-l" autocomplete="off" ng-model="cups_modal"
+                      style="text-transform:uppercase" />
+                  </div>
+                  <div class="col s2 center"
+                    style="align-items: center;display: flex;justify-content: center;height: 70px;">
+                    <div class="button-custom-d ripple-custom-d" style="width: 10vw;"
+                      ng-click="consultarProducto(cups_modal)">
+                      <strong>CONSULTAR</strong>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s12" style="max-height: 50vh; overflow: auto;">
+                    <ul>
+                      <li class="m-b" ng-repeat="x in listaProductos">
+                        <span class="default-color" ng-click="seleccionarProducto(x, 'cups_nombre')"
+                          style="cursor: pointer;">{{x.CODIGO}} -
+                          {{x.NOMBRE}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- boton cancelar y guardar -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

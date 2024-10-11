@@ -1,0 +1,424 @@
+<div id="pantalla" class="white newdesing">
+  <div class="row section-header" style="margin-top:7px">
+    <ul class="left mailbox-custom-search list-inline"
+      style="width: 100%;display: flex;justify-content: space-between;align-items: center;">
+      <li id="inicio">
+        <h5 onclick="location.reload();" class="cursor-pointer">MODULO CONSULTA SUPERVISIÓN DE CONTRATOS</h5>
+      </li>
+    </ul>
+  </div>
+  <div class="col s12 m12 l12" style="margin-top: 30px;justify-content: center;zoom:65%;" ng-show="vistaResumen">
+    <div class="row">
+      <h6 style="color: #1a2e63 !important;font-weight: 600 !important;font-size: 1.8125rem;text-align: center">
+        <b>***** CONSOLIDADO DE SUPERVISIONES *****</b>
+      </h6>
+    </div>
+    <div class="row" style="margin-bottom: 0px;">
+      <div class="col l12 m12 s12">
+        <div class="row">
+          <div ng-repeat="list in resumencontaContrato | orderBy:'NOMBRE_SUPERVISOR'"
+            class=" cursor-pointer col s3 m3 l3 ng-scope" ng-click="function_control_inicio_Seccion(list);function_inicioContador(list)">
+            <div class="card-panel center-align white-text no-padding">
+              <div style="padding: 20px 20px 10px;background-color: #1a2e63;position:relative">
+                <i class="material-icons prefix hovitem ng-binding"
+                  style="position: relative;font-size: 8em;z-index: 10;margin: auto;height: 140px;display: flex;justify-content: center;align-items: center;">person_pin</i>
+                <p class="margin" style="z-index: 10;position: relative;">
+                  <strong style="padding: 2px 15px;" class="ng-binding">
+                    {{list.NOMBRE_SUPERVISOR}}
+                  </strong>
+                </p>
+                <div
+                  style="background-color: rgb(205, 104, 104); position: absolute; bottom: 0px; right: 0px; left: 0px; height: 0%;"
+                  ng-style="colors(list.ACTIVO)"></div>
+              </div>
+              <div class="black-text white"
+                style="font-size: 14px;padding: 10px 20px;display: flex;justify-content: space-around;">
+                <a ng-click="obtenerAcasXPersona(list.IDENTIFICACION,'A',list.NOMBRE,'Abiertos')" class="red-text"
+                  href="javascript:void(0)" style="width: 50%;display: grid;font-weight: bold">
+                  <span class="ng-binding">{{list.CANTIDAD}}</span>
+                  Cantidad
+                </a>
+                <a ng-click="obtenerAcasXPersona(list.IDENTIFICACION,'P',list.NOMBRE,'Cerrados')" class="green-text"
+                  href="javascript:void(0)"
+                  style="width: 50%;border-left: 1px solid #ededed;display: grid;font-weight: bold">
+                  <span class="ng-binding">{{list.REALIZADAS
+                    }}</span>
+                  Realizadas
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12" ng-show="vistaConsulta">
+    <div class="card ng-scope" style="margin: 38px; bottom: 10px ;zoom:75%;">
+      <div class="row margin">
+        <div class="col l12 m12 s12 center">
+          <strong>
+            <h5><b>INICIO DE PROCESO DE CONSULTA SUPERVISION</b></h5>
+            <h6 style="color:#1a2e63"><b>** {{nombredelsupervisado}} **</b></h6>
+          </strong>
+        </div>
+      </div>
+      <div class="row margin">
+        <div class="col l12 m12 s12">
+          <div class="row margin right">
+            <button type="button" class="center white-text default-background  icon-reply-outline" style="border-radius: 10px;zoom:130%;" ng-click="Inicio()"
+              title="Volver al incio"></button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col l7 m7 s7">
+          <div class="row center">
+            <div class="row form-group">
+              <div class="col s12 m12 l12 margin">
+                <div class="col s12">
+                  <div class="col s4 no-padding label-new m-b right" style="margin-right: 0.5rem !important; margin-top: 30px" >
+                    <input id="Var_Seccional_Filtrar_Sol" class="margin border-none input-text-new  w-100 m-l" autocomplete="off" type="text" placeholder="Buscar..." ng-model="listContratos" text-upper/>
+                    <i class="icon-search cursor-pointer default-color" style="margin-left: -1.45em" title="Buscar"></i>
+                  </div>
+                </div>
+                    <div class="col l12 m12 s12" >
+                          <div ng-repeat="c in contaContrato" class="card-panel center-align white-text no-padding">
+                            <div style="padding: 5px 5px 5px;background-color: #1a2e63;position:relative">
+                              <p class="margin" style="z-index: 10;position: relative;">
+                                <strong style="padding: 2px 15px;" class="ng-binding">
+                                  ESTADO DE LAS SUPERVISIONES
+                                </strong>
+                              </p>
+                            </div>
+                            <div class="black-text white" style="font-size: 14px;padding: 10px 20px;display: flex;justify-content: space-around;">
+                              <a class="red-text" style="width: 50%;display: grid;font-weight: bold">{{c.CANTIDAD}}<span class="icon-chart-line ng-binding">  Supervisiones a Realizar</span> 
+                              </a>
+                              <a class="green-text" 
+                               style="width: 50%;border-left: 1px solid #ededed;display: grid;font-weight: bold">{{c.REALIZADAS}}<span class="ng-binding icon-ok-5">  Supervisiones Realizadas</span>
+                              </a>
+                            </div>
+                          </div>
+                    </div>
+                <div class="col s12" style="margin-top: -13px;">
+                  <div style="max-height:66vh;overflow-y:auto;border: 1px solid;overflow-x: hidden;">
+                    <table id="tabla_modal_ENTREGA" class=" highlight" style="width:100%;color: black;">
+                      <thead>
+                        <th class="center default-background  white-text">NIT</th>
+                        <th class="center default-background  white-text">IPS</th>
+                        <th class="center default-background  white-text">FECHA DE EVALUACION</th>
+                        <th class="center default-background  white-text">CONTROL</th>
+                      </thead>
+                      <tbody id="idpro">
+                        <tr ng-repeat="list in lista_Contrato |  filter:listContratos">
+                          <td class="center"><b>{{list.CODIGO}}</b></td>
+                          <td class="center"><b>{{list.NOMBRE}}</b></td>
+                          <td class="center"><b>{{list.FECHA}}</b></td>
+                          <td class="center">
+                            <i ng-show="list.REALIZADA =='S' && list.PROCESO == null || list.PROCESO > 7 "
+                              ng-click="function_bucarSupervision(list)" class="icon-eye-6 fs-20 cursor-pointer"
+                              title="Ver evaluacion"></i>
+                          </td>
+                      
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div style="width: 41%;display: flex;">
+                    <label for="normal">Total de de contratos:
+                      {{lista_Contrato.length}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col l5 m5 s5">
+          <div class="row center" style="margin-top: 124px;">
+            <img src="assets/images/Supervisioncontrato/supervision.svg" class=" margin center">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12" ng-show="vistaconsultaContrato">
+    <div class="card ng-scope" style="margin: 38px; bottom: 10px; zoom: 90%">
+      <div class="row">
+        <div class="col s12">
+          <div class="col l12 m12 s12">
+            <div class="row form-group" ng-show="visualTable">
+              <blockquote>
+                <h6>Listado de Contratos</h6>
+              </blockquote>
+              <div class="row margin">
+                <div class="col l12 m12 s12">
+                    <div class="row right">
+                      <button type="button" class="center icon-reply" style="border-radius: 10px" ng-click="Inicio()" title="Volver al incio"></button>
+                  </div>
+                </div>
+              </div>
+              <div class="col s12 m12 l12 margin">
+                <div class="col s12">
+                  <div style="max-height: 70vh;overflow-y: auto;border: 1px solid;overflow-x: hidden;">
+                    <table id="tabla_modal_ENTREGA" class="highlight" style="width: 100%; color: black">
+                      <thead>
+                        <th class="center default-background white-text">Id Proceso</th>
+                        <th class="center default-background white-text">Fecha supervision</th>
+                        <th class="center default-background white-text">Ips</th>
+                        <th class="center default-background white-text">Supervisor</th>
+                        <th class="center default-background white-text">Ver supervion detalle</th>
+                        <th class="center default-background white-text">Imprimir</th>
+                      </thead>
+                      <tbody id="idpro">
+                        <tr ng-repeat="contratos in listaconsultaContrato |  filter:busquedaInfo">
+                        <td class="center">{{contratos.ID_PROCESO}}</td>
+                          <td class="center">{{contratos.FECHA_VISITA}}</td>
+                          <td class="center">{{contratos.IPS}}</td>
+                          <td class="center">{{contratos.SUPERVISIOR}}</td>
+                          <td class="center">
+                            <i ng-click="function_obtener_supervision_detalle(contratos)" class="icon-eye-1 fs-20 cursor-pointer" title="Ver supervision detalle"></i>
+                          </td>
+                          <td class="center">
+                            <i ng-click="function_imprimirSupervision(contratos,'P')" class="icon-print-3 fs-20 cursor-pointer" title="Imprimir evaluacion"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div style="width: 89%; display: flex">
+                    <div style="width: 50%">
+                      <label for="normal">Total de de contratos:{{listaconsultaContrato.length}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group" ng-show="visualtableDetalle">
+        <blockquote><h6>Listado de Contratos Detalle</h6></blockquote>
+        <div class="row margin">
+          <div class="col l12 m12 s12">
+              <div class="row right">
+                <button type="button" class="center icon-reply" style="border-radius: 10px" ng-click="function_controlVista('vistaconsultaContrato')"  title="Volver al incio"></button>
+              </div>
+          </div>
+        </div>
+        <div class="col s12 m12 l12 margin">
+          <div class="col s12">
+            <div style="max-height: 70vh;overflow-y: auto;border: 1px solid;overflow-x: hidden;">
+              <table id="tabla_modal_ENTREGA" class="highlight" style="width: 100%; color: black">
+                <thead>
+                  <th class="center default-background white-text">Fecha supervision</th>
+                  <th class="center default-background white-text">Ips</th>
+                  <th class="center default-background white-text">N° de contrato</th>
+                  <th class="center default-background white-text">Supervisor</th>
+                  <th class="center default-background white-text">Ver supervion</th>
+                  <th class="center default-background white-text">Resultado</th>
+                  <th class="center default-background white-text">Imprimir</th>
+                  <!-- <th class="center default-background white-text">Editar</th> -->
+                </thead>
+                <tbody id="idpro">
+                  <tr ng-repeat="contratos in listaconsultaDetalle |  filter:busquedaInfo">
+                    <td class="center">{{contratos.FECHA_VISITA}}</td>
+                    <td class="center">{{contratos.IPS}}</td>
+                    <td class="center">{{contratos.CONTRATO}}</td>
+                    <td class="center">{{contratos.SUPERVISIOR}}</td>
+                    <td class="center">
+                      <i ng-click="function_imprimirSupervision(contratos,'N')" class="icon-eye-1 fs-20 cursor-pointer" title="Ver evaluacion"></i>
+                    </td>
+                    <td class="center">
+                      <i ng-click="function_verResultado(contratos)" class=" icon-chart fs-20 cursor-pointer" title="Ver resultados"></i>
+                    </td>
+                    <td class="center">
+                      <i ng-click="function_imprimirSupervision(contratos,'S')" class="icon-print-3 fs-20 cursor-pointer" title="Imprimir evaluacion"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="width: 89%; display: flex">
+              <div style="width: 50%">
+                <label for="normal">Total de de contratos:
+                  {{listaconsultaDetalle.length}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="modalresulltados" class="modal" style="zoom: 80%;width: 75%;">
+    <div class="modal-content" style="padding: 0px !important;">
+        <div class="row">
+          <div class="col s12">
+            <div class="col l12 m12 s12">
+                <div class="center row">
+                  <div class="col l12 m12 s12">
+                        <strong><h5>* {{ips}} *</h5></strong>
+                  </div>
+                </div>
+                <blockquote>
+                  <h5>Resumen de resultado</h5>
+                </blockquote>
+                <div class="row">
+                  <div class="col l6 m6 s6">
+                    <label style="padding-left: 2%;font-size: inherit;">Mantenimiento de las
+                      condiciones de habilitacion y soportes contractuales 15%:</label>
+                    <div class="col s12">
+                      <input ng-model="result.proceso1" type="text" disabled>
+                    </div>
+                  </div>
+                  <div class="col l6 m6 s6">
+                    <label style="padding-left: 2%;font-size: inherit;">Indicadores 20%:</label>
+                    <div class="col s12">
+                      <input ng-model="result.proceso2" type="text" disabled>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col l6 m6 s6">
+                    <label style="padding-left: 2%;font-size: inherit;">Cumplimiento financieros
+                      5%:</label>
+                    <div class="col s12">
+                      <input ng-model="result.proceso3" type="text" disabled>
+                    </div>
+                  </div>
+                  <div class="col l6 m6 s6">
+                    <label style="padding-left: 2%;font-size: inherit;">Prestación efectiva de los
+                      servicios 20%:</label>
+                    <div class="col s12">
+                      <input ng-model="result.proceso4" type="text" disabled>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col l6 m6 s6">
+                    <label style="padding-left: 2%;font-size: inherit;">Satisfacción del usuario
+                      20%:</label>
+                    <div class="col s12">
+                      <input ng-model="result.proceso5" type="text" disabled>
+                    </div>
+                  </div>
+                  <div class="col l6 m6 s6">
+                    <label style="padding-left: 2%;font-size: inherit;">Tutelas 5%:</label>
+                    <div class="col s12">
+                      <input ng-model="result.proceso6" type="text" disabled>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col l4 m4 s4">
+                    <label style="padding-left: 2%;font-size: inherit;">Planes de accion 15%</label>
+                    <div class="col s12">
+                      <input ng-model="result.proceso7" type="text" disabled>
+                    </div>
+                  </div>
+                  <div class="col l4 m4 s4">
+                    <label style="padding-left: 2%;font-size: inherit;">Total:</label>
+                    <div class="col s12">
+                      <input ng-model="result.total" type="text" disabled>
+                    </div>
+                  </div>
+                  <div class="col l4 m4 s4">
+                    <label style="padding-left: 2%;font-size: inherit;">Calificacion:</label>
+                    <div class="col s12">
+                      <input ng-model="result.calificacion" type="text" disabled>
+                    </div>
+                  </div>
+                </div>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div id="modalpermisos" class="modal" >
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <div class="card-content foot4">
+            <div class="s12">
+              <h5 class="white-text">Coordial salud.
+            </div>
+            <div class="center s12">
+              <h5 class="white-text">En estos momentos no tienes permisos para trabajar en el modulo de <b>CONSULTA SUPERVISION</b>,
+                para su habilitación por favor solicite la autorizacion del modulo al área de <b>CONTRATACION</b>.</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    #tabla_modal_ENTREGA th {
+      position: sticky;
+      top: 0;
+      z-index: 9;
+    }
+    .btn_2 {
+      border: none;
+      border-radius: 2px;
+      display: inline-block;
+      height: 36px;
+      line-height: 36px;
+      outline: 0;
+      padding: 0 2rem;
+      text-transform: uppercase;
+      vertical-align: middle;
+      -webkit-tap-highlight-color: transparent;
+      background-color: #1a2e63;
+    }
+    .textCollapsible {
+      border: none;
+      border-radius: 2px;
+      display: inline-block;
+      height: 36px;
+      line-height: 36px;
+      outline: 0;
+      padding: 0 2rem;
+      text-transform: uppercase;
+      vertical-align: middle;
+      -webkit-tap-highlight-color: transparent;
+      background-color: #fcfcfd;
+    }
+    .input-field-ps {
+      position: relative;
+      margin-top: 1px;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+    .select-new-ps {
+      outline: none !important;
+      height: 34px;
+      background-color: white;
+      display: block;
+      border: 1px solid #8a88865e;
+      border-radius: 0.25rem;
+      border-bottom: 1px solid #8a88865e;
+      box-shadow: none !important;
+    }
+    .btn-new-ps {
+      border: none;
+      border-radius: 2px;
+      display: inline-block;
+      height: 32px;
+      line-height: 36px;
+      outline: 0;
+      padding: 0 2rem;
+      text-transform: uppercase;
+      vertical-align: middle;
+      background-color: #1a2e63;
+      -webkit-tap-highlight-color: transparent
+    }
+    input[type=text] {
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+      background-color: #fff;
+      background-clip: padding-box;
+      padding: 0 1em;
+      font-weight: 600;
+      height: 2rem;
+    }
+  </style>
+</div>

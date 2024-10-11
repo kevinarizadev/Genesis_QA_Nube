@@ -1,0 +1,544 @@
+<div id="validacioncamposVacios" class="white newdesing validacioncamposVacios">
+  <style>
+    .newdesing .content-container {
+      min-height: 0;
+    }
+    .content-container {
+      padding: 0 20px;
+    }
+  </style>
+  <div class="row section-header margin">
+    <ul class="left mailbox-custom-search list-inline w-100 d-flex justify-content-between align-items-center">
+      <li id="inicio">
+        <h5 class="cursor-pointer" style="font-size: 22px;line-height: 22px;opacity: .54;margin: 9px 0">
+          <i class="icon-arrows-ccw default-color cursor-pointer" title="Refrescar" ng-click="Inicio()"></i>
+          TABLERO EISP SIVIGILA
+        </h5>
+      </li>
+      <li>
+        <ul class="tabs transparent" style="overflow:hidden;">
+          <li ng-show="cargue_Reporte" class="tab col w-auto">
+            <a ng-click="SetTab(1);" id="tabCargue" href class="active">Cargue<i class="icon-doc-add"></i></a>
+          </li>
+          <li ng-show="cargue_Estado" class="tab col w-auto">
+            <a ng-click="SetTab(2);" id="tabConsulta" href>Consulta<i class="icon-pen"></i></a>
+          </li>
+          <li ng-show="rol_Obtenido" class="tab col w-auto">
+            <a ng-click="SetTab(3)" href>Permisos
+              <i class="icon-users"></i></a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <!-- <button ng-click="Hoja_Limpiar()">asd</button> -->
+  <!-- //////////////////////////////////TAB 1////////////////////////////////// -->
+  <!-- ///// -->
+  <!-- CARGUE -->
+  <div class="row dashboard-wrapper content-container white" ng-show="Tabs==1 && cargue_Reporte">
+    <form ng-submit="guardarCargue()">
+      <div class="col s12 m12 l12 d-flex">
+        <div class="col s9 m9 l9" style="margin: auto;">
+          <div class="col s3 no-padding label-new m-b">
+            <label id="tipoCubo_label">Tipo de Reporte<span class="red-text">*</span></label>
+            <select class="select-default-new input-out-new m-l" ng-model="hoja1.tipoCubo" ng-click="testsemanaDatos()">
+              <option value="" disabled>SELECCIONAR</option>
+              <option value="1">Eisp sivigila</option>
+              <option value="2">Web</option>
+            </select>
+          </div>
+          <div class="col s3 no-padding label-new m-b">
+            <label id="anio_label">Año<span class="red-text">*</span></label>
+            <select class="select-default-new input-out-new m-l" ng-model="hoja1.anio"
+              ng-change="obtenerMeses(hoja1.anio)" ng-click="testsemanaDatos()">
+              <option value="" disabled>SELECCIONAR</option>
+              <option value="{{x.codigo}}" ng-repeat="x in list.listadoAnio">{{x.codigo}}</option>
+            </select>
+          </div>
+          <div class="col s3 no-padding label-new m-b" ng-init="selectPeriodo()">
+            <label id="periodo_label">Periodo<span class="red-text">*</span></label>
+            <select class="select-default-new input-out-new m-l" ng-model="hoja1.periodo" ng-click="testsemanaDatos()">
+              <option value="" disabled>SELECCIONAR</option>
+              <option value="{{x.id}}" ng-repeat="x in arrlistPerido" ng-value="x.id">{{x.name}}</option>
+              <!-- ng-show="x.id == periodoActual" -->
+            </select>
+          </div>
+          <div class="col s3 no-padding label-new m-b">
+            <label id="semana_label">Semana<span class="red-text">*</span></label>
+            <select class="select-default-new input-out-new m-l" ng-model="hoja1.semana" ng-click="testsemanaDatos()">
+              <option value="" disabled>SELECCIONAR</option>
+              <option value="{{x.id}}" ng-repeat="x in arrlistPerido[hoja1.periodo-1].semanas" ng-value="x.id">
+                {{x.name}}</option>
+              <!-- ng-show="x.id == semanaActual" -->
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="center col l12 m12 s12" style="margin-top: -17px;">
+          <label><span class="red-text" style="zoom: 128%;">Por favor tener encuenta que todos los campos marcados con
+              ( * ) son obligatorios.</span></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div style="position: absolute;margin-top: 39px;z-index: 999;padding-left: 521px;">
+            <img src="assets/images/file.png" style="zoom: 5%;">
+          </div>
+        </div>
+        <div class="col l6 m6 s6" style="margin-left: 413px;">
+          <label id="adjuntar_label"><span class="red-text right">*</span></label>
+          <div class="col s12">
+            <div
+              class="file-upload-wrapper file-field input-field {{hoja1.textoFile == 'Archivo Cargado' ? 'success' : ''}}"
+              id="file-upload-wrapper" data-text="{{hoja1.textoFile}}" style="margin: 0;width: -webkit-fill-available;">
+              <div class="right">
+                <input type="file" id="files_cargue" name="files_cargue">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row center">
+        <div style="text-align: center; padding: 10px 0.75px;">
+          <button class="icon-floppy white-text default-background" type="submit" ng-disabled="btnGuardarDsb"
+            style="border-radius: 10px;zoom:130%;">Guardar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- ///// -->
+  <!-- TABLA CONSULTA-->
+  <div class="row dashboard-wrapper content-container white" ng-show="Tabs==2">
+    <div class="foot4 divcardcustom default-linear-gradient">
+      <div class="text-al divcardcustom2">
+        <strong class="switch" style="font-weight:600">Listado de cargues
+          ({{list.listadoCargues.length}})</strong>
+        <div class="tooltip">
+          <i class="icon-cw-circle cursor-pointer" ng-click="obtenerListadoCargues()"></i>
+          <span class="tooltiptext" style="font-size: 12px;width: 60px;margin-left: -30px;">Actualizar</span>
+        </div>
+        <div class="col s3 no-padding label-new right"
+          style="width: 25%;display: inline-flex;margin-right: -5px;margin-top: -2px;">
+          <input class="margin border-none input-text-new black-text white w-100 m-l" style="text-align:right;"
+            autocomplete="off" placeholder="Buscar..." ng-model="hoja2.Filtro">
+        </div>
+      </div>
+    </div>
+    <!-- ELEGIR -->
+    <div style="max-height: 90vh;overflow-y: auto;">
+      <table class="bordered table_center_align highlight border-color default-border"
+        style="width:100%;font-size:6px !important;border-width: medium;">
+        <thead class="default-border default-color">
+          <th>Cargue</th>
+          <th>Periodo</th>
+          <th>Semana</th>
+          <th>Año</th>
+          <th>Fecha y hora</th>
+          <th>Tipo de reporte</th>
+          <th>Responsable</th>
+          <th>Estado</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="x in list.listadoCargues | filter:hoja2.Filtro">
+            <td>{{x.ID}}</td>
+            <td>{{x.PERIODO}}</td>
+            <td>{{x.SEMANA}}</td>
+            <td>{{x.ANO}}</td>
+            <td>{{x.FECHA_CARGUE}}</td>
+            <td>{{x.TIPO_REPORTE == '1' ?'EISP SIVIGILA' :'WEB'}}</td>
+            <td>{{x.RESPONSABLE}}</td>
+            <td>
+              <span class="{{x.ESTADO_CLASE}}">{{x.ESTADO_NOM}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- ///// -->
+  <!-- TABLA FUNCIONARIOS -->
+  <div class="row dashboard-wrapper content-container white" ng-show="Tabs==3">
+    <div class="foot4 divcardcustom default-linear-gradient">
+      <div class="text-al divcardcustom2">
+        <strong class="switch" style="font-weight:600">Listado de usuarios con permisos en el módulo
+          ({{list.listadoFuncionarios.length}})</strong>
+        <div class="tooltip" style="margin: 0px 5px 0px 5px;">
+          <i class="icon-user-plus cursor-pointer" ng-click="openModal('funcionarios')"></i>
+          <span class="tooltiptext" style="font-size: 12px;width: 60px;margin-left: -30px;">Agregar funcionario</span>
+        </div>
+        <div class="tooltip">
+          <i class="icon-cw-circle cursor-pointer" ng-click="obtenerListadoFuncs()"></i>
+          <span class="tooltiptext" style="font-size: 12px;width: 60px;margin-left: -30px;">Actualizar</span>
+        </div>
+        <div class="col s3 no-padding label-new right"
+          style="width: 25%;display: inline-flex;margin-right: -5px;margin-top: -2px;">
+          <input class="margin border-none input-text-new black-text white w-100 m-l" style="text-align:right;"
+            autocomplete="off" placeholder="Buscar..." ng-model="hoja3.Filtro">
+        </div>
+      </div>
+    </div>
+    <!-- modal listado de ips formulario Principal -->
+    <div id="modalfuncionarios" class="modal" style="overflow: hidden;">
+      <div class="modal-content" style="padding: 0px !important;">
+        <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+          <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+            <div class="card-content foot4" style="padding: 0;zoom:60%;">
+              <div class="col s11">
+                <h5 class="white-text">Listado de funcionarios</h5>
+              </div>
+              <div class="col s1">
+                <div class="col s1">
+                  <h5 style="text-align: end;"><i style="cursor:pointer;" ng-click="closeModal('funcionarios')"
+                      class="material-icons white-text">close</i></h5>
+                </div>
+              </div>
+            </div>
+            <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+              <div class="row">
+                <div class="col s12">
+                  <form ng-submit="selecionarUsuario(buscard1)">
+                    <div class="input-field col s6" style="margin-left: -21px;">
+                      <input id="ipsinput" type="text" ng-model="buscard1" style="cursor: pointer;" class="clase-gray"
+                        autocomplete="off">
+                      <label for="ipsinput" style="cursor: pointer;">Nombre o numero de documento:
+                        <span style="color:red;"> ( * )</span></label>
+                      <a href="javascript:void(0)" ng-click="selecionarUsuario(buscard1)">
+                        <i style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                          class="material-icons prefix default-color">search</i></a>
+                    </div>
+                  </form>
+                </div>
+
+                <div style="width:100%;color: black;border:3px solid; overflow-x:hidden; max-height: 60vh;">
+                  <table class="highlight tabla_nueva_resp" style="width:100%;font-size:6px !important;">
+                    <thead class="center-align default-background default-border white-text">
+                      <tr>
+                        <th># Cedula</th>
+                        <th>Nombre completo</th>
+                        <th>Seleccione Funcionario</th>
+                      </tr>
+                    </thead>
+                    <tbody class="default-border">
+                      <tr ng-repeat="funcionarios in listFuncionarios | filter:buscard1 as resultips">
+                        <td style="text-align:center;">{{funcionarios.CODIGO}}
+                        </td>
+                        <td style="text-align:center;">{{funcionarios.NOMBRE}}
+                        </td>
+                        <td>
+                          <div class="center">
+                            <i ng-click="seleccionarFuncionario(funcionarios,'S')" style="cursor:pointer;"
+                              class="material-icons prefix">check</i>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr ng-show="listFuncionarios.length==0">
+                        <td class="center-align" colspan="10" style="font-weight: bolder;">No se
+                          encontraron
+                          resultados para su revision.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div style="width: 89%;display: flex;">
+                  <div style="width: 50%;">
+                    <label for="normal">Total encontrados:
+                      {{listFuncionarios.length}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ELEGIR -->
+    <div style="max-height: 90vh;overflow-y: auto;">
+      <table class="bordered table_center_align highlight border-color default-border"
+        style="width:100%;font-size:6px !important;border-width: medium;">
+        <thead class="default-border default-color">
+          <th>#</th>
+          <th>Cédula</th>
+          <th>Funcionario</th>
+          <th>Cargo</th>
+          <th>Realizar Cargue</th>
+          <th>Estado</th>
+          <th>Administradores</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="x in list.listadoFuncionarios | filter:hoja3.Filtro">
+            <td>{{$index + 1}}</td>
+            <td>{{x.CEDULA}}</td>
+            <td>{{x.NOMBRE}}</td>
+            <td>{{x.CARGO}}</td>
+            <td>
+              <div class="tooltip">
+                <i class="{{x.CARGAR_REPORTE == 'S' ? 'icon-ok-circle' : 'icon-cancel-circled2'}} default-color c-pointer"
+                  style="font-size: 16px;"
+                  ng-click="modificarUsuario(x, 'cargarReporte', x.CARGAR_REPORTE == 'S' ? 'N' : 'S')"></i>
+                <span class="tooltiptext"
+                  style="font-size: 12px;width: 70px;margin-left: -36px;margin-bottom: 4px;">{{x.CARGAR_REPORTE == 'S'
+                  ?
+                  'Si' :
+                  'No'}}</span>
+              </div>
+            </td>
+            <td class="center">
+              <div class="tooltip" ng-if="x.ESTADO == 'A'">
+                <i class="icon-circle Con_pulse_A"
+                  style="color: transparent;font-size: 9px;background-color:rgb(3, 197, 20) !important;"
+                  ng-click="modificarUsuario(x,'estado', x.ESTADO == 'A' ? 'I' : 'A')"></i>
+                <span class="tooltiptext"
+                  style="font-size: 12px;width: 70px;margin-left: -36px;margin-bottom: 4px;">Activo</span>
+              </div>
+              <div class="tooltip" ng-if="x.ESTADO == 'I'">
+                <i class="icon-circle Con_pulse_X"
+                  style="color: transparent;font-size: 9px;background-color:rgb(245, 75,75) !important"
+                  ng-click="modificarUsuario(x,'estado', x.ESTADO == 'A' ? 'I' : 'A')"></i>
+                <span class="tooltiptext"
+                  style="font-size: 12px;width: 70px;margin-left: -36px;margin-bottom: 4px;">Inactivo</span>
+              </div>
+            </td>
+            <td>
+              <div class="tooltip">
+                <i class="{{x.ADMIN == 'S' ? 'icon-ok-circle' : 'icon-cancel-circled2'}} default-color c-pointer"
+                  style="font-size: 16px;" ng-click="modificarUsuario(x, 'rolUsuario', x.ADMIN == 'S' ? 'N' : 'S')"></i>
+                <span class="tooltiptext"
+                  style="font-size: 12px;width: 70px;margin-left: -36px;margin-bottom: 4px;">{{x.ADMIN == 'S'
+                  ?
+                  'Si' :
+                  'No'}}</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- modal mensaje de permisos al modulo -->
+  <div id="modalpermisos" class="modal">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <div class="card-content foot4">
+            <div class="s12">
+              <h5 class="white-text">Coordial salud.
+            </div>
+            <div class="center s12">
+              <h5 class="white-text">En estos momentos no tienes permisos para trabajar en el modulo de EISP SIVIGILA,
+                para su habilitación por favor solicite la autorizacion del modulo al área de Salud Publica.</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .tabla_nueva_resp th {
+      position: sticky;
+      top: 0;
+      z-index: 9;
+      background-color: #1a2e63;
+    }
+
+    /* FOOTER
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+    .page-footer {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 1rem;
+    }
+
+    .page-footer span {
+      color: var(--red);
+    }
+
+
+    #validacioncamposVacios {
+      max-height: 50vh;
+    }
+
+    table th,
+    table td {
+      text-align: center;
+    }
+
+    .etiquetaRoja {
+      padding: 5px;
+      background-color: red;
+      color: white;
+    }
+
+    .etiquetaVerde {
+      padding: 5px;
+      background-color: green;
+      color: white;
+    }
+
+    .etiquetaNaranja {
+      padding: 5px;
+      background-color: orange;
+      color: white;
+    }
+
+    .file-upload-wrapper {
+      position: relative;
+      width: 100%;
+      height: 10vh;
+      /* height: 44px; */
+      /* border: 1px solid #eeeeee; */
+      z-index: 1;
+      border-radius: 10px;
+      border: 2px dashed #ccc;
+    }
+
+    .file-upload-wrapper.success {
+      border: 2px dashed #08d108;
+    }
+
+    .file-upload-wrapper:after {
+      text-align: center;
+      content: attr(data-text);
+      font-size: 3vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #fff;
+      padding: 10px 15px;
+      display: block;
+      width: calc(100% - 40px);
+      pointer-events: none;
+      z-index: 20;
+      line-height: 2;
+      color: #999;
+      border-radius: 5px 10px 10px 5px;
+      font-weight: 400;
+      height: 8vh;
+    }
+
+    .file-upload-wrapper:hover:before {
+      background: #3d8c63;
+    }
+
+    .file-upload-wrapper input {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 99;
+      height: 43px;
+      margin: 0;
+      padding: 0;
+      display: block;
+      cursor: pointer;
+      width: 100%;
+      height: 10vh;
+    }
+
+    /* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+    .Con_pulse_A {
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_A 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_A {
+      0% {
+        box-shadow: 0 0 0 0 rgba(3, 197, 20, 0.7), 0 0 0 0 rgba(3, 197, 20, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(3, 197, 20, 0.0), 0 0 0 0 rgba(3, 197, 20, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(3, 197, 20, 0.0), 0 0 0 15px rgba(3, 197, 20, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(3, 197, 20, 0.0), 0 0 0 0 rgba(3, 197, 20, 0);
+      }
+    }
+
+    .Con_pulse_X {
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_X 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_X {
+      0% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.7), 0 0 0 0 rgba(245, 75, 75, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(245, 75, 75, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 15px rgba(245, 75, 75, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(245, 75, 75, 0);
+      }
+    }
+
+    select:disabled {
+      color: black;
+    }
+
+    .default-linear-gradient {
+      border-radius: 0px !important;
+    }
+
+    .btn-floating .default-linear-gradient {
+      border-radius: 10px !important;
+    }
+
+    .Valid_Campo {
+      border: 1px solid red !important;
+    }
+
+    .text-upper {
+      text-transform: uppercase !important;
+    }
+
+    .tabs {
+      height: 30px !important;
+    }
+
+    .tabs .tab {
+      line-height: 30px !important;
+      height: 30px !important;
+    }
+
+
+    .label-new>label {
+      display: table;
+    }
+
+    #toast-container .toast {
+      border-radius: 10px !important;
+      font-weight: 600;
+      text-align: center !important;
+      word-break: keep-all;
+      padding: 10px 25px;
+      width: auto;
+      background: linear-gradient(to bottom left, #e04242, #8b0000, #e04242);
+    }
+
+    #toast-container .success {
+      background: linear-gradient(to bottom left, #0fda00, #007217, #0fda00);
+    }
+
+
+    /* //////////////////////////////////////////////////////////////////////////////// */
+  </style>
+</div>

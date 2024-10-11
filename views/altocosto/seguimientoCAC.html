@@ -1,0 +1,3490 @@
+<div id="versionamiento" class="white newdesing">
+  <!-- ## Inicio Vista de Tabs ## -->
+  <div class="row section-header">
+    <ul class="left mailbox-custom-search list-inline"
+      style="width: 100%;display: flex;justify-content: space-between;align-items: center;">
+      <li id="inicio">
+        <h5 onclick="location.reload();">MODULO DE SEGUMIENTO TELEFÓNICO</h5>
+      </li>
+      <li>
+        <ul class="tabs transparent" style="overflow:hidden;">
+          <li class="tab col w-auto">
+            <a ng-click="control_vista_Tabs('resumen')" id="tabs_1" href class="icon-chart-pie-alt active"> Resumen</a>
+          </li>
+          <li class="tab col w-auto">
+            <a ng-click="control_vista_Tabs('tablaSeguimiento')" id="tabs_2" href class="icon-phone-3 active"> Seguimiento telefonico</a>
+          </li>
+          <li class="tab col w-auto">
+            <a ng-click="control_vista_Tabs('tablacasoCerrado')" id="tabs_4" href class="icon-lock-1"> Casos Cerrados</a>
+          </li>
+          <li class="tab col w-auto">
+            <a ng-click="control_vista_Tabs('tablaGestion')" id="tabs_3" href class="icon-cube active"> Gestion</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <!-- ## Fin Vista de Tabs ## -->
+  <!-- ****************************************************<<<SIGUIENTE>>>***************************************************************************** -->
+  <!--  ## Inicio Vista Resumen ## -->
+  <!--Resumen de regional-->
+  <div class="col s12 m12 l12" style="margin-top: 30px;justify-content: center;zoom:90%;"
+    ng-show="resumenRegional && vista == 'resumen'">
+    <!-- <img src="assets/images/seguimientoTefonico.png" class="center"> -->
+    <div class="row">
+      <h6 style="color: #8898aa !important;font-weight: 600 !important;font-size: 1.8125rem;text-align: center">
+        CONSOLIDADO POR REGIONAL</h6>
+    </div>
+    <div class="row" style="margin-bottom: 0px;">
+      <div class="col l12 m12 s12">
+        <div class="row">
+          <div class="col l12 m12 s12">
+            <div class="col s12 ">
+              <div class="col s12 m12 l12" style="margin-top: 30px;justify-content: center;zoom:70%;">
+                <div class="row" style="margin-bottom: 0px;">
+                  <div class="col l12 m12 s12">
+                    <div class="row">
+                      <div ng-repeat="x in list_resumen_regional | orderBy:'DESCRIPCIONCOHORTE'"
+                        class=" cursor-pointer col s3 m3 l3 ng-scope">
+                        <div class="card-panel center-align white-text no-padding">
+                          <div style="background-color: #1a2e63;position:relative" ng-click="resumencohorteGeneral(x)">
+                            <i class="material-icons prefix hovitem ng-binding"
+                              style="position: relative;font-size: 8em;z-index: 10;margin: auto;height: 140px;display: flex;justify-content: center;align-items: center;">room</i>
+                            <p class="margin" style="z-index: 10;position: relative;">
+                              <strong style="padding: 2px 15px;" class="ng-binding">
+                                {{x.REGIONAL}}
+                              </strong>
+                            </p>
+                            <div
+                              style="background-color: rgb(205, 104, 104); position: absolute; bottom: 0px; right: 0px; left: 0px; height: 0%;"
+                              ng-style="colors(list.ACTIVO)"></div>
+                          </div>
+                          <div class="black-text white"
+                            style="font-size: 14px;padding: 10px 20px;display: flex;justify-content: space-around;">
+
+                            <a class="blue-text" href="javascript:void(0)"
+                              style="width: 50%;border-left: 1px solid #ededed;display: grid;"
+                              ng-click="resumenestadoGestion(x)">
+                              <span class="ng-binding">{{x.GESTION
+                                }}</span>
+                              GESTION
+                            </a>
+                            <a class="green-text" href="javascript:void(0)"
+                              style="width: 50%;border-left: 1px solid #ededed;display: grid;"
+                              ng-click="resumenestadoPendiente(x)">
+                              <span class="ng-binding">{{x.PENDIENTE
+                                }}</span>
+                              PENDIENTE
+                            </a>
+                            <a class="amber-text" href="javascript:void(0)"
+                              style="width: 50%;border-left: 1px solid #ededed;display: grid;"
+                              ng-click="resumenestadoSeguimiento(x)">
+                              <span class="ng-binding">{{x.SEGUIMIENTO
+                                }}</span>
+                              SEGUIMIENTO
+                            </a>
+                            <a class="red-text" href="javascript:void(0)" style="width: 50%;display: grid;"
+                              ng-click="resumenestadoCerrado(x)">
+                              <span class="ng-binding">{{x.CERRADA}}</span>
+                              CERRADA
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Resumen de cohorte-->
+  <div class="col s12 m12 l12" style="margin-top: 30px;justify-content: center;zoom:90%;" ng-show="resumenCohorte">
+    <!-- <img src="assets/images/seguimientoTefonico.png" class="center"> -->
+    <div class="row">
+      <h6 style="color: #8898aa !important;font-weight: 600 !important;font-size: 1.8125rem;text-align: center">
+        CONSOLIDADO POR COHORTE</h6>
+      <h3 style="color: #8898aa !important;font-weight: 600 !important;font-size: 0.8125rem;text-align: center"
+        class="margin">
+        REGIONAL / {{textRegonal}}</h3>
+    </div>
+    <div class="row margin">
+      <div class="col l12 m12 s12">
+        <div class="row margin right">
+          <button type="button" class="center white-text default-background  icon-reply-outline"
+            style="border-radius: 10px;zoom:130%;" ng-click="control_vista_Tabs('resumen')" title="Atras"></button>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-bottom: 0px;" ng-show="resumenCohorte">
+      <div class="col l12 m12 s12">
+        <div class="row">
+          <div class="col l12 m12 s12">
+            <div class="col s12 ">
+              <div class="col s12 m12 l12" style="margin-top: 30px;justify-content: center;zoom:70%;">
+                <div class="row" style="margin-bottom: 0px;">
+                  <div class="col l12 m12 s12">
+                    <div class="row">
+                      <div ng-repeat="x in list_resumen | orderBy:'DESCRIPCIONCOHORTE'" class="col s3 m3 l3 ng-scope">
+                        <div class="card-panel center-align white-text no-padding">
+                          <div style="background-color: #1a2e63;position:relative">
+                            <i class="material-icons prefix hovitem ng-binding"
+                              style="position: relative;font-size: 8em;z-index: 10;margin: auto;height: 140px;display: flex;justify-content: center;align-items: center;"><img
+                                src="{{imagenesCohorte(x.DESCRIPCIONCOHORTE)}}" class="center"></i>
+                            <p class="margin" style="z-index: 10;position: relative;">
+                              <strong style="padding: 2px 15px;" class="ng-binding">
+                                {{x.DESCRIPCIONCOHORTE}}
+                              </strong>
+                            </p>
+                            <div
+                              style="background-color: rgb(205, 104, 104); position: absolute; bottom: 0px; right: 0px; left: 0px; height: 0%;"
+                              ng-style="colors(list.ACTIVO)"></div>
+                          </div>
+                          <div class="black-text white"
+                            style="font-size: 14px;padding: 10px 20px;display: flex;justify-content: space-around;">
+
+                            <a class="blue-text" href="javascript:void(0)"
+                              style="width: 50%;border-left: 1px solid #ededed;display: grid;">
+                              <span class="ng-binding">{{x.GESTION
+                                }}</span>
+                              GESTION
+                            </a>
+                            <a class="green-text" href="javascript:void(0)"
+                              style="width: 50%;border-left: 1px solid #ededed;display: grid;">
+                              <span class="ng-binding">{{x.PENDIENTE
+                                }}</span>
+                              PENDIENTE
+                            </a>
+                            <a class="amber-text" href="javascript:void(0)"
+                              style="width: 50%;border-left: 1px solid #ededed;display: grid;">
+                              <span class="ng-binding">{{x.SEGUIMIENTO
+                                }}</span>
+                              SEGUIMIENTO
+                            </a>
+                            <a ng-click="control_vista_Tabs('tablacasoCerrado')" class="red-text"
+                              href="javascript:void(0)" style="width: 50%;display: grid;">
+                              <span class="ng-binding">{{x.CERRADA}}</span>
+                              CERRADA
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Resumen de fuentes-->
+  <div class="col s12 m12 l12" style="margin-top: 30px;justify-content: center;zoom:90%;" ng-show="resumenFuentes">
+    <!-- <img src="assets/images/seguimientoTefonico.png" class="center"> -->
+    <div class="row">
+      <h6 style="color: #8898aa !important;font-weight: 600 !important;font-size: 1.8125rem;text-align: center">
+        CONSOLIDADO POR FUENTE</h6>
+      <h3 style="color: #8898aa !important;font-weight: 600 !important;font-size: 0.8125rem;text-align: center"
+        class="margin">
+        FUENTE / {{estadoFuente}}</h3>
+    </div>
+    <div class="row margin">
+      <div class="col l12 m12 s12">
+        <div class="row margin right">
+          <button type="button" class="center white-text default-background  icon-reply-outline"
+            style="border-radius: 10px;zoom:130%;" ng-click="control_vista_Tabs('resumen')" title="Atras"></button>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-bottom: 0px;" ng-show="resumenFuentes">
+      <div class="col l12 m12 s12">
+        <div class="row">
+          <div class="col l12 m12 s12">
+            <div class="col s12 ">
+              <div class="col s12 m12 l12" style="margin-top: 30px;justify-content: center;zoom:70%;">
+                <div class="row" style="margin-bottom: 0px;">
+                  <div class="col l12 m12 s12">
+                    <div class="row">
+                      <div ng-repeat="x in list_resumen_pendiente | orderBy:'TIPO_FUENTE'"
+                        class=" cursor-pointer col s3 m3 l3 ng-scope">
+                        <div class="card-panel center-align white-text no-padding">
+                          <div style="background-color: #1a2e63;position:relative">
+                            <i class="material-icons prefix hovitem ng-binding"
+                              style="position: relative;font-size: 8em;z-index: 10;margin: auto;height: 140px;display: flex;justify-content: center;align-items: center;">equalizer</i>
+                            <p class="margin" style="z-index: 10;position: relative;">
+                              <strong style="padding: 2px 15px;" class="ng-binding">
+                                {{x.TIPO_FUENTE}}
+                              </strong>
+                            </p>
+                            <div
+                              style="background-color: rgb(205, 104, 104); position: absolute; bottom: 0px; right: 0px; left: 0px; height: 0%;"
+                              ng-style="colors(list.ACTIVO)"></div>
+                          </div>
+                          <div class="black-text white"
+                            style="font-size: 14px;padding: 10px 20px;display: flex;justify-content: space-around;">
+
+                            <a class="black-text" href="javascript:void(0)"
+                              style="width: 50%;border-left: 1px solid #ededed;display: grid;">
+                              <span class="ng-binding">{{x.TOTAL
+                                }}</span>
+                              TOTAL
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  ## Fin vista Resumen ## -->
+  <!-- ****************************************************<<<SIGUIENTE>>>***************************************************************************** -->
+  <!-- ## Inicio Vista Seguimiento Telefonico ## -->
+  <!-- Botones de control de seguimiento Telefonico-->
+  <div class="col s12" ng-show="vista =='tablaSeguimiento' && vistaseguimientoTelefonico">
+    <div class="card ng-scope" style="margin: 38px; bottom: 10px ;zoom:75%;">
+      <div class="row">
+        <div class="col l12 m12 s12 center">
+          <strong>
+            <h5>SEGUIMIENTOS TELEFONICOS</h5>
+          </strong>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col l12 m12 s12">
+          <div class="row center">
+            <button type="button" class="center icon-phone-3 white-text default-background btn_2 "
+              style="border-radius: 10px;zoom:130%;" ng-click="botondecontroldeProcesos('llamadasPendientes')">
+              Llamadas
+              pendientes</button>
+            <button class="center  icon-pin white-text default-background btn_2 " type="button"
+              style="border-radius: 10px;zoom:130%;" ng-click="botondecontroldeProcesos('enSeguimiento')"> En
+              seguimiento</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Vista de preguntas seguimiento-->
+  <div class="row dashboard-wrapper content-container white"
+    style="zoom: 0.9; padding-bottom: 20px; margin-bottom: 0; padding-left: 20px; padding-right: 20px;"
+    ng-show="show_preguntas_seguimiento">
+    <div class="col l12 m12 s12" style="position:relative">
+      <div class="col s12 m12 l12" style="justify-content: center;">
+        <div class="row" style="margin-bottom: 0px;">
+          <!-- data -->
+          <div id="Diag_2" class="foot4 divcardcustom default-background">
+            <div class="text-al divcardcustom2">
+              <strong class="switch" style="font-weight: 600">
+                <span>{{verpreguntas_seguimiento[0].DescripcionTipo}}</span>
+                <a class="icon-reply right" style="color:#fff" ng-click="botondecontroldeProcesos('enSeguimiento')"
+                  title="Atras"></a>
+              </strong>
+            </div>
+
+          </div>
+          <div
+            style="display: flex; justify-content: end; flex-direction: row; gap: 1em; border-left: 3px solid #111; border-right: 3px solid #111; border-bottom: 3px solid #111; padding: 1em;">
+            <div style="display: grid; width: 100%; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div ng-repeat="item in verpreguntas_seguimiento">
+                <div class="input-group m-b">
+                  {{item.IdPregunta}} - {{item.Pregunta}}
+                </div>
+                <div class="input-group m-b">
+                  <label>Respuesta</label>
+                  <input type="text" ng-model="item.Respuesta" disabled>
+                </div>
+                <!-- <div class="input-group m-b">
+                  <label>Descripción</label>
+                  <input type="text" ng-model="item.DescripcionRespuesta" disabled>
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <div
+            style="display: flex; justify-content: end; flex-direction: row; gap: 1em; border-left: 3px solid #111; border-right: 3px solid #111; border-bottom: 3px solid #111; padding: 1em;">
+            <div style="width: 100%;grid-template-columns: 1fr 1fr;gap: 10px;">
+              <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+                <div class="" style="margin-top: 0px; margin-bottom: 0px;">
+                  <div class="default-background" style="padding: 0;zoom:60%;">
+                    <div class="col l12 m12 s12">
+                      <div class="row margin">
+                        <div class="col s11">
+                          <h5 class=""><b>OBSERVACION 2 - EN PROCESO DE SEGUIMIENTO TELEFONICO</b></h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+                    <div class="col s12">
+                      <div class="row">
+                        <div class="col l12 m12 s12">
+                          <label style=" margin-top: -20px; padding-left: 1%;">Observacion:<span style="color:red;"> ( *
+                              )</span></label>
+                          <div class="col s12">
+                            <div class="form-group shadow-textarea">
+                              <textarea
+                                class="form-control z-depth-1 ng-pristine ng-untouched ng-valid ng-valid-maxlength"
+                                id="exampleFormControlTextarea1" rows="3" ng-keyup="handleKeyPress($event,'modal2')"
+                                ng-model="modal2.observacion" cols="50" placeholder="Comentario"
+                                tyle="margin: 0px; height: 123px;" style="margin: 0px;height: 134px;" text-upper=""
+                                maxlength="3999"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- fila boton  -->
+                      <div class="row" style="margin-top: 10px; padding: 0;">
+                        <div class="col l12 text-center">
+                          <button class="center white-text default-background btn_2 "
+                            style="border-radius: 10px;zoom:130%;" ng-click="guardar_observacionSeguimiento()"
+                            type="submit">Guardar
+                            observacion</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Vista boton LLAMADAS PENDIENTES seguimiento telefonico -->
+  <div class="row dashboard-wrapper content-container white"
+    style="padding-bottom: 20px;margin-bottom: 0;padding-left: 20px;padding-right: 20px;"
+    ng-show="vista ==='tablaSeguimiento' && listatabladellamadasPendientes">
+    <div class="col l12 m12 s12" style="position:relative">
+      <div class="col s12 m12 l12" style="justify-content: center;">
+        <div class="row" style="margin-bottom: 0px;">
+          <div id="Diag_1" class="foot4 divcardcustom 0default-background cursor-pointer">
+            <div class="text-al divcardcustom2">
+              <strong class="switch" style="font-weight:600">Tabla de llamadas pendientes</strong>
+              <!-- boton nuevo seguimiento -->
+              <i class="icon-user-plus default-color white-text cursor-pointer" style="margin-left: 4px;"
+                title="Nuevo Afiliado" ng-click="controdeVistas('nuevoSeguimiento')"></i>
+              <!-- boton filtro seguimiento -->
+              <i class="icon-filter default-color white-text cursor-pointer" style="margin-left: 4px;" title="Filtrar"
+                ng-click="controdeVistas('filtroSeguimiento')"></i>
+              <!-- boton actualizar seguimiento -->
+              <i class="icon-arrows-cw-2 default-color white-text cursor-pointer" style="margin-left: 4px;"
+                title="Actualizar Tabla" ng-click="Obtener_Seguimiento()"></i>
+              <!-- Buscar seguimiento -->
+              <form ng-submit="chg_filtrar('bucartablaseguimiento');">
+                <div id="id_bucartablaseguimiento">
+                  <div class="col s3 no-padding label-new right"
+                    style="width: 25%;display: inline-flex;margin-right: -5px;margin-top: -25px;">
+                    <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                      style="text-align:right;" autocomplete="off" placeholder="Buscar..."
+                      ng-model="filtro.bucartablaseguimiento">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col l12 m12 s12" style="border: solid 2px;">
+              <!-- Vista de nuevo afiliado de seguimiento -->
+              <div class="row" ng-show="vista =='tablaSeguimiento' && vista_nuevoafiliadoSeguimiento"
+                style="zoom: 75%;">
+                <div class="row">
+                  <div class="col l12 m12 s12">
+                    <blockquote>
+                      <h5>AGREGAR NUEVO AFILIADO </h5>
+                      <a class="icon-reply right" style="zoom:142%; color:#1a2e63"
+                        ng-click="botondecontroldeProcesos('llamadasPendientes')">Atras</a>
+                    </blockquote>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col l12 m12 s12">
+                    <div class="row">
+                      <div class="col l4 m4 s4">
+                        <label style="padding-left: 4%;font-size: inherit;"></span>Tipo Dcto:<span class="red-text">
+                            (*)</label>
+                        <div class="col s12 ">
+                          <select class="select-new-ps cursor-pointer"
+                            ng-model="nuevoAfiliadoFormSeguTele.tipoDocumento" required>
+                            <option value="">SELECCIONAR</option>
+                            <option value="{{x.CODIGO}}"
+                              ng-selected="x.CODIGO == nuevoAfiliadoFormSeguTele.tipoDocumento"
+                              ng-repeat="x in Tipos_Documentos">{{x.NOMBRE}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <form ng-submit="Obtener_Consulta_Siniestro('nuevoAfiliadoFormSeguTele');">
+                        <div class="col l4 m4 s4">
+                          <label for="numDocumento" style="margin-top: -14px;margin-left: 10px;" class="active">N°
+                            Documento:<span class="red-text">
+                              (*)</label></label>
+                          <div class="input-field-ps col s12">
+                            <input class="margin input-text-white gray-input w-100 "
+                              id="id_nuevoAfiliadoFormSeguTelenumDocumento"
+                              ng-model="nuevoAfiliadoFormSeguTele.numDocumento" type="text" placeholder="..."
+                              style="cursor: pointer;" text-upper autocomplete="off" maxlength="15"
+                              ng-keyup="FormatSoloNumero('id_nuevoAfiliadoFormSeguTelenumDocumento')">
+                            <a><i style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                                class="material-icons prefix default-color"
+                                ng-click="Obtener_Consulta_Siniestro('nuevoAfiliadoFormSeguTele');">search</i></a>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="row">
+                      <div class="col l4 m4 s4">
+                        <label for="tipo_cohortes" style="padding-left: 4%;font-size: inherit;">Cohorte:</label>
+                        <div class=" input-field-ps col s12 ">
+                          <input class="input-text-disable" id="tipo_cohortes"
+                            ng-model="nuevoAfiliadoFormSeguTele.cohortes" type="text" style="color: #000000c7;"
+                            disabled>
+                        </div>
+                      </div>
+                      <div class="col l4 m4 s4">
+                        <label for="tipo_clasificacion"
+                          style="padding-left: 4%;font-size: inherit;">Clasificacion:</label>
+                        <div class=" input-field-ps input-text-disable  col s12 ">
+                          <input class="input-text-disable" id="tipo_clasificacion"
+                            ng-model="nuevoAfiliadoFormSeguTele.clasificacion" type="text" style="color: #000000c7;"
+                            disabled>
+                        </div>
+                      </div>
+                      <div class="col l4 m4 s4">
+                        <label for="tipo_marca_seguimientoTelefonico" class="active"
+                          style="padding-left: 4%;font-size: inherit;"></span>Condicion:<span class="red-text">
+                            (*)</label>
+                        <div class="col s12 ">
+                          <select id="tipo_marca_seguimientoTelefonico" class="select-new-ps cursor-pointer"
+                            ng-model="nuevoAfiliadoFormSeguTele.marca" required>
+                            <option value="" disabled>SELECCIONAR</option>
+                            <option value="{{x.coodigo}}" ng-repeat="x in list_marca">{{x.descripcion}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- TABLA DE CONSULTA SINIESTRO -->
+                    <div class="row" style="margin-bottom: 0px;">
+                      <div class="col 12 m12 s12">
+                        <div style="width:100%;">
+                          <div class="row" ng-show="list_siniestro.length && show_nuevoAfiliadoFormSeguTele">
+                            <div id="Diag_3" class="foot4 divcardcustom default-linear-gradient">
+                              <div class="text-al divcardcustom2">
+                                <strong class="switch" style="font-weight:600">Consulta siniestro - Seguimiento Telefonico</strong>
+                                <!-- <div class="col s3 no-padding label-new right"
+                                  style="width: 25%;display: inline-flex;margin-right: -5px;margin-top: -2px;">
+                                  <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                                    style="text-align:right;" autocomplete="off" placeholder="Buscar..."
+                                    ng-model="buscarnuevoAfiliadoFormSeguTele" ng-keyup="filter($event)">
+                                </div> -->
+                              </div>
+                            </div>
+                            <div
+                              style="max-height:22vh;overflow-y:auto;border: 1px solid;overflow-x: hidden;zoom: 95%;">
+                              <table id="tabla_modal_ENTREGA" class="bordered table_center_align highlight border-color"
+                                style="width:100%;font-size:6px !important;border:1px solid;  ">
+                                <thead class="default-border default-color">
+                                  <tr>
+                                    <th>Radicado</th>
+                                    <th>Tipo Número de Documento </th>
+                                    <th>Coherte</th>
+                                    <th>Descripcion</th>
+                                    <th>Clase Concepto</th>
+                                    <th>Estado</th>
+                                    <th>Seleccionar</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr ng-repeat="consulta in list_siniestro  |filter:buscarnuevoAfiliadoFormSeguTele"
+                                    style="color: black;cursor:pointer; ">
+                                    <td>{{ consulta.RADICADO }}</td>
+                                    <td>{{ consulta.DOCUMENTOC }}</td>
+                                    <td>{{ consulta.COHORTE }}</td>
+                                    <td>{{ consulta.DESCRIPCION_COHORTE }}</td>
+                                    <td>{{ consulta.CLASE_CONCEPTO }}</td>
+                                    <td>
+                                      <span style=" padding: 2px 10px;border-radius: 0.5em;"
+                                        ng-class="consulta.ESTADO_AFILIADO=='ACTIVO'?'color-verde':'color-rojo'">
+                                        {{ consulta.ESTADO_AFILIADO }}
+                                      </span>
+                                    </td>
+                                    <td><i ng-click="select_siniestro(consulta,'nuevoAfiliadoFormSeguTele')"
+                                        class="icon-check-3"></i></td>
+                                  </tr>
+                                  <tr ng-show="list_siniestro.length==0">
+                                    <td class="center-align" colspan="9" style="font-weight: bolder;">No se
+                                      encontraron
+                                      resultados.</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="text-align: center; padding: 10px 0.75px;">
+                      <button class=" icon-paper-plane-1 white-text default-background" type="button"
+                        ng-click="enviarAfiliado()" style="border-radius:10px;zoom:130%;">Enviar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Vista filtro tabla de seguimiento -->
+              <div class="row" ng-show="vista =='tablaSeguimiento' && vista_filtroSeguimiento" style="zoom: 75%;">
+                <div class="col l3 m3 s3">
+                  <label style="padding-left: 4%;font-size: inherit;">Tipo de busqueda:<span class="red-text">
+                      (*)</span></label>
+                  <div class="col s12 " type="text" ng-click="reiniciarBusqueda()">
+                    <select ng-change="Selector()" class="select-new-ps cursor-pointer" type="text"
+                      ng-model="buscar1.tipoSolicitud" id="tipoSolicitud">
+                      <option value="" disabled>SELECCIONAR</option>
+                      <option value="ND">NUMERO DE DOCUMENTO</option>
+                      <option value="NS">NUMERO DE SINIESTRO</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3" ng-show="buscar1.tipoSolicitud == 'ND'">
+                  <label style="padding-left: 4%;font-size: inherit;"></span>Tipo Dcto:<span class="red-text">
+                      (*)</label>
+                  <div class="col s12 ">
+                    <select class="select-new-ps cursor-pointer" ng-model="buscar1.Tipo_Doc" required>
+                      <option value="">SELECCIONAR</option>
+                      <option value="{{x.CODIGO}}" ng-selected="x.CODIGO == buscar1.Tipo_Doc"
+                        ng-repeat="x in Tipos_Documentos">{{x.NOMBRE}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3" ng-show="buscar1.tipoSolicitud == 'ND'">
+                  <label style="padding-left: 4%;font-size: inherit;">N° Documento:<span class="red-text">
+                      (*)</label></label>
+                  <div class=" input-field-ps  col s12 ">
+                    <input id="id_buscar1Num_Doc" ng-model="buscar1.Num_Doc" type="text" style="color: #000000c7;"
+                      maxlength="15" ng-keyup="FormatSoloNumero('id_buscar1Num_Doc')">
+                  </div>
+                </div>
+                <div class="col l3 m3 s3" ng-show="buscar1.tipoSolicitud == 'NS'">
+                  <label style="padding-left: 4%;font-size: inherit;">N° Siniestro Procesado:<span
+                      class="red-text">(*)</label></label>
+                  <div class=" input-field-ps  col s12 ">
+                    <input ng-model="buscar1.siniestro" type="text" style="color: #000000c7;">
+                  </div>
+                </div>
+                <div class="col l3 m3 s3" ng-show="buscar1.tipoSolicitud == 'ND' || buscar1.tipoSolicitud == 'NS'">
+                  <div style="text-align: center; padding: 10px 0.75px;">
+                    <button class="icon-search-3 white-text default-background" type="button"
+                      ng-click="busquedaenTablas('buscar1')" style="border-radius:10px;zoom:130%;">Buscar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Tabla de seguimiento telefonico -->
+            <div style="width:100%;" ng-show="list_DatosTemp.length > 0">
+              <table id="H1_Tabla" class="bordered table_center_align highlight border-color"
+                style="width:100%;font-size:6px !important;border:2px solid;  ">
+                <thead class="default-border default-color">
+                  <tr>
+                    <th>Fecha de registro</th>
+                    <th>Regional</th>
+                    <th>Tipo</th>
+                    <th>Número de documento</th>
+                    <th>Afiliado</th>
+                    <th>Estado afiliado</th>
+                    <th>Cohorte</th>
+                    <th>Pluripatológico </th>
+                    <th>Fuente </th>
+                    <th>Número de intentos </th>
+                    <th>Ver Afiliados</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    ng-repeat="info_seguimiento in list_DatosTemp  | inicio: currentPage * pageSize | limitTo: pageSize | orderBy:propertyName:reverse | filter:filtro.bucartablaseguimiento"
+                    style="color: black;cursor:pointer; ">
+                    <td>{{ info_seguimiento.FECHAREGISTRO }}</td>
+                    <td>{{ info_seguimiento.REGIONAL }}</td>
+                    <td>{{ info_seguimiento.TIPODOCUMENTO }}</td>
+                    <td>{{ info_seguimiento.NUMDOCUMENTO }} </td>
+                    <td>{{ info_seguimiento.NOMBRES }} {{ info_seguimiento.APELLIDOS }}</td>
+                    <td>
+                      <span style=" padding: 2px 10px;border-radius: 0.5em;"
+                        ng-class="info_seguimiento.ESTADOAFILIACION=='ACTIVO'?'color-verde':'color-rojo'">
+                        {{ info_seguimiento.ESTADOAFILIACION }}
+                      </span>
+                    </td>
+                    <td>{{ info_seguimiento.DESCRIPCIONCOHORTE }}</td>
+                    <td>{{ info_seguimiento.PLURIPATOLOGICO=='N'?'NO':'SI' }}</td>
+                    <td>{{ info_seguimiento.TIPOFUENTE }}</td>
+                    <td>{{ info_seguimiento.NUMEROINTENTOLLAMADA>0==''?0:info_seguimiento.NUMEROINTENTOLLAMADA
+                      }}</td>
+                    <td ng-hide="info_seguimiento.NUMEROINTENTOLLAMADA>=3"><i ng-click="dataSiniestro(info_seguimiento)"
+                        class="icono fas fa-eye "></i></td>
+                  </tr>
+                  <tr ng-show="list_DatosTemp.length==0">
+                    <td class="center-align" colspan="11" style="font-weight: bolder;">No se encontraron
+                      resultados.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div style="width: 100%;display: flex;">
+                <label for="normal">Total de información: <strong>{{list_DatosTemp.length}} </strong> registros
+                  encontrados
+                </label>
+              </div>
+              <ul class="pagination" ng-show="list_DatosTemp.length > 0">
+                <li><button ng-disabled='currentPage == 0' class="btn-floating white-text default-background"
+                    ng-click="paso('back')">&laquo;</button></li>
+                <li ng-repeat='page in pages'><button ng-disabled='currentPage == page.no - 1'
+                    class="btn-floating white-text default-background" ng-click='setPage(page.no)'>{{page.no}}</button>
+                </li>
+                <li><button ng-disabled='currentPage >= list_DatosTemp.length/pageSize - 1'
+                    class="btn-floating white-text default-background" ng-click="paso('next')">&raquo;</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Vista Informacion del Afiliado -->
+  <div class="row dashboard-wrapper content-container white"
+    style="padding-bottom: 20px;margin-bottom: 0;padding-left: 20px;padding-right: 20px;"
+    ng-show="vista =='tablaSeguimiento' && verinfoAfiliado">
+    <div id="Diag_1" class="foot4 divcardcustom default-background">
+      <div class="text-al divcardcustom2">
+        <strong class="switch" style="font-weight:600">Información del afiliado</strong>
+      </div>
+    </div>
+    <div class="col s12" style="padding: 1px; border-left: 3px solid #111;border-right: 3px solid #111;">
+      <div class="row" style="padding: 1em;">
+        <div class="col l12 card-content">
+          <!-- fila 1 -->
+          <div class="row" style="margin: 0; padding: 0;">
+            <div class="col s3">
+              <label style="font-size: 0.9rem;">
+                <i class="fas fa-clipboard" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Número siniestro:</span>
+              </label>
+            </div>
+            <div class="col s3">
+              <label style="font-size: 0.9rem;">
+                <i class="fas fa-globe" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Regional:</span>
+              </label>
+            </div>
+            <div class="col s3">
+              <label style="font-size: 0.9rem;">
+                <i class="fa fa-id-card" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Tipo documento:</span>
+              </label>
+            </div>
+            <div class="col s3">
+              <label style="font-size: 0.9rem;">
+                <i class="fa fa-id-card" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Número Documento:</span>
+              </label>
+            </div>
+          </div>
+          <div class="row" style="margin: 0; padding: 0;">
+            <div class="col s3">
+              <div class="input-group">
+                <input ng-style="{'color': textoColor}" ng-disabled="bloquearSiniestro"
+                  ng-model="formSeguimiento.NUMEROSINIESTRO">
+              </div>
+            </div>
+            <div class="col s3">
+              <div class="input-group">
+                <input ng-style="{'color': textoColor}" ng-disabled="bloquearRegional"
+                  ng-model="formSeguimiento.REGIONAL">
+              </div>
+            </div>
+            <div class="col s3">
+              <div class="input-group">
+                <select class="select-chosen-eps" ng-style="{'color': textoColor}" style="padding-top: 0px;"
+                  ng-model="formSeguimiento.TIPODOCUMENTO" disabled>
+                  <option value="">SELECCIONAR</option>
+                  <option value="{{x.CODIGO}}" ng-selected="x.CODIGO == formSeguimiento.TIPODOCUMENTO"
+                    ng-repeat="x in Tipos_Documentos">{{x.NOMBRE}}</option>
+                </select>
+                <!-- <input ng-style="{'color': textoColor}" ng-disabled="bloquearNumdoc"
+               ng-model="formSeguimiento.TipoDoc"> -->
+              </div>
+            </div>
+            <div class="col s3">
+              <div class="input-group">
+                <input ng-style="{'color': textoColor}" ng-disabled="bloquearNumdoc"
+                  ng-model="formSeguimiento.NUMDOCUMENTO">
+              </div>
+            </div>
+          </div>
+          <!-- fin file 1 -->
+          <!-- fila 2 -->
+          <div class="row" style="margin: 0; padding: 0;">
+            <div class="col s9">
+              <label style="font-size: 0.9rem;">
+                <i class="fas fa-user" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Nombres del afiliado</span>
+              </label>
+            </div>
+            <div class="col s3">
+              <label style="font-size: 0.9rem;">
+                <i class="fas fa-check-circle" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Estado del afilido:</span>
+              </label>
+            </div>
+          </div>
+          <div class="row" style="margin: 0; padding: 0;">
+            <div class="col s9">
+              <div class="input-group">
+                <input ng-style="{'color': textoColor}" ng-disabled="bloquearNombresyapellidos"
+                  ng-style="{'color': textoColor}" ng-model="formSeguimiento.NombreCompleto">
+              </div>
+            </div>
+            <div class="col s3">
+              <div style="    padding-top: 10px;
+               padding-bottom: 11px;
+               border-bottom: 1px solid #bdbdbd;
+               width: 100%;">
+                <span style=" padding: 2px 10px; border-radius: 0.5em;" ng-show="formSeguimiento.ESTADOAFILIACION"
+                  ng-class="formSeguimiento.ESTADOAFILIACION=='ACTIVO'?'color-verde':'color-rojo1'">
+                  {{formSeguimiento.ESTADOAFILIACION}}
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- fin de fila 2 - -->
+          <!-- fila 3- -->
+          <div class="row" style="margin: 0; padding: 0;">
+            <div class="col s4">
+              <label style="font-size: 0.9rem;">
+                <i class="fas fa-calendar" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Edad:</span>
+              </label>
+            </div>
+            <div class="col s4">
+              <label style="font-size: 0.9rem;">
+                <i class="fas fa-male" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Género:</span>
+              </label>
+            </div>
+            <div class="col s4">
+              <label style="font-size: 0.9rem;">
+                <i class="fas fa-exchange-alt" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Portabilidad:</span>
+              </label>
+            </div>
+          </div>
+          <div class="row" style="margin: 0; padding: 0;">
+            <div class="col s4">
+              <div class="input-group">
+                <input ng-style="{'color': textoColor}" ng-disabled="bloquearEdad" ng-model="formSeguimiento.EDAD">
+              </div>
+            </div>
+            <div class="col s4">
+              <div class="input-group">
+                <input ng-style="{'color': textoColor}" ng-disabled="bloquearGenero" ng-model="formSeguimiento.GENERO">
+              </div>
+            </div>
+            <div class="col s4">
+              <div class="input-group">
+                <input ng-style="{'color': textoColor}" ng-disabled="bloquearPortabilidad"
+                  ng-model="formSeguimiento.PORTABILIDAD">
+              </div>
+            </div>
+          </div>
+          <!-- fin fila 3  -->
+          <!-- fila 4 -->
+          <div class="row" style="margin: 0; padding: 0;" ng-show="formSeguimiento.PORTABILIDAD === 'SI'">
+            <div class="col s4">
+              <label style="font-size: 0.9rem;">
+                <i class="fas fa-calendar" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Descripción portabilidad:</span>
+              </label>
+            </div>
+          </div>
+          <div class="row" style="margin: 0; padding: 0;" ng-show="formSeguimiento.PORTABILIDAD === 'SI'">
+            <div class="col s4">
+              <div class="input-group">
+                <input ng-style="{'color': textoColor}" ng-disabled="bloquearDescripcioPortabilidad"
+                  ng-model="formSeguimiento.DescripcioPortabilidad">
+              </div>
+            </div>
+          </div>
+          <!-- fin fila 4 -->
+        </div>
+      </div>
+    </div>
+    <div id="Diag_2" class="foot4 divcardcustom default-background">
+      <div class="text-al divcardcustom2">
+        <strong class="switch" style="font-weight:600">Actualizar datos del afiliado</strong>
+      </div>
+    </div>
+    <div class="col s12" style="padding: 1px; border-left: 3px solid #111;
+       border-right: 3px solid #111;">
+      <div class="row" style="padding: 1em;">
+        <div class="col l12 card-content">
+          <!-- fila 4 -->
+          <div class="row" style="margin: 0; padding: 0;">
+            <div class="col s12">
+              <label style="font-size: 0.9rem;">
+                <i class="fas fa-location-arrow" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Dirección:</span>
+              </label>
+            </div>
+          </div>
+          <div class="row" style="margin: 0; padding: 0;">
+            <div class="col s12">
+              <div class="input-group">
+                <input ng-click="AbrirModalDireccion()" ng-style="{'color': textoColor}" readonly="false"
+                  ng-model="formSeguimiento.DIRECCION">
+                <span class="edit-icon"><i class="fas fa-edit" ng-click="AbrirModalDireccion()"></i></span>
+              </div>
+            </div>
+          </div>
+          <!-- fin fila 4  -->
+          <!-- fila 5 -->
+          <div class="row" style="margin: 0; padding: 0;">
+            <div class="col s3">
+              <label style="font-size: 0.9rem;">
+                <i class="fas fa-phone" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Teléfono 1:</span>
+              </label>
+            </div>
+            <div class="col s3">
+              <label style="font-size: 0.9rem;">
+                <i class="fas fa-phone" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Teléfono 2:</span>
+              </label>
+            </div>
+            <div class="col s6">
+              <label style="font-size: 0.9rem;">
+                <i class="fas fa-envelope" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Correo Electrónico:</span>
+              </label>
+            </div>
+          </div>
+          <div class="row" style="margin: 0; padding: 0;">
+            <div class="col s3">
+              <div class="input-group">
+                <input type="text" ng-disabled="bloquearTelefono1" ng-model="formSeguimiento.TELEFONO1"
+                  ng-change="validarTelefono1()">
+                <span class="edit-icon"><i class="fas fa-edit" ng-click="editartelefono1()"></i></span>
+              </div>
+              <div ng-show="telefonoInvalido1" class="error-message">El telefono es inválido</div>
+            </div>
+            <div class="col s3">
+              <div class="input-group">
+                <input type="text" ng-disabled="bloquearTelefono2" ng-model="formSeguimiento.TELEFONO2"
+                  ng-change="validarTelefono2()">
+                <span class="edit-icon"><i class="fas fa-edit" ng-click="editartelefono2()"></i></span>
+              </div>
+              <div ng-show="telefonoInvalido2" class="error-message">El telefono es inválido</div>
+            </div>
+            <div class="col s6">
+              <div class="input-group">
+                <input ng-model="formSeguimiento.CORREO" ng-disabled="bloquearCorreo" ng-change="validarCorreo()">
+                <span class="edit-icon"><i class="fas fa-edit" ng-click="editarcorreo()"></i></span>
+              </div>
+              <div ng-show="correoInvalido" class="error-message">El correo es inválido</div>
+            </div>
+            <!--fin fila 5 -->
+          </div>
+        </div>
+      </div>
+      <div id="Diag_2" class="foot4 divcardcustom default-background">
+        <div class="text-al divcardcustom2">
+          <strong class="switch" style="font-weight:600">Patología seleccionada</strong>
+        </div>
+      </div>
+      <div class="col s12" style="padding: 1px; border-left: 3px solid #111;
+       border-right: 3px solid #111;">
+        <div class="row" style="padding: 1em;">
+          <div class="col l12 card-content">
+            <!-- fila 6 -->
+            <div class="row" style="margin: 0; padding: 0;">
+              <div class="col s4">
+                <label style="font-size: 0.9rem;">
+                  <i class="fas fa-medkit" style="margin-right: 5px;"></i>
+                  <span style="vertical-align: middle;">CIE10:</span>
+                </label>
+              </div>
+              <div class="col s4">
+                <label style="font-size: 0.9rem;">
+                  <i class="fas fa-people-carry" style="margin-right: 5px;"></i>
+                  <span style="vertical-align: middle;">Cohorte a la que pertenece:</span>
+                </label>
+              </div>
+              <div class="col s4">
+                <label style="font-size: 0.9rem;">
+                  <i class="fas fa-calendar-alt" style="margin-right: 5px;"></i>
+                  <span style="vertical-align: middle;">Fecha de
+                    diagnóstico:</span>
+                </label>
+              </div>
+            </div>
+            <div class="row" style="margin: 0; padding: 0;">
+              <div class="col s4">
+                <div class="input-group">
+                  <input ng-style="{'color': textoColor}" ng-model="formSeguimiento.CIE10" ng-disabled="bloquearCIE10">
+                </div>
+              </div>
+              <div class="col s4">
+                <div class="input-group">
+                  <input ng-style="{'color': textoColor}" ng-disabled="bloquearCohorte"
+                    ng-model="formSeguimiento.DESCRIPCIONCOHORTE">
+                </div>
+              </div>
+              <div class="col s4">
+                <div class="input-group">
+                  <input ng-style="{'color': textoColor}" ng-disabled="bloquearCohorte"
+                    ng-model="formSeguimiento.FECHADIAGNOSTICO">
+                </div>
+              </div>
+            </div>
+            <!-- fila 6 -->
+
+            <!-- fila 7 -->
+            <div class="row" style="margin: 0; padding: 0;">
+              <div class="col s12">
+                <label style="font-size: 0.9rem;">
+                  <i class="fas fa-file-medical" style="margin-right: 5px;"></i>
+                  <span style="vertical-align: middle;">Clasificación de
+                    patología:</span>
+                </label>
+              </div>
+            </div>
+            <div class="row" style="margin: 0; padding: 0;">
+              <div class="col s12">
+                <div class="input-group">
+                  <input ng-model="formSeguimiento.CLASIFICACION">
+                </div>
+              </div>
+            </div>
+            <!-- fin fila 7 -->
+            <!--  fila 8 -->
+            <div class="row" style="margin: 0; padding: 0;">
+              <div class="col s3">
+                <label style="font-size: 0.9rem;">
+                  <i class="fas fa-heartbeat" style="margin-right: 5px;"></i>
+                  <span style="vertical-align: middle;">Pluripatológico::</span>
+                </label>
+              </div>
+            </div>
+            <div class="row" style="margin: 0; padding: 0;">
+              <div class="col s3">
+                <div class="input-group">
+                </div>
+                <input readonly ng-value="formSeguimiento.PLURIPATOLOGICO=='N'?'NO':'SI'">
+              </div>
+            </div>
+          </div>
+          <!--  fila 8 -->
+        </div>
+      </div>
+    </div>
+    <div id="Diag_2" class="foot4 divcardcustom default-background">
+      <div class="text-al divcardcustom2">
+        <strong class="switch" style="font-weight:600">Patologías asociadas</strong>
+      </div>
+    </div>
+    <table id="H2_Tabla" class="bordered table_center_align highlight border-color"
+      style="width:100%;font-size:6px !important;border:3px solid;  ">
+      <thead class="default-border default-color">
+        <tr>
+          <th>Proceso</th>
+          <th>No de siniestro</th>
+          <th>Estado siniestro </th>
+          <th>Origen</th>
+          <th>CIE10</th>
+          <th>Clasificación</th>
+          <th>Cohorte</th>
+          <th>Patologías asociadas </th>
+          <th>Descripción cohorte</th>
+          <th>Fecha diagnóstico</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in patologiaAfiliados">
+          <td class="center-align">
+            {{item.Proceso}}
+          </td>
+          <td class="center-align">
+            {{item.NumeroSiniestro}}
+          </td>
+          <td class="center-align">
+            {{item.EstadoSiniestro}}
+          </td>
+          <td class="center-align">
+            {{item.Origen}}
+          </td>
+          <td class="center-align">
+            {{item.CIE10}}
+          </td>
+          <td class="center-align">
+            {{item.Clasificacion}}
+          </td>
+          <td class="center-align">
+            {{item.Cohorte}}
+          </td>
+          <td class="center-align">
+            {{item.PatologiasAsociadas}}
+          </td>
+          <td class="center-align">
+            {{item.DescripcionCohorte}}
+          </td>
+          <td class="center-align">
+            {{item.FechaDiagnostico}}
+          </td>
+        </tr>
+        <tr>
+          <td class="center-align" colspan="9" ng-if="listado.patologiaAfiliados.length" style="font-weight: bolder;">
+            No
+            se encontraron
+            resultados.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="Diag_2" class="foot4 divcardcustom default-background">
+      <div class="text-al divcardcustom2">
+        <strong class="switch" style="font-weight:600">Gestión de seguimiento</strong>
+      </div>
+    </div>
+    <div class="col s12" style="padding: 1px; border-left: 3px solid #111;
+       border-right: 3px solid #111; border-bottom: 3px solid #111;">
+      <div class="row" style="padding: 1em;">
+        <div class="col l12 card-content">
+          <!--  fila 9 -->
+          <div class="row" style="margin: 0; padding: 0;">
+            <div class="col s6">
+              <label style="font-size: 0.9rem;">
+                <i class="fas fa-phone-volume" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Estado De la llamada:</span>
+              </label>
+            </div>
+            <div class="col s6" ng-show="selectedEstado == 5">
+              <label style="font-size: 0.9rem;">
+                <i class="fas fa-phone-volume" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Responsable de atender la llamada::</span>
+              </label>
+            </div>
+            <div class="col s6">
+              <label style="font-size: 0.9rem;" ng-show="selectedEstado >= 1 && selectedEstado <= 4">
+                <i class="fas fa-edit" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Observación:</span>
+              </label>
+            </div>
+          </div>
+          <div class="row" style="margin: 0; padding: 0;">
+            <div class="col s6">
+              <select class="select-chosen-eps" style="padding-top: 0px;" ng-model="selectedEstado"
+                ng-click="limpiar('seguimiento')">
+                <option value="" disabled>SELECCIONAR</option>
+                <option value="{{x.Codigo}}" ng-repeat="x in listado.EstadoLlamada">
+                  {{x.Descripcion}}</option>
+              </select>
+            </div>
+            <div class="col s6" ng-show="selectedEstado == 5">
+              <select class="select-chosen-eps" style="padding-top: 0px;" ng-model="selectedResponsable">
+                <option value="" disabled>SELECCIONAR</option>
+                <option value="{{x.Codigo}}" ng-repeat="x in listado.Reponsable">
+                  {{x.Descripcion}}</option>
+              </select>
+            </div>
+            <div class="col s6" ng-show="selectedEstado >= 1 && selectedEstado <= 4">
+
+              <div class="input-group">
+                <textarea requerid ng-model="seguimiento.observacion" ng-keyup="handleKeyPress($event,'seguimiento')"
+                  name="" id="id_observaciones" cols="30" rows="10" style="height: 10rem;" maxlength="1999"
+                  ng-keyup="formatTexto('id_observaciones')">
+                        </textarea>
+              </div>
+              <label style=" margin-top: -20px; padding-left: 1%;">Observaciones - Caracteres:
+                {{count}} - Minimo 30 y Máximo: 2000<span class="red-text"> ( * )</span></label>
+            </div>
+          </div>
+          <!--  Inicio codigo Pablo -->
+          <div class="row" style="margin: 0; padding: 0;"
+            ng-show="cant_llamadas == 2 && selectedEstado >= 1 && selectedEstado <= 4">
+            <div class="col s6">
+              <label style="font-size: 0.9rem;">
+                <i class="fas fa-phone-volume" style="margin-right: 5px;"></i>
+                <span style="vertical-align: middle;">Visita Domiciliaria:</span>
+              </label>
+              <select class="select-chosen-eps" style="padding-top: 0px;" ng-model="selectedDomiciliaria">
+                <option value="" disabled>SELECCIONAR</option>
+                <option value="S">SI</option>
+                <option value="N">NO</option>
+              </select>
+            </div>
+          </div>
+          <!--  fin codigo Pablo -->
+          <!--  fin fila 9 -->
+          <!-- fila boton  -->
+          <div class="row" style="margin-top: 10px; padding: 0;">
+            <div class="col l12 text-center">
+              <button class="btn btn-primary" ng-click="guardar()" type="submit">Guardar seguimiento</button>
+            </div>
+          </div>
+          <!-- fin fila boton  -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Vista en seguimiento  del Tabs seguimiento telefonico -->
+  <div class="row dashboard-wrapper content-container white"
+    style="padding-bottom: 20px;margin-bottom: 0;padding-left: 20px;padding-right: 20px; zoom: 90%;"
+    ng-show="vista === 'tablaSeguimiento' && listatablaenSeguimiento">
+    <div class="col l12 m12 s12" style="position:relative">
+      <div class="col s12 m12 l12" style="justify-content: center;">
+        <div class="row" style="margin-bottom: 0px;">
+          <div style="width: 100%;display: flex;">
+            <label for="normal">
+              <h6 style="background-color: lemonchiffon;"><strong>Descripcion de Los tiempos de acuerdo a los colores
+                  visualizado en la columna de estado:</strong></h6>
+              <div class="btn_2" style="zoom:100% ;border-radius: 10px;font-weight: 700;"><img
+                  src="assets/images/Cohorte/red.svg"><strong>Mismo dia de la fecha de seguimiento.</strong></img>
+              </div>
+              <div class="btn_2" style="zoom:100% ;border-radius: 10px;font-weight: 700;">
+                <img src="assets/images/Cohorte/yellow.svg">
+                <strong>1 Dias antes de la fecha de seguimiento.</strong>
+                </img>
+              </div>
+              <div class="btn_2" style="zoom:100% ;border-radius: 10px;font-weight: 700;"><img
+                  src="assets/images/Cohorte/green.svg">
+                <strong>2 Dias antes de la fecha de seguimiento.</strong>
+                </img>
+              </div>
+            </label>
+          </div>
+          <div id="Diag_1" class="foot4 divcardcustom 0default-background cursor-pointer">
+            <div class="text-al divcardcustom2">
+              <strong class="switch" style="font-weight:600">Tabla en seguimiento</strong>
+              <!-- <i class="icon-user-plus default-color white-text cursor-pointer" style="margin-left: 4px;"
+                title="Nuevo Afiliado" ng-click="controdeVistas('nuevoSeguimiento')"></i> -->
+              <!-- <i class="icon-filter default-color white-text cursor-pointer" style="margin-left: 4px;" title="Filtrar"
+                ng-click="controdeVistas('filtroSeguimiento')"></i> -->
+              <i class="icon-arrows-cw-2 default-color white-text cursor-pointer" style="margin-left: 4px;"
+                title="Actualizar Tabla" ng-click="Obtener_listaenSeguimiento()"></i>
+              <form ng-submit="chg_filtrar('bucartablaseguimiento');">
+                <div id="id_bucartablaseguimiento">
+                  <div class="col s3 no-padding label-new right"
+                    style="width: 25%;display: inline-flex;margin-right: -5px;margin-top: -25px;">
+                    <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                      style="text-align:right;" autocomplete="off" placeholder="Buscar..."
+                      ng-model="filtro.bucartablaseguimiento">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <!-- Tabla de seguimiento telefonico -->
+            <div style="width:100%;">
+              <table id="H1_Tabla" class="bordered table_center_align highlight border-color"
+                style="width:100%;font-size:6px !important;border:2px solid;  ">
+                <thead class="default-border default-color">
+                  <tr>
+                    <th>No. de siniestro</th>
+                    <th>Regional</th>
+                    <th>Número de documento</th>
+                    <th>Afiliado</th>
+                    <th>Estado afiliado</th>
+                    <th>Edad</th>
+                    <th>Genero</th>
+                    <th>Portabilidad</th>
+                    <th>Cohorte</th>
+                    <th>Fuente</th>
+                    <th>Fecha seguimiento</th>
+                    <th>Estado</th>
+                    <th>Funcionario responsable</th>
+                    <th>Ver formulario</th>
+                    <!-- <th>Observacion de cierre</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    ng-repeat="info_seguimiento in list_DatosTemp  | inicio: currentPage * pageSize | limitTo: pageSize | orderBy:propertyName:reverse | filter:filtro.bucartablaseguimiento"
+                    style="color: black;cursor:pointer; ">
+                    <td>{{ info_seguimiento.NUMEROSINIESTRO }}</td>
+                    <td>{{ info_seguimiento.REGIONAL }}</td>
+                    <td>{{ info_seguimiento.TIPODOCUMENTO }} {{ info_seguimiento.NUMDOCUMENTO }} </td>
+                    <td>{{ info_seguimiento.NOMBRES }} {{ info_seguimiento.APELLIDOS }}</td>
+                    <td>
+                      <span style=" padding: 2px 10px;
+                border-radius: 0.5em;"
+                        ng-class="info_seguimiento.ESTADOAFILIACION=='ACTIVO'?'color-verde':'color-rojo'">
+                        {{ info_seguimiento.ESTADOAFILIACION }}
+                      </span>
+                    </td>
+                    <td>{{ info_seguimiento.EDAD }}</td>
+                    <td>{{ info_seguimiento.GENERO }}</td>
+                    <td>{{ info_seguimiento.PORTABILIDAD}}</td>
+                    <td>{{ info_seguimiento.COHORTE }}</td>
+                    <td>{{ info_seguimiento.TIPOFUENTE }}</td>
+                    <td>{{ info_seguimiento.FECHA_PROXIMA_LLAMADA }}</td>
+                    <td><i class="icon-circle" style="color: transparent;font-size: 9px;" ng-class="{
+                           'Con_pulse_VERDE' : (info_seguimiento.SEMAFORIZACION == 'VERDE') ? 'rgba(3, 197, 20)' : '',
+                           'Con_pulse_ROJO' : (info_seguimiento.SEMAFORIZACION == 'ROJO') ? 'rgba(245, 75, 75)' : '',
+                           'Con_pulse_AZUL' : (info_seguimiento.SEMAFORIZACION == 'AZUL') ? 'rgba(51, 70, 255)' : '',
+                           'Con_pulse_AMARILLO' : (info_seguimiento.SEMAFORIZACION == 'AMARILLO') ? 'rgba(255, 235, 59)' : ''
+                         }" ng-style="{
+                           'background-color' : info_seguimiento.SEMAFORIZACION == 'VERDE' ? 'rgba(3, 197, 20)' :
+                                     info_seguimiento.SEMAFORIZACION == 'AZUL' ? 'rgba(51, 70, 255)' :
+                                     info_seguimiento.SEMAFORIZACION == 'ROJO' ? 'rgba(245, 75, 75)' :
+                                     info_seguimiento.SEMAFORIZACION == 'AMARILLO' ? 'rgba(255, 235, 59)' : ''}"></td>
+
+
+                    <td>{{ info_seguimiento.FUNCIONARIO_RESPONSABLE}}</td>
+                    <td ng-click="consulta_formularioSeguimiento(info_seguimiento)" class="icono fas fa-eye "
+                      style="padding-top: 25px"></td>
+                    <!-- <td ng-click="openmodals('observacionesSeguimiento',info_seguimiento)" class="icon-doc-text-1"></td> -->
+                  </tr>
+                  <tr ng-show="list_DatosTemp.length==0">
+                    <td class="center-align" colspan="11" style="font-weight: bolder;">No se encontraron
+                      resultados.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div style="width: 100%;display: flex;">
+                <label for="normal">Total de información: <strong>{{list_DatosTemp.length}} </strong> registros
+                  encontrados
+                </label>
+              </div>
+              <ul class="pagination" ng-show="list_DatosTemp.length > 0">
+                <li><button ng-disabled='currentPage == 0' class="btn-floating white-text default-background"
+                    ng-click="paso('back')">&laquo;</button></li>
+                <li ng-repeat='page in pages'><button ng-disabled='currentPage == page.no - 1'
+                    class="btn-floating white-text default-background" ng-click='setPage(page.no)'>{{page.no}}</button>
+                </li>
+                <li><button ng-disabled='currentPage >= list_DatosTemp.length/pageSize - 1'
+                    class="btn-floating white-text default-background" ng-click="paso('next')">&raquo;</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ## Fin Vista Seguimiento Telefonico ## -->
+  <!-- ***************************************************<<<SIGUIENTE>>>*************************************************************************** -->
+  <!-- ## Inicio Vista Casos Cerrado ## -->
+  <!-- Tabla de casos cerrados -->
+  <div class="row dashboard-wrapper content-container white"
+    style="padding-bottom: 20px;margin-bottom: 0;padding-left: 20px;padding-right: 20px;"
+    ng-show="vista =='tablacasoCerrado'">
+    <!-- Vista Consulta Casos Cerrados-->
+    <div ng-show="vistacasosCerrarados" class="col l12 m12 s12" style="position:relative">
+      <div class="col s12 m12 l12" style="justify-content: center;">
+        <div class="row" style="margin-bottom: 0px;">
+          <div id="Diag_1" class="foot4 divcardcustom 0default-background cursor-pointer">
+            <div class="text-al divcardcustom2">
+              <strong class="switch" style="font-weight:600"> Consulta casos cerrados</strong>
+              <!-- Boton de exportar-->
+              <i class="icon-download default-color white-text cursor-pointer" style="margin-left: 4px;"
+                title="Exportar Informacion" ng-click="controdeVistas('consultacasoCerrado')"></i>
+            </div>
+          </div>
+          <br>
+          <div style="width:100%;">
+            <div class="col l12 m12 s12" style="border: solid 2px;">
+              <!-- Vista filtro tabla de seguimiento -->
+              <div class="row" style="zoom: 70%;" ng-show="vista_consultacasoCerrado">
+                <div class="col l3 m3 s3">
+                  <label style="padding-left: 4%;font-size: inherit;"></span>Tipo Dcto:<span class="red-text">
+                      (*)</label>
+                  <div class="col s12 ">
+                    <select class="select-new-ps cursor-pointer" ng-model="buscar3.Tipo_Doc" required>
+                      <option value="">SELECCIONAR</option>
+                      <option value="{{x.CODIGO}}" ng-selected="x.CODIGO == buscar3.Tipo_Doc"
+                        ng-repeat="x in Tipos_Documentos">{{x.NOMBRE}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3">
+                  <label style="padding-left: 4%;font-size: inherit;">N° Documento:<span class="red-text">
+                      (*)</label></label>
+                  <div class=" input-field-ps  col s12 ">
+                    <input id="id_buscar3Num_Doc" ng-model="buscar3.Num_Doc" type="text" style="color: #000000c7;"
+                      maxlength="15" ng-keyup="FormatSoloNumero('id_buscar3Num_Doc')">
+                  </div>
+                </div>
+                <div class="col l3 m3 s3">
+                  <div style="text-align: center; padding: 10px 0.75px;">
+                    <button class="icon-search-3 white-text default-background" type="button"
+                      ng-click="Obtene_casosCerrados()" style="border-radius:10px;zoom:130%;">Buscar</button>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="zoom: 75%;" ng-show="vista_exportarcasoCerrado">
+                <div class="col l2 m2 s2">
+                  <label id="id_fechaInicio_label" style="padding-left: 9%;font-size: inherit;">Fecha
+                    Inicio Cierre:<span style="color:red;">*</span></label>
+                  <div class="col s12 ">
+                    <input
+                      class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l ng-pristine ng-valid ng-valid-max ng-touched error-input"
+                      id="fechaInicio" name="fechaInicio" ng-model="consulcasocerrado.fechaInicio" type="date"
+                      ng-change="validarVacio('fechaInicio','id_fechaInicio_label')" required>
+                  </div>
+                </div>
+                <div class="col l2 m2 s2">
+                  <label id="id_fechaFinal_label" style="padding-left: 9%;font-size: inherit;">Fecha
+                    Fin Cierre:<span style="color:red;">*</span></label>
+                  <div class="col s12 ">
+                    <input
+                      class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l ng-pristine ng-valid ng-valid-max ng-touched error-input"
+                      id="fechaFinal" name="fechaFinal" ng-model="consulcasocerrado.fechaFinal" type="date"
+                      ng-change="validarVacio('fechaFinal','id_fechaFinal_label')" required>
+                  </div>
+                </div>
+                <div class="col l2 m2 s2">
+                  <label style="padding-left: 4%;font-size: inherit;"></span>Cohorte:<span class="red-text">
+                      (*)</label>
+                  <div class="col s12 ">
+                    <select class="select-new-ps cursor-pointer" ng-model="consulcasocerrado.cohorte" required>
+                      <option value="">SELECCIONAR</option>
+                      <option value="{{x.CODIGO}}" ng-selected="x.CODIGO == consulcasocerrado.cohorte"
+                        ng-repeat="x in listCohortes">{{x.COHORTE}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col l2 m2 s2">
+                  <label style="padding-left: 4%;font-size: inherit;"></span>Regional:<span class="red-text">
+                      (*)</label>
+                  <div class="col s12 ">
+                    <select class="select-new-ps cursor-pointer" ng-model="consulcasocerrado.regional" required>
+                      <option value="">SELECCIONAR</option>
+                      <option value="{{x.UBGN_CODIGO}}" ng-selected="x.UBGN_CODIGO == consulcasocerrado.regional"
+                        ng-repeat="x in listRegionales">{{x.UBGC_NOMBRE}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="center row">
+                  <div class="col s12" style="text-align: center; padding-top: 20px;">
+                    <button class="icon-download white-text default-background" type="button"
+                      ng-click="exportarcasocerradoExcel()" style="border-radius:10px;zoom:130%;">Exportar</button>
+                    <button class="icon-reply  white-text default-background" type="button"
+                      ng-click="control_vista_Tabs('tablacasoCerrado')"
+                      style="border-radius:10px;zoom:130%;">Atras</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Vista Tabla consulta casos Cerrados -->
+    <div ng-show="vistacasosenSeguimiento" class="col l12 m12 s12" style="position:relative">
+      <div class="col s12 m12 l12" style="justify-content: center;">
+        <div class="row" style="margin-bottom: 0px;">
+          <form ng-submit="chg_filtrar('filtrarcasosCerrados');">
+            <div id="filtrar_casosCerrados" class="foot4 divcardcustom">
+              <div class="text-al divcardcustom2">
+                <strong class="switch" style="font-weight:600">Tabla de resultado de consulta de casos cerrados</strong>
+                <a class="icon-reply right" style="color:#fff"
+                  ng-click="botondecontroldeProcesos('consultacasoCerrado')" title="Atras"></a>
+              </div>
+            </div>
+          </form>
+          <div style="width:100%;">
+            <table id="H1_Tabla" class="bordered table_center_align highlight border-color"
+              style="width:100%;font-size:6px !important;border:3px solid;">
+              <thead class="default-border default-color">
+                <tr>
+                  <th>N° de seguimiento</th>
+                  <th>N° de siniestro</th>
+                  <th>Fecha llamada efectiva</th>
+                  <th>Regional</th>
+                  <th>Número de documento</th>
+                  <th>Afiliado</th>
+                  <th>Cohorte</th>
+                  <th>Gestion</th>
+                  <th>Estado llamada</th>
+                  <th ng-show="{{casos.ESTADO_DE_LA_LLAMADA != 'NO EFECTIVA'}}">Ver detalle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="casos in listaconsultacasosCerrados | orderBy:propertyName:reverse"
+                  style="color: black; ">
+                  <td>{{casos.ID_SEGUIMIENTO}}</td>
+                  <td>{{casos.NO_DE_SINIESTRO}}</td>
+                  <td ng-if="casos.FECHA_LLAMADA_EFECTIVA =='N/A'">NO CONTESTADO</td>
+                  <td ng-if="casos.FECHA_LLAMADA_EFECTIVA !='N/A'">{{casos.FECHA_LLAMADA_EFECTIVA}}</td>
+                  <td>{{casos.REGIONAL }}</td>
+                  <td>{{casos.TIPO_DOCUMENTO}} {{casos.NUMERO_DOCUMENTO }} </td>
+                  <td>{{casos.NOMBRES }} {{casos.APELLIDOS }}</td>
+                  <td>{{casos.CONC_NOMBRE }}</td>
+                  <td>{{casos.GESTION }}</td>
+                  <td>{{casos.ESTADO_DE_LA_LLAMADA}}</td>
+                  <td ng-show="{{casos.ESTADO_DE_LA_LLAMADA == 'EFECTIVA'}}"><i ng-click="consulta_formulario(casos)"
+                      class="icono fas fa-eye"></i></td>
+                </tr>
+                <tr ng-show="listaconsultacasosCerrados.length==0">
+                  <td class="center-align" colspan="9" style="font-weight: bolder;">No se encontraron
+                    resultados.</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="width: 100%;display: flex;">
+              <label for="normal">Total de información: <strong>{{listaconsultacasosCerrados.length}} </strong>
+                registros
+                encontrados
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Vista de preguntas-->
+    <div class="row dashboard-wrapper content-container white"
+      style="zoom: 0.9; padding-bottom: 20px; margin-bottom: 0; padding-left: 20px; padding-right: 20px;"
+      ng-show="show_Preguntas">
+      <div class="col l12 m12 s12" style="position:relative">
+        <div class="col s12 m12 l12" style="justify-content: center;">
+          <div class="row" style="margin-bottom: 0px;">
+            <!-- data -->
+            <div id="Diag_2" class="foot4 divcardcustom default-background">
+              <div class="text-al divcardcustom2">
+                <strong class="switch" style="font-weight: 600">
+                  <span>{{verPreguntas[0].DescripcionTipo}}</span>
+                  <a class="icon-reply right" style="color:#fff"
+                    ng-click="botondecontroldeProcesos('consultacasoCerrado')" title="Atras"></a>
+                </strong>
+              </div>
+            </div>
+            <div
+              style="display: flex; justify-content: end; flex-direction: row; gap: 1em; border-left: 3px solid #111; border-right: 3px solid #111; border-bottom: 3px solid #111; padding: 1em;">
+              <div style="display: grid; width: 100%; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div ng-repeat="item in verPreguntas">
+                  <div class="input-group m-b">
+                    {{item.IdPregunta}} - {{item.Pregunta}}
+                  </div>
+                  <div class="input-group m-b">
+                    <label>Respuesta</label>
+                    <input type="text" ng-model="item.Respuesta" disabled>
+                  </div>
+                  <!-- <div class="input-group m-b">
+                    <label>Descripción</label>
+                    <input type="text" ng-model="item.DescripcionRespuesta" disabled>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ## Fin de Vista Casos Cerrado ## -->
+  <!-- *****************************************************<<<SIGUIENTE>>>************************************************************************* -->
+  <!-- Botones de control de gestion-->
+  <!-- <div class="col s12" ng-show="vista=='tablaGestion'">
+  <div class="card ng-scope" style="margin: 38px; bottom: 10px ;zoom:75%;">
+    <div class="row">
+      <div class="col l12 m12 s12 center">
+        <strong>
+          <h5>SEGUIMIENTOS DE GESTION</h5>
+        </strong>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col l12 m12 s12">
+        <div class="row center">
+          <button type="button" class="center icon-phone-3 white-text default-background btn_2 "
+            style="border-radius: 10px;zoom:130%;" ng-click="botondecontroldeProcesos('gestionLlamadas')">Gestion
+            llamada</button>
+          <button type="button" class="icon-user-add white-text default-background btn_2 "
+            style="border-radius: 10px;zoom:130%;" ng-click="botondecontroldeProcesos('gestionLlamadas_manual')">
+            Gestion
+            Manual</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+  <!-- Botones de Control de Gesstion -->
+  <!-- ****************************************************************************************************************************** -->
+  <!-- Formulario gestion llamada-->
+  <div class="row dashboard-wrapper content-container white"
+    style="padding-bottom: 20px;margin-bottom: 0;padding-left: 20px;padding-right: 20px;"
+    ng-show="vista =='tablaGestion' && listatabladegestionLlamadas">
+    <div class="col l12 m12 s12" style="position:relative">
+      <div class="col s12 m12 l12" style="justify-content: center;">
+        <div class="row" style="margin-bottom: 0px;">
+          <div id="Diag_1" class="foot4 divcardcustom 0default-background cursor-pointer">
+            <div class="text-al divcardcustom2">
+              <strong class="switch" style="font-weight:600"> Tabla de gestion</strong>
+              <!-- Boton de nueva gestion -->
+              <!-- <i class="icon-user-plus default-color white-text cursor-pointer" style="margin-left: 4px;"
+              title="Nuevo Afiliado" ng-click="controdeVistas('nuevaGestion')"></i> -->
+              <!-- Boton de gestion manual -->
+              <i class="icon-user-plus default-color white-text cursor-pointer" style="margin-left: 4px;"
+                title="Gestion Manual" ng-click="controdeVistas('nuevagestionManual')"></i>
+              <!-- Boton de filtrar-->
+              <i class="icon-filter default-color white-text cursor-pointer" style="margin-left: 4px;" title="Filtrar"
+                ng-click="controdeVistas('filtroGestion')"></i>
+              <!-- Boton de exportar-->
+              <i class="icon-download default-color white-text cursor-pointer" style="margin-left: 4px;"
+                title="Exportar Informacion" ng-click="controdeVistas('exportarGestion')"></i>
+              <!-- Boton de actualizar-->
+              <i class="icon-arrows-cw-2 default-color white-text cursor-pointer" style="margin-left: 4px;"
+                title="Actualizar Tabla" ng-click="Obtener_Gestion()"></i>
+              <!-- Input de buscar en la tabla-->
+              <form ng-submit="chg_filtrar('bucartablaGestion');">
+                <div id="id_bucartablaGestion">
+                  <div class="col s3 no-padding label-new right"
+                    style="width: 25%;display: inline-flex;margin-right: -5px;margin-top: -25px;">
+                    <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                      style="text-align:right;" autocomplete="off" placeholder="Buscar..."
+                      ng-model="filtro.bucartablaGestion">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col l12 m12 s12" style="border: solid 2px;">
+              <!-- Vista de Nuevo Afiliado Gestion Llamada-->
+              <div class="row" ng-show="vista =='tablaGestion' && vista_nuevoafiliadoGestion" style="zoom: 75%;">
+                <div class="row">
+                  <div class="col l12 m12 s12">
+                    <blockquote>
+                      <h5>AGREGAR NUEVO AFILIADO</h5>
+                      <a class="icon-reply right" style="zoom:142%; color:#1a2e63"
+                        ng-click="botondecontroldeProcesos('llamadasPendientes')">Atras</a>
+                    </blockquote>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col l12 m12 s12">
+                    <div class="row">
+                      <div class="col l3 m3 s3">
+                        <label style="padding-left: 4%;font-size: inherit;"></span>Tipo Dcto:<span class="red-text">
+                            (*)</label>
+                        <div class="col s12 ">
+                          <select class="select-new-ps cursor-pointer"
+                            ng-model="nuevoAfiliadoFormgestionLlamada.tipoDocumento" required>
+                            <option value="">SELECCIONAR</option>
+                            <option value="{{x.CODIGO}}"
+                              ng-selected="x.CODIGO == nuevoAfiliadoFormgestionLlamada.tipoDocumento"
+                              ng-repeat="x in Tipos_Documentos">{{x.NOMBRE}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <form ng-submit="Obtener_Consulta_Siniestro('nuevoAfiliadoFormgestionLlamada');">
+                        <div class="col l3 m3 s3">
+                          <label for="numDocumento" style="margin-top: -14px;margin-left: 10px;" class="active">N°
+                            Documento:<span class="red-text">
+                              (*)</label></label>
+                          <div class="input-field-ps col s12">
+                            <input class="margin input-text-white gray-input w-100 "
+                              ng-model="nuevoAfiliadoFormgestionLlamada.numDocumento" type="text" placeholder="..."
+                              style="cursor: pointer;" text-upper autocomplete="off">
+                            <a><i style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                                class="material-icons prefix default-color"
+                                ng-click="Obtener_Consulta_Siniestro('nuevoAfiliadoFormgestionLlamada');">search</i></a>
+                          </div>
+                        </div>
+                      </form>
+                      <div class="col l3 m3 s3">
+                        <label for="tipo_cohortes" style="padding-left: 4%;font-size: inherit;">Cohorte:</label>
+                        <div class=" input-field-ps col s12 ">
+                          <input class="input-text-disable" id="tipo_cohortes"
+                            ng-model="nuevoAfiliadoFormgestionLlamada.cohortes" type="text" style="color: #000000c7;"
+                            disabled>
+                        </div>
+                      </div>
+                      <div class="col l3 m3 s3">
+                        <label for="tipo_clasificacion"
+                          style="padding-left: 4%;font-size: inherit;">Clasificacion:</label>
+                        <div class=" input-field-ps input-text-disable  col s12 ">
+                          <input class="input-text-disable" id="tipo_clasificacion"
+                            ng-model="nuevoAfiliadoFormgestionLlamada.clasificacion" type="text"
+                            style="color: #000000c7;" disabled>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col l4 m4 s4" ng-show="vista_nuevoafiliadoGestion && Condicion">
+                        <label for="tipo_marca_gestion" class="active"
+                          style="padding-left: 4%;font-size: inherit;"></span>Condicion:<span class="red-text">
+                            (*)</label>
+                        <div class="col s12 ">
+                          <select id="tipo_marca_gestion" class="select-new-ps cursor-pointer"
+                            ng-model="nuevoAfiliadoFormgestionLlamada.marca" required>
+                            <option value="" disabled>SELECCIONAR</option>
+                            <option value="{{x.coodigo}}" ng-repeat="x in list_marca">{{x.descripcion}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col l4 m4 s4" ng-show="vista_nuevoafiliadoGestion && requerimientopendiente">
+                        <label for="tipo_requerimiento" class="active"
+                          style="padding-left: 4%;font-size: inherit;"></span>Requerimiento Pendiente:<span
+                            class="red-text">
+                            (*)</label>
+                        <div class="col s12 ">
+                          <select id="tipo_requerimiento" class="select-new-ps cursor-pointer"
+                            ng-model="nuevoAfiliadoFormgestionLlamada.requerimiento" required>
+                            <option value="" disabled>SELECCIONAR</option>
+                            <option value="{{x.ID}}" ng-repeat="x in listrequerimientoPendiente">{{x.DESCRIPCION}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col l4 m4 s4" ng-show="vista_nuevoafiliadoGestion && requerimientopendiente">
+                        <label for="tipo_motivosestudio" class="active"
+                          style="padding-left: 4%;font-size: inherit;"></span>Motivos Pendiente:<span class="red-text">
+                            (*)</label>
+                        <div class="col s12 ">
+                          <select id="tipo_motivosestudio" class="select-new-ps cursor-pointer"
+                            ng-model="nuevoAfiliadoFormgestionLlamada.motivosestudio" required>
+                            <option value="" disabled>SELECCIONAR</option>
+                            <option value="{{x.ID}}" ng-repeat="x in listmotivosEstudio">{{x.PREGUNTA}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col l4 m4 s4" ng-show="vista_nuevoafiliadoGestion && requerimientopendiente">
+                        <label id="id_fechanuevoafiliado_label" style="font-size: inherit;">Fecha
+                          Inicio:<span style="color:red;">*</span></label>
+                        <div class="col s12 ">
+                          <input
+                            class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l ng-pristine ng-valid ng-valid-max ng-touched error-input"
+                            id="fechanuevoafiliado" name="fechanuevoafiliado"
+                            ng-model="nuevoAfiliadoFormgestionLlamada.fechanuevoafiliado" type="date"
+                            ng-change="validarVacio('fechanuevoafiliado','id_fechanuevoafiliado_label')" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col l12 m12 s2" ng-show="vista_nuevoafiliadoGestion && requerimientopendiente">
+                        <label id="id_observacion_label" style="font-size: inherit;">Observacion:<span
+                            style="color:red;">*</span></label>
+                        <div class="input-group">
+                          <textarea requerid ng-model="nuevoAfiliadoFormgestionLlamada.observacion"
+                            ng-keyup="handleKeyPress($event,'nuevoAfiliadoFormgestionLlamada')" name=""
+                            id="id_observacion_nuevoafiladomanual" cols="30" rows="10" style="height: 10rem;"
+                            maxlength="1999" ng-keyup="formatTexto('id_observacion_nuevoafiladomanual')">
+                                 </textarea>
+                        </div>
+                        <label style=" margin-top: -20px; padding-left: 1%;">Observaciones - Caracteres:
+                          {{count}} - Minimo 30 y Máximo: 2000<span class="red-text"> ( * )</span></label>
+                      </div>
+                    </div>
+                    <!-- TABLA DE CONSULTA SINIESTRO -->
+                    <div class="row" style="margin-bottom: 0px;">
+                      <div class="col 12 m12 s12">
+                        <div style="width:100%;">
+                          <div class="row" ng-show="list_siniestro.length && nuevoAfiliadoFormgestionLlamada">
+                            <div id="Diag_3" class="foot4 divcardcustom default-linear-gradient">
+                              <div class="text-al divcardcustom2">
+                                <strong class="switch" style="font-weight:600">Consulta siniestro</strong>
+                                <!-- <div class="col s3 no-padding label-new right"
+                                  style="width: 25%;display: inline-flex;margin-right: -5px;margin-top: -2px;">
+                                  <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                                    style="text-align:right;" autocomplete="off" placeholder="Buscar..."
+                                    ng-model="buscarnuevoAfiliadoFormgestionLlamada" ng-keyup="filter($event)">
+                                </div> -->
+                              </div>
+                            </div>
+                            <div
+                              style="max-height:22vh;overflow-y:auto;border: 1px solid;overflow-x: hidden;zoom: 95%;">
+                              <table id="tabla_modal_ENTREGA" class="bordered table_center_align highlight border-color"
+                                style="width:100%;font-size:6px !important;border:1px solid;  ">
+                                <thead class="default-border default-color">
+                                  <tr>
+                                    <th>Radicado</th>
+                                    <th>Tipo Número de Documento </th>
+                                    <th>Coherte</th>
+                                    <th>Descripcion</th>
+                                    <th>Clase Concepto</th>
+                                    <th>Estado</th>
+                                    <th>Seleccionar</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr
+                                    ng-repeat="consulta in list_siniestro  "
+                                    style="color: black;cursor:pointer; ">
+                                    <td>{{ consulta.RADICADO }}</td>
+                                    <td>{{ consulta.DOCUMENTOC }}</td>
+                                    <td>{{ consulta.COHORTE }}</td>
+                                    <td>{{ consulta.DESCRIPCION_COHORTE }}</td>
+                                    <td>{{ consulta.CLASE_CONCEPTO }}</td>
+                                    <td>
+                                      <span style=" padding: 2px 10px;border-radius: 0.5em;"
+                                        ng-class="consulta.ESTADO_AFILIADO=='ACTIVO'?'color-verde':'color-rojo'">
+                                        {{ consulta.ESTADO_AFILIADO }}
+                                      </span>
+                                    </td>
+                                    <td><i ng-click="select_siniestro(consulta,'nuevoAfiliadoFormgestionLlamada')"
+                                        class="icon-check-3"></i></td>
+                                  </tr>
+                                  <tr ng-show="list_siniestro.length==0">
+                                    <td class="center-align" colspan="9" style="font-weight: bolder;">No se
+                                      encontraron
+                                      resultados.</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="text-align: center; padding: 10px 0.75px;">
+                      <button class=" icon-paper-plane-1 white-text default-background" type="button"
+                        ng-click="enviarAfiliado()" style="border-radius:10px;zoom:130%;">Enviar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Vista de Gestion  Manual -->
+              <div class="row" ng-show="vista =='tablaGestion' && vista_nuevoafiliadoManual" style="zoom: 75%;">
+                <div class="row">
+                  <div class="col l12 m12 s12">
+                    <blockquote>
+                      <h5>AGREGAR NUEVO AFILIADO MANUAL</h5>
+                    </blockquote>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col l12 m12 s12">
+                    <div class="row">
+                      <div class="col l3 m3 s3">
+                        <label style="padding-left: 4%;font-size: inherit;"></span>Tipo Dcto:<span class="red-text">
+                            (*)</label>
+                        <div class="col s12 ">
+                          <select class="select-new-ps cursor-pointer"
+                            ng-model="nuevoAfiliadoFormgestionManual.tipoDocumento" required>
+                            <option value="">SELECCIONAR</option>
+                            <option value="{{x.CODIGO}}"
+                              ng-selected="x.CODIGO == nuevoAfiliadoFormgestionManual.tipoDocumento"
+                              ng-repeat="x in Tipos_Documentos">{{x.NOMBRE}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <form ng-submit="Obtener_Consulta_Siniestro('nuevoAfiliadoFormgestionManual');">
+                        <div class="col l3 m3 s3">
+                          <label for="numDocumento" style="margin-top: -14px;margin-left: 10px;" class="active">N°
+                            Documento:<span class="red-text">
+                              (*)</label></label>
+                          <div class="input-field-ps col s12">
+                            <input class="margin input-text-white gray-input w-100 "
+                              id="id_nuevoAfiliadoFormgestionManualnumDocumento"
+                              ng-model="nuevoAfiliadoFormgestionManual.numDocumento" type="text" placeholder="..."
+                              style="cursor: pointer;" text-upper autocomplete="off" maxlength="15"
+                              ng-keyup="FormatSoloNumero('id_nuevoAfiliadoFormgestionManualnumDocumento')">
+                            <a><i style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                                class="material-icons prefix default-color"
+                                ng-click="Obtener_Consulta_Siniestro('nuevoAfiliadoFormgestionManual');">search</i></a>
+                          </div>
+                        </div>
+                      </form>
+                      <div class="col l3 m3 s3">
+                        <label for="tipo_cohortes" style="padding-left: 4%;font-size: inherit;">Cohorte:</label>
+                        <div class=" input-field-ps col s12 ">
+                          <input class="input-text-disable" id="tipo_cohortes"
+                            ng-model="nuevoAfiliadoFormgestionManual.cohortes" type="text" style="color: #000000c7;"
+                            disabled>
+                          <input class="input-text-disable" id="Id_Seguimiento" ng-model="seguimientoId" type="text"
+                            style="color: #000000c7;" disabled ng-hide="true">
+                        </div>
+                      </div>
+                      <div class="col l3 m3 s3">
+                        <label for="tipo_clasificacion"
+                          style="padding-left: 4%;font-size: inherit;">Clasificacion:</label>
+                        <div class=" input-field-ps input-text-disable  col s12 ">
+                          <input class="input-text-disable" id="tipo_clasificacion"
+                            ng-model="nuevoAfiliadoFormgestionManual.clasificacion" type="text"
+                            style="color: #000000c7;" disabled>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col l3 m3 s3">
+                        <label for="tipo_requerimiento" class="active"
+                          style="padding-left: 4%;font-size: inherit;"></span>Requerimiento Pendiente:<span
+                            class="red-text">
+                            (*)</label>
+                        <div class="col s12 ">
+                          <select id="tipo_requerimiento" class="select-new-ps cursor-pointer"
+                            ng-model="nuevoAfiliadoFormgestionManual.requerimiento" required>
+                            <option value="" disabled>SELECCIONAR </option>
+                            <option value="{{x}}" ng-repeat="x in listrequerimientoPendiente">{{x.DESCRIPCION}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col l3 m3 s3">
+                        <label for="tipo_motivosestudio" class="active"
+                          style="padding-left: 4%;font-size: inherit;"></span>Motivos
+                          de Estudio:<span class="red-text">
+                            (*)</label>
+                        <!-- 22407023 -->
+                        <div class="col s12 ">
+                          <select id="tipo_motivosestudio" class="select-new-ps cursor-pointer"
+                            ng-model="nuevoAfiliadoFormgestionManual.motivosestudio"
+                            ng-change="capturainfogestionManua(nuevoAfiliadoFormgestionManual.motivosestudio,nuevoAfiliadoFormgestionManual.requerimiento)"
+                            required>
+                            <option value="" disabled>SELECCIONAR</option>
+                            <option value="{{x}}" ng-repeat="x in listmotivosEstudio">{{x.DESCRIPCION}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col l3 m3 s3">
+                        <label id="id_fechanuevoafiliado_label"
+                          style="padding-left: 4%;font-size: inherit;">{{nombrefechadeGestion}}:<span
+                            style="color:red;">*</span></label>
+                        <div class="col s12 ">
+                          <input
+                            class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l ng-pristine ng-valid ng-valid-max ng-touched error-input"
+                            id="fechanuevoafiliado" name="fechanuevoafiliado"
+                            ng-model="nuevoAfiliadoFormgestionManual.fechanuevoafiliado" type="date"
+                            ng-change="validarVacio('fechanuevoafiliado','id_fechanuevoafiliado_label')" required>
+                        </div>
+                      </div>
+                      <div class="col l3 m3 s3">
+                        <label for="tipo_marcacion" class="active"
+                          style="padding-left: 4%;font-size: inherit;"></span>Tipo Fuente:<span class="red-text">
+                            (*)</label>
+                        <!-- 22407023 -->
+                        <div class="col s12 ">
+                          <select id="tipo_marcacion" class="select-new-ps cursor-pointer"
+                            ng-model="nuevoAfiliadoFormgestionManual.tipo_marcacion" required>
+                            <option value="" disabled>SELECCIONAR</option>
+                            <option value="{{x.coodigo}}" ng-repeat="x in list_marca_usuario">{{x.descripcion}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col l12 m12 s2">
+                        <label id="id_observacion_label"
+                          style="font-size: inherit;">{{nombreobservaciondeGestion}}:<span
+                            style="color:red;">*</span></label>
+                        <div class="input-group">
+                          <textarea requerid ng-model="nuevoAfiliadoFormgestionManual.observacion"
+                            ng-keyup="handleKeyPress($event,'nuevoAfiliadoFormgestionManual')" name=""
+                            id="id_observacion_nuevoafiladomanual" cols="30" rows="10" style="height: 10rem;"
+                            maxlength="1999" ng-keyup="formatTexto('id_observacion_nuevoafiladomanual')">
+                                     </textarea>
+                        </div>
+                        <label style=" margin-top: -20px; padding-left: 1%;">Observaciones - Caracteres:
+                          {{count}} - Minimo 30 y Máximo: 2000<span class="red-text"> ( * )</span></label>
+                      </div>
+                    </div>
+                    <!-- TABLA DE CONSULTA SINIESTRO -->
+                    <div class="row" style="margin-bottom: 0px;">
+                      <div class="col 12 m12 s12">
+                        <div style="width:100%;">
+                          <div class="row" ng-show="list_siniestro.length && nuevoAfiliadoFormgestionManual">
+                            <div id="Diag_3" class="foot4 divcardcustom default-linear-gradient">
+                              <div class="text-al divcardcustom2">
+                                <strong class="switch" style="font-weight:600">Consulta siniestro - Gestion</strong>
+                                <!-- <div class="col s3 no-padding label-new right"
+                                  style="width: 25%;display: inline-flex;margin-right: -5px;margin-top: -2px;">
+                                  <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                                    style="text-align:right;" autocomplete="off" placeholder="Buscar..."
+                                    ng-model="buscarnuevoAfiliadoFormgestionManual" ng-keyup="filter($event)">
+                                </div> -->
+                              </div>
+                            </div>
+                            <div
+                              style="max-height:22vh;overflow-y:auto;border: 1px solid;overflow-x: hidden;zoom: 95%;">
+                              <table id="tabla_modal_ENTREGA" class="bordered table_center_align highlight border-color"
+                                style="width:100%;font-size:6px !important;border:1px solid;  ">
+                                <thead class="default-border default-color">
+                                  <tr>
+                                    <th>Radicado</th>
+                                    <th>Tipo Número de Documento </th>
+                                    <th>Coherte</th>
+                                    <th>Descripcion</th>
+                                    <th>Clase Concepto</th>
+                                    <th>Estado Siniestro</th>
+                                    <th>Estado</th>
+                                    <th>Seleccionar</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr
+                                    ng-repeat="consulta in list_siniestro"
+                                    style="color: black;cursor:pointer; ">
+                                    <td>{{ consulta.RADICADO }}</td>
+                                    <td>{{ consulta.DOCUMENTOC }}</td>
+                                    <td>{{ consulta.COHORTE }}</td>
+                                    <td>{{ consulta.DESCRIPCION_COHORTE }}</td>
+                                    <td>{{ consulta.CLASE_CONCEPTO }}</td>
+                                    <td>{{ consulta.ESTADO }}</td>
+                                    <td>
+                                      <span style=" padding: 2px 10px;border-radius: 0.5em;"
+                                        ng-class="consulta.ESTADO_AFILIADO=='ACTIVO'?'color-verde':'color-rojo'">
+                                        {{ consulta.ESTADO_AFILIADO }}
+                                      </span>
+                                    </td>
+                                    <td><i ng-click="select_siniestro(consulta,'nuevoAfiliadoFormgestionManual')"
+                                        class="icon-check-3" ng-show="consulta.ESTADO != 'Anulado'"></i></td>
+                                  </tr>
+                                  <tr ng-show="list_siniestro.length==0">
+                                    <td class="center-align" colspan="9" style="font-weight: bolder;">No se
+                                      encontraron
+                                      resultados.</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="text-align: center; padding: 10px 0.75px;">
+                      <button class=" icon-paper-plane-1 white-text default-background" type="button"
+                        ng-click="guardar_gestionManual()" style="border-radius:10px;zoom:130%;">Enviar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Vista filtro tabla de gestion -->
+              <div class="row" ng-show="vista =='tablaGestion' && vista_filtroGestion" style="zoom: 75%;">
+                <div class="col l3 m3 s3">
+                  <label style="padding-left: 4%;font-size: inherit;">Tipo de busqueda:<span class="red-text">
+                      (*)</span></label>
+                  <div class="col s12 " type="text" ng-click="reiniciarBusqueda()">
+                    <select ng-change="Selector()" class="select-new-ps cursor-pointer" type="text"
+                      ng-model="buscar2.tipoSolicitud" id="tipoSolicitud">
+                      <option value="" disabled>SELECCIONAR</option>
+                      <option value="ND">NUMERO DE DOCUMENTO</option>
+                      <option value="NS">NUMERO DE SINIESTRO</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3" ng-show="buscar2.tipoSolicitud == 'ND'">
+                  <label style="padding-left: 4%;font-size: inherit;"></span>Tipo Dcto:<span class="red-text">
+                      (*)</label>
+                  <div class="col s12 ">
+                    <select class="select-new-ps cursor-pointer" ng-model="buscar2.Tipo_Doc" required>
+                      <option value="">SELECCIONAR</option>
+                      <option value="{{x.CODIGO}}" ng-selected="x.CODIGO == buscar2.Tipo_Doc"
+                        ng-repeat="x in Tipos_Documentos">{{x.NOMBRE}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3" ng-show="buscar2.tipoSolicitud == 'ND'">
+                  <label style="padding-left: 4%;font-size: inherit;">N° Documento:<span class="red-text">
+                      (*)</label></label>
+                  <div class=" input-field-ps  col s12 ">
+                    <input id="id_buscar2Num_Doc" ng-model="buscar2.Num_Doc" type="text" style="color: #000000c7;"
+                      maxlength="15" ng-keyup="FormatSoloNumero('id_buscar2Num_Doc')">
+                  </div>
+                </div>
+                <div class="col l3 m3 s3" ng-show="buscar2.tipoSolicitud == 'NS'">
+                  <label style="padding-left: 4%;font-size: inherit;">N° Siniestro Procesado:<span
+                      class="red-text">(*)</label></label>
+                  <div class=" input-field-ps  col s12 ">
+                    <input ng-model="buscar2.siniestro" type="text" style="color: #000000c7;">
+                  </div>
+                </div>
+                <div class="col l3 m3 s3" ng-show="buscar2.tipoSolicitud == 'ND' || buscar2.tipoSolicitud == 'NS'">
+                  <div style="text-align: center; padding: 10px 0.75px;">
+                    <button class="icon-search-3 white-text default-background" type="button"
+                      ng-click="busquedaenTablas('buscar2')" style="border-radius:10px;zoom:130%;">Buscar</button>
+                  </div>
+                </div>
+              </div>
+              <!-- Vista exportar gestion -->
+              <div class="row" ng-show="vista =='tablaGestion' && vista_exportarGestion" style="zoom: 73%;">
+                <div class="col l2 m2 s2">
+                  <label id="consulgestionfechaInicio_label" style="padding-left: 9%;font-size: inherit;">Fecha
+                    Inicio Ultima Gestion:<span style="color:red;">*</span></label>
+                  <div class="col s12 ">
+                    <input
+                      class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l ng-pristine ng-valid ng-valid-max ng-touched error-input"
+                      id="consulgestionfechaInicio" name="consulgestionfechaInicio" ng-model="consulgestion.fechaInicio" type="date"
+                      ng-change="validarVacio('consulgestionfechaInicio','consulgestionfechaInicio_label')" required>
+                  </div>
+                </div>
+                <div class="col l2 m2 s2">
+                  <label id="consulgestionfechaFinal_label" style="padding-left: 9%;font-size: inherit;">Fecha
+                    Fin Ultima Gestion:<span style="color:red;">*</span></label>
+                  <div class="col s12 ">
+                    <input
+                      class="margin border-none white input-text-new input-w-p input-out-new w-100 m-l ng-pristine ng-valid ng-valid-max ng-touched error-input"
+                      id="consulgestionfechaFinal" name="consulgestionfechaFinal" ng-model="consulgestion.fechaFinal" type="date"
+                      ng-change="validarVacio('consulgestionfechaFinal','consulgestionfechaFinal_label')" required>
+                  </div>
+                </div>
+                <div class="col l3 m3 s3">
+                  <div class="col s12" style="text-align: center; padding-top: 20px;">
+                    <button class="icon-download white-text default-background" type="button" ng-click="exportargestionExcel()"
+                      style="border-radius:10px;zoom:130%;">Exportar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Tabla Gestion  llamada-->
+            <div style="width:100%;" ng-show="gestionllamada">
+              <table id="H1_Tabla" class="bordered table_center_align highlight border-color"
+                style="width:100%;font-size:6px !important;border:2px solid;  ">
+                <thead class="default-border default-color">
+                  <tr>
+                    <th>Regional</th>
+                    <th>Tipo </th>
+                    <th>Número de documento</th>
+                    <th>Afiliado</th>
+                    <th>Fecha anterior gestión</th>
+                    <th>Fecha ultimo seguimiento</th>
+                    <th>Fecha reprogramación</th>
+                    <!-- <th>Pluripatológico </th> -->
+                    <th>Cohorte</th>
+                    <th>Fuente</th>
+                    <th>Número de intentos </th>
+                    <th>Semaforización</th>
+                    <th>Gestión</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    ng-repeat="gestion in list_DatosTemp | inicio: currentPage * pageSize | limitTo: pageSize |orderBy:propertyName:reverse"
+                    style="color: black; cursor: pointer;" style="color: black;cursor:pointer; ">
+                    <td>{{ gestion.REGIONAL}}</td>
+                    <td>{{ gestion.TIPODOCUMENTO }} </td>
+                    <td>{{ gestion.NUMDOCUMENTO}}</td>
+                    <td>{{ gestion.NOMBRES }} {{ gestion.APELLIDOS }}</td>
+                    <td>{{ gestion.FECHAANTERIORGESTION }}</td>
+                    <td>{{ gestion.FECHAULTIMOSEGUIMIENTO }}</td>
+                    <td>{{ gestion.FECHAREPROGRAMACION }}</td>
+                    <!-- <td>{{ gestion.PLURIPATOLOGICO=='S'?'SI':'NO' }}</td> -->
+                    <td>{{ gestion.NOMCOHORTE}}</td>
+                    <td>{{ gestion.TIPOFUENTE}}</td>
+                    <td>{{ gestion.NUMEROINTENTO }}</td>
+                    <td>
+                      <i class="icon-circle" style="color: transparent;font-size: 9px;" ng-class="{
+                      'Con_pulse_VERDE' : (gestion.SEMAFORIZACION == 'VERDE') ? 'rgba(3, 197, 20)' : '',
+                      'Con_pulse_ROJO' : (gestion.SEMAFORIZACION == 'ROJO') ? 'rgba(245, 75, 75)' : '',
+                      'Con_pulse_AZUL' : (gestion.SEMAFORIZACION == 'AZUL') ? 'rgba(51, 70, 255)' : '',
+                      'Con_pulse_AMARILLO' : (gestion.SEMAFORIZACION == 'AMARILLO') ? 'rgba(255, 235, 59)' : ''
+                    }" ng-style="{
+                      'background-color' : gestion.SEMAFORIZACION == 'VERDE' ? 'rgba(3, 197, 20)' :
+                                gestion.SEMAFORIZACION == 'AZUL' ? 'rgba(51, 70, 255)' :
+                                gestion.SEMAFORIZACION == 'ROJO' ? 'rgba(245, 75, 75)' :
+                                gestion.SEMAFORIZACION == 'AMARILLO' ? 'rgba(255, 235, 59)' : ''}">
+
+                    </td>
+                    <td>
+                      <i ng-click="obtener_preguntasGestion(gestion.IDSEGUIMIENTO, gestion)"
+                        class="icono fas fa-eye "></i>
+                    </td>
+
+                  </tr>
+                  <tr ng-show="list_DatosTemp.length==0">
+                    <td class="center-align" colspan="10" style="font-weight: bolder;">No se encontraron
+                      resultados.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div style="width: 100%;display: flex;">
+                <label for="normal">Total de información: <strong>{{list_DatosTemp.length}} </strong> registros
+                  encontrados
+                </label>
+              </div>
+              <ul class="pagination" ng-show="list_DatosTemp.length > 0">
+                <li><button ng-disabled='currentPage == 0' class="btn-floating white-text default-background"
+                    ng-click="paso('back')">&laquo;</button></li>
+                <li ng-repeat='page in pages'><button ng-disabled='currentPage == page.no - 1'
+                    class="btn-floating white-text default-background" ng-click='setPage(page.no)'>{{page.no}}</button>
+                </li>
+                <li><button ng-disabled='currentPage >= list_DatosTemp.length/pageSize - 1'
+                    class="btn-floating white-text default-background" ng-click="paso('next')">&raquo;</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fin de Formulario gestion-->
+  <!-- ****************************************************************************************************************************** -->
+  <div class="row dashboard-wrapper content-container white " ng-show="preguntasGestion && tablaGestion"
+    style="zoom: 0.9;padding-bottom: 20px;margin-bottom: 0;padding-left: 20px;padding-right: 20px;">
+    <div class="col l12 m12 s12" style="position:relative">
+      <div class="col s12 m12 l12" style="justify-content: center;">
+        <div class="row" style="margin-bottom: 0px;">
+          <div id="Diag_1" class="foot4 divcardcustom default-background">
+            <div class="text-al divcardcustom2">
+              <strong style="font-weight:600">Información del afiliado</strong>
+              <a class="icon-reply right" style="color:#fff" ng-click="control_vista_Tabs('tablaGestion')"
+                title="Atras"></a>
+            </div>
+          </div>
+          <div class="col s12" style="padding: 1px; border-left: 3px solid #111;border-right: 3px solid #111;">
+            <div class="row" style="padding: 1em;">
+              <div class="col l12 card-content">
+                <!-- fila 1 -->
+                <div class="row" style="margin: 0; padding: 0;">
+                  <div class="col s3">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fas fa-clipboard" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Número siniestro:</span>
+                    </label>
+                  </div>
+                  <div class="col s3">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fas fa-globe" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Regional:</span>
+                    </label>
+                  </div>
+                  <div class="col s3">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fa fa-id-card" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Tipo documento:</span>
+                    </label>
+                  </div>
+                  <div class="col s3">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fa fa-id-card" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Número Documento:</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="row" style="margin: 0; padding: 0;">
+                  <div class="col s3">
+                    <div class="input-group">
+                      <input ng-style="{'color': textoColor}" ng-disabled="bloquearSiniestro"
+                        ng-model="formSeguimiento.NUMEROSINIESTRO">
+                    </div>
+                  </div>
+                  <div class="col s3">
+                    <div class="input-group">
+                      <input ng-style="{'color': textoColor}" ng-disabled="bloquearRegional"
+                        ng-model="formSeguimiento.REGIONAL">
+                    </div>
+                  </div>
+                  <div class="col s3">
+                    <div class="input-group">
+                      <select class="select-chosen-eps" ng-style="{'color': textoColor}" style="padding-top: 0px;"
+                        ng-model="formSeguimiento.TIPODOCUMENTO" disabled>
+                        <option value="">SELECCIONAR</option>
+                        <option value="{{x.CODIGO}}" ng-selected="x.CODIGO == formSeguimiento.TIPODOCUMENTO"
+                          ng-repeat="x in Tipos_Documentos">{{x.NOMBRE}}</option>
+                      </select>
+                      <!-- <input ng-style="{'color': textoColor}" ng-disabled="bloquearNumdoc"
+                      ng-model="formSeguimiento.TipoDoc"> -->
+                    </div>
+                  </div>
+                  <div class="col s3">
+                    <div class="input-group">
+                      <input ng-style="{'color': textoColor}" ng-disabled="bloquearNumdoc"
+                        ng-model="formSeguimiento.NUMDOCUMENTO">
+                    </div>
+                  </div>
+                </div>
+                <!-- fin file 1 -->
+                <!-- fila 2 -->
+                <div class="row" style="margin: 0; padding: 0;">
+                  <div class="col s9">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fas fa-user" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Nombres del afiliado</span>
+                    </label>
+                  </div>
+                  <div class="col s3">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fas fa-check-circle" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Estado del afilido:</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="row" style="margin: 0; padding: 0;">
+                  <div class="col s9">
+                    <div class="input-group">
+                      <input ng-style="{'color': textoColor}" ng-disabled="bloquearNombresyapellidos"
+                        ng-style="{'color': textoColor}" ng-model="formSeguimiento.NombreCompleto">
+                    </div>
+                  </div>
+                  <div class="col s3">
+                    <div style="    padding-top: 10px;
+                      padding-bottom: 11px;
+                      border-bottom: 1px solid #bdbdbd;
+                      width: 100%;">
+                      <span style=" padding: 2px 10px; border-radius: 0.5em;" ng-show="formSeguimiento.ESTADOAFILIACION"
+                        ng-class="formSeguimiento.ESTADOAFILIACION=='ACTIVO'?'color-verde':'color-rojo1'">
+                        {{formSeguimiento.ESTADOAFILIACION}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <!-- fin de fila 2 - -->
+                <!-- fila 3- -->
+                <div class="row" style="margin: 0; padding: 0;">
+                  <div class="col s4">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fas fa-calendar" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Edad:</span>
+                    </label>
+                  </div>
+                  <div class="col s4">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fas fa-male" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Género:</span>
+                    </label>
+                  </div>
+                  <div class="col s4">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fas fa-exchange-alt" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Portabilidad:</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="row" style="margin: 0; padding: 0;">
+                  <div class="col s4">
+                    <div class="input-group">
+                      <input ng-style="{'color': textoColor}" ng-disabled="bloquearEdad"
+                        ng-model="formSeguimiento.EDAD">
+                    </div>
+                  </div>
+                  <div class="col s4">
+                    <div class="input-group">
+                      <input ng-style="{'color': textoColor}" ng-disabled="bloquearGenero"
+                        ng-model="formSeguimiento.GENERO">
+                    </div>
+                  </div>
+                  <div class="col s4">
+                    <div class="input-group">
+                      <input ng-style="{'color': textoColor}" ng-disabled="bloquearPortabilidad"
+                        ng-model="formSeguimiento.PORTABILIDAD">
+                    </div>
+                  </div>
+                </div>
+                <!-- fin fila 3  -->
+              </div>
+            </div>
+          </div>
+          <!-- data -->
+          <div id="Diag_2" class="foot4 divcardcustom default-background ">
+            <div class="text-al divcardcustom2">
+              <strong class="switch" style="font-weight:600">
+                <span>{{dataPregunta.cohorte}}</span>
+              </strong>
+            </div>
+          </div>
+          <form>
+            <div
+              style="display: flex;justify-content: end;flex-direction: row; gap: 1em; border-left: 3px solid #111;border-right: 3px solid #111;border-bottom: 3px solid #111; padding: 1em;">
+              <div style="display: grid; width: 100%; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div ng-repeat="item in preguntas" ng-if="item.aparecer=='N'?false:true">
+
+                  <label for="{{item.id}}">{{item.orden}}. {{item.pregunta}} <strong style="color:#0501e7"
+                      data-tooltip="Busqueda por nit">{{item.nombreIPS}}</strong></label>
+
+                  <!-- selec -->
+                  <select class="select-new" ng-class="item.ClaseRequerido" style="box-shadow: none;display: block;
+                              background: white;color:#111" ng-if="item.objhtml == 'select'" ng-model="item.respuesta"
+                    name="name{{item.id}}" ng-change="mostrarPregunta(item);item.ClaseRequerido='';validaGestion(item)">
+                    <option value="" disabled>SELECCIONAR</option>
+                    <option value="{{x.id}}" ng-repeat="x in  item.listado" ng-selected="x.id == item.respuesta">
+                      {{x.descripcion}}</option>
+                  </select>
+                  <!-- fin del select -->
+
+                  <!-- input -->
+                  <input placeholder="{{item.input.textPlaceHolder}}" ng-class="item.ClaseRequerido"
+                    name="name{{item.id}}" type="{{item.input.typeInput}}" ng-model="item.respuesta"
+                    style="color: #111;" ng-change="item.ClaseRequerido=''"
+                    min="{{validacionDinamica(item.input.metodo, 'fechaMinHoy',item.input.typeInput)}}"
+                    max="{{validacionDinamica(item.input.metodo, 'fechaMaxHoy',item.input.typeInput)}}"
+                    ng-if="item.objhtml == 'input'">
+                  <!-- fin del input -->
+                  <!-- input -->
+                  <div ng-if="item.objhtml == 'IPS-H'" style="position: relative;">
+                    <input name="name{{item.id}}" ng-model="item.respuesta" autocomplete="off" type="text"
+                      ng-class="item.ClaseRequerido" ng-change="item.ClaseRequerido=''" ng-init="i=$index"
+                      style="padding: 0;">
+                    <i class="fa fa-search" aria-hidden="true" ng-click="buscar_listado_select(item.respuesta,$index)"
+                      style="position: absolute;
+                    right: 10px;
+                    cursor:pointer;
+                    bottom: 24px;"></i>
+                    <ul class="list-group" id="list-group-prestador"
+                      style="overflow: auto;max-height: 200px;position:absolute;margin: 0;width: inherit;z-index: 99;">
+                      <li id="DM{{x.nit}}" class="list-group-item" ng-class="{'active_list':(x.ESTADO==true)}"
+                        ng-repeat="x in json_prestador" ng-click="seleccion_opcion2(x.nit,x.razon_social, i)">
+                        {{x.nit}}
+                        -
+                        {{x.razon_social}}</li>
+                    </ul>
+                  </div>
+                  <!-- fin del input -->
+
+                  <!-- input de ips -->
+                  <div ng-if="item.objhtml == 'IPS'" style="position: relative;">
+                    <input name="name{{item.id}}" ng-model="item.respuesta" autocomplete="off" type="text"
+                      ng-class="item.ClaseRequerido" ng-change="item.ClaseRequerido=''" ng-init="i=$index">
+                    <i class="fa fa-search" aria-hidden="true"
+                      ng-click="buscar_listado_select_ips(item.respuesta,$index)" style="position: absolute;
+                    right: 10px;
+                    cursor:pointer;
+                    bottom: 24px;"></i>
+                    <ul class="list-group" id="list-group-ips"
+                      style="overflow: auto;max-height: 200px;position:absolute;margin: 0;width: inherit;z-index: 99;">
+                      <li id="DMIPS{{x.nit}}" class="list-group-item" ng-class="{'active_list':(x.ESTADO==true)}"
+                        ng-repeat="x in json_prestador_ips" ng-click="seleccion_opcion2_ips(x.nit,x.razon_social, i)">
+                        {{x.nit}}
+                        -
+                        {{x.razon_social}}</li>
+                    </ul>
+                  </div>
+                  <!-- fin del input de ips -->
+                  <!-- texarea  -->
+                  <textarea ng-if="item.objhtml == 'textarea'" name="name{{item.id}}" ng-class="item.ClaseRequerido"
+                    id="{{item.id}}" cols="30" rows="10" ng-model="item.respuesta" ng-change="item.ClaseRequerido='' "
+                    style="resize: vertical !important;"></textarea>
+                  <!-- fin teztarea -->
+                </div>
+                <div ng-if="mostrarGestion" ng-show="tipoPreguntaLado == '2'" ng-repeat="item in gestion">
+                  <label for="{{$index}}">{{item.key}}</label>
+                  <input name="name{{$index}}" type="text" disabled ng-model="item.respuesta" style="color: #111;">
+                </div>
+              </div>
+            </div>
+            <p class="alert " ng-show="tipoPreguntaLado == '1'">
+              <strong style="    font-size: 23px;"><i class="icon-attention"></i>Educación</strong><br>
+              {{dataPregunta.educacion }}
+            </p>
+            <style>
+              .alert {
+                padding: 10px;
+                /* Agregar un espacio de relleno de 10px */
+                color: #856404;
+                font-size: 17px;
+                background-color: #fff3cd;
+                border-color: #ffeeba;
+                box-shadow: -4px 3px 10px 2px rgba(0, 0, 0, 0.3);
+              }
+            </style>
+          </form>
+
+          <!-- Trazabilidad -->
+          <div ng-show="trazabilidad === 1">
+            <div id="Diag_2" class="foot4 divcardcustom default-background">
+              <div class="text-al divcardcustom2">
+                <strong class="switch" style="font-weight:600">Observaciones asociadas</strong>
+              </div>
+            </div>
+            <table id="H2_Tabla" class="bordered table_center_align highlight border-color"
+              style="width:100%;font-size:6px !important;border:3px solid;  ">
+              <thead class="default-border default-color">
+                <tr>
+                  <th>Observación</th>
+                  <th>Fecha</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in observaciones">
+                  <td class="center-align">
+                    {{item.Descripcion}}
+                  </td>
+                  <td class="center-align">
+                    {{item.Fecha}}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="center-align" colspan="9" ng-if="listado.observaciones.length"
+                    style="font-weight: bolder;">
+                    No
+                    se encontraron
+                    resultados.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- fila boton  -->
+          <div class="row" style="margin-top: 10px; padding: 0;">
+            <div class="col l12 text-center">
+              <button class="btn btn-primary" ng-click="guardarPreguntas()" type="submit">Guardar
+                seguimiento</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row dashboard-wrapper content-container white " ng-show="preguntasSeguimientoTelefonico"
+    style="zoom: 0.9;padding-bottom: 20px;margin-bottom: 0;padding-left: 20px;padding-right: 20px;">
+    <div class="col l12 m12 s12" style="position:relative">
+      <div class="col s12 m12 l12" style="justify-content: center;">
+        <div class="row" style="margin-bottom: 0px;">
+          <div id="Diag_1" class="foot4 divcardcustom default-background">
+            <div class="text-al divcardcustom2">
+              <strong class="switch" style="font-weight:600">Información del afiliado</strong>
+            </div>
+          </div>
+          <div class="col s12" style="padding: 1px; border-left: 3px solid #111;border-right: 3px solid #111;">
+            <div class="row" style="padding: 1em;">
+              <div class="col l12 card-content">
+                <!-- fila 1 -->
+                <div class="row" style="margin: 0; padding: 0;">
+                  <div class="col s3">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fas fa-clipboard" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Número siniestro:</span>
+                    </label>
+                  </div>
+                  <div class="col s3">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fas fa-globe" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Regional:</span>
+                    </label>
+                  </div>
+                  <div class="col s3">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fa fa-id-card" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Tipo documento:</span>
+                    </label>
+                  </div>
+                  <div class="col s3">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fa fa-id-card" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Número Documento:</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="row" style="margin: 0; padding: 0;">
+                  <div class="col s3">
+                    <div class="input-group">
+                      <input ng-style="{'color': textoColor}" ng-disabled="bloquearSiniestro"
+                        ng-model="formSeguimiento.NUMEROSINIESTRO">
+                    </div>
+                  </div>
+                  <div class="col s3">
+                    <div class="input-group">
+                      <input ng-style="{'color': textoColor}" ng-disabled="bloquearRegional"
+                        ng-model="formSeguimiento.REGIONAL">
+                    </div>
+                  </div>
+                  <div class="col s3">
+                    <div class="input-group">
+                      <select class="select-chosen-eps" ng-style="{'color': textoColor}" style="padding-top: 0px;"
+                        ng-model="formSeguimiento.TIPODOCUMENTO" disabled>
+                        <option value="">SELECCIONAR</option>
+                        <option value="{{x.CODIGO}}" ng-selected="x.CODIGO == formSeguimiento.TIPODOCUMENTO"
+                          ng-repeat="x in Tipos_Documentos">{{x.NOMBRE}}</option>
+                      </select>
+                      <!-- <input ng-style="{'color': textoColor}" ng-disabled="bloquearNumdoc"
+                      ng-model="formSeguimiento.TipoDoc"> -->
+                    </div>
+                  </div>
+                  <div class="col s3">
+                    <div class="input-group">
+                      <input ng-style="{'color': textoColor}" ng-disabled="bloquearNumdoc"
+                        ng-model="formSeguimiento.NUMDOCUMENTO">
+                    </div>
+                  </div>
+                </div>
+                <!-- fin file 1 -->
+                <!-- fila 2 -->
+                <div class="row" style="margin: 0; padding: 0;">
+                  <div class="col s9">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fas fa-user" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Nombres del afiliado</span>
+                    </label>
+                  </div>
+                  <div class="col s3">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fas fa-check-circle" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Estado del afilido:</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="row" style="margin: 0; padding: 0;">
+                  <div class="col s9">
+                    <div class="input-group">
+                      <input ng-style="{'color': textoColor}" ng-disabled="bloquearNombresyapellidos"
+                        ng-style="{'color': textoColor}" ng-model="formSeguimiento.NombreCompleto">
+                    </div>
+                  </div>
+                  <div class="col s3">
+                    <div style="    padding-top: 10px;
+                      padding-bottom: 11px;
+                      border-bottom: 1px solid #bdbdbd;
+                      width: 100%;">
+                      <span style=" padding: 2px 10px; border-radius: 0.5em;" ng-show="formSeguimiento.ESTADOAFILIACION"
+                        ng-class="formSeguimiento.ESTADOAFILIACION=='ACTIVO'?'color-verde':'color-rojo1'">
+                        {{formSeguimiento.ESTADOAFILIACION}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <!-- fin de fila 2 - -->
+                <!-- fila 3- -->
+                <div class="row" style="margin: 0; padding: 0;">
+                  <div class="col s4">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fas fa-calendar" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Edad:</span>
+                    </label>
+                  </div>
+                  <div class="col s4">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fas fa-male" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Género:</span>
+                    </label>
+                  </div>
+                  <div class="col s4">
+                    <label style="font-size: 0.9rem;">
+                      <i class="fas fa-exchange-alt" style="margin-right: 5px;"></i>
+                      <span style="vertical-align: middle;">Portabilidad:</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="row" style="margin: 0; padding: 0;">
+                  <div class="col s4">
+                    <div class="input-group">
+                      <input ng-style="{'color': textoColor}" ng-disabled="bloquearEdad"
+                        ng-model="formSeguimiento.EDAD">
+                    </div>
+                  </div>
+                  <div class="col s4">
+                    <div class="input-group">
+                      <input ng-style="{'color': textoColor}" ng-disabled="bloquearGenero"
+                        ng-model="formSeguimiento.GENERO">
+                    </div>
+                  </div>
+                  <div class="col s4">
+                    <div class="input-group">
+                      <input ng-style="{'color': textoColor}" ng-disabled="bloquearPortabilidad"
+                        ng-model="formSeguimiento.PORTABILIDAD">
+                    </div>
+                  </div>
+                </div>
+                <!-- fin fila 3  -->
+              </div>
+            </div>
+          </div>
+          <!-- data -->
+          <div id="Diag_2" class="foot4 divcardcustom default-background ">
+            <div class="text-al divcardcustom2">
+              <strong class="switch" style="font-weight:600">
+                <span>{{dataPregunta.cohorte}}</span>
+              </strong>
+            </div>
+          </div>
+          <form>
+            <div
+              style="display: flex;justify-content: end;flex-direction: row; gap: 1em; border-left: 3px solid #111;border-right: 3px solid #111;border-bottom: 3px solid #111; padding: 1em;">
+              <div style="display: grid; width: 100%; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div ng-repeat="item in preguntas" ng-if="item.aparecer=='N'?false:true">
+
+                  <label for="{{item.id}}">{{item.orden}}. {{item.pregunta}} <strong style="color:#0501e7"
+                      data-tooltip="Busqueda por nit">{{item.nombreIPS}}</strong></label>
+
+                  <!-- selec -->
+                  <select class="select-new" ng-class="item.ClaseRequerido" style="box-shadow: none;display: block;
+                              background: white;color:#111" ng-if="item.objhtml == 'select'" ng-model="item.respuesta"
+                    name="name{{item.id}}" ng-change="mostrarPregunta(item);item.ClaseRequerido='';validaGestion(item)">
+                    <option value="" disabled>SELECCIONAR</option>
+                    <option value="{{x.id}}" ng-repeat="x in  item.listado" ng-selected="x.id == item.respuesta">
+                      {{x.descripcion}}</option>
+                  </select>
+                  <!-- fin del select -->
+
+                  <!-- input -->
+                  <input placeholder="{{item.input.textPlaceHolder}}" ng-class="item.ClaseRequerido"
+                    name="name{{item.id}}" type="{{item.input.typeInput}}" ng-model="item.respuesta"
+                    style="color: #111;" ng-change="item.ClaseRequerido=''"
+                    min="{{validacionDinamica(item.input.metodo, 'fechaMinHoy',item.input.typeInput)}}"
+                    max="{{validacionDinamica(item.input.metodo, 'fechaMaxHoy',item.input.typeInput)}}"
+                    ng-if="item.objhtml == 'input'">
+                  <!-- fin del input -->
+                  <!-- input -->
+                  <div ng-if="item.objhtml == 'IPS-H'" style="position: relative;">
+                    <input name="name{{item.id}}" ng-model="item.respuesta" autocomplete="off" type="text"
+                      ng-class="item.ClaseRequerido" ng-change="item.ClaseRequerido=''" ng-init="i=$index"
+                      style="padding: 0;">
+                    <i class="fa fa-search" aria-hidden="true" ng-click="buscar_listado_select(item.respuesta,$index)"
+                      style="position: absolute;
+                    right: 10px;
+                    cursor:pointer;
+                    bottom: 24px;"></i>
+                    <ul class="list-group" id="list-group-prestador"
+                      style="overflow: auto;max-height: 200px;position:absolute;margin: 0;width: inherit;z-index: 99;">
+                      <li id="DM{{x.nit}}" class="list-group-item" ng-class="{'active_list':(x.ESTADO==true)}"
+                        ng-repeat="x in json_prestador" ng-click="seleccion_opcion2(x.nit,x.razon_social, i)">
+                        {{x.nit}}
+                        -
+                        {{x.razon_social}}</li>
+                    </ul>
+                  </div>
+                  <!-- fin del input -->
+
+                  <!-- input de ips -->
+                  <div ng-if="item.objhtml == 'IPS'" style="position: relative;">
+                    <input name="name{{item.id}}" ng-model="item.respuesta" autocomplete="off" type="text"
+                      ng-class="item.ClaseRequerido" ng-change="item.ClaseRequerido=''" ng-init="i=$index">
+                    <i class="fa fa-search" aria-hidden="true"
+                      ng-click="buscar_listado_select_ips(item.respuesta,$index)" style="position: absolute;
+                    right: 10px;
+                    cursor:pointer;
+                    bottom: 24px;"></i>
+                    <ul class="list-group" id="list-group-ips"
+                      style="overflow: auto;max-height: 200px;position:absolute;margin: 0;width: inherit;z-index: 99;">
+                      <li id="DMIPS{{x.nit}}" class="list-group-item" ng-class="{'active_list':(x.ESTADO==true)}"
+                        ng-repeat="x in json_prestador_ips" ng-click="seleccion_opcion2_ips(x.nit,x.razon_social, i)">
+                        {{x.nit}}
+                        -
+                        {{x.razon_social}}</li>
+                    </ul>
+                  </div>
+                  <!-- fin del input de ips -->
+                  <!-- texarea  -->
+                  <textarea ng-if="item.objhtml == 'textarea'" name="name{{item.id}}" ng-class="item.ClaseRequerido"
+                    id="{{item.id}}" cols="30" rows="10" ng-model="item.respuesta" ng-change="item.ClaseRequerido='' "
+                    style="resize: vertical !important;"></textarea>
+                  <!-- fin teztarea -->
+                </div>
+                <div ng-if="mostrarGestion" ng-show="tipoPreguntaLado == '2'" ng-repeat="item in gestion">
+                  <label for="{{$index}}">{{item.key}}</label>
+                  <input name="name{{$index}}" type="text" disabled ng-model="item.respuesta" style="color: #111;">
+                </div>
+              </div>
+            </div>
+            <p class="alert " ng-show="tipoPreguntaLado == '1'">
+              <strong style="    font-size: 23px;"><i class="icon-attention"></i>Educación</strong><br>
+              {{dataPregunta.educacion }}
+            </p>
+            <style>
+              .alert {
+                padding: 10px;
+                /* Agregar un espacio de relleno de 10px */
+                color: #856404;
+                font-size: 17px;
+                background-color: #fff3cd;
+                border-color: #ffeeba;
+                box-shadow: -4px 3px 10px 2px rgba(0, 0, 0, 0.3);
+              }
+            </style>
+          </form>
+
+          <!-- Trazabilidad -->
+          <div ng-show="trazabilidad === 1">
+            <div id="Diag_2" class="foot4 divcardcustom default-background">
+              <div class="text-al divcardcustom2">
+                <strong class="switch" style="font-weight:600">Observaciones asociadas</strong>
+              </div>
+            </div>
+            <table id="H2_Tabla" class="bordered table_center_align highlight border-color"
+              style="width:100%;font-size:6px !important;border:3px solid;  ">
+              <thead class="default-border default-color">
+                <tr>
+                  <th>Observación</th>
+                  <th>Fecha</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in observaciones">
+                  <td class="center-align">
+                    {{item.Descripcion}}
+                  </td>
+                  <td class="center-align">
+                    {{item.Fecha}}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="center-align" colspan="9" ng-if="listado.observaciones.length"
+                    style="font-weight: bolder;">
+                    No
+                    se encontraron
+                    resultados.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- fila boton  -->
+          <div class="row" style="margin-top: 10px; padding: 0;">
+            <div class="col l12 text-center">
+              <button class="btn btn-primary" ng-click="guardarPreguntas()" type="submit">Guardar
+                seguimiento</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  fin preguntas -->
+  <!-- Modal de observacion -->
+  <div id="modalObservaciones" class="modal" style="overflow: hidden; zoom:75%">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <div class="default-background" style="padding: 0;zoom:60%;">
+            <div class="col l12 m12 s12">
+              <div class="row margin">
+                <div class="col s11">
+                  <h5 class="white-text"><b>OBSERVACION 1</b></h5>
+                </div>
+                <div class="col s1">
+                  <h5 style="text-align: end;"><i style="cursor:pointer;"
+                      ng-click="closemodals('observacionenSeguimiento')" class="material-icons white-text">close</i>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+            <div class="col s12">
+              <div class="row">
+                <div class="col l12 m12 s12">
+                  <label style=" margin-top: -20px; padding-left: 1%;">Observacion</label>
+                  <div class="col s12">
+                    <div class="form-group shadow-textarea">
+                      <textarea class="form-control z-depth-1" id="exampleFormControlTextarea1" rows="3"
+                        ng-keyup="handleKeyPress($event,'modal1')" ng-model="modal1.observacion" cols="50"
+                        placeholder="Comentario" tyle="margin: 0px; height: 123px;" style="margin: 0px;height: 134px;background-color:
+                        #1a2e6329;" text-upper maxlength="3999" ng-keyup="formatTexto('exampleFormControlTextarea1')"
+                        disabled></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="modalObservacionesSeguimiento" class="modal" style="overflow: hidden; zoom:75%">
+    <div class="modal-content" style="padding: 0px !important;">
+      <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+          <div class="default-background" style="padding: 0;zoom:60%;">
+            <div class="col l12 m12 s12">
+              <div class="row margin">
+                <div class="col s11">
+                  <h5 class="white-text"><b>OBSERVACION 2 - EN PROCESO DE SEGUIMIENTO TELEFONICO</b></h5>
+                </div>
+                <div class="col s1">
+                  <h5 style="text-align: end;"><i style="cursor:pointer;"
+                      ng-click="closemodals('observacionesSeguimiento')" class="material-icons white-text">close</i>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+            <div class="col s12">
+              <div class="row">
+                <div class="col l12 m12 s12">
+                  <label style=" margin-top: -20px; padding-left: 1%;">Observacion:<span style="color:red;"> ( *
+                      )</span></label>
+                  <div class="col s12">
+                    <div class="form-group shadow-textarea">
+                      <textarea class="form-control z-depth-1" id="exampleFormControlTextarea1" rows="3"
+                        ng-keyup="handleKeyPress($event,'modal2')" ng-model="modal2.observacion" cols="50"
+                        placeholder="Comentario" tyle="margin: 0px; height: 123px;" style="margin: 0px;height: 134px;"
+                        text-upper maxlength="3999" ng-keyup="formatTexto('exampleFormControlTextarea1')"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- fila boton  -->
+              <div class="row" style="margin-top: 10px; padding: 0;">
+                <div class="col l12 text-center">
+                  <button class="center white-text default-background btn_2 " style="border-radius: 10px;zoom:130%;"
+                    ng-click="guardar_observacionSeguimiento()" type="submit">Guardar
+                    observacion</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .Con_pulse_G {
+
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_G 3s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_G {
+      0% {
+        box-shadow: 0 0 0 0 rgba(162, 162, 175, 0.7), 0 0 0 0 rgba(162, 162, 175, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(71, 71, 165, 0.0), 0 0 0 0 rgba(162, 162, 175, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(71, 71, 165, 0.0), 0 0 0 15px rgba(71, 71, 165, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(71, 71, 165, 0.0), 0 0 0 0 rgba(71, 71, 165, 0);
+      }
+    }
+
+    /* css para tarjeta  */
+    .lineatarjeta {
+      padding-bottom: 0px;
+      padding-top: 0px;
+      padding-right: 0px;
+      padding-left: 0px;
+      height: 3px;
+    }
+
+    .tarjetaresumen {
+      background-color: #6081d7;
+      display: inline-block;
+      width: 100%;
+      transition: box-shadow 1s;
+      /* margin-top: 74px; */
+    }
+
+    /* css para tarjeta  */
+    #tabla_modal_ENTREGA th {
+      position: sticky;
+      top: 0;
+      z-index: 9;
+    }
+
+    .input-field-ps {
+      position: relative;
+      margin-top: 1px;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+    .select-new-ps {
+      outline: none !important;
+      height: 34px;
+      background-color: white;
+      display: block;
+      border: 1px solid #8a88865e;
+      border-radius: 0.25rem;
+      border-bottom: 1px solid #8a88865e;
+      box-shadow: none !important;
+    }
+
+    .requerido {
+      border: 1px solid red !important;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 5px;
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      border-radius: 4px;
+      padding: 3px;
+      font-size: 12px;
+      animation: shake 0.5s;
+      display: inline-block;
+      /* Opcionalmente, puedes usar 'inline' */
+    }
+
+
+
+    @keyframes shake {
+      0% {
+        transform: translateX(0);
+      }
+
+      20% {
+        transform: translateX(-5px);
+      }
+
+      40% {
+        transform: translateX(5px);
+      }
+
+      60% {
+        transform: translateX(-5px);
+      }
+
+      80% {
+        transform: translateX(5px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+
+
+
+
+    .input-group {
+      display: flex;
+      align-items: center;
+    }
+
+    .edit-icon {
+      display: inline-block;
+      margin-left: 5px;
+    }
+
+    #tabla_scroll th {
+      padding: 3px 10px;
+    }
+
+    #tabla_scroll li>button.btn {
+      font-size: small;
+      height: auto;
+      line-height: inherit;
+      padding: 0 1rem;
+    }
+
+    .table_border,
+    .table_border th,
+    .table_border td {
+      border: 1px solid #c2c2c2;
+    }
+
+    .table_center_align,
+    .table_center_align th,
+    .table_center_align td {
+      text-align: center;
+    }
+
+    .swal-wide {
+      width: 850px !important;
+    }
+
+    .invalid-email {
+      border-color: red;
+    }
+
+    /* ng-style="{'color' : (siniestro.codigoEstado == 'A' ? '#0e8d0' : '#8d0202')};{'background' : (siniestro.codigoEstado == 'A') ? '#3cc321' : '#ff43508'}" */
+    .color-verde {
+      color: #0e8d01;
+      background: #3cc32163;
+    }
+
+    .color-amarillo {
+      color: #e6f205;
+      background: #f5f90e63;
+    }
+
+    .color-rojo {
+      color: #8d0202;
+      background: #ff435045;
+    }
+
+    .label-ajustado {
+      margin-right: 10px;
+      /* ajustar según sea necesario */
+    }
+
+
+    #Diag_1 {
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+
+    #Diag_2 {
+      border-radius: 0px;
+    }
+
+    #Diag_3 {
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+
+    .foot4 .tabs .indicator {
+      background-color: #edf0f9 !important;
+      top: 1px;
+    }
+
+    @keyframes Anim_Show {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .Anim_Show {
+      animation-name: Anim_Show;
+      animation-duration: 1s;
+    }
+
+
+    .Con_pulse_VERDE {
+      /* background: #FF6D4A; */
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_V 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_V {
+      0% {
+        box-shadow: 0 0 0 0 rgba(43, 255, 36, 0.7), 0 0 0 0 rgba(43, 255, 36, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(43, 255, 36, 0.0), 0 0 0 0 rgba(43, 255, 36, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(43, 255, 36, 0.0), 0 0 0 15px rgba(43, 255, 36, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(43, 255, 36, 0.0), 0 0 0 0 rgba(43, 255, 36, 0);
+      }
+    }
+
+
+
+    .Con_pulse_ROJO {
+      /* background: #e21308; */
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_ROJO 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_ROJO {
+      0% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.7), 0 0 0 0 rgba(245, 75, 75, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(245, 75, 75, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 15px rgba(245, 75, 75, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(245, 75, 75, 0);
+      }
+    }
+
+    .Con_pulse_AZUL {
+      /* background: #1138d4; */
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_AZUL 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_AZUL {
+      0% {
+        box-shadow: 0 0 0 0 rgba(51, 70, 255, 0.7), 0 0 0 0 rgba(51, 70, 255, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(51, 70, 255, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 15px rgba(245, 75, 75, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(245, 75, 75, 0);
+      }
+    }
+
+    .Con_pulse_AMARILLO {
+      /* background: #e4e009; */
+      border-radius: 50%;
+      color: #FFF;
+      animation: animate-pulse_AMARILLO 5s linear infinite;
+      cursor: pointer;
+    }
+
+    @keyframes animate-pulse_AMARILLO {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 235, 59, 0.7), 0 0 0 0 rgba(255, 235, 59, 0.7);
+      }
+
+      40% {
+        box-shadow: 0 0 0 15px rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(255, 235, 59, 0.7);
+      }
+
+      80% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 15px rgba(245, 75, 75, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(245, 75, 75, 0.0), 0 0 0 0 rgba(245, 75, 75, 0);
+      }
+    }
+
+    .tabs {
+      height: 30px !important;
+    }
+
+    .tabs .tab {
+      line-height: 30px !important;
+      height: 30px !important;
+    }
+
+    .list-group-item:last-child {
+      margin-bottom: 0;
+      border-bottom-right-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+
+    .list-group-item:first-child {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    .list-group-item:hover {
+      color: #1a2e63;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .list-group-item.hover {
+      color: #1a2e63;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .list-group-item {
+      position: relative;
+      display: block;
+      padding: 10px 15px;
+      margin-bottom: -1px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      font-size: 0.7em;
+    }
+
+    .list-group {
+      font-size: 14px;
+      overflow: auto;
+      max-height: 13vh;
+      position: absolute;
+      margin: 0;
+      width: inherit;
+      margin-top: 2.2em;
+      z-index: 3;
+    }
+
+    #H2_Tabla th {
+      position: sticky;
+      top: 0;
+      z-index: 9;
+    }
+
+    .sortorder2:after {
+      content: '\25bc';
+    }
+
+    .sortorder2.reverse2:after {
+      content: '\25b2';
+    }
+
+    input.input-text-new {
+      background-color: #f1f3f4 !important;
+    }
+
+    input.input-text-white {
+      background-color: white !important;
+    }
+
+    input.input-text-disable {
+      background-color: #f1f3f4 !important;
+    }
+
+    .gray-input {
+      background-color: #f1f3f4 !important;
+    }
+
+    .invalid-email {
+      border-color: red;
+    }
+
+    .md-card-buttons {
+      position: absolute;
+      z-index: -1;
+      top: -50px;
+      width: calc(100% - 30px);
+      left: 15px;
+      text-align: center;
+    }
+
+
+    #H1_Tabla>thead,
+    #H2_Tabla>thead {
+      font-size: 1em;
+      /* border: 3px; */
+      border-width: medium;
+      border-style: solid;
+      border-radius: .375rem;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    }
+
+
+    .tooltip_ab {
+      position: relative;
+      display: inline-block;
+    }
+
+    .tooltip_ab .tooltiptext_ab::after {
+      content: "";
+      position: absolute;
+      top: -37%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #00000000 #00000000 #555 #00000000;
+    }
+
+    .tooltip_ab:hover .tooltiptext_ab {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .tooltip_ab .tooltiptext_ab {
+      visibility: hidden;
+      width: 120px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      padding: 5px 0;
+      border-radius: 6px;
+      position: absolute;
+      z-index: 1;
+      bottom: -150%;
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 1s;
+    }
+
+    .dropdown-content li {
+      min-height: 23px;
+    }
+
+    .select_maxheigth ul {
+      max-height: 125px;
+    }
+
+    #toast-container .toast {
+      border-radius: 25px !important;
+      font-weight: 600;
+      text-align: center !important;
+      word-break: keep-all;
+      padding: 10px 25px;
+      width: auto;
+    }
+
+    blockquote {
+      font-weight: 700;
+      background-color: #f1f3f4;
+    }
+
+    .dropdown-content li {
+      min-height: 23px;
+    }
+
+    .dropdown-content li>span {
+      line-height: 32px;
+      padding: 0px 16px;
+    }
+
+    .modal {
+      border-radius: 10px;
+      overflow: hidden;
+      max-height: 88%;
+      z-index: 1003;
+      display: none;
+      opacity: 0;
+      transform: scaleX(0.7);
+      top: 4%;
+    }
+
+    .pagination {
+      text-align: center;
+      padding-top: 0px;
+      font-weight: 800;
+    }
+
+
+    /**/
+    /**/
+    /**/
+    .content-box2 {
+      background-color: #F1F3F4;
+      padding: 10px;
+      border: 1px solid #ebecec;
+      position: relative;
+      box-shadow: none !important;
+      margin-left: .55vw;
+    }
+
+    .chip_1 {
+      display: inline;
+      text-align: left;
+      color: #737373;
+      line-height: 1.7em;
+      font-size: 1em;
+      font-style: italic;
+      text-transform: uppercase;
+    }
+
+    .chip_2 {
+      background-color: #e4e4e4;
+      font-weight: 700;
+    }
+
+    #versionamiento .content-box {
+      border-bottom: 0px !important;
+    }
+
+    .timeline-page .timeline .timeline-milestone:not(:first-child)::before {
+      left: calc(10% - 1px);
+    }
+
+    .timeline-page .timeline .timeline-event .timeline-content {
+      position: relative;
+      width: calc(90% - 50px);
+    }
+
+    .timeline-page .timeline .timeline-event:nth-child(even) .timeline-content {
+      margin-left: calc(10% + 39px);
+    }
+
+    .timeline-page .timeline .timeline-badge {
+      right: calc(90% - 20px);
+    }
+
+    .timeline-page .timeline .timeline-milestone::after {
+      left: calc(10% - 1px);
+    }
+
+    .timeline-page .timeline .timeline-event::after {
+      left: calc(10% - 1px);
+    }
+
+    #versionamiento .timeline-page .timeline .timeline-event:nth-child(even) .timeline-content .content-box::before {
+      left: -54px;
+    }
+
+    #versionamiento .timeline-page .timeline .timeline-event .timeline-content .content-box::before {
+      width: calc(100% + 70px);
+    }
+
+    #tabla_scroll th {
+      padding: 3px 10px;
+    }
+
+    .timeline-page .timeline .timeline-badge {
+      right: calc(90% - 20px);
+    }
+
+    .timeline-page .timeline .timeline-badge {
+      right: calc(90% - 20px);
+    }
+
+    .timeline-badge4 {
+      background-color: #dd4bd6 !important;
+    }
+
+    .timeline-badge5 {
+      background-color: #52120b !important;
+    }
+
+    .timeline-badge6 {
+      background-color: #bb5964 !important;
+    }
+
+    .timeline-badge7 {
+      background-color: #3bf2dd !important;
+    }
+
+    .timeline-badge8 {
+      background-color: #6f19ce !important;
+    }
+
+    .timeline-badge9 {
+      background-color: #c54141 !important;
+    }
+
+    .timeline-badge10 {
+      background-color: #06965a !important;
+    }
+
+    .timeline-badge11 {
+      background-color: #fec035 !important;
+    }
+
+    .timeline-badge12 {
+      background-color: #0501e7 !important;
+    }
+
+    .timeline-badge13 {
+      background-color: #e182ba !important;
+    }
+
+    .timeline-badge14 {
+      background-color: #dd4bd6 !important;
+    }
+
+    .timeline-badge15 {
+      background-color: #52120b !important;
+    }
+
+    .timeline-badge16 {
+      background-color: #bb5964 !important;
+    }
+
+    .timeline-badge17 {
+      background-color: #3bf2dd !important;
+    }
+
+    .timeline-badge18 {
+      background-color: #6f19ce !important;
+    }
+
+    .timeline-badge19 {
+      background-color: #c54141 !important;
+    }
+
+    .timeline-badge20 {
+      background-color: #06965a !important;
+    }
+
+    input[type=text] {
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+      background-color: #fff;
+      background-clip: padding-box;
+      padding: 0 1em;
+      font-weight: 600;
+      height: 2rem;
+    }
+  </style>
+</div>

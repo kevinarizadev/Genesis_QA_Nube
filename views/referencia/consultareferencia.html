@@ -1,0 +1,207 @@
+<div id="pantalla" class="white newdesing">
+    <style>
+        #tabla_scroll th {
+            padding: 3px 10px;
+        }
+
+        #tabla_scroll li>button.btn {
+            font-size: small;
+            height: auto;
+            line-height: inherit;
+            padding: 0 1rem;
+        }
+
+        .table_border,
+        .table_border th,
+        .table_border td {
+            border: 1px solid #c2c2c2;
+        }
+
+        .table_center_align,
+        .table_center_align th,
+        .table_center_align td {
+            text-align: center;
+        }
+
+        .swal-wide {
+            width: 850px !important;
+        }
+    </style>
+    <!-- configuracion de los tabs principales -->
+    <div class="row section-header" style="margin-top:7px">
+        <ul class="left mailbox-custom-search list-inline"
+            style="width: 100%;display: flex;justify-content: space-between;align-items: center;">
+            <li id="inicio">
+                <i ng-click="Refrescar_Inicio()"></i>
+                <h5 onclick="location.reload();" class="cursor-pointer">MODULO CONSULTA REFERENCIA</h5>
+            </li>
+        </ul>
+    </div>
+    <!-- Formulario de consultas -->
+    <div class="col s12">
+        <div class="card ng-scope" style="margin: 38px; bottom: 10px ;zoom:75%;">
+            <div class="row">
+                <div class="col s12">
+                    <!-- Informacion del Paciente -->
+                    <br>
+                    <blockquote>
+                        <strong style="font-size: x-large;">
+                            CONSULTA REFERENCIA
+                        </strong>
+                    </blockquote>
+                    <br><br>
+                    <div class="col l12 m12 s12">
+                        <div class="row">
+                            <div class="col l3 m3 s3">
+                                <label style="padding-left: 4%;font-size: inherit;"></span>Tipo Dcto:<span
+                                        class="red-text"> ( * )</label>
+                                <div class="col s12 ">
+                                    <select class="select-new-ps cursor-pointer"
+                                        ng-model="consulta1.selecctipoDocumento" required>
+                                        <option value="">SELECCIONAR</option>
+                                        <option value="{{x.CODIGO}}" ng-repeat="x in Tipos_Documentos">{{x.NOMBRE}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <form ng-submit="consultarReferencias();">
+                                <div class="col l3 m3 s3">
+                                    <label style="padding-left: 2%;font-size: inherit;">N° Documento:<span
+                                            class="red-text"> ( * )</span></label>
+                                    <div class="input-field-ps col s12">
+                                        <input id="with_icon" ng-model="consulta1.numeroDocumento" type="text"
+                                            style="cursor: pointer;" text-upper autocomplete="off">
+                                        <a><i style="position: absolute; top: 5px; right: 0px;cursor: pointer;"
+                                                class="material-icons prefix default-color"
+                                                ng-click="consultarReferencias();">search</i></a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tabla de resultado de consulta  -->
+                <div class="row dashboard-wrapper content-container white"
+                    style="padding-bottom: 20px;margin-bottom: 0;" ng-show="tablaConsulta">
+                    <div class="row" style="margin-bottom: 0;">
+                        <div style="width:100%;">
+                            <table id="H1_Tabla" class="bordered table_center_align"
+                                style="width:100%;font-size:6px !important;">
+                                <thead class="center-align default-background default-border white-text">
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Codigo</th>
+                                        <th>Grupo</th>
+                                        <th>Responsable</th>
+                                        <th>Fecha</th>
+                                        <th>Nro Doc</th>
+                                        <th>Nombre Paciente</th>
+                                        <th>Edad</th>
+                                        <th>Nombre Dx</th>
+                                        <th>Ips Solicitante</th>
+                                        <th>Ips Receptora</th>
+                                        <th>Empresa Traslado</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="consulta in list_DatosTemp | inicio: currentPage * pageSize | limitTo: pageSize | orderBy:propertyName:reverse"
+                                        ng-click="" style="color: black;">
+                                        <td>{{consulta.DOCUMENTO}}</td>
+                                        <td>{{consulta.CODIGO}}</td>
+                                        <td>{{consulta.GRUPO}}</td>
+                                        <td>{{consulta.RESPONSABLE}}</td>
+                                        <td>{{consulta.FECHA}}</td>
+                                        <td>{{consulta.TIPO_DOC}}-{{consulta.NRO_DOC}}</td>
+                                        <td>{{consulta.NOMBRE_PCTE}}</td>
+                                        <td>{{consulta.EDAD}}</td>
+                                        <td>{{consulta.NOMBRE_DX}}</td>
+                                        <td>{{consulta.IPS_SOLICITANTE}}</td>
+                                        <td>{{consulta.IPS_RECEPTORA}}</td>
+                                        <td>{{consulta.EMPRESA_TRASALADO}}</td>
+                                        <td>{{consulta.NOMBRE_STATUS}}</td>
+                                    </tr>
+                                    <tr ng-show="list_DatosTemp.length == 0">
+                                        <td class="center-align" colspan="20" style="font-weight: bolder;">No se
+                                            encontraron
+                                            resultados.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- <strong> TOTAL DE GESTIONES REALIZADAS - ({{ list_DatosTemp.length }})</strong> -->
+                            <ul style="text-align: center;padding-top: 0px;" class="pagination">
+                                <li><button ng-disabled='currentPage == 0' class="btn-floating default-background"
+                                        ng-click="paso('back')">&laquo;</button></li>
+                                <li ng-repeat='page in pages'><button ng-disabled='currentPage == page.no - 1'
+                                        class="btn-floating default-background"
+                                        ng-click='setPage(page.no)'>{{page.no}}</button>
+                                </li>
+                                <li><button ng-disabled='currentPage >= list_DatosTemp.length/pageSize - 1'
+                                        class="btn-floating default-background" ng-click="paso('next')">&raquo;</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .input-field-ps {
+            position: relative;
+            margin-top: 1px;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        .select-new-ps {
+            outline: none !important;
+            height: 34px;
+            background-color: white;
+            display: block;
+            border: 1px solid #8a88865e;
+            border-radius: 0.25rem;
+            border-bottom: 1px solid #8a88865e;
+            box-shadow: none !important;
+        }
+
+        #H1_Tabla>thead,
+        #H1_Tabla>tbody {
+            font-size: 1em;
+            /* border: 3px; */
+            border-width: medium;
+            border-style: solid;
+            border-radius: .375rem;
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        }
+
+        .Class_Tabla_Btn_Gestionar {
+            border-radius: .375rem;
+            width: 30%;
+            margin: auto;
+            border-width: medium;
+        }
+
+        .Class_Tabla_Btn_Gestionar h6 {
+            font-weight: 700 !important;
+            font-size: 0.8125rem;
+        }
+
+        .pagination {
+            text-align: center;
+            padding-top: 0px;
+            font-weight: 800;
+        }
+
+
+        input[type=text] {
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            background-color: #fff;
+            background-clip: padding-box;
+            padding: 0 1em;
+            font-weight: 600;
+            height: 2rem;
+        }
+    </style>
+</div>

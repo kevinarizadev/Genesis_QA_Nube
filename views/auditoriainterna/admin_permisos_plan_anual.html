@@ -1,0 +1,309 @@
+<div class="card">
+    <div class="row">
+        <div class="col s12 m12 l12 center">
+            <h6>Administración de permisos</h6>
+        </div>
+        <div class="col s12 m12 l12">
+            <div class="row dashboard-wrapper content-container white"
+                style="padding-bottom: 20px;margin-bottom: 0;padding-left: 20px;padding-right: 20px;">
+                <div class="col l12 m12 s12" style="position: relative">
+                    <div class="col s12 m12 l12" style="justify-content: center">
+                        <div class="row" style="margin-bottom: 0px">
+                            <div class="foot4 divcardcustom">
+                                <div class="text-al divcardcustom2">
+                                    <strong class="switch" style="font-weight: 600">Listado de Funcionarios
+                                        ({{arrAdministradores.length}})</strong>
+                                    <div class="tooltip" style="margin: 0px 5px 0px 5px">
+                                        <i class="icon-user-plus cursor-pointer" ng-click="nuevoUsuario()"></i>
+                                        <span class="tooltiptext"
+                                            style="font-size: 12px; width: 80px; margin-left: -40px">Agregar
+                                            Funcionario</span>
+                                    </div>
+                                    <!-- <div class="tooltip">
+                                        <i class="icon-cw-circle cursor-pointer"
+                                            ng-click="ObtenerListado_Funcs('X')"></i>
+                                        <span class="tooltiptext"
+                                            style="font-size: 12px; width: 70px; margin-left: -35px">Actualizar</span>
+                                    </div> -->
+                                    <div class="col s3 no-padding label-new right"
+                                        style="width: 25%;display: inline-flex;margin-right: -5px;margin-top: -2px;">
+                                        <input class="margin border-none input-text-new black-text gray-input w-100 m-l"
+                                            style="text-align: right" autocomplete="off" placeholder="Buscar..."
+                                            ng-model="MPFiltrar_Func" />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- TABLA ADMINISTRADOR -->
+                            <div style="width: 100%">
+                                <div style="max-height: 60vh; overflow: auto" class="default-color">
+                                    <table id="H2_Tabla" class="bordered highlight table_center_align default-color"
+                                        style="width: 100%;font-size: 6px !important;border: 3px solid;">
+                                        <thead class="default-border default-color">
+                                            <th class="center white">#</th>
+                                            <th class="center white">NOMBRE</th>
+                                            <th class="center white">DOCUMENTO</th>
+                                            <th class="center white">CONSULTA</th>
+                                            <th class="center white">CREACION</th>
+                                            <th class="center white">MODIFICACION</th>
+                                            <th class="center white">APROBACION</th>
+                                            <th class="center white">ESTADO</th>
+                                            <th class="center white">ACCIONES</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="cursor-pointer"
+                                                ng-repeat="x in arrAdministradores | filter:MPFiltrar_Func">
+                                                <td class="center">{{$index + 1}}</td>
+                                                <td class="center">{{x.BPLN_CEDULA_NOMBRE}}</td>
+                                                <td class="center">{{x.BPLN_CEDULA}}</td>
+                                                <td class="center">
+                                                    {{x.BPLV_CONSULTA == 'S' ? 'PERMITIDO' : 'NO PERMITIDO'}}
+                                                </td>
+                                                <td class="center">
+                                                    {{x.BPLV_CREACION == 'S' ? 'PERMITIDO' : 'NO PERMITIDO'}}
+                                                </td>
+                                                <td class="center">
+                                                    {{x.BPLV_MODIFICACION == 'S' ? 'PERMITIDO' : 'NO PERMITIDO'}}
+                                                </td>
+                                                <td class="center">
+                                                    {{x.BPLV_APROBACION == 'S' ? 'PERMITIDO' : 'NO PERMITIDO'}}
+                                                </td>
+                                                <td class="center">
+                                                    <span class="badge-custom-d">
+                                                        {{x.BPLV_ESTADO == 'A' ? 'ACTIVO' : 'INACTIVO'}}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <div class="tooltip">
+                                                        <i class="icon-cog-alt cursor-pointer"
+                                                            ng-click="agingar_permisos(x)"></i>
+                                                        <span class="tooltiptext"
+                                                            style="font-size: 12px;width: 60px;margin-left: -30px;">Gestionar
+                                                            Permisos</span>
+                                                    </div>
+                                                    <div class="tooltip">
+                                                        <i class="icon-cog-alt cursor-pointer"
+                                                            ng-class="{'A':'icon-cancel-outline', 'I':'icon-ok-outline'}[x.BPLV_ESTADO]"
+                                                            ng-click="cambiarEstado(x)"></i>
+                                                        <span class="tooltiptext"
+                                                            style="font-size: 12px;width: 60px;margin-left: -30px;">{{x.BPLV_ESTADO
+                                                            == 'A' ? 'Inactivar Usuario' : 'Activar Usuario'}}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- // -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal_Direccion  -->
+    <div id="Modal_Agregar_usu" class="modal card modal-cumtom-d">
+        <div class="col s12 m6 l6 margin">
+            <div class="ngdialog-close"
+                style="font-size: 50px;position: absolute;z-index: 106;right: 0.5em;color: white;"
+                ng-click="cerrarModal('Modal_Agregar_usu')">
+            </div>
+            <div class="card-content default-background white-text">
+                <div class="col s11">
+                    <div class="col s5" style="display: inline-flex">
+                        <span class="margin" style="font-size: 1.64rem">Asignar Permisos</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-t" ng-show="busquedaUsu == 1">
+                <div class="col s12">
+                    <div class="col s10 no-padding label-new m-b">
+                        <label id="vigencia_plan">Documento o Nombre de funcionario</label>
+                        <input
+                            class="margin border-none input-text-new gray-input w-100 m-l ng-pristine ng-untouched ng-valid"
+                            autocomplete="off" style="text-transform: uppercase" name="recursos"
+                            ng-model="formPermisoFunc.query">
+                    </div>
+                    <div class="col s2 center" style="margin-top: 6%">
+                        <div class="button-custom-d ripple-custom-d"
+                            style="border-radius: 0.3rem;border: 2px solid;padding: 0.2em;font-weight: 600;"
+                            ng-click="buscarFuncionario(formPermisoFunc.query)"><i
+                                class="icon-search cursor-pointer"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12" ng-repeat="func in arrFuncionarios">
+                    <div class="col">
+                        <i class="icon-user"></i>
+                    </div>
+                    <div class="col s10">
+                        <span class="default-color" style="cursor: pointer;"
+                            ng-click="seleccionarUsu(func)">{{func.NOMBRE_FUNCIONARIO}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-t" ng-show="busquedaUsu == 2">
+                <div class="row">
+                    <div class="col s12 center">
+                        <strong>{{formPermisoFunc.BPLN_CEDULA_NOMBRE}}</strong>
+                    </div>
+                    <div class="col m12 s12 l12 center"
+                        style="align-items: center;display: flex;justify-content: center;">
+                        <div class="col s4 color_azul_card">
+                            <span>Creación</span>
+                            <div class="switch">
+                                <p>
+                                    <span class="hide-on-large-only"></span>
+                                    <label>
+                                        <input type="checkbox" ng-model="formPermisoFunc.BPLV_CREACION" />
+                                        <span class="lever"></span>
+                                    </label>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col s4 color_azul_card">
+                            <span>Modificación</span>
+                            <div class="switch">
+                                <p>
+                                    <span class="hide-on-large-only"></span>
+                                    <label>
+                                        <input type="checkbox" ng-model="formPermisoFunc.BPLV_MODIFICACION" />
+                                        <span class="lever"></span>
+                                    </label>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col s4 color_azul_card">
+                            <span>Aprobación</span>
+                            <div class="switch">
+                                <p>
+                                    <span class="hide-on-large-only"></span>
+                                    <label>
+                                        <input type="checkbox" ng-model="formPermisoFunc.BPLV_APROBACION" />
+                                        <span class="lever"></span>
+                                    </label>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col s4 color_azul_card">
+                            <span>Consulta</span>
+                            <div class="switch">
+                                <p>
+                                    <span class="hide-on-large-only"></span>
+                                    <label>
+                                        <input type="checkbox" ng-model="formPermisoFunc.BPLV_CONSULTA" />
+                                        <span class="lever"></span>
+                                    </label>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 center" style="align-items: center;display: flex;justify-content: center;">
+                        <div class="button-custom-d ripple-custom-d" style="width: 10vw;" ng-click="agingar_permisos()">
+                            <strong>Guardar</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Styles -->
+    <style>
+        #tabla_scroll th {
+            padding: 3px 10px;
+        }
+
+        #tabla_scroll li>button.btn {
+            font-size: small;
+            height: auto;
+            line-height: inherit;
+            padding: 0 1rem;
+        }
+
+        .table_border,
+        .table_border th,
+        .table_border td {
+            border: 1px solid #c2c2c2;
+        }
+
+        .table_center_align,
+        .table_center_align th,
+        .table_center_align td {
+            text-align: center;
+        }
+
+        .swal-wide {
+            width: 850px !important;
+        }
+
+        .color_azul_card {
+            border: 2px solid #1a2e63;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        .button-custom-d {
+            position: relative;
+            overflow: hidden;
+            color: #1a2e63;
+            transition: background 400ms;
+            background-color: white;
+            font-weight: 600;
+            outline: 0;
+            border: 2px solid;
+            border-radius: 0.3rem;
+            box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            padding: 0.2em;
+        }
+
+        /* Ripple effect */
+        .ripple-custom-d {
+            background-position: center;
+            transition: background 0.8s;
+        }
+
+        .button-custom-d:hover {
+            color: white;
+        }
+
+        .ripple-custom-d:hover {
+            background: #1a2e63 radial-gradient(circle, transparent 1%, #1a2e63 1%) center/15000%;
+        }
+
+        .ripple-custom-d:active {
+            background-color: white;
+            background-size: 100%;
+            transition: background 0s;
+        }
+
+        .badge-custom-d {
+            display: inline-block;
+            padding: 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            line-height: 1;
+            color: white;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 5px;
+            background-color: #1a2e63;
+        }
+
+        .modal-cumtom-d {
+            margin: 0px auto;
+            max-height: 40%;
+            width: 30%;
+            top: 25%;
+            border-radius: 5px;
+            z-index: 1003;
+            display: block;
+            opacity: 1;
+            transform: scaleX(1);
+        }
+    </style>
+</div>

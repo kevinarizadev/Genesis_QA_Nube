@@ -1,0 +1,175 @@
+<div class="main">
+    <style>
+        input[type=file] {
+            width: 350px;
+            max-width: 100%;
+            color: #444;
+            padding: 5px;
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #555;
+        }
+
+        input[type=file]::file-selector-button {
+            margin-right: 20px;
+            border: none;
+            background: #203776;
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+            transition: background .2s ease-in-out;
+        }
+
+        input[type=file]::file-selector-button:hover {
+            background: #1a2e63;
+        }
+    </style>
+    <div class="card-content clearfix card center"
+        style="width: 60%;margin: 1rem auto auto auto;border-radius: 5px; padding: 2%;" ng-show="pantalla == 1">
+        <h5><strong>CARGUE DE CARACTERIZACION</strong></h5>
+        <div class="row m-t">
+            <div class="col s12 card-content">
+                <div class="col s6">
+                    <label class="m-l">Año</label>
+                    <select class="select-new-style gray-input m-l" ng-model="anno" ng-change="obtenerMeses(anno);">
+                        <option ng-repeat="x in anos track by $index" ng-value="x.ANNO">{{x.ANNO}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col s6">
+                    <label class="m-l">Mes</label>
+                    <select class="select-new-style gray-input m-l" ng-model="mes">
+                        <option ng-repeat="x in meses track by $index" ng-value="x.IDE">{{x.NOMBRE}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s8">
+                    <label for="file_salud" class="drop-container" id="dropcontainer">
+                        <input type="file" class="file-input" id="file_salud" accept=".txt" required>
+                    </label>
+                </div>
+                <div class="col s4">
+                    <strong class="default-color">ESTRUCTURA SALUD</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s8">
+                    <label for="file_vivienda" class="drop-container" id="dropcontainer">
+                        <input type="file" class="file-input" id="file_vivienda" accept=".txt" required>
+                    </label>
+                </div>
+                <div class="col s4">
+                    <strong class="default-color">ESTRUCTURA VIVIENDA</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s8">
+                    <label for="archivo_demanda_efectiva" class="drop-container" id="dropcontainer">
+                        <input type="file" class="file-input" id="archivo_demanda_efectiva" accept=".txt" required>
+                    </label>
+                </div>
+                <div class="col s4">
+                    <strong class="default-color">ESTRUCTURA DEMANDA EFECTIVA</strong>
+                </div>
+            </div>
+        </div>
+        <div class="row m-t">
+            <div class="col s12 l12 center">
+                <button class="btn waves-effect waves-light" ng-click="limpiarDatos()">
+                    <i class="icon-eraser" style="font-size: 1rem;">Limpiar</i></button>
+                <button class="btn waves-effect waves-light m-l" ng-click="enviar()">
+                    <i class="icon-paper-plane" style="font-size: 1rem;">Enviar</i></button>
+            </div>
+        </div>
+        <div class="row center">
+            <div class="col s12 l12 center">
+                <button class="btn waves-effect waves-light m-l" ng-click="setPantalla(2)">
+                    <i class="icon-list-alt" style="font-size: 1rem;"> MIS CARGUES</i></button>
+            </div>
+        </div>
+    </div>
+    <div ng-show="pantalla == 2">
+        <div class="card-content clearfix card" id="card-content" style="border-radius: 15px;">
+            <div class="row" style="margin-bottom: 0;margin-top: 1rem;">
+                <div class="row dashboard-wrapper content-container white"
+                    style="padding-bottom: 20px;margin-bottom: 0;padding-left: 20px;padding-right: 20px;">
+                    <div class="col l12 m12 s12" style="position:relative">
+                        <div class="black-text title-panel"
+                            style="display: flex;justify-content: space-between;align-items: center;margin-bottom: 15px;">
+                            <button class="btn waves-effect waves-light m-l" ng-click="setPantalla(1)">
+                                <i class=" icon-left-big" style="font-size: 1rem;"> ATRAS</i></button>
+                            <strong>Listado de Radicaciones</strong>
+                            <input type="text" class="margin border-none input-text-new" ng-keyup="filter(filtro)"
+                                ng-model="filtro" placeholder="Buscar en la tabla">
+                        </div>
+                        <div id="tabla_scroll" class="scroll_x">
+                            <div class="responsive" ng-hide="inactiveipstable" style="overflow: auto;max-height: 80vh;">
+                                <table class="striped table-bordered white" style="zoom: 0.8;">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" style="text-align:center;"><b>#</b></th>
+                                            <th rowspan="2" style="text-align:center;">RADICADO</th>
+                                            <th rowspan="2" style="text-align:center;">ARCHIVO</th>
+                                            <th rowspan="2" style="text-align:center;">PERIODO</th>
+                                            <th rowspan="2" style="text-align:center;">FECHA INGRESO AL SISTEMA</th>
+                                            <th rowspan="2" style="text-align:center;">FECHA DE VALIDACION</th>
+                                            <th rowspan="2" style="text-align:center;">ESTADO VALIDADO</th>
+                                            <th rowspan="2" style="text-align:center;">ESTADO CARGUE</th>
+                                            <!-- <th rowspan="2" colspan="4" style="text-align:center;">ACCIÓN</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="x in radicados track by $index" ng-hide="radicados.length == 0">
+                                            <th style="text-align: center">{{$index + 1 }}</th>
+                                            <td style="text-align: center"><b>{{x.SGCN_CODIGO_PROCESO}}</b></td>
+                                            <td style="text-align: center"><b>{{x.SGCC_NOMBRE_ARCHIVO.split('.')[0]}}</b></td>
+                                            <td style="text-align: center">{{x.SGCN_PERIODO}} - {{x.SGCN_ANNO}}</td>
+                                            <td style="text-align: center">{{x.SGCF_FECHA_CARGUE}}</td>
+                                            <td style="text-align: center">{{x.SGCF_FECHA_CONFIRMADO}}</td>
+                                            <td style="text-align: center">
+                                                {{x.SGCC_ESTADO_CONFIRMADO == 'N' ? 'NO' : 'SI'}}
+                                            </td>
+                                            <td style="text-align: center">
+                                                <span style="cursor: pointer"><b>{{x.SGCC_ESTADO}}</b></span>
+                                            </td>
+                                            <!-- <td style="text-align: center">
+                                                <div class="tooltip" ng-if="x.estado_cargue == 'CON ERRORES'">
+                                                    <i style="cursor: pointer; width: 25px" ng-click="verdetalle(x)"
+                                                        class="icon-download dropbtn2"></i>
+                                                    <span class="tooltiptext">Descargar Errores</span>
+                                                </div>
+
+                                                <div class="tooltip" ng-if="x.estado_cargue == 'CON ERRORES'">
+                                                    <i style="cursor: pointer; width: 25px"
+                                                        ng-click="actualizarSoporte(x)"
+                                                        class="icon-upload dropbtn2"></i>
+                                                    <span class="tooltiptext">Actualizar Soporte</span>
+                                                </div>
+
+                                                <div class="tooltip" ng-if="tipoUsuario != 0">
+                                                    <i style="cursor: pointer; width: 25px"
+                                                        ng-click="download(x.ruta, x.nombre_archivo)"
+                                                        class="icon-download-cloud dropbtn2"></i>
+                                                    <span class="tooltiptext">Decargar Archivo</span>
+                                                </div>
+                                            </td> -->
+                                        </tr>
+                                        <tr ng-show="radicados.length == 0">
+                                            <th colspan="12">
+                                                <center>No hay cargues para mostrar</center>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
