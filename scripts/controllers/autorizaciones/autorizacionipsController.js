@@ -1,31 +1,698 @@
 'use strict';
-angular.module('GenesisApp')
-  .controller('autorizacionipsController', ['$scope', '$http', '$location', 'ngDialog','pqrHttp',
+angular.module('GenesisApp').controller('autorizacionipsController', ['$scope', '$http', '$location', 'ngDialog','pqrHttp',
     function ($scope, $http, $location, ngDialog,pqrHttp) {
-
-      $(document).ready(function () {
-        $('.tooltipped').tooltip({ delay: 50 });
-        $('#modaldetalle').modal();
-        $('#modaleditardetalle').modal();
-        $('#modaldiagnostico').modal();
-        $('#modalips').modal();
-        $('#modalservicio').modal();
-        $("#modalespecialidad").modal();
-        $("#modalproducto").modal();
+      $scope.function_Inicio = function () {
+      // setTimeout(() => {
+      //   $('#modalpopUp').modal("open");
+      // }, 500);
+   
+        $scope.function_set_Tab(1);
+        $scope.show_solicitudAutorizacion = true;
+        $scope.show_formularioSolicitud = true;
+        // $scope.inactivepaso1 = true;
+        // $scope.inactivepaso2 = true;
+        // $scope.inactivepaso3 = true;
+        $scope.buscarcodigoServicio = "";
+        $scope.show_nextPaso2 = false;
+        $scope.show_solicitud = false;
+        $scope.show_servicios = false;
+        $scope.show_finalizar = false;
+        $scope.function_limpiar('solicitud');
+        $scope.function_limpiar('detalle');
+        $scope.list_solictAutorizacion = [];
+        $scope.listContratos = [];
+        $scope.infoAut = {};
+        
+        // $scope.funtion_iniciar_Show_False();
+        // $scope.responsable = sessionStorage.getItem("cedula");
+        // $scope.municipio = sessionStorage.getItem("municipio");
+        // $scope.departamento = sessionStorage.getItem("dpto");
+        $scope.sessionNit = sessionStorage.getItem("nit");
+        // $scope.SysDay = new Date();
+        $(".modal").modal();
+        // $scope.function_limpiar("form1");
+        // $scope.function_limpiar("modal");
+        // $scope.function_limpiar("modalUsuario");
+        // $scope.list_DatosTemp = [];
+        //TABLA
+        // $scope.Filtrar_Sol = 10;
+        // $scope.Vista1 = {
+        //   Mostrar_Sol: 10,
+        // };
+        //TABLA
+        // este codigo sirve para tener un input tipo fecha que solo permita escoger el dia actual
+        // var hoy = new Date();
+        // var dd = hoy.getDate();
+        // var mm = hoy.getMonth() + 1; //hoy es 0!
+        // var yyyy = hoy.getFullYear();
+        // if (dd < 10) {
+        //   dd = "0" + dd;
+        // }
+        // if (mm < 10) {
+        //   mm = "0" + mm;
+        // }
+        // $scope.maxDate = yyyy + "-" + mm + "-" + dd;
 
         var fecha = new Date();
         fecha.setDate(fecha.getDate() - 2);
-        $('#date-fr').bootstrapMaterialDatePicker({ format: 'DD/MM/YYYY HH:mm', lang: 'fr', weekStart: 1, nowText: 'Now', minDate: fecha, maxDate: new Date(), defaultDate: fecha });
+        $('#id_solicitud_fecingreso').bootstrapMaterialDatePicker({ format: 'DD/MM/YYYY HH:mm', lang: 'fr', weekStart: 1, nowText: 'Now', minDate: fecha, maxDate: new Date(), defaultDate: fecha });
 
         $('#date-fr-modal').bootstrapMaterialDatePicker({ format: 'DD/MM/YYYY HH:mm', lang: 'fr', weekStart: 1, nowText: 'Now', minDate: fecha, maxDate: new Date() });
 
-        var myInput = document.getElementById('justificacion');
+        var myInput = document.getElementById('id_solicitud_justificacion');
         myInput.onpaste = function(e) {
           e.preventDefault();
           alert("esta acción no esta permitida");
         }
+      };
+      $scope.function_limpiar = function(accion){
+        switch (accion) {
+          case "solicitud":
+            $scope.solicitud = {
+             numero:"0",
+             ubicacion:"0",
+             tipodocumento:"",
+             documento:"",
+             nombre:"",
+             fecingreso:"",
+             origen:"G",
+             ubipaciente:"H",
+             tiposervicio:"E",
+             servicio:"",
+             nombreservcio:"",
+             contrato:"",
+             ubicacioncontrato:"",
+             documentocontrato:"KS",
+             cama: "",
+             dxprincipal: "",
+             urgencia:"",
+             dxsecundario: "",
+             diagnostico2_nombre:"",
+             justificacion:"",
+             medico:"",
+             cargomedico:"",
+             codips:"",
+             nombreips:"",
+             nit:"",
+             prioridad:"",
+             hijode:"",
+             fecsolicitud:"",
+             ruta:"",
+             direccion:"",
+             actividad:"I",
+             viaingreso:"",
+             ftp:3,
+            }
+            break;
+          case "detalle":
+            $scope.detalle = {
+              producto: '',
+              nombre: '',
+              cantidad: '',
+              producto2: '',
+              nombre2: '',
+              cantidad2: '',
+              subclas: '',
+              subclasn: '',
+              subclascod: ''
+            }
+            break;
+          case "form3":
+            $scope.form3 = {
+              numeroDocumento: "",
+              numeroRegistro: "",
+              motivoaAnulacion: "",
+              observacionAnulacion: "",
+            };
+            break;
+          case "gastoQuirurgico":
+            $scope.form3 = {
+              adjuntogastoQuirurgico: "",
+            };
+            break;
+          case "cargue":
+            $scope.cargue = {
+              cotizacion: "",
+              soporte: "",
+            };
+            break;
+          case "2":
+            $scope.material = {
+              referencia: "",
+              nombre: "",
+              pos: "",
+              mipres: "",
+              cantidad: "",
+            };
+            break;
+          case "4":
+            $scope.procedimiento = {
+              referencia: "",
+              nombre: "",
+            };
+            break;
+          case "modalUsuario":
+            $scope.modalUsuario = {
+              numeroDocumento: "",
+              nombreFuncionario: "",
+              nombrefunCreado: "",
+              tipoUser: "",
+              estadoVisible: "",
+            };
+            break;
+          case "modalObservacio":
+            $scope.modalObservacio = {
+              numeroConsecutivo: "",
+              nombrePaciente: "",
+              observaciones: "",
+            };
+            break;
+          default:
+        }
 
-      });
+
+
+      }
+      $scope.function_consultaAfiliado = function () {
+        if ($scope.solicitud.tipodocumento == '' && $scope.solicitud.documento == '') {
+          swal({
+            title: "Notificación",
+            text: "Completa todos los campos obligatorios (*).",
+            type: "warning",
+          }).catch(swal.noop);
+          let elementosAValidar = [
+            {
+              Codigo: "1",
+              id_label: "id_selecctipoDocumento_label",
+              id_input: "id_selecctipoDocumento",
+            },
+            {
+              Codigo: "2",
+              id_label: "id_seleccnumeroDocumento_label",
+              id_input: "id_seleccnumeroDocumento",
+            },
+          ];
+          elementosAValidar.forEach(function (elemento) {
+            $scope.validarVacio(elemento.id_input, elemento.id_label);
+          });
+          return;
+        }else{
+          $http({
+            method: 'POST',
+            url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
+            data: {
+              function: 'P_OBTENER_AFILIADO', 
+              documento: $scope.solicitud.documento,
+              tipodocumento: $scope.solicitud.tipodocumento,
+            }
+          }).then(function (response) {
+            console.log(response);
+            if (response.data.Codigo == "0") {                      
+              $scope.inactivefields = true;
+              $scope.solicitud.nombre = '';
+              swal('Importante', response.data.Nombre, 'info');
+            }else{
+              let date = new Date()
+              // $scope.solicitud.fecsolicitud = new Date(date.getFullYear(), (date.getMonth()), date.getDate(), date.getHours(), date.getMinutes());
+              var d = new Date();
+              var month = d.getMonth() + 1;
+              var day = d.getDate();
+              var output = (day < 10 ? '0' : '') + day + '/' +
+                (month < 10 ? '0' : '') + month + '/' +
+                d.getFullYear();
+              $("#id_solicitud_fecingreso").val(output + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds());
+              $scope.solicitud.fecsolicitud = output + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+              $scope.solicitud.nombre = response.data["0"].NOMBRE;
+              $scope.solicitud.fechanacimiento = response.data["0"].NACIMIENTO;
+              $scope.solicitud.estadoafiliado = response.data["0"].ESTADO;
+              $scope.solicitud.regimen = response.data["0"].REGIMEN=='S' ? 'SUBSIDIADO':'CONTRIBUTIVO';
+              $scope.solicitud.edad = response.data["0"].Edad + " Años";
+              $scope.afiliado = response.data["0"];
+              $scope.obtenerContratos();
+              $scope.obtenerDirecciones();
+              $scope.inactivefields = false;
+              $scope.show_formularioSolicitud = true;
+              $scope.show_solicitud =  true;
+            }
+          })
+        } 
+      }
+      $scope.obtenerContratos = function () {
+        $http({
+          method: 'POST',
+          url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
+          data: {
+            function: 'obtenerContratos', 
+            nit: $scope.nit,
+            regimen: $scope.afiliado.REGIMEN
+          }
+        }).then(function ({data}) {
+          console.log(data);
+          if (data.CODIGO == '1') {
+            $scope.listContratos = [];
+            swal('Advertencia', response.data.NOMBRE, 'warning');
+          } else {
+            if (data.length === 1) {
+              $scope.solicitud.contrato = data.NUMERO;
+            }
+            $scope.listContratos = data;
+            $http({
+              method: 'POST',
+              url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
+              data: {
+                function: 'p_obtener_servicio',
+                contrato: $scope.solicitud.contrato,
+                ubicacion: data.UBICACIONCONTRATO,
+                documento: data.DOCUMENTOCONTRATO,
+              }
+            }).then(function ({data}) {
+              $scope.listServicios = data;
+            })
+          }
+        })
+      }
+      $scope.obtenerServicios = function (tempcontrato) {
+        if ($scope.solicitud.contrato != "") {
+          for (var i = 0; i < $scope.listContratos.length; i++) {
+            if ($scope.listContratos[i].NUMERO == tempcontrato) {
+              $scope.solicitud.ubicacioncontrato = $scope.listContratos[i].UBICACIONCONTRATO;
+              $scope.solicitud.documentocontrato = $scope.listContratos[i].DOCUMENTOCONTRATO;
+            }
+          }
+          $http({
+            method: 'POST',
+            url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
+            data: {
+              function: 'p_obtener_servicio',
+              contrato: $scope.solicitud.contrato,
+              ubicacion: $scope.solicitud.ubicacioncontrato,
+              documento: $scope.solicitud.documentocontrato
+            }
+          }).then(function (response) {
+            $scope.listServicios = response.data;
+          })
+        }
+      }
+      $scope.obtenerDirecciones = function () {
+        $http({
+          method: 'POST',
+          url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
+          data: {
+            function: 'p_obtener_direccion', tercero: $scope.nit
+          }
+        }).then(function (response) {
+          $scope.listDirecciones = response.data;
+
+        })
+      }
+      $scope.function_siguiente = function (op, ac) {
+        console.log('op',op, 'ac', ac);
+          $('.content-step1').removeClass('animated slideInRight slideOutLeft');
+          $('.content-step2').removeClass('animated slideInRight slideOutLeft');
+          $('.content-step3').removeClass('animated slideInRight slideOutLeft');
+          switch (op) {
+            case "paso1":
+              if (ac == "next") {
+                $scope.buscarcodigoServicio = "";
+               // $(".paso1").removeClass("activebtn-step").addClass("donebtn-step");
+                //  $scope.show_solicitud = false;
+                //  $scope.show_servicios = true;
+                // $('.content-step2').addClass('animated slideInRight');
+                // $scope.titletab = 'REGISTRO DE SERVICIOS';
+                $scope.insertarSolicitud();
+      
+              }
+              if (ac == "back") {
+                // if($scope.resumen.DETALLE.length == 0 || $scope.resumen.DETALLE == undefined ){
+  
+                //   $scope.show_nextPaso2 = false;
+        
+                
+                // }else{
+                
+                //   $scope.show_nextPaso2 = true;
+               
+                // }
+              //   $(".paso2").removeClass("activebtn-step").addClass("donebtn-step");                            
+              //   $(".paso1").removeClass("donebtn-step").addClass("activebtn-step");
+              //   // $(".paso2").removeClass("activebtn-step");
+              //   $('.content-step1').addClass('animated slideInRight');
+              //   $scope.show_solicitud = true;
+              //   $scope.show_servicios = false;
+              //   $scope.show_finalizar = false;
+              //   $scope.titletab = 'PROCESO DE SOLICITUD';
+              $(".paso2").removeClass("donebtn-step");
+              $('.content-step1').addClass('animated slideInRight');
+              $scope.show_solicitud = true;
+              $scope.show_servicios = false;
+              $scope.show_finalizar = false;
+              $scope.buscarcodigoServicio = "";
+              $scope.titletab = 'PROCESO DE SOLICITUD';
+                // if($scope.resumen.DETALLE.length == 0){
+                // $scope.show_nextPaso2 = false;
+                // }else{
+                // $scope.show_nextPaso2 = true;
+                // }
+              }
+              break;
+              case "paso2":
+                $scope.obtenerResumen2();
+                $(".paso2").removeClass("activebtn-step").addClass("donebtn-step");
+                $(".paso3").addClass("activebtn-step");
+                $('.content-step3').addClass('animated slideInRight');
+                $scope.show_finalizar = true;
+                $scope.show_servicios = false;
+                // $('.content-step3').addClass('animated slideInRight');
+                $scope.titletab = 'REGISTRO DE SERVICIOS';
+                $scope.titletab = 'Finalizar';
+              $scope.show_nextPaso2 = true;
+              break;
+              case "paso3":
+              if (ac == "finish") {
+                $scope.titletab = 'Finalizar';
+                $scope.finalizarSolicitud();
+              } else {
+                $scope.titletab = 'REGISTRO DE SERVICIOS';
+                $(".paso3").removeClass("activebtn-step");
+                $(".paso2").removeClass("donebtn-step").addClass("activebtn-step");
+                $scope.show_finalizar = false;
+                $scope.show_servicios = true;
+                $('.content-step2').addClass('animated slideInLeft');
+              }
+              break;
+            default:
+          }
+      }
+      $scope.buscarpro = null;
+      $scope.obtenerProducto = function () {
+        if ($scope.buscarpro != '') {
+          $http({
+            method: 'POST',
+            url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
+            data: {
+              function: 'obtenerProducto', 
+              producto: $scope.buscarpro,
+              clasificacion: $scope.resultado.servicio,
+              regimen: $scope.resultado.regimen,
+              contrato: $scope.resultado.contrato
+            }
+          }).then(function (response) {
+            if (response.data["0"].CODIGO != "0") {
+              $scope.detalle.nombre = response.data["0"].NOMBRE;
+            } else {
+              swal('Importante', response.data["0"].MENSAJE, 'info');
+            }
+          })
+        }
+      }
+      $scope.inactivebarrapro = true;
+      $scope.buscarproductomodal = function () {
+        if($scope.buscarcodigoServicio == "" || $scope.buscarcodigoServicio == undefined){
+          swal({
+            title: "¡Alerta!",
+            text: "Por favor agregue un codigo",
+            type: "warning",
+          }).catch(swal.noop);
+          return
+        }else{
+          swal({
+            title: "Buscando...",
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+          });
+          swal.showLoading();
+          $http({
+            method: 'POST',
+            url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
+            data: {
+              function: 'obtenerProducto', 
+              word: $scope.buscarcodigoServicio,
+              clasificacion: $scope.resultado.servicio,
+              regimen: $scope.resultado.regimen,
+              contrato: $scope.resultado.contrato,
+              sexo: $scope.resultado.sexo,
+              edad: $scope.resultado.edad,
+            }
+          }).then(function (response) {
+            swal.close();
+            if (response.data.CODIGO == "1") {
+              $scope.inactivebarrapro = true;
+              $scope.listProductos = [];
+              swal('Importante', response.data.NOMBRE, 'info');
+              $scope.buscarcodigoServicio = "";
+            } else {
+              $scope.inactivebarrapro = false;
+              $scope.listProductos = response.data;
+  
+            }
+          })
+
+        }
+   
+      }
+      $scope.insertarSolicitud = function () {
+          if($scope.solicitud.fecsolicitud == '' || $scope.solicitud.fecsolicitud == undefined || $scope.solicitud.fecsolicitud == null ||
+            $scope.solicitud.dxprincipal == '' || $scope.solicitud.dxprincipal == undefined || $scope.solicitud.dxprincipal == null ||
+            $scope.solicitud.contrato == '' || $scope.solicitud.contrato == undefined || $scope.solicitud.contrato == null ||
+            $scope.solicitud.nombreservcio == '' || $scope.solicitud.nombreservcio == undefined || $scope.solicitud.nombreservcio == null ||
+            $scope.solicitud.cama == '' || $scope.solicitud.cama == undefined || $scope.solicitud.cama == null ||
+            $scope.solicitud.viaingreso == '' || $scope.solicitud.viaingreso == undefined || $scope.solicitud.viaingreso == null ||
+            $scope.solicitud.direccion == '' || $scope.solicitud.direccion == undefined || $scope.solicitud.direccion == null ||
+            $scope.solicitud.prioridad == '' || $scope.solicitud.prioridad == undefined || $scope.solicitud.prioridad == null ||
+            $scope.solicitud.justificacion == '' || $scope.solicitud.justificacion == undefined || $scope.solicitud.justificacion == null ||
+            $scope.solicitud.codips == '' || $scope.solicitud.codips == undefined || $scope.solicitud.codips == null ||
+            $scope.solicitud.medico == '' || $scope.solicitud.medico == undefined || $scope.solicitud.medico == null ||
+            $scope.solicitud.cargomedico == '' || $scope.solicitud.cargomedico == undefined || $scope.solicitud.cargomedico == null ||
+            $("#adjunto")[0].value == ""){ 
+            swal({
+              title: "Notificación",
+              text: "Completa todos los campos obligatorios (*).",
+              type: "warning",
+            }).catch(swal.noop);
+            $scope.show_solicitud = true;
+            $scope.show_servicios = false;
+            $scope.show_finalizar = false;
+            $scope.show_nextPaso2 = true;
+            let elementosAValidar = [
+              {
+                Codigo: "1",
+                id_label: "id_solicitud_fecsolicitud_label",
+                id_input: "id_solicitud_fecsolicitud",
+              },
+              {
+                Codigo: "2",
+                id_label: "id_diagnosticoPrincipal_label",
+                id_input: "id_diagnosticoPrincipal",
+              },
+              {
+                Codigo: "3",
+                id_label: "id_solicitud_contrato_label",
+                id_input: "id_solicitud_contrato",
+              },
+              {
+                Codigo: "4",
+                id_label: "id_nombreservcio_label",
+                id_input: "id_nombreservcio",
+              },
+              {
+                Codigo: "5",
+                id_label: "id_solicitud_cama_label",
+                id_input: "id_solicitud_cama",
+              },
+              {
+                Codigo: "6",
+                id_label: "id_viaingreso_label",
+                id_input: "id_viaingreso",
+              },
+              {
+                Codigo: "7",
+                id_label: "id_solicitud_urgencia_label",
+                id_input: "id_solicitud_urgencia",
+              },
+              {
+                Codigo: "8",
+                id_label: "id_direccion_label",
+                id_input: "id_direccion",
+              },
+              {
+                Codigo: "9",
+                id_label: "id_solicitud_prioridad_label",
+                id_input: "id_solicitud_prioridad",
+              },
+              {
+                Codigo: "10",
+                id_label: "id_solicitud_justificacion_label",
+                id_input: "id_solicitud_justificacion",
+              },
+              {
+                Codigo: "11",
+                id_label: "id_solicitud_codips_label",
+                id_input: "id_solicitud_codips",
+              },
+              {
+                Codigo: "12",
+                id_label: "id_solicitud_medico_label",
+                id_input: "id_solicitud_medico",
+              },
+              {
+                Codigo: "13",
+                id_label: "id_solicitud_cargomedico_label",
+                id_input: "id_solicitud_cargomedico",
+              },
+            ];
+            elementosAValidar.forEach(function (elemento) {
+              $scope.validarVacio(elemento.id_input, elemento.id_label);
+            });
+            return
+          }if($scope.solicitud.urgencia == '' || $scope.solicitud.urgencia == undefined || $scope.solicitud.urgencia == null){
+          // }if($scope.solicitud.viaingreso == 'U' &&  ($scope.solicitud.urgencia == '' || $scope.solicitud.urgencia == undefined || $scope.solicitud.urgencia == null)){
+            swal({
+              title: "Notificación",
+              text: "Completa todos los campos obligatorios (*).",
+              type: "warning",
+            }).catch(swal.noop);
+            $scope.show_solicitud = true;
+            $scope.show_servicios = false;
+            $scope.show_finalizar = false;
+            $scope.show_nextPaso2 = true;
+            let elementosAValidar = [
+              {
+                Codigo: "1",
+                id_label: "id_solicitud_urgencia_label",
+                id_input: "id_solicitud_urgencia",
+              },
+            ];
+            elementosAValidar.forEach(function (elemento) {
+              $scope.validarVacio(elemento.id_input, elemento.id_label);
+            });
+            return; 
+          }
+         
+          //  $scope.inactivebtnsolicitud = true;
+
+          // formatDate
+          $scope.solicitud.nit = $scope.nit;
+          if ($scope.solicitud.dxsecundario == "" || $scope.solicitud.dxsecundario == null || $scope.solicitud.dxsecundario == undefined) {
+            $scope.solicitud.dxsecundario = "0";
+          }
+          if ($scope.solicitud.viaingreso == 'U') {
+            if ($scope.solicitud.urgencia == undefined) {
+              swal("Importante", "El Código de urgencia es obligatorio si la via de ingreso es por Urgencia", "info");
+              return;
+            }
+          }
+          // subir ruta
+          if ($scope.archivobase != null) {
+            $http({
+              method: 'POST',
+              url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
+              data: {
+                function: 'adjuntos_ftp', 
+                achivobase: $scope.archivobase,
+                ext: $scope.extensionarchivo,
+              }
+            }).then(function (response) {
+              $scope.solicitud.ruta = response.data;
+              $scope.list_solictAutorizacion = [
+                {
+                  "numero":"0",
+                  "ubicacion":"0",
+                  "tipodocumento":$scope.solicitud.tipodocumento,
+                  "documento":$scope.solicitud.documento,
+                  "nombre":$scope.solicitud.nombre,
+                  "fecingreso":$scope.solicitud.fecsolicitud,
+                  "origen":"G",
+                  "ubipaciente":"H",
+                  "tiposervicio":"E",
+                  "servicio":$scope.solicitud.servicio,
+                  "nombreservcio":$scope.solicitud.nombreservcio,
+                  "contrato":$scope.solicitud.contrato,
+                  "ubicacioncontrato":$scope.solicitud.ubicacioncontrato,
+                  "documentocontrato":"KS",
+                  "cama": $scope.solicitud.cama,
+                  "dxprincipal": $scope.solicitud.dxprincipal,
+                  "urgencia":$scope.solicitud.urgencia,
+                  "dxsecundario":$scope.solicitud.dxsecundario,
+                  "diagnostico2_nombre":"",
+                  "justificacion":$scope.solicitud.justificacion,
+                  "medico":$scope.solicitud.medico,
+                  "cargomedico":$scope.solicitud.cargomedico,
+                  "codips":$scope.solicitud.codips,
+                  "nombreips":$scope.solicitud.nombreips,
+                  "nit":$scope.solicitud.codips,
+                  "prioridad":$scope.solicitud.prioridad,
+                  "hijode":"",
+                  "fecsolicitud":$scope.solicitud.fecsolicitud,
+                  "ruta":$scope.solicitud.ruta,
+                  "direccion":$scope.solicitud.direccion,
+                  "actividad":"I",
+                  "viaingreso":$scope.solicitud.viaingreso,
+                  "ftp":3,
+                }
+               ]
+              if (($scope.solicitud.ruta != '0 - Error') && ($scope.solicitud.ruta.substr(0, 3) != "<br")) {
+                $http({
+                  method: 'POST',
+                  url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
+                  data: { function: 'insertarSoplicitud', 
+                  data: JSON.stringify($scope.list_solictAutorizacion)
+                }
+                }).then(function (response) {
+                  $scope.resultado = response.data;
+                  if ($scope.resultado.Codigo == '0') {
+                    $(".paso2").removeClass("activebtn-step").addClass("donebtn-step");
+
+                    $('.content-step2').addClass('animated slideInRight');
+                    $scope.titletab = 'PROCESO DE SELECCION DE SERVICIOS';
+                     $scope.show_solicitud = false;
+                     $scope.show_servicios = true;
+                     $scope.show_nextPaso2 = true;
+                    // $scope.solicitud.actividad = 'U';
+                    $scope.solicitud.numero = $scope.resultado.numero;
+                    $scope.solicitud.ubicacion = $scope.resultado.ubicacion;
+                  }else{
+                    swal('Importante', $scope.resultado.Nombre, 'info');
+                    $scope.show_nextPaso2 = false;
+                    $scope.show_solicitud = true;
+                    $scope.show_servicios = false;
+                    $scope.show_finalizar = false;
+                  }
+                
+                })
+              } else {
+                swal("Importante", "No se cargo el archivo correctamente. Favor intente nuevamente", "info");
+              }
+
+            });
+          } else {
+            swal("Importante", "No se cargo el archivo correctamente. Favor intente nuevamente", "info");
+          }
+
+
+      }
+
+      // $(document).ready(function () {
+      //   $('#modaldetalle').modal();
+      //   $('#modaleditardetalle').modal();
+      //   $('#modaldiagnostico').modal();
+      //   $('#modalips').modal();
+      //   $('#modalservicio').modal();
+      //   $("#modalespecialidad").modal();
+      //   $("#modalproducto").modal();
+
+      //   var fecha = new Date();
+      //   fecha.setDate(fecha.getDate() - 2);
+      //   $('#date-fr').bootstrapMaterialDatePicker({ format: 'DD/MM/YYYY HH:mm', lang: 'fr', weekStart: 1, nowText: 'Now', minDate: fecha, maxDate: new Date(), defaultDate: fecha });
+
+      //   $('#date-fr-modal').bootstrapMaterialDatePicker({ format: 'DD/MM/YYYY HH:mm', lang: 'fr', weekStart: 1, nowText: 'Now', minDate: fecha, maxDate: new Date() });
+
+      //   var myInput = document.getElementById('justificacion');
+      //   myInput.onpaste = function(e) {
+      //     e.preventDefault();
+      //     alert("esta acción no esta permitida");
+      //   }
+
+      // });
 
       $scope.Obtener_Tipos_Documentos = function () {
         $http({
@@ -47,14 +714,7 @@ angular.module('GenesisApp')
           }
         });
       }
-$scope.Obtener_Tipos_Documentos();
-
-      $(document).ready(function () {
-        $('#modalpopUp').modal();
-      });
-      setTimeout(() => {
-        $('#modalpopUp').modal("open");
-      }, 500);
+      
       var dat = { prov: 'navb' }
       $.getJSON("php/obtenersession.php", dat)
         .done(function (respuesta) {
@@ -64,7 +724,7 @@ $scope.Obtener_Tipos_Documentos();
         .fail(function (jqXHR, textStatus, errorThrown) {
           console.log("navbar error obteniendo variables");
         });
-      $scope.tabI = true;
+      $scope.show_solicitudAutorizacion = true;
       $scope.resultado = [];
       $scope.tabII = false;
       $scope.tabIII = false;
@@ -75,12 +735,11 @@ $scope.Obtener_Tipos_Documentos();
       $scope.activeIII = 'none';
       $scope.activeIV = 'none';
       $scope.activeV = 'none';
-      $scope.titletab = 'Solicitud';
+      $scope.titletab = 'PROCESO DE SOLICITUD';
       $scope.inactivepaso2 = true;
       $scope.inactivepaso3 = true;
       $scope.buscaraut = "";
       $scope.buscarauta = "";
-      $scope.prioridadsw = false;
       $scope.hijodesw = false;
       $scope.requierecama = false;
       $scope.switchinit1 = true;
@@ -93,42 +752,6 @@ $scope.Obtener_Tipos_Documentos();
       $scope.inactiveaut_activa = true;
       $scope.inactiveaut2 = true;
       $scope.inactivepro = true;
-      $scope.solicitud = {
-        numero: '0',
-        ubicacion: '0',
-        tipodocumento: '',
-        documento: '',
-        nombre: '',
-        fecingreso: '',
-        origen: '',
-        ubipaciente: '',
-        tiposervicio: '',
-        servicio: '',
-        nombreservcio: '',
-        viaingreso: '',
-        contrato: '',
-        ubicacioncontrato: '',
-        documentocontrato: '',
-        cama: '',
-        dxprincipal: '',
-        diagnostico1_nombre: '',
-        dxsecundario: '',
-        diagnostico2_nombre: '',
-        justificacion: '',
-        medico: '',
-        cargomedico: '',
-        codips: '',
-        nombreips: '',
-        nit: '',
-        prioridad: '',
-        hijode: '',
-        fecsolicitud: '',
-        ruta: '',
-        direccion: '',
-        actividad: 'I',
-        ftp: null
-      }
-
       $scope.searchaut = '';
 
       function sumarDias(fecha, dias) {
@@ -154,10 +777,10 @@ $scope.Obtener_Tipos_Documentos();
         $("#adjunto")[0].value = "";
         $scope.archivobase = "";
         $scope.extensionarchivo = "";
-        $scope.inactivepaso1 = false;
+        $scope.show_solicitud = false;
         $scope.inactivepaso2 = true;
         $scope.inactivepaso3 = true;
-        $scope.tabI = true;
+        $scope.show_solicitudAutorizacion = true;
         $scope.tabII = false;
         $scope.tabIII = false;
         $scope.tabIV = false;
@@ -169,7 +792,6 @@ $scope.Obtener_Tipos_Documentos();
         $scope.inactivepaso3 = true;
         $scope.buscaraut = "";
         $scope.buscarauta = "";
-        $scope.prioridadsw = false;
         $scope.hijodesw = false;
         $scope.requierecama = false;
         $scope.switchinit1 = true;
@@ -187,34 +809,34 @@ $scope.Obtener_Tipos_Documentos();
         $scope.solicitud = {
           numero: '0',
           ubicacion: '0',
-          tipodocumento: '',
-          documento: '',
-          nombre: '',
-          fecingreso: '',
-          origen: '',
-          ubipaciente: '',
-          tiposervicio: '',
-          servicio: '',
-          nombreservcio: '',
-          contrato: '',
-          ubicacioncontrato: '',
-          documentocontrato: '',
-          cama: '',
-          dxprincipal: '',
-          diagnostico1_nombre: '',
-          dxsecundario: '',
-          diagnostico2_nombre: '',
-          justificacion: '',
-          medico: '',
-          cargomedico: '',
-          codips: '',
-          nombreips: '',
-          nit: '',
-          prioridad: '',
-          hijode: '',
-          fecsolicitud: '',
-          ruta: '',
-          direccion: '',
+          // tipodocumento: '',
+          // documento: '',
+          // nombre: '',
+          // fecingreso: '',
+          // origen: '',
+          // ubipaciente: '',
+          // tiposervicio: '',
+          // servicio: '',
+          // nombreservcio: '',
+          // contrato: '',
+          // ubicacioncontrato: '',
+          // documentocontrato: '',
+          // cama: '',
+          // dxprincipal: '',
+          // diagnostico1_nombre: '',
+          // dxsecundario: '',
+          // diagnostico2_nombre: '',
+          // justificacion: '',
+          // medico: '',
+          // cargomedico: '',
+          // codips: '',
+          // nombreips: '',
+          // nit: '',
+          // prioridad: '',
+          // hijode: '',
+          // fecsolicitud: '',
+          // ruta: '',
+          // direccion: '',
           actividad: 'I',
           ftp: null
         }
@@ -243,7 +865,7 @@ $scope.Obtener_Tipos_Documentos();
       }
       $(".paso1").addClass("activebtn-step");
       $('.content-step1').addClass('animated slideInRight');
-      $scope.inactivepaso1 = false;
+       $scope.show_solicitud = false;
       //Al iniciar
       $http({
         method: 'POST',
@@ -266,32 +888,6 @@ $scope.Obtener_Tipos_Documentos();
       }).then(function (response) {
         $scope.listTipoServicio = response.data;
       })
-      $scope.obtenerServicios = function (tempcontrato) {
-        console.log(tempcontrato);
-        if ($scope.solicitud.contrato != "") {
-
-          for (var i = 0; i < $scope.listContratos.length; i++) {
-            if ($scope.listContratos[i].NUMERO == tempcontrato) {
-              $scope.solicitud.ubicacioncontrato = $scope.listContratos[i].UBICACIONCONTRATO;
-              $scope.solicitud.documentocontrato = $scope.listContratos[i].DOCUMENTOCONTRATO;
-            }
-          }
-          $http({
-            method: 'POST',
-            url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
-            data: {
-              function: 'p_obtener_servicio',
-              contrato: $scope.solicitud.contrato,
-              ubicacion: $scope.solicitud.ubicacioncontrato,
-              documento: $scope.solicitud.documentocontrato
-            }
-          }).then(function (response) {
-
-
-            $scope.listServicios = response.data;
-          })
-        }
-      }
       $scope.obtenerServiciosedit = function () {
         if ($scope.contrato != "" && $scope.contrato != undefined && $scope.contrato != null) {
           $http({
@@ -306,59 +902,6 @@ $scope.Obtener_Tipos_Documentos();
           }).then(function (response) {
             $scope.listServiciosedit = response.data;
           })
-        }
-      }
-      $scope.obtenerNombre = function () {
-        if ($scope.solicitud.tipodocumento != '' && $scope.solicitud.documento != '') {
-          $scope.switchinit1 = false;
-          $http({
-            method: 'POST',
-            url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
-            data: {
-              function: 'obtenerNombre', documento: $scope.solicitud.documento,
-              tipodocumento: $scope.solicitud.tipodocumento
-            }
-          }).then(function (response) {
-            console.log(response);
-            if (response.data.Codigo == "0") {                      
-              $scope.inactivefields = true;
-              $scope.solicitud.nombre = '';
-              swal('Importante', response.data.Nombre, 'info');
-            }else{
-              let date = new Date()
-              // $scope.solicitud.fecsolicitud = new Date(date.getFullYear(), (date.getMonth()), date.getDate(), date.getHours(), date.getMinutes());
-
-
-              var d = new Date();
-
-              var month = d.getMonth() + 1;
-              var day = d.getDate();
-
-              var output = (day < 10 ? '0' : '') + day + '/' +
-                (month < 10 ? '0' : '') + month + '/' +
-                d.getFullYear();
-
-
-              $("#date-fr").val(output + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds());
-              $scope.solicitud.fecsolicitud = output + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
-              $scope.solicitud.nombre = response.data["0"].NOMBRE;
-              $scope.solicitud.fechanacimiento = response.data["0"].NACIMIENTO;
-              $scope.solicitud.estadoafiliado = response.data["0"].ESTADO;
-              $scope.solicitud.regimen = response.data["0"].REGIMEN=='S' ? 'SUBSIDIADO':'CONTRIBUTIVO';
-              $scope.solicitud.edad = response.data["0"].Edad + " Años";
-              $scope.afiliado = response.data["0"];
-              $scope.obtenerContratos();
-              $scope.obtenerDirecciones();
-              $scope.inactivefields = false;
-            }
-          })
-        } else {
-          swal('Importante', "No pueden haber campos vacios.", 'info');
-          if (($scope.solicitud.tipodocumento == '' || $scope.solicitud.documento == '' || $scope.solicitud.documento == undefined) && $scope.switchinit1 == false) {
-
-            $scope.inactivefields = true;
-            $scope.solicitud.nombre = '';
-          }
         }
       }
       $scope.obtenerNombreIps = function () {
@@ -380,36 +923,6 @@ $scope.Obtener_Tipos_Documentos();
 
           }
         }
-      }
-      $scope.obtenerContratos = function () {
-        $http({
-          method: 'POST',
-          url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
-          data: {
-            function: 'obtenerContratos', nit: $scope.nit,
-            regimen: $scope.afiliado.REGIMEN
-          }
-        }).then(function (response) {
-
-          if (response.data.CODIGO == '1') {
-            $scope.listContratos = [];
-            swal('Advertencia', response.data.NOMBRE, 'warning');
-          } else {
-            $scope.listContratos = response.data;
-          }
-        })
-      }
-      $scope.obtenerDirecciones = function () {
-        $http({
-          method: 'POST',
-          url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
-          data: {
-            function: 'p_obtener_direccion', tercero: $scope.nit
-          }
-        }).then(function (response) {
-          $scope.listDirecciones = response.data;
-
-        })
       }
       $scope.obtenerDiagnostico = function (tipo) {
         console.log("me ejeucte");
@@ -441,7 +954,7 @@ $scope.Obtener_Tipos_Documentos();
         }
       }
       $scope.init = function () {
-        $scope.tabI = false;
+        $scope.show_solicitudAutorizacion = false;
         $scope.tabII = false;
         $scope.tabIII = false;
         $scope.tabIV = false;
@@ -451,13 +964,16 @@ $scope.Obtener_Tipos_Documentos();
         $scope.activeII = 'none';
         $scope.activeIII = 'none';
         $scope.activeIV = 'none';
-        $scope.titletab = 'Solicitud';
+        $scope.titletab = 'PROCESO DE SOLICITUD';
       }
-      $scope.setTab = function (opcion) {
+      $scope.function_set_Tab = function (opcion) {
+        console.log(opcion);
         $scope.init();
+        $scope.Tabs = opcion;
         switch (opcion) {
           case 1:
-            $scope.tabI = true;
+            $scope.Obtener_Tipos_Documentos();
+            $scope.show_solicitudAutorizacion = true;
             $scope.tabII = false;
             $scope.tabIII = false;
             $scope.tabIV = false;
@@ -466,10 +982,10 @@ $scope.Obtener_Tipos_Documentos();
             $scope.activeIII = 'none';
             $scope.activeIV = 'none';
             $scope.tipoaut = '1';
-            $scope.titletab = 'Solicitud';
+            $scope.titletab = 'PROCESO DE SOLICITUD';
             break;
           case 2:
-            $scope.tabI = false;
+            $scope.show_solicitudAutorizacion = false;
             $scope.tabII = true;
             $scope.tabIII = false;
             $scope.tabIV = false;
@@ -480,7 +996,7 @@ $scope.Obtener_Tipos_Documentos();
             $scope.tipoaut = '2';
             break;
           case 3:
-            $scope.tabI = false;
+            $scope.show_solicitudAutorizacion = false;
             $scope.tabII = false;
             $scope.tabIII = true;
             $scope.tabIV = false;
@@ -491,7 +1007,7 @@ $scope.Obtener_Tipos_Documentos();
             $scope.tipoaut = '3';
             break;
           case 4:
-            $scope.tabI = false;
+            $scope.show_solicitudAutorizacion = false;
             $scope.tabII = false;
             $scope.tabIII = false;
             $scope.tabIV = true;
@@ -502,7 +1018,7 @@ $scope.Obtener_Tipos_Documentos();
             $scope.tipoaut = '4';
             break;
           case 5:
-            $scope.tabI = false;
+            $scope.show_solicitudAutorizacion = false;
             $scope.tabII = false;
             $scope.tabIII = false;
             $scope.tabIV = false;
@@ -518,123 +1034,128 @@ $scope.Obtener_Tipos_Documentos();
 
         }
       }
-      $scope.wizardstep = function (op, ac) {
-        $('.content-step1').removeClass('animated slideInRight slideOutLeft');
-        $('.content-step2').removeClass('animated slideInRight slideOutLeft');
-        $('.content-step3').removeClass('animated slideInRight slideOutLeft');
-        switch (op) {
-          case "paso1":
-            if (ac == "back") {
-              // $(".paso2").removeClass("activebtn-step").addClass("donebtn-step");                            
-              $(".paso2").removeClass("activebtn-step");
-              $(".paso1").removeClass("donebtn-step").addClass("activebtn-step");
-              $('.content-step1').addClass('animated slideInRight');
-              $scope.inactivepaso1 = false;
-              $scope.inactivepaso2 = true;
-              $scope.inactivepaso3 = true;
-              $scope.titletab = 'Solicitud';
-            }
-            if (ac == "next") {
 
 
-              if ($scope.solicitud.dxprincipal == '') {
-                swal("Importante", "Diagnostico 1 no puede estar vacio", "info");
-                return;
-              }
-              if ($scope.solicitud.dxsecundario == '') {
-                swal("Importante", "Diagnostico 2 no puede estar vacio", "info");
-                return;
-              }
-              if ($scope.solicitud.origen == '') {
-                swal("Importante", "Orgien de atención no puede estar vacio", "info");
-                return;
-              } if ($scope.solicitud.ubipaciente == '') {
-                swal("Importante", "Ubicación paciente no puede estar vacio", "info");
-                return;
-              } if ($scope.solicitud.contrato == '') {
-                swal("Importante", "Contrato no puede estar vacio", "info");
-                return;
-              } if ($scope.solicitud.tiposervicio == '') {
-                swal("Importante", "Tipo de servicio no puede estar vacio", "info");
-                return;
-              } if ($scope.solicitud.nombreservcio == '') {
-                swal("Importante", "Servicio no puede estar vacio", "info");
-                return;
-              }
-              if ($scope.requierecama == true) {
-                if ($scope.solicitud.cama == '') {
-                  swal("Importante", "Cama no puede estar vacio", "info");
-                  return;
-                }
-              }
-              if ($scope.solicitud.viaingreso == '') {
-                swal("Importante", "Via de ingreso no puede estar vacio", "info");
-                return;
-              }
-              if ($scope.solicitud.direccion == '') {
-                swal("Importante", "Dirección atención no puede estar vacio", "info");
-                return;
-              }
-              if ($scope.solicitud.justificacion.length < 30) {
-                swal("Importante", "La justificación debe tener como minimo 30  y maximo 1000 caracteres", "info");
-                return;
-              }
-              if ($scope.solicitud.codips == '') {
-                swal("Importante", "NIT IPS no puede estar vacio", "info");
-                return;
-              }
-              if ($scope.solicitud.medico == '') {
-                swal("Importante", "Nombre del Médico no puede estar vacio", "info");
-                return;
-              }
+      // $scope.wizardstep = function (op, ac) {
+      //   console.log('op',op, 'ac', ac);
+      //   $('.content-step1').removeClass('animated slideInRight slideOutLeft');
+      //   $('.content-step2').removeClass('animated slideInRight slideOutLeft');
+      //   $('.content-step3').removeClass('animated slideInRight slideOutLeft');
+      //   switch (op) {
+      //     case "paso1":
+      //       if (ac == "back") {
+      //         // $(".paso2").removeClass("activebtn-step").addClass("donebtn-step");                            
+      //         $(".paso2").removeClass("activebtn-step");
+      //         $(".paso1").removeClass("donebtn-step").addClass("activebtn-step");
+      //         $('.content-step1').addClass('animated slideInRight');
+      //         $scope.inactivepaso1 = true;
+      //         $scope.inactivepaso2 = false;
+      //         $scope.inactivepaso3 = false;
+      //         $scope.titletab = 'PROCESO DE SOLICITUD';
+      //       }
+      //       if (ac == "next") {
+      //         if ($scope.solicitud.dxprincipal == '') {
+      //           swal("Importante", "Diagnostico 1 no puede estar vacio", "info");
+      //           return;
+      //         }
+      //         if ($scope.solicitud.dxsecundario == '') {
+      //           swal("Importante", "Diagnostico 2 no puede estar vacio", "info");
+      //           return;
+      //         }
+      //         // if ($scope.solicitud.origen == '') {
+      //         //   swal("Importante", "Orgien de atención no puede estar vacio", "info");
+      //         //   return;
+      //         // } 
+      //         // if ($scope.solicitud.ubipaciente == '') {
+      //         //   swal("Importante", "Ubicación paciente no puede estar vacio", "info");
+      //         //   return;
+      //         // } 
+      //         if ($scope.solicitud.contrato == '') {
+      //           swal("Importante", "Contrato no puede estar vacio", "info");
+      //           return;
+      //         }
+      //         // } if ($scope.solicitud.tiposervicio == '') {
+      //         //   swal("Importante", "Tipo de servicio no puede estar vacio", "info");
+      //         //   return;
+      //         // } 
+      //         if ($scope.solicitud.nombreservcio == '') {
+      //           swal("Importante", "Servicio no puede estar vacio", "info");
+      //           return;
+      //         }
+      //         if ($scope.requierecama == true) {
+      //           if ($scope.solicitud.cama == '') {
+      //             swal("Importante", "Cama no puede estar vacio", "info");
+      //             return;
+      //           }
+      //         }
+      //         if ($scope.solicitud.viaingreso == '') {
+      //           swal("Importante", "Via de ingreso no puede estar vacio", "info");
+      //           return;
+      //         }
+      //         if ($scope.solicitud.direccion == '') {
+      //           swal("Importante", "Dirección atención no puede estar vacio", "info");
+      //           return;
+      //         }
+      //         if ($scope.solicitud.justificacion.length < 30) {
+      //           swal("Importante", "La justificación debe tener como minimo 30  y maximo 1000 caracteres", "info");
+      //           return;
+      //         }
+      //         if ($scope.solicitud.codips == '') {
+      //           swal("Importante", "NIT IPS no puede estar vacio", "info");
+      //           return;
+      //         }
+      //         if ($scope.solicitud.medico == '') {
+      //           swal("Importante", "Nombre del Médico no puede estar vacio", "info");
+      //           return;
+      //         }
 
-              if ($scope.solicitud.cargomedico == '') {
-                swal("Importante", "Especialidad no puede estar vacio", "info");
-                return;
-              }
+      //         if ($scope.solicitud.cargomedico == '') {
+      //           swal("Importante", "Especialidad no puede estar vacio", "info");
+      //           return;
+      //         }
 
-              if ($scope.adjunto == null) {
-                swal("Importante", "Archivo no puede estar vacio", "info");
-                return;
-              }
-
-
-              $scope.insertarSolicitud();
-
-              // }else{                
-
-              // }
+      //         if ($scope.adjunto == null) {
+      //           swal("Importante", "Archivo no puede estar vacio", "info");
+      //           return;
+      //         }
 
 
-            }
-            break;
-          case "paso2":
-            $(".paso2").removeClass("activebtn-step").addClass("donebtn-step");
-            $(".paso3").addClass("activebtn-step");
-            $scope.inactivepaso2 = true;
-            $scope.inactivepaso3 = false;
-            $('.content-step3').addClass('animated slideInRight');
-            $scope.titletab = 'Servicios';
-            $scope.obtenerResumen();
-            $scope.titletab = 'Finalizar';
-            break;
-          case "paso3":
+      //         $scope.insertarSolicitud();
 
-            if (ac == "finish") {
-              $scope.titletab = 'Finalizar';
-              $scope.finalizarSolicitud();
-            } else {
-              $scope.titletab = 'Servicios';
-              $(".paso3").removeClass("activebtn-step");
-              $(".paso2").removeClass("donebtn-step").addClass("activebtn-step");
-              $scope.inactivepaso3 = true;
-              $scope.inactivepaso2 = false;
-              $('.content-step2').addClass('animated slideInLeft');
-            }
-            break;
-          default:
-        }
-      }
+      //         // }else{                
+
+      //         // }
+
+
+      //       }
+      //       break;
+      //     case "paso2":
+      //       $(".paso2").removeClass("activebtn-step").addClass("donebtn-step");
+      //       $(".paso3").addClass("activebtn-step");
+      //       $scope.inactivepaso2 = true;
+      //       $scope.inactivepaso3 = false;
+      //       $('.content-step3').addClass('animated slideInRight');
+      //       $scope.titletab = 'REGISTRO DE SERVICIOS';
+      //       $scope.obtenerResumen();
+      //       $scope.titletab = 'Finalizar';
+      //       break;
+      //     case "paso3":
+
+      //       if (ac == "finish") {
+      //         $scope.titletab = 'Finalizar';
+      //         $scope.finalizarSolicitud();
+      //       } else {
+      //         $scope.titletab = 'REGISTRO DE SERVICIOS';
+      //         $(".paso3").removeClass("activebtn-step");
+      //         $(".paso2").removeClass("donebtn-step").addClass("activebtn-step");
+      //         $scope.inactivepaso3 = true;
+      //         $scope.inactivepaso2 = false;
+      //         $('.content-step2').addClass('animated slideInLeft');
+      //       }
+      //       break;
+      //     default:
+      //   }
+      // }
       function formatDate(date) {
         var dd = ('0' + date.getDate()).slice(-2);
         var mm = ('0' + (date.getMonth() + 1)).slice(-2);
@@ -664,112 +1185,75 @@ $scope.Obtener_Tipos_Documentos();
         return hh + ':' + mi + ':00';
       }
       //TAB I
-      $scope.inactivebtnsolicitud = false;
-      $scope.insertarSolicitud = function () {
-        if ($scope.solicitud.dxprincipal) {
-          $scope.inactivebtnsolicitud = true;
-          if ($scope.prioridadsw == true) {
-            $scope.solicitud.prioridad = 'S';
-          } else {
-            $scope.solicitud.prioridad = 'N';
-          };
-          if ($scope.hijodesw == true) {
-            $scope.solicitud.hijode = 'S';
-          } else {
-            $scope.solicitud.hijode = 'N';
-          };
-          // formatDate
-          $scope.solicitud.fecingreso = ($scope.solicitud.fecsolicitud);
-          $scope.solicitud.nit = $scope.nit;
-          if ($scope.solicitud.dxsecundario == "" || $scope.solicitud.dxsecundario == null || $scope.solicitud.dxsecundario == undefined) {
-            $scope.solicitud.dxsecundario = "0";
-          }
-          if ($scope.solicitud.viaingreso == 'U') {
-            if ($scope.solicitud.urgencia == undefined) {
-              swal("Importante", "El Código de urgencia es obligatorio si la via de ingreso es por Urgencia", "info");
-              return;
-            }
-          }
-          // subir ruta
-          if ($scope.archivobase != null) {
-            $http({
-              method: 'POST',
-              url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
-              data: {
-                function: 'adjuntos_ftp', 
-                achivobase: $scope.archivobase,
-                ext: $scope.extensionarchivo,
-              }
-            }).then(function (response) {
-              console.log(response);
-              $scope.solicitud.ruta = response.data;
-              $scope.solicitud.ftp = 3;
-              var data = JSON.stringify($scope.solicitud);
-              if (($scope.solicitud.ruta != '0 - Error') && ($scope.solicitud.ruta.substr(0, 3) != "<br")) {
-                $http({
-                  method: 'POST',
-                  url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
-                  data: { function: 'insertarSoplicitud', data: data }
-                }).then(function (response) {
-                  $scope.resultado = response.data;
-                  console.log($scope.resultado);
-                  if ($scope.resultado.Codigo == '0') {
-                    $scope.solicitud.actividad = 'U';
-                    $scope.solicitud.numero = $scope.resultado.numero;
-                    $scope.solicitud.ubicacion = $scope.resultado.ubicacion;
-
-                    $(".paso1").removeClass("activebtn-step").addClass("donebtn-step");
-                    $(".paso2").addClass("activebtn-step");
-                    $scope.inactivepaso1 = true;
-                    $('.content-step2').addClass('animated slideInRight');
-                    $scope.inactivepaso2 = false;
-
-                    $scope.titletab = 'Servicios';
-                  }
-                  // if ($scope.resultado.error == '1') {
-                  //   swal('Importante', $scope.resultado.observacion, 'info');
-                  // }
-                  //else 
-                  if ($scope.resultado.Codigo == '1') {
-                    swal('Importante', $scope.resultado.Nombre, 'info');
-                  }
-
-                  $scope.inactivebtnsolicitud = false;
-                })
-              } else {
-                swal("Importante", "No se cargo el archivo correctamente. Favor intente nuevamente", "info");
-              }
-
-            });
-          } else {
-            swal("Importante", "No se cargo el archivo correctamente. Favor intente nuevamente", "info");
-          }
-          //procedimientos subir infor
-        } else {
-          swal("Importante", "Favor llenar el diagnostico nuevamente", "info");
-        }
-
-      }
-      $scope.buscarpro = null;
-      $scope.obtenerProducto = function () {
-        if ($scope.buscarpro != '') {
-          $http({
-            method: 'POST',
-            url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
-            data: {
-              function: 'obtenerProducto', producto: $scope.buscarpro,
-              clasificacion: $scope.resultado.servicio,
-              regimen: $scope.resultado.regimen,
-              contrato: $scope.resultado.contrato
-            }
+      // $scope.inactivebtnsolicitud = false;
+   
+      $scope.buscarcodigo = function (select) {
+        $http({
+          method: 'POST',
+          url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
+          data: { function: 'p_validarsicodigo',tipodocumento:$scope.solicitud.tipodocumento,numero:$scope.solicitud.documento,nit: $scope.sessionNit,ingreso:select}
           }).then(function (response) {
-            if (response.data["0"].CODIGO != "0") {
-              $scope.detalle.nombre = response.data["0"].NOMBRE;
-            } else {
-              swal('Importante', response.data["0"].MENSAJE, 'info');
+            $scope.datocodigo = response.data;
+            if (select == "Q") {
+              $scope.buscarEspecialidades();
+              $scope.buscarIps($scope.sessionNit);
+              $scope.solicitud.urgencia ="";
+              if($scope.datocodigo.Codigo == '0'){
+                setTimeout(() => {
+                  $scope.solicitud.codips = $scope.listIps[0].Codigo;
+                  $scope.solicitud.nombreips =$scope.listIps[0].Nombre;
+                  $scope.solicitud.urgencia = $scope.datocodigo.Nombre;
+                }, 1000);
+              }else{
+                $scope.solicitud.codips="";
+                $scope.solicitud.nombreips="";
+                $scope.solicitud.urgencia ="";
+                swal('Importante', $scope.datocodigo.Nombre, 'info');
+              }
             }
-          })
-        }
+            if (select == "U") {
+              $scope.buscarEspecialidades();
+              $scope.buscarIps($scope.sessionNit);
+              $scope.solicitud.urgencia ="";
+              if($scope.datocodigo.Codigo == '0'){
+                setTimeout(() => {
+                  $scope.solicitud.codips = $scope.listIps[0].Codigo;
+                  $scope.solicitud.nombreips =$scope.listIps[0].Nombre;
+                  $scope.solicitud.urgencia = $scope.datocodigo.Nombre;
+                }, 1000);
+              }else{
+                $scope.solicitud.codips="";
+                $scope.solicitud.nombreips="";
+                $scope.solicitud.urgencia ="";
+                swal('Importante', $scope.datocodigo.Nombre, 'info');
+              }
+            } else if(select == "H") {
+              $scope.buscarEspecialidades();
+              $scope.buscarIps($scope.sessionNit);
+              $scope.solicitud.urgencia ="";
+              if($scope.datocodigo.Codigo == '0'){
+                setTimeout(() => {
+                  $scope.solicitud.codips = $scope.listIps[0].Codigo;
+                  $scope.solicitud.nombreips =$scope.listIps[0].Nombre;
+                  $scope.solicitud.urgencia = $scope.datocodigo.Nombre;
+                }, 1000);
+              }else{
+                $scope.solicitud.codips ="";
+                $scope.solicitud.nombreips ="";
+                swal('Importante', $scope.datocodigo.Nombre, 'info');
+              }
+            }else{
+              $scope.solicitud.codips="";
+              $scope.solicitud.nombreips="";
+              if($scope.datocodigo.Codigo == '0'){
+                $scope.solicitud.urgencia = $scope.datocodigo.Nombre;
+              }else{
+                $scope.solicitud.urgencia ="";
+                swal('Importante', $scope.datocodigo.Nombre, 'info');
+              }
+            }
+          });
+         
       }
       $scope.validarUbicacionPaciente = function (ubi) {
         if (ubi == "H") {
@@ -780,12 +1264,14 @@ $scope.Obtener_Tipos_Documentos();
       }
       $scope.insertarDetalle = function () {
         console.log($scope.detalle);
+        $scope.resultadodetalle  = [];
         if ($scope.detalle.cantidad > 0) {
           $http({
             method: 'POST',
             url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
             data: {
-              function: 'insertarDetalle', producto: $scope.detalle.producto,
+              function: 'insertarDetalle', 
+              producto: $scope.detalle.producto,
               cantidad: $scope.detalle.cantidad,
               numero: $scope.resultado.numero,
               ubicacion: $scope.resultado.ubicacion,
@@ -796,18 +1282,8 @@ $scope.Obtener_Tipos_Documentos();
             }
           }).then(function (response) {
             $scope.resultadodetalle = response.data;
-            if ($scope.resultadodetalle.Codigo == '0') {
-              $scope.detalle = {
-                producto: '',
-                nombre: '',
-                cantidad: '',
-                producto2: '',
-                nombre2: '',
-                cantidad2: '',
-                subclas: '',
-                subclasn: '',
-                subclascod: ''
-              }
+            if (response.data.Codigo == '0') {
+              $scope.function_limpiar('detalle');
               $scope.obtenerResumen();
               swal('Completado', $scope.resultadodetalle.Nombre, 'success');
             } else {
@@ -851,6 +1327,7 @@ $scope.Obtener_Tipos_Documentos();
                     if (response.data["0"].CODIGO == "0") {
                       swal('Advertencia', 'Error al encontrar detalle', 'warning');
                     } else {
+                  
                       $scope.resumenedit = response.data["0"];
                       $scope.resumeneditcabeza = $scope.resumenedit.CABEZA["0"];
                     }
@@ -866,13 +1343,11 @@ $scope.Obtener_Tipos_Documentos();
         })
 
       }
-
       $scope.tempData;
       $scope.cantidadinput = 1;
       $scope.tempProd = '';
       $scope.seleccionarproducto = function (data) {
         $scope.tempProd = data;
-
         if (data.UNICA_HOSP == 'S') {
 
           $scope.detalle.cantidad = '1';
@@ -1205,38 +1680,166 @@ $scope.Obtener_Tipos_Documentos();
 
 
       }
+      // $scope.function_agregarProcedimiento = function (data) {
+      //   // Verifica si el procedimiento ya está en la lista
+      //     var existenteProcedimiento = $scope.procedimientoSeleccionados.some(function(procedimiento){
+      //       return procedimiento.CODIGO_PRDUCTO === data.Codigo;
+      //     });
+      //   // Si el  procedimiento no existe, lo agrega
+      //    if (!existenteProcedimiento) {
+      //     var nuevoProcedimiento = {
+      //       CODIGO_PRDUCTO: data.Codigo,
+      //       NOMBRE: data.Nombre,
+      //     };
+      //     $scope.procedimientoSeleccionados.push(nuevoProcedimiento);
+      //     $scope.cantidadProcedimiento = $scope.procedimientoSeleccionados.length;
+      //     ($scope.buscard1 = ""), ($scope.listProcedimientos = []);
+      //     $scope.function_limpiar("4");
+      //     }else{
+      //       swal({
+      //         title: "¡Alerta¡",
+      //         text: 'El procedimiento ya ha sido agregado.',
+      //         type: "warning",
+      //       }).catch(swal.noop);
+      //       ($scope.buscard1 = ""), ($scope.listProcedimientos = []);
+      //       $scope.function_limpiar("4");
+      //     }
+      //   };
+      // $scope.obtenerResumen = function () {
+      //   $http({
+      //     method: 'POST',
+      //     url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
+      //     data: {
+      //       function: 'obtenerResumen', 
+      //       numero: $scope.resultado.numero,
+      //       ubicacion: $scope.resultado.ubicacion
+      //     }
+      //   }).then(function (response) {
+      //     if (response.data["0"].CODIGO == "0") {
+      //       swal('Advertencia', 'Error al encontrar detalle', 'warning');
+      //     } else {
+      //       if(response.data[0].DETALLE == null){
+      //         swal({
+      //           title: "Notificación",
+      //           text: "Por agregue un codigo CUPS",
+      //           type: "warning",
+      //         }).catch(swal.noop);
+      //         return
+      //       }else{
+
+      //         $(".paso2").removeClass("activebtn-step").addClass("donebtn-step");
+      //         $(".paso3").addClass("activebtn-step");
+      //         $scope.show_servicios = false;
+      //         $scope.show_finalizar = true;
+      //         $('.content-step3').addClass('animated slideInRight');
+      //         $scope.titletab = 'REGISTRO DE SERVICIOS';
+      //         $scope.titletab = 'Finalizar';
+      //       $scope.show_nextPaso2 = false;
+      //       $scope.resumen = response.data["0"];
+      //       $scope.resumencabeza = $scope.resumen.CABEZA["0"];
+      //       }
+      //     }
+      //   })
+      // }
       $scope.obtenerResumen = function () {
         $http({
           method: 'POST',
           url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
           data: {
-            function: 'obtenerResumen', numero: $scope.resultado.numero,
+            function: 'obtenerResumen', 
+            numero: $scope.resultado.numero,
             ubicacion: $scope.resultado.ubicacion
           }
         }).then(function (response) {
           if (response.data["0"].CODIGO == "0") {
             swal('Advertencia', 'Error al encontrar detalle', 'warning');
           } else {
-            $scope.resumen = response.data["0"];
+            if(response.data[0].DETALLE == null){
+              swal({
+                title: "Notificación",
+                text: "Por agregue un codigo CUPS",
+                type: "warning",
+              }).catch(swal.noop);
+              return
+            }else{
 
+              //$(".paso2").removeClass("activebtn-step").addClass("donebtn-step");
+              // $(".paso3").addClass("activebtn-step");
+                        // $('.content-step3').addClass('animated slideInRight');
+              $scope.show_servicios = true;
+              // $scope.show_finalizar = false;
+              // $('.content-step3').addClass('animated slideInRight');
+              //$scope.titletab = 'REGISTRO DE SERVICIOS';
+              //$scope.titletab = 'Finalizar';
+            $scope.show_nextPaso2 = true;
+            $scope.resumen = response.data["0"];
             $scope.resumencabeza = $scope.resumen.CABEZA["0"];
+            }
+          }
+        })
+      }
+      $scope.obtenerResumen2 = function () {
+        $http({
+          method: 'POST',
+          url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
+          data: {
+            function: 'obtenerResumen', 
+            numero: $scope.resultado.numero,
+            ubicacion: $scope.resultado.ubicacion
+          }
+        }).then(function (response) {
+          if (response.data["0"].CODIGO == "0") {
+            swal('Advertencia', 'Error al encontrar detalle', 'warning');
+          } else {
+            if(response.data[0].DETALLE == null){
+              swal({
+                title: "Notificación",
+                text: "Por agregue un codigo CUPS",
+                type: "warning",
+              }).catch(swal.noop);
+              return
+            }else{
+
+              //$(".paso2").removeClass("activebtn-step").addClass("donebtn-step");
+              // $(".paso3").addClass("activebtn-step");
+                        // $('.content-step3').addClass('animated slideInRight');
+              $scope.show_servicios = false;
+              // $scope.show_finalizar = false;
+              // $('.content-step3').addClass('animated slideInRight');
+              //$scope.titletab = 'REGISTRO DE SERVICIOS';
+              //$scope.titletab = 'Finalizar';
+            $scope.show_nextPaso2 = true;
+            $scope.resumen = response.data["0"];
+            $scope.resumencabeza = $scope.resumen.CABEZA["0"];
+            }
           }
         })
       }
       $scope.finalizarSolicitud = function () {
+        //ps
+        $scope.function_limpiar('solicitud');
+        $scope.function_limpiar('detalle');
+        $scope.show_solicitudAutorizacion = true;
+        $scope.show_formularioSolicitud = false;
+        $scope.show_servicios = false;
+        $scope.show_finalizar = false;
+        $scope.listProductos = [];
+        $scope.buscarpro  = ""; 
+                $scope.resumen = [];
+        $scope.resumencabeza = [];
+        $scope.resultado = [];
+        //ps
         $scope.tabII = false;
         $scope.tabIII = false;
         $scope.tabIV = false;
-        $scope.tabI = true;
         $scope.activeII = 'none';
         $scope.activeIII = 'none';
         $scope.activeIV = 'none';
         $scope.activeI = 'active final';
-        $scope.inactivepaso2 = true;
-        $scope.inactivepaso3 = true;
+        // $scope.inactivepaso2 = true;
+        // $scope.inactivepaso3 = true;
         $scope.buscaraut = "";
         $scope.buscarauta = "";
-        $scope.prioridadsw = false;
         $scope.hijodesw = false;
         $scope.switchinit1 = true;
         $scope.switchinit2 = true;
@@ -1247,50 +1850,6 @@ $scope.Obtener_Tipos_Documentos();
         $scope.fecsolicitud = '';
         $scope.inactiveaut2 = true;
         $scope.inactivepro = true;
-        $scope.solicitud = {
-          numero: '0',
-          ubicacion: '0',
-          tipodocumento: '',
-          documento: '',
-          nombre: '',
-          fecingreso: '',
-          origen: '',
-          ubipaciente: '',
-          tiposervicio: '',
-          servicio: '',
-          nombreservcio: '',
-          contrato: '',
-          ubicacioncontrato: '',
-          documentocontrato: '',
-          cama: '',
-          dxprincipal: '',
-          diagnostico1_nombre: '',
-          dxsecundario: '',
-          diagnostico2_nombre: '',
-          justificacion: '',
-          medico: '',
-          cargomedico: '',
-          codips: '',
-          nombreips: '',
-          nit: '',
-          prioridad: '',
-          hijode: '',
-          fecsolicitud: '',
-          ruta: '',
-          direccion: '',
-          actividad: 'I'
-        }
-        $scope.detalle = {
-          producto: '',
-          nombre: '',
-          cantidad: '',
-          producto2: '',
-          nombre2: '',
-          cantidad2: '',
-          subclas: '',
-          subclasn: '',
-          subclascod: ''
-        }
         $scope.afiliado = [];
         $scope.encabezado = {
           fecha: '',
@@ -1309,10 +1868,11 @@ $scope.Obtener_Tipos_Documentos();
         $(".paso1").removeClass("activebtn-step donebtn-step");
         $(".paso1").addClass("activebtn-step");
         $('.content-step1').addClass('animated slideInRight');
-        $scope.inactivepaso1 = false;
+        $scope.show_solicitud = false;
         $scope.diagnostico1_nombre = '';
         $scope.diagnostico2_nombre = '';
         $scope.adjunto = null;
+        document.getElementById('adjunto').value = null;
         $scope.nombreadjunto = '';
         document.getElementById('nombreadjunto').value = null;
         setTimeout(function () {
@@ -1441,7 +2001,8 @@ $scope.Obtener_Tipos_Documentos();
           method: 'POST',
           url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
           data: {
-            function: 'obtenerResumen', numero: $scope.codeditdetalle,
+            function: 'obtenerResumen', 
+            numero: $scope.codeditdetalle,
             ubicacion: $scope.ubieditdetalle
           }
         }).then(function (response) {
@@ -1455,7 +2016,6 @@ $scope.Obtener_Tipos_Documentos();
           }
         })
       }
-
       $scope.cancelar_solicitud = function (sol) {
 
         swal({
@@ -1516,7 +2076,8 @@ $scope.Obtener_Tipos_Documentos();
               method: 'POST',
               url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
               data: {
-                function: 'actualizarEncabezado', numero: $scope.codeditdetalle,
+                function: 'actualizarEncabezado', 
+                numero: $scope.codeditdetalle,
                 ubicacion: $scope.ubieditdetalle,
                 tipodocumento: $scope.tipodocafiliado,
                 documento: $scope.docafiliado,
@@ -1559,21 +2120,12 @@ $scope.Obtener_Tipos_Documentos();
         })
       }
       $scope.insertarDetalleEdit = function () {
-        console.log({
-          function: 'insertarDetalle', producto: $scope.detalle.producto,
-          cantidad: $scope.detalle.cantidad,
-          numero: $scope.codeditdetalle,
-          ubicacion: $scope.ubieditdetalle,
-          subclas: $scope.detalle.subclas,
-          subclasn: $scope.detalle.subclasn,
-          subclascod: $scope.detalle.subclascod,
-          actividad: 'I'
-        });
         $http({
           method: 'POST',
           url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
           data: {
-            function: 'insertarDetalle', producto: $scope.detalle.producto,
+            function: 'insertarDetalle', 
+            producto: $scope.detalle.producto,
             cantidad: $scope.detalle.cantidad,
             numero: $scope.codeditdetalle,
             ubicacion: $scope.ubieditdetalle,
@@ -1592,7 +2144,8 @@ $scope.Obtener_Tipos_Documentos();
               method: 'POST',
               url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
               data: {
-                function: 'obtenerResumen', numero: $scope.codeditdetalle,
+                function: 'obtenerResumen', 
+                numero: $scope.codeditdetalle,
                 ubicacion: $scope.ubieditdetalle
               }
             }).then(function (response) {
@@ -1622,7 +2175,8 @@ $scope.Obtener_Tipos_Documentos();
           method: 'POST',
           url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
           data: {
-            function: 'obtenerResumen', numero: num,
+            function: 'obtenerResumen',
+            numero: num,
             ubicacion: ubi
           }
         }).then(function (response) {
@@ -1631,6 +2185,7 @@ $scope.Obtener_Tipos_Documentos();
           } else {
             $scope.justificacion = obs;
             $scope.resumendetalle = response.data["0"].DETALLE;
+            $scope.infoAut = response.data["0"].CABEZA[0];
             $('#modaldetalle').modal("open");
           }
         })
@@ -1775,7 +2330,7 @@ $scope.Obtener_Tipos_Documentos();
             break;
 
           case 'producto':
-            $scope.buscarpro = '';
+            // $scope.buscarpro = '';
             $scope.inactivebarrapro = true;
             $scope.listProductos = [];
             $("#modalproducto").modal("open");
@@ -1816,8 +2371,6 @@ $scope.Obtener_Tipos_Documentos();
           default:
         }
       }
-
-
       $scope.closemodals = function (tipo) {
         switch (tipo) {
           case 'diagnostico':
@@ -1845,8 +2398,6 @@ $scope.Obtener_Tipos_Documentos();
           default:
         }
       }
-
-
       $scope.removeSeleccion = function () {
         if ($scope.tipo == 1) {
           $('#DM' + $scope.diagnostico1).removeClass('eleacti');
@@ -1933,8 +2484,6 @@ $scope.Obtener_Tipos_Documentos();
           swal({ title: "Completado", text: text, showConfirmButton: false, type: "success", timer: 800 });
         }
       }
-
-
       $scope.buscarEspecialidades = function () {
 
         $http({
@@ -1945,7 +2494,6 @@ $scope.Obtener_Tipos_Documentos();
           $scope.listEspecialidades = response.data;
         })
       }
-
       $scope.seleccionarservicio = function (data, tipo) {
         var text = ''
         $scope.bservicio = '';
@@ -1956,7 +2504,6 @@ $scope.Obtener_Tipos_Documentos();
         $scope.closemodals('modalservicio');
 
       }
-
       $scope.seleccionarespecialidad = function (data) {
         var text = ''
         $scope.bservicio = '';
@@ -2017,8 +2564,6 @@ $scope.Obtener_Tipos_Documentos();
         }
 
       }
-
-
       $scope.buscarIps = function (ips) {
 
         if (ips != "" || ips != undefined) {
@@ -2040,7 +2585,6 @@ $scope.Obtener_Tipos_Documentos();
         }
 
       }
-
       $scope.pasostab = function (op) {
         switch (op) {
           case '1':
@@ -2057,7 +2601,7 @@ $scope.Obtener_Tipos_Documentos();
           case '2':
             $scope.validartab('solicitud');
             if ($scope.pasarsolicitudaut == true) {
-              $scope.setTab(2);
+              $scope.function_set_Tab(2);
             } else {
               swal('Importante', $scope.textvalidate, 'info');
             }
@@ -2126,8 +2670,6 @@ $scope.Obtener_Tipos_Documentos();
           default:
         }
       }
-
-
       // $scope.cargarDiagnosticos = function (texto) {
       //   console.log(texto);
       //   console.log($scope.afiliado);
@@ -2210,33 +2752,6 @@ $scope.Obtener_Tipos_Documentos();
         $scope.coincidencia1 = '';
       }
 
-      $scope.inactivebarrapro = true;
-      $scope.buscarproductomodal = function (coincidencia1) {
-        $scope.cargando = true;
-        $http({
-          method: 'POST',
-          url: "php/autorizaciones/autorizacion/funcautorizacionips.php",
-          data: {
-            function: 'obtenerProducto', word: coincidencia1,
-            clasificacion: $scope.resultado.servicio,
-            regimen: $scope.resultado.regimen,
-            contrato: $scope.resultado.contrato,
-            sexo: $scope.resultado.sexo,
-            edad: $scope.resultado.edad,
-          }
-        }).then(function (response) {
-
-          if (response.data.CODIGO == "1") {
-            $scope.inactivebarrapro = true;
-            $scope.listProductos = [];
-            swal('Importante', response.data.NOMBRE, 'info');
-          } else {
-            $scope.inactivebarrapro = false;
-            $scope.listProductos = response.data;
-
-          }
-        })
-      }
       $scope.elegir = function (codigo, nombre) {
         $("#DM" + codigo).addClass('eleacti');
         $('#DM' + codigo).siblings().removeClass('eleacti');
@@ -2268,46 +2783,44 @@ $scope.Obtener_Tipos_Documentos();
           swal.close();
         })
       }
-
       $scope.limpiar = function () {
         $scope.verAutorizaciones = true;
         $scope.textfile="";
-        $scope.solicitud = {
-          numero: '0',
-          ubicacion: '0',
-          tipodocumento: '',
-          documento: '',
-          nombre: '',
-          fecingreso: '',
-          origen: '',
-          ubipaciente: '',
-          tiposervicio: '',
-          servicio: '',
-          nombreservcio: '',
-          viaingreso: '',
-          contrato: '',
-          ubicacioncontrato: '',
-          documentocontrato: '',
-          cama: '',
-          dxprincipal: '',
-          diagnostico1_nombre: '',
-          dxsecundario: '',
-          diagnostico2_nombre: '',
-          justificacion: '',
-          medico: '',
-          cargomedico: '',
-          codips: '',
-          nombreips: '',
-          nit: '',
-          prioridad: '',
-          hijode: '',
-          fecsolicitud: '',
-          ruta: '',
-          direccion: '',
-          actividad: 'I'
-        }
+        // $scope.solicitud = {
+        //   numero: '0',
+        //   ubicacion: '0',
+        //   // tipodocumento: '',
+        //   // documento: '',
+        //   // nombre: '',
+        //   // fecingreso: '',
+        //   // origen: '',
+        //   // ubipaciente: '',
+        //   // tiposervicio: '',
+        //   // servicio: '',
+        //   // nombreservcio: '',
+        //   // viaingreso: '',
+        //   // contrato: '',
+        //   // ubicacioncontrato: '',
+        //   // documentocontrato: '',
+        //   // cama: '',
+        //   // dxprincipal: '',
+        //   // diagnostico1_nombre: '',
+        //   // dxsecundario: '',
+        //   // diagnostico2_nombre: '',
+        //   // justificacion: '',
+        //   // medico: '',
+        //   // cargomedico: '',
+        //   // codips: '',
+        //   // nombreips: '',
+        //   // nit: '',
+        //   // prioridad: '',
+        //   // hijode: '',
+        //   // fecsolicitud: '',
+        //   // ruta: '',
+        //   // direccion: '',
+        //   actividad: 'I'
+        // }
       }
-
       $scope.initPaginacion = function (info) {
         $scope.listarAutorizacionesTemp = info;
         $scope.currentPage = 0;
@@ -2412,7 +2925,6 @@ $scope.Obtener_Tipos_Documentos();
           });
         }
       }
-
       $scope.filter = function (val) {
         $scope.listarAutorizacionesTemp = $filter('filter')($scope.listarAutorizaciones, val);
         if ($scope.listarAutorizacionesTemp.length > 0) {
@@ -2420,7 +2932,6 @@ $scope.Obtener_Tipos_Documentos();
         }
         $scope.configPages();
       }
-
       $scope.formatTextoObs = function (NID) {
         const input = document.getElementById('' + NID + '');
         var valor = input.value;
@@ -2428,7 +2939,6 @@ $scope.Obtener_Tipos_Documentos();
         valor = valor.replace(/(\r\n|\n|\r)/g, ' ');
         input.value = valor;
       }
-
       $scope.formatSoloTexto = function (NID) {
         const input = document.getElementById('' + NID + '');
         var valor = input.value;
@@ -2436,7 +2946,18 @@ $scope.Obtener_Tipos_Documentos();
         valor = valor.replace(/(\r\n|\n|\r)/g, ' ');
         input.value = valor;
       }
-
+      $scope.eliminarZero = function(inputId) {
+        var inputElement = document.getElementById(inputId);
+        if (inputElement) {
+          inputElement.value = inputElement.value.replace(/^0+/, '');
+        }
+      };
+      $scope.FormatSoloNumero = function (NID) {
+        const input = document.getElementById("" + NID + "");
+        var valor = input.value;
+        valor = valor.replace(/[^0-9]/g, "");
+        input.value = valor;
+      };
       $scope.FormatSoloTextoNumero = function (NID) {
         const input = document.getElementById('' + NID + '');
         var valor = input.value;
@@ -2446,7 +2967,6 @@ $scope.Obtener_Tipos_Documentos();
       $scope.getFocusJustificacion = function () {
         $scope.focusboolean = false;
       }
-
       $scope.validarjustificacion = function () {
         if ($scope.focusboolean == false) {
           if ($scope.solicitud.justificacion.length < 30) {
@@ -2455,10 +2975,37 @@ $scope.Obtener_Tipos_Documentos();
           }
           $scope.focusboolean = true;
         }
-
       }
-
-
-
-
+      $scope.validarVacio = function (id, label) {
+        // console.log("id", id, "label", label);
+        let input = document.getElementById(id);
+        let Texto = document.getElementById(label);
+        if (input.value == "" || input.value == null) {
+          Texto.classList.add("red-text");
+          input.classList.add("error-input");
+        } else {
+          Texto.classList.remove("red-text");
+          input.classList.remove("error-input");
+        }
+      };
+      if (document.readyState !== "loading") {
+        $scope.function_Inicio();
+      } else {
+        document.addEventListener("DOMContentLoaded", function () {
+          $scope.function_Inicio();
+        });
+      }
+      $(document).ready(function () {
+        $(".tooltipped").tooltip({ delay: 50 });
+      });
     }])
+    .filter("inicio", function () {
+      return function (input, start) {
+        if (input != undefined && start != NaN) {
+          start = +start;
+          return input.slice(start);
+        } else {
+          return null;
+        }
+      };
+    });

@@ -251,6 +251,21 @@
     };
   }
 
+    // Censo Hospitalario
+    angular.module("GenesisApp").directive("censohospitalario", censohospitalario);
+    censohospitalario.$inject = ["$rootScope", "$compile"];
+    function censohospitalario($rootScope, $compile) {
+      return {
+        restrict: "EA",
+        templateUrl: "views/salud/censo-hospitalario/censohospitalario.html",
+        replace: true,
+        link: function (scope, element) {
+          $compile(element.contents())($rootScope);
+        },
+        controller: "censohospitalarioController",
+      };
+    }
+
   angular.module('GenesisApp').directive('lineaeticadenuncia', lineaeticadenuncia);
 
   lineaeticadenuncia.$inject = ['$rootScope', '$compile'];
@@ -427,6 +442,22 @@
         $compile(element.contents())($rootScope);
       },
       controller: 'consultacodigoController'
+    };
+  }
+
+
+  angular.module('GenesisApp').directive('censoautorizaciones', censoautorizaciones);
+
+  censoautorizaciones.$inject = ['$rootScope', '$compile'];
+  function censoautorizaciones($rootScope, $compile) {
+    return {
+      restrict: 'EA',
+      templateUrl: 'views/autorizaciones/censoautorizaciones.html',
+      replace: true,
+      link: function (scope, element) {
+        $compile(element.contents())($rootScope);
+      },
+      controller: 'censoautorizacionesController'
     };
   }
 

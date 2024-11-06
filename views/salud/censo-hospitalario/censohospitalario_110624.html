@@ -317,7 +317,7 @@
     }
 
     .autoscrollable-wrapper {
-
+      
       flex-direction: column-reverse;
     }
   </style>
@@ -410,7 +410,6 @@
                               'green' ? 'SI' : 'NO'}}</span></td>
                           <td class="center">
                             <span class="pointer" ng-style="{'background': d.STATUS}" style="margin-left: 50%;"></span>
-                            <!-- STATUS 'red' -->
                           </td>
                           <td class="center" ng-show="rol.Nombre == 'AD'">
                             <div class="dropdown autoscrollable-wrapper">
@@ -423,7 +422,7 @@
                                 <a href="" ng-click="censoDetalle(d)"><i class="icom icon-cog-alt fs-15 cursor-pointer"
                                     title="Gestion"></i> Ver
                                   Evoluciones</a>
-                                <a href="" ng-click="showModals('modalNuevaGlosa',d)" ng-if="d.STATUS =='green'"><i
+                                <a href="" ng-click="showModals('modalNuevaGlosa',d)"><i
                                     class="icon-plus-outline fs-15 cursor-pointer" title="Cierre"></i> Agregar
                                   Glosa</a>
                                 <a href="" ng-click="verGlosas('',d.CENN_NUMERO,d.CENN_UBICACION)"><i
@@ -512,7 +511,7 @@
                 </div>
                 <strong class="switch" style="font-weight: 600; font-size: 0.9rem">LISTADO EVOLUCIONES DE:
                   {{censo.NOMBRE_AFILIADO}}</strong>
-                <div class="tooltip" style="margin: 0px 5px 0px 5px" ng-if="censo.STATUS =='green'">
+                <div class="tooltip" style="margin: 0px 5px 0px 5px">
                   <i class="icon-plus-outline cursor-pointer" ng-click="showModals('modalNuevaEvolucion', censo)"></i>
                   <span class="tooltiptext" style="font-size: 12px; width: 80px; margin-left: -40px">Nueva
                     Evolucion</span>
@@ -830,8 +829,7 @@
                       <i class="icon-cog-alt" style="margin-top: -1px;font-size: 13px"></i> GESTIONAR
                       PERTINENCIA
                     </button>
-                    <button class="btn row" ng-show="rol.Nombre == 'AU' && autDetalle.ESTADO == 'A'"
-                      ng-click="ui_vobo_aut(autDetalle,'S')">
+                    <button class="btn row" ng-show="rol.Nombre == 'AU'" ng-click="ui_vobo_aut(autDetalle,'S')">
                       <i class="icon-ok-outline" style="margin-top: -1px;font-size: 13px"></i>APROBAR</button>
                     <button class="btn row" ng-show="rol.Nombre == 'AU'" ng-click="ui_vobo_aut(autDetalle,'N')">
                       <i class="icon-cancel-outline" style="margin-top: -1px;font-size: 13px"></i>RECHAZAR</button>
@@ -898,6 +896,9 @@
                       <td>
                         <label>{{X.FECHA}}</label>
                       </td>
+                      <td>
+                        <label>{{X.FECHA}}</label>
+                      </td>
                       <td class="center">
                         <i class="icom icon-eye fs-15 cursor-pointer default-color" title="Observacion Glosa"
                           ng-click="ObservacionGlosa(X)"></i>
@@ -931,8 +932,7 @@
             </div>
             <div class="row m-t">
               <div class="col s12 l12 center">
-                <button class="btn waves-effect waves-light m-l"
-                  ng-click="consultar_prestador_auditor(prestadorQuery,'I')">
+                <button class="btn waves-effect waves-light m-l" ng-click="consultar_prestador_auditor(prestadorQuery,'I')">
                   <i class="icon-paper-plane" style="font-size: 1rem;">CONSULTAR</i></button>
               </div>
             </div>
@@ -1236,7 +1236,7 @@
                   <h5 class="white-text">REGISTRAR EVOLUCION A ({{censo.NOMBRE_AFILIADO}})</h5>
                 </div>
                 <div class="col s1">
-                  <h5 style="text-align: end;"><i style="cursor:pointer;" ng-click="closeModal('modalNuevaEvolucion',1)"
+                  <h5 style="text-align: end;"><i style="cursor:pointer;" ng-click="closeModal('modalNuevaEvolucion')"
                       class="material-icons white-text">close</i>
                   </h5>
                 </div>
@@ -1500,7 +1500,7 @@
                   <div class="col s12" type="text">
                     <input class="margin border-none input-text-new black-text gray-input w-100" autocomplete="off"
                       ng-model="glosa_evento.valor_glosa" id="valorGlosaEvento"
-                      ng-change="FormatPeso('valorGlosaEvento', 'GLOSA')" />
+                      ng-change="FormatPeso('valorGlosaEvento')" />
                   </div>
                 </div>
                 <div class="col l6 m6 s6">

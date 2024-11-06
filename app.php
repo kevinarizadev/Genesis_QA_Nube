@@ -699,6 +699,7 @@ if (!isset($_SESSION['nombre'])) {
 <script src="scripts/controllers/siau/gestioncodigoController.js"></script>
 <script src="scripts/controllers/financiera/reservastecnicasController.js"></script>
 <script src="scripts/controllers/aseguramiento/consultacodigoController.js"></script>
+<script src="scripts/controllers/autorizaciones/censoautorizacionesController.js"></script>
 <script src="scripts/controllers/autorizaciones/programacionquirurgicaController.js"></script>
 <script src="scripts/controllers/autorizaciones/consultaprogramadasController.js"></script>
 <!-- Reportes nuevo -->

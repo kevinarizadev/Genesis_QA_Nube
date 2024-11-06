@@ -1642,11 +1642,11 @@ angular.module('GenesisApp').controller('auditoriacuentasController', ['$scope',
       $scope.Vistas_Informativa_Titulo = 'Autorizaciones';
       $scope.Consulta_Auts($scope.HojaGest.TIPO_DOCUMENTO, $scope.HojaGest.DOC_AFILIADO);
     }
-    if (x == 6) { //Autorizaciones
+    if (x == 6) { //Censo
       $scope.Vistas_Informativa = 6;
       $scope.Vistas_Informativa_Titulo = 'Censo Hospitalario';
       $scope.Consulta_Censos($scope.HojaGest.TIPO_DOCUMENTO, $scope.HojaGest.DOC_AFILIADO, $scope.Vista1.Nit_Prestador, $scope.HojaGest.RECIBO, $scope.HojaGest.FACTURA);
-
+      $scope.detalleCenso = { 'censo': null, 'ubicacion': null };
     }
     if (x == 7) { //Financiera
       $scope.Vistas_Informativa = 7;
@@ -2171,25 +2171,59 @@ angular.module('GenesisApp').controller('auditoriacuentasController', ['$scope',
     });
   }
   $scope.detalleCenso = { 'censo': null, 'ubicacion': null };
-  $scope.detail = function (censo, ubicacion) {
+  $scope.censoEvoluciones = function (censo, ubicacion) {
 
     $scope.detalleCenso.censo = censo;
     $scope.detalleCenso.ubicacion = ubicacion;
-    ngDialog.open({
-      template: 'views/salud/modal/censodetail.html', className: 'ngdialog-theme-plain',
-      controller: 'censodetalle',
-      scope: $scope
-    });//.closePromise.then(function (data) {});
+    $scope.detalleCenso.listadoEvoluciones = [];
+    // ngDialog.open({
+    //   template: 'views/salud/modal/censodetail.html', className: 'ngdialog-theme-plain',
+    //   controller: 'censodetalle',
+    //   scope: $scope
+    // });
+    swal({ title: 'Cargando...', allowOutsideClick: false });
+    swal.showLoading();
+    $http({
+      method: 'POST',
+      url: "php/salud/censo-hospitalario/censohospitalario.php",
+      data: {
+        function: 'obtenerEvoluciones', numerocenso: censo, ubicacion
+      }
+    }).then(function ({ data }) {
+      swal.close();
+      if (data != '') {
+        $scope.detalleCenso.listadoEvoluciones = data;
+      }
+    });
   }
-  $scope.historial_glosa = function (censo, ubicacion) {
+  $scope.censoGlosa = function (censo, ubicacion) {
     $scope.detalleCenso.censo = censo;
     $scope.detalleCenso.ubicacion = ubicacion;
-    ngDialog.open({
-      template: 'views/salud/modal/modalHglosa.html',
-      className: 'ngdialog-theme-plain',
-      controller: 'modalHglosactrl',
-      scope: $scope
+    $scope.detalleCenso.listadoGlosas = [];
+    // ngDialog.open({
+    //   template: 'views/salud/modal/modalHglosa.html',
+    //   className: 'ngdialog-theme-plain',
+    //   controller: 'modalHglosactrl',
+    //   scope: $scope
+    // });
+    swal({ title: 'Cargando...', allowOutsideClick: false });
+    swal.showLoading();
+    $http({
+      method: 'POST',
+      url: "php/salud/censo-hospitalario/censohospitalario.php",
+      data: {
+        function: 'obtener_glosas', numerocenso: censo, ubicacion, evolucion: ''
+      }
+    }).then(function ({ data }) {
+      swal.close();
+      if (data != '') {
+        $scope.detalleCenso.listadoGlosas = data;
+      }
     });
+  }
+  $scope.atrasGlosa = function () {
+    $scope.detalleCenso = { 'censo': null, 'ubicacion': null };
+    setTimeout(() => { $scope.$apply(); }, 500);
   }
   ///////////////////////////////////////////////////////
   $scope.Consulta_Financiera = function () {

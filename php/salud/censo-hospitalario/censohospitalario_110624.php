@@ -584,7 +584,7 @@ function P_UI_ADMIN_AUDITOR()
   oci_bind_by_name($consulta, ':v_pnit', $request->json->nit);
   oci_bind_by_name($consulta, ':v_paccion', $request->accion);
   oci_bind_by_name($consulta, ':v_pcantidad_auditor', $request->json->cantidad_auditor);
-  oci_bind_by_name($consulta, ':v_ptipo', $tipo);
+  oci_bind_by_name($consulta, ':v_pcantidad_auditor', $tipo);
   oci_bind_by_name($consulta, ':v_pjson_auditor', $auditores);
   $clob = oci_new_descriptor($c, OCI_D_LOB);
   oci_bind_by_name($consulta, ':v_json_row', $clob, -1, OCI_B_CLOB);
@@ -593,7 +593,7 @@ function P_UI_ADMIN_AUDITOR()
     $json = $clob->read($clob->size());
     echo $json;
   } else {
-    echo "ERROR EN EL SERVIDOR";
+    echo "Error que nadie sabe";
   }
   oci_close($c);
 }
@@ -702,11 +702,12 @@ function P_UI_VOBO_AUT()
   global $request;
   require_once('../../config/dbcon_prod.php');
   // print_r(["numero" => $request->numero, "ubicacion" => $request->ubicacion, "accion" => $request->accion,]);
-  $consulta = oci_parse($c, 'BEGIN pq_genesis_censo_hospitalario.P_ui_vobo_aut(:v_pnumero,:v_pubicacion, :v_paccion, :v_pfecha, :v_json_row); end;');
+  $consulta = oci_parse($c, 'BEGIN pq_genesis_censo_hospitalario.P_ui_vobo_aut(:v_pnumero,:v_pubicacion, :v_paccion, :v_pfecha, :v_pobservacion, :v_json_row); end;');
   oci_bind_by_name($consulta, ':v_pnumero', $request->numero);
   oci_bind_by_name($consulta, ':v_pubicacion', $request->ubicacion);
   oci_bind_by_name($consulta, ':v_paccion', $request->accion);
   oci_bind_by_name($consulta, ':v_pfecha', $request->fecha);
+  oci_bind_by_name($consulta, ':v_pobservacion', $request->fecha);
   $clob = oci_new_descriptor($c, OCI_D_LOB);
   oci_bind_by_name($consulta, ':v_json_row', $clob, -1, OCI_B_CLOB);
   oci_execute($consulta, OCI_DEFAULT);

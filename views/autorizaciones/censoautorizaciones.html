@@ -1,0 +1,516 @@
+<div class="white newdesing" id="pantalla">
+  <style>
+    .newdesing .content-container {
+      min-height: 0;
+    }
+  </style>
+  <div class="row section-header margin">
+    <ul class="left mailbox-custom-search list-inline w-100 d-flex justify-content-between align-items-center">
+      <li id="inicio">
+        <h5 class="cursor-pointer"
+          style="font-family: 'Product Sans',Arial,sans-serif;font-size: 22px;line-height: 22px;opacity: .54;margin: 9px 0"
+          onclick="location.reload();">
+          <spam>
+            <h5 class="fontello-icon">Censo Autorizaciones
+            </h5>
+          </spam>
+        </h5>
+      </li>
+    </ul>
+  </div>
+  <div id="Form" class="card-content clearfix card" style="width: 95%;margin: 1rem auto auto auto;border-radius: 15px;">
+    <!-- //////////////////////////////////////////////////Seleccionar TAB //////////////////////////////// -->
+    <div class="Hoja_2">
+      <div class="row" style="width: 100%;">
+        <div ng-show="verips">
+          <h5 style="margin-top: 20px;text-align: center;font-weight: bold;">Listado de IPS</h5>
+        </div>
+        <div ng-hide="verips">
+          <h5 style="margin-top: 20px;text-align: center;font-weight: bold;">Listado de Censos</h5>
+          <i class="icon-left-open-2" ng-click="verips=true;" style="cursor: pointer">LISTAR IPS</i>
+        </div>
+        <ul class="tabs nav" style="background-color: transparent;margin: .5vh;width: 99%;overflow: hidden;height: 4px !important;">
+          <li class="tab col w-auto active"><a id="tab_numero1" href ng-click="setTab(1)" class="active"><h5 style="font-weight: bold;"> </h5></a>
+          </li>
+          <!-- <li class="tab col w-auto"><a id="tab_numero2" href ng-click="setTab(2)"><strong
+            style="font-weight: bold;">Gestionar Programacion</strong></a></li> -->
+          </ul>
+        </div>
+      </div>
+      <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+      <!-- ----------------------------------------- -->
+      <div ng-show="Tap == '1'">
+        <div class="row" style="margin-bottom: 13;width: 98%;margin-top: 1rem;">
+          <div style="padding:0px">
+            <div class="card-content clearfix" style="padding-bottom:0px">
+              <!-- -----------------------------------------ver primero las ips -->
+              <div ng-show="verips">
+                <div class="row margin">
+                  <article ng-repeat='d in Lista_Ips_censo' class="card_custom_d" ng-click="vercensos(d)">
+                    <i class="large material-icons"
+                      style="color: white;position: relative;bottom: 55px; size: b5;">assignment_ind</i>
+                    <div class="card__content">
+                      <div class="card__content--container">
+                        <h2 class="card__title m-t ng-binding">{{d.PRESTADOR}}</h2>
+                      </div>
+                      <p style="font-weight: bold;text-align: center;">{{d.CENV_TERCERO}}</p>
+                      <div class="center white-text">
+                      </div>
+                    </div>
+                  </article>
+                  <!-- <div ng-repeat='d in Lista_Ips_censo' class="col s12 m6 l3">
+                      <div class="card" style="cursor: pointer;" ng-click="vercensos(d)">
+                          <div class="card-content">
+                              <h5 class="ng-binding"> {{d.CENV_TERCERO}}
+                                <div class="right Con_pulse_Z" style="background-color: rgb(26, 46, 99)!important;">
+                                  <i class="zmdi zmdi-globe-alt  white-text" style="padding: 10px;display: flex;"></i>
+                                </div>
+                              </h5>
+                              <div class="row">
+                                  <h6>{{d.PRESTADOR}}</h6>
+                              </div>
+                              <div class="progress teal lighten-4">
+                                  <div class="determinate teal darken-2" style="width: 100%"></div>
+                              </div>
+                          </div>
+                      </div>
+                  </div> -->
+              </div>
+              </div>
+              <!-- -----------------------------------------ver primero las ips fin -->
+          
+              <div ng-hide="verips" class="col l12 m12 s12" style="position:relative">
+                <h5 style="margin: 0;text-align: center;">{{nitips}} - {{nombreips}}</h5>
+                <div class="black-text title-panel"
+                  style="display: flex;justify-content: space-between;align-items: center;margin-bottom: 15px;">
+                  <div>
+                    <i class="icon-arrows-ccw default-color cursor-pointer" title="Refrescar"
+                      ng-click="verNotificaciones()"></i>
+                    Listado de Solicitudes ({{Lista_censoTemp.length}})
+                  </div>
+  
+                  <input type="text" class="margin border-none input-text-new" style="width: 20vw;"
+                    ng-model="filtroNotificaciones" placeholder="Buscar en la tabla"
+                    ng-change="filter(filtroNotificaciones)">
+                </div>
+                <div class="tabla_scroll">
+                  <table class="striped table-bordered white">
+                    <thead>
+                      <tr>
+                        <th style="text-align:center;">DOCUMENTO</th>
+                        <th style="text-align:center;">NOMBRE</th>
+                        <th style="text-align:center;">FECHA INGRESO</th>
+                        <th style="text-align:center;">FECHA EGRESO</th>
+                        <th style="text-align:center;">UBICACION</th>
+                        <th style="text-align:center;">VALOR</th>
+                        <th style="text-align:center;">ACCION</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        ng-repeat="X in Lista_censoTemp | inicio: currentPage * pageSize | limitTo: pageSize" ng-hide="Lista_censoTemp.length == 0">
+                        <td style="text-align:center;">{{X.CENC_TIPO_DOCUMENTO}}-{{X.CENC_AFILIADO}}</td>
+                        <td style="text-align:center;">{{X.NOMBRE_AFILIADO}}</td>
+                        <td style="text-align:center;">{{X.CENF_FECHA_INGRESO}}</td>
+                        <td style="text-align:center;">{{X.CENF_FECHA_EGRESO}}</td>
+                        <td style="text-align:center;">{{X.UBGC_NOMBRE}}
+                        <td style="text-align:center;">${{FormatPesoNumero(X.VALOR_AUT.toString().replace(',', '.'))}}</td>
+                        <td style="text-align:center;">
+                          <div class="tooltip">
+                            <i style="cursor:pointer;font-size: 2em;" ng-click="VerAutorizaciones(X)"
+                              class="icon-eye"></i>
+                            <span class="tooltiptext">Ver Autorizaciones</span>
+                          </div>
+                          <div class="tooltip">
+                            <i style="cursor:pointer;font-size: 2em;" ng-click="insertarSolicitud(X)"
+                              class="icon-check"></i>
+                            <span class="tooltiptext">Aprobar Censo</span>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr ng-show="listadoSolicitudes.length == 0">
+                        <th colspan="9" class="center">
+                          No hay notificaciones para mostrar
+                        </th>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ----------------------------------------- -->
+        <!-- !<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Modales de Autorizacion>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+        <div id="modalautorizaciones" class="modal" style="overflow: hidden; z-index: 9999;">
+          <div class="modal-content" style="padding: 0px !important;">
+            <div class="col s12" style="padding-left: 0px; padding-right: 0px;">
+              <div class="card charts" style="margin-top: 0px; margin-bottom: 0px;">
+                <div class="row card-content foot4" style="padding: 0">
+                  <div class="col s11">
+                    <h5 class="white-text">Autorizaciones</h5>
+                  </div>
+                  <div class="col s1">
+                    <h5 style="text-align: end;"><i style="cursor:pointer;"
+                        ng-click="closemodals('modalautorizaciones')" class="material-icons white-text">close</i></h5>
+                  </div>
+                </div>
+                <div class="card-action" style="padding-bottom: 3px;border-top: 0">
+                  <div class="row">
+                    <div class="col s12" style="max-height: 45vh;overflow-y: auto;">
+                      <div class="responsive">
+                        <table class="table table-bordered table-striped">
+                          <thead>
+                            <tr>
+                              <th style="text-align:center;">Numero</th>
+                              <th style="text-align:center;">Ubicacion</th>
+                              <th style="text-align:center;">Clasificacion</th>
+                              <th style="text-align:center;">Valor</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr
+                              ng-repeat="e in Lista_Autorizaciones">
+                              <td style="text-align:center;">{{e.AUTN_NUMERO}}</td>
+                              <td style="text-align:center;">{{e.AUTN_UBICACION}}</td>
+                              <td style="text-align:center;">{{e.CLASIFICACION}}</td>
+                              <td style="text-align:center;">${{FormatPesoNumero(e.VALOR_AUT.toString().replace(',', '.'))}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <!-- !<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Modales de Autorizacion>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
+    <div ng-show="Tap == '2'">
+      <div class="row" style="margin-bottom: 13;width: 98%;margin-top: 1rem;">
+        <div style="padding:0px">
+          <div class="card-content" style="padding-bottom:0px">
+            
+        
+            <!-- <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Realizar Autorizacion>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+          
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ----------------------------------------- -->
+   
+
+  </div>
+
+  <style>
+    .botonseleccionar {
+      position: relative;
+      margin-top: 1.6rem;
+      width: 40px;
+      cursor: pointer;
+    }
+
+    .border-texto {
+      border: 1px solid black;
+      padding: 10px;
+      border-radius: 7px;
+    }
+
+    .buscarafi {
+      background: linear-gradient(to bottom left, #1a2e63, #1a2e63, #1a2e63);
+      width: 100%;
+      margin-top: 23px;
+      height: 45px;
+      border-radius: 9px;
+    }
+
+    .Valid_Campo {
+      border: 1px solid red !important;
+    }
+
+    .card-panel,
+    .card,
+    .btn {
+      box-shadow: 0 2px 5px 0 rgb(197 208 239), 0 2px 10px 0 rgb(197 208 239) !important;
+    }
+
+    .tabs {
+      height: 30px !important;
+    }
+
+    .tabs .tab {
+      line-height: 30px !important;
+      height: 30px !important;
+    }
+
+
+    /* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+    .estiloobligatorio {
+      color: red;
+      font-size: initial;
+      font-weight: 700;
+    }
+
+    input[type=text] {
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+      background-color: #fff;
+      background-clip: padding-box;
+      padding: 0 1em;
+      font-weight: 600;
+    }
+
+    input[type=date] {
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+      background-color: #fff;
+      background-clip: padding-box;
+      padding: 0 1em;
+      font-weight: 600;
+    }
+
+    input[type=datetime-local] {
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+      background-color: #fff;
+      background-clip: padding-box;
+      padding: 0 1em;
+      font-weight: 600;
+    }
+
+    input[type=number] {
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+      background-color: #fff;
+      background-clip: padding-box;
+      padding: 0 1em;
+      font-weight: 600;
+    }
+
+    #chat_textarea {
+      resize: none;
+      /* border: none; */
+      display: block;
+      width: 102%;
+      height: 80px;
+      border-radius: 3px;
+      padding: 20px;
+      font-size: 13px;
+      /* background-color: #67a0fd;
+      color: white; */
+      font-weight: 600;
+    }
+
+    select {
+      font-weight: 600;
+    }
+
+    .selectopciones {
+      font-weight: 600;
+    }
+
+    input:focus+label {
+      color: blue;
+    }
+
+    .inpuntnuevo {
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+      background-color: #fff;
+      background-clip: padding-box;
+      padding: 0 1em;
+    }
+
+
+    .form-control {
+      font-size: .875rem;
+      height: calc(1.5em + 1.25rem + 5px);
+      transition: all .15s ease-in-out;
+    }
+
+    .form-control {
+      font-size: .875rem;
+      font-weight: 400;
+      line-height: 1.5;
+      display: block;
+      width: 100%;
+      height: calc(1.5em + 1.25rem + 2px);
+      padding: 0.625rem 0.75rem;
+      transition: all .15s cubic-bezier(.68, -.55, .265, 1.55);
+      color: #8898aa;
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+      background-color: #fff;
+      background-clip: padding-box;
+      box-shadow: 0 3px 2px rgb(233 236 239 / 5%);
+    }
+
+    input,
+    button,
+    select,
+    optgroup,
+    textarea {
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      margin: 0;
+    }
+
+    .tabla_scroll th {
+      padding: 3px 10px;
+    }
+
+    .tabla_scroll li>button.btn {
+      font-size: small;
+      height: auto;
+      line-height: inherit;
+      padding: 0 1rem;
+    }
+
+    .table_border,
+    .table_border th,
+    .table_border td {
+      border: 1px solid #c2c2c2;
+    }
+
+    .table_center_align,
+    .table_center_align th,
+    .table_center_align td {
+      text-align: center;
+    }
+
+    #tabla_detalleglosa th {
+      position: sticky;
+      top: 0;
+      z-index: 9;
+    }
+
+    /* //////////////////////////////////////////////////////////////////////////////// */
+
+    .card_custom_d {
+      display: grid;
+      place-items: center;
+      width: 40vw;
+      max-width: 25vw;
+      height: 30vh;
+      overflow: hidden;
+      border-radius: 0.625rem;
+      box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+      background-color: #2d5786;
+      cursor: pointer;
+      zoom: 75%;
+      color: white;
+      margin-top: 10px;
+    }
+
+    .card_custom_d>* {
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+    }
+
+    .card__background {
+      object-fit: cover;
+      max-width: 100%;
+      height: 100%;
+    }
+
+    .card__content {
+      --flow-space: 0.9375rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-self: flex-end;
+      height: 55%;
+      /* padding: 0% 7.25rem 3.875rem; */
+      background: linear-gradient(180deg,
+          hsla(0, 0%, 0%, 0) 0%,
+          hsla(0, 0%, 0%, 0.3) 10%,
+          hsl(0, 0%, 0%) 100%);
+      padding-left: 100%;
+      padding-right: 100%;
+    }
+
+    .card__content--container {
+      --flow-space: 1.25rem;
+    }
+
+    .card__title {
+      position: relative;
+      width: 24vw;
+      font-size: 23px;
+      text-align: center;
+      width: -moz-fit-content;
+      /* Prefijo necesario para Firefox  */
+    }
+
+    .card__title::after {
+      content: "";
+      font-size: 23px;
+      text-align: center;
+      position: absolute;
+      height: 0.3125rem;
+      width: calc(100% + 24.25rem);
+      bottom: calc((4.25rem - 1.5rem) * -1);
+      left: -11.25rem;
+      background-color: var(--brand-color);
+    }
+
+    .card__button {
+      padding: 10px 28px;
+      width: fit-content;
+      width: -moz-fit-content;
+      /* Prefijo necesario para Firefox  */
+      /* font-weight: bold; */
+      border-radius: 0.45em;
+      border: none;
+      background-color: var(--brand-color);
+      font-family: var(--font-title);
+      font-size: 18px;
+      color: var(--black);
+    }
+
+    .card__button:focus {
+      outline: 2px solid black;
+      outline-offset: -5px;
+    }
+
+    @media (any-hover: hover) and (any-pointer: fine) {
+
+      .card_custom_d:hover,
+      .card_custom_d:focus-within {
+        transform: scale(1.05);
+        transition: transform 500ms ease-in;
+      }
+
+      .card_custom_d:hover .card__background,
+      .card_custom_d:focus-within .card__background {
+        transform: scale(1.3);
+      }
+
+      .card_custom_d:hover .card_content--container> :not(.card_title),
+      .card_custom_d:hover,
+      .card_custom_d:focus-within .card_content--container> :not(.card_title),
+      .card_custom_d:focus-within {
+        opacity: 1;
+        transition: opacity 500ms ease-in;
+        transition-delay: 1000ms;
+      }
+
+      .card_custom_d:hover .card__title::after,
+      .card_custom_d:focus-within .card__title::after {
+        opacity: 1;
+        transform: scaleX(1);
+        transform-origin: left;
+        transition: opacity 500ms ease-in, transform 500ms ease-in;
+        transition-delay: 500ms;
+      }
+    }
+  </style>
+</div>

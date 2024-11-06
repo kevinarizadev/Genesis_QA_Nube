@@ -52,9 +52,6 @@ function obtenerTipoServicio()
   }
   oci_close($c);
 }
-
-
-
 function p_obtener_servicio()
 {
   require_once('../../config/dbcon_prod.php');
@@ -116,7 +113,7 @@ function obtenerDiagnostico()
   }
   oci_close($c);
 }
-function obtenerNombre()
+function P_OBTENER_AFILIADO()
 {
   require_once('../../config/dbcon_prod.php');
   global $request;
@@ -438,7 +435,6 @@ function insertarDetalle()
   }
   oci_close($c);
 }
-
 function  adjuntos_ftp()
 {
   global $request;
@@ -613,6 +609,27 @@ function p_gestiona_egreso_esoa_eps()
   oci_bind_by_name($consulta, ':v_pusuariogestiona', $request->usuario);
   oci_bind_by_name($consulta, ':v_ptipo_hospitalizacion', $request->tipo_hospitalizacion);
   oci_bind_by_name($consulta, ':v_pmotigo_egreso', $request->motivo_egreso);
+  $clob = oci_new_descriptor($c, OCI_D_LOB);
+  oci_bind_by_name($consulta, ':v_json_row', $clob, -1, OCI_B_CLOB);
+  oci_execute($consulta, OCI_DEFAULT);
+  if (isset($clob)) {
+    $json = $clob->read($clob->size());
+    echo $json;
+  } else {
+    echo 0;
+  }
+  oci_close($c);
+}
+
+function p_validarsicodigo()
+{
+  require_once('../../config/dbcon.php');
+  global $request;
+  $consulta = oci_parse($c, 'BEGIN pq_genesis_censo_hospitalario.p_obtener_codigo_urgencia(:v_pnit,:v_ptipo_documento,:v_pdocumento,:v_pingreso,:v_json_row); end;');
+  oci_bind_by_name($consulta, ':v_pnit', $request->nit);
+  oci_bind_by_name($consulta, ':v_ptipo_documento', $request->tipodocumento);
+  oci_bind_by_name($consulta, ':v_pdocumento', $request->numero);
+  oci_bind_by_name($consulta, ':v_pingreso', $request->ingreso);
   $clob = oci_new_descriptor($c, OCI_D_LOB);
   oci_bind_by_name($consulta, ':v_json_row', $clob, -1, OCI_B_CLOB);
   oci_execute($consulta, OCI_DEFAULT);

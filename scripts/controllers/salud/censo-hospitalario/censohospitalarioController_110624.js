@@ -101,8 +101,6 @@ angular.module("GenesisApp").controller("censohospitalarioController", [
         pendientes: '',
         fecha_cierre_temp: "",
       };
-      document.getElementById("check_glosa").disabled = false;
-      document.getElementById("check_glosa").value = false;
     }
 
     $scope.limpiar_campos = function () {
@@ -250,21 +248,7 @@ angular.module("GenesisApp").controller("censohospitalarioController", [
         $scope.evolucion.glosa = true;
         document.getElementById("check_glosa").disabled = true;
       } else {
-        $scope.evolucion.glosa = false;
         document.getElementById("check_glosa").disabled = false;
-        $scope.evolucion.evento_adverso = '';
-        $scope.evolucion.evento_adverso_detalle = '';
-        $scope.glosa_evolucion = {
-          cod_cups: '',
-          cups_nombre: '',
-          cantidad: '',
-          valor_con: '',
-          valor_glosa: '',
-          motivo_glosa: '',
-          motivo_nombre: '',
-          observacion: ''
-        };
-        // limpiar campos
       }
     }
 
@@ -341,7 +325,6 @@ angular.module("GenesisApp").controller("censohospitalarioController", [
           $scope.gestion = 'ver';
           $scope.initPaginacion(res.data, 'pendientes');
         } else {
-          $scope.listaCensosPendientes = [];
           return swal({
             title: "!NOTIFICACION¡",
             text: "NO HAY CENSOS PENDIENTES POR GESTION",
@@ -586,7 +569,7 @@ angular.module("GenesisApp").controller("censohospitalarioController", [
       }
     };
 
-    $scope.closeModal = function (id, opc = 0) {
+    $scope.closeModal = function (id) {
       if (id != undefined) {
         // $("#" + id).modal("close");
         var modalElement = document.getElementById(id);
@@ -605,11 +588,8 @@ angular.module("GenesisApp").controller("censohospitalarioController", [
         if (id == 'modalNuevaGlosa') {
           $scope.limpiar_glosa();
         }
-        if (id = 'modalNuevaEvolucion') {
-          if (opc == 1) {
-            $scope.limpiarEvolucion();
-          }
-          document.getElementById("check_glosa").disabled = false;
+        if(id == 'modalNuevaEvolucion'){
+          $scope.limpiarEvolucion();
         }
       }
     }
@@ -868,7 +848,7 @@ angular.module("GenesisApp").controller("censohospitalarioController", [
             $scope.obtenerEvoluciones($scope.censo.CENN_UBICACION, $scope.censo.CENN_NUMERO);
             $scope.obtenerCensoPendientes($scope.tipoUsuario[0].NIT, $scope.tipoUsuario[0].TIPO);
             $scope.closeModal('modalNuevaGlosa');
-            $scope.closeModal('modalNuevaEvolucion', 1)
+            $scope.closeModal('modalNuevaEvolucion')
             $scope.limpiar_glosa();
             $scope.limpiarEvolucion();
             document.getElementById("check_glosa").disabled = false;
@@ -963,19 +943,12 @@ angular.module("GenesisApp").controller("censohospitalarioController", [
       })
     }
 
-    $scope.FormatPeso = function (NID, UBI = 'E') {
+    $scope.FormatPeso = function (NID) {
       const input = document.getElementById('' + NID + '');
       var valor = input.value;
       valor = valor.replace(/[^0-9,]/g, '');
       if (NID == 'valorGlosaEvento') {
-        let cant = 1;
-        if (UBI == 'GLOSA') {
-          cant = $scope.glosa_evento.cantidad != '' ? parseInt($scope.glosa_evento.cantidad) : 1;
-        } else {
-          cant = $scope.glosa_evolucion.cantidad != '' ? parseInt($scope.glosa_evolucion.cantidad) : 1;
-
-        }
-        if (parseInt(valor) < 0 || parseInt(valor) > (parseInt($scope.productoSelect.VALOR2) * cant)) {
+        if (parseInt(valor) < 0 || parseInt(valor) > parseInt($scope.productoSelect.VALOR2)) {
           input.value = '0';
           return swal({
             title: "!NOTIFICACION¡",
@@ -1138,7 +1111,6 @@ angular.module("GenesisApp").controller("censohospitalarioController", [
       const g = JSON.stringify(glosa_in);
       let cont_prod = 0;
       if (scope != undefined) {
-        $scope.glosa_evento = glosa_in;
         let glosa = JSON.parse(g);
         $scope.btn_nueva_glosa = false;
         $scope[scope].observacion = $scope.evolucion.descripcion;
@@ -1156,28 +1128,7 @@ angular.module("GenesisApp").controller("censohospitalarioController", [
             type: "error",
           });
         }
-        $scope.Validar_glosa().then(function (result) {
-          if(result.status){
-            $scope.evolucion.glosas.push(glosa);
-            $scope.glosa_evento = {
-              cod_cups: '',
-              cups_nombre: '',
-              cantidad: '',
-              valor_con: '',
-              valor_glosa: '',
-              motivo_glosa: '',
-              motivo_nombre: '',
-              observacion: ''
-            };
-            $scope.productoSelect = {};
-          }else{
-            return swal({
-              title: "!NOTIFICACION¡",
-              text: result.message,
-              type: "error",
-            });
-          }
-        })
+        $scope.evolucion.glosas.push(glosa);
       } else {
         $scope.glosa.glosas.forEach(gl => {
           if (gl.CODIGO == glosa.CODIGO) {
@@ -1192,56 +1143,19 @@ angular.module("GenesisApp").controller("censohospitalarioController", [
           });
         }
         $scope.glosa.glosas.push(glosa);
-        $scope.glosa_evento = {
-          cod_cups: '',
-          cups_nombre: '',
-          cantidad: '',
-          valor_con: '',
-          valor_glosa: '',
-          motivo_glosa: '',
-          motivo_nombre: '',
-          observacion: ''
-        };
-        $scope.productoSelect = {};
       }
-      
+      $scope.glosa_evento = {
+        cod_cups: '',
+        cups_nombre: '',
+        cantidad: '',
+        valor_con: '',
+        valor_glosa: '',
+        motivo_glosa: '',
+        motivo_nombre: '',
+        observacion: ''
+      };
+      $scope.productoSelect = {};
     }
-
-    
-$scope.Validar_glosa = function () {
-  var defered = $q.defer();
-  var promise = defered.promise;
-  let message = "";
-
-  if ($scope.glosa_evento.cantidad == undefined || $scope.glosa_evento.cantidad == null || $scope.glosa_evento.cantidad == '') {
-    message = "CAMPO CANTIDAD ES OBLIGATORIO";
-    defered.resolve({ status: false, message });
-    return promise;
-  }
-  if ($scope.glosa_evento.valor_con == undefined || $scope.glosa_evento.valor_con == null || $scope.glosa_evento.valor_con == '') {
-    message = "CAMPO VALOR PRODUCTO ES OBLIGATORIO";
-    defered.resolve({ status: false, message });
-    return promise;
-  }
-  //
-  if ($scope.glosa_evento.valor_glosa == undefined || $scope.glosa_evento.valor_glosa == null || $scope.glosa_evento.valor_glosa == '') {
-    message = "CAMPO VALOR GLOSA ES OBLIGATORIO";
-    defered.resolve({ status: false, message });
-    return promise;
-  }
-  if ($scope.glosa_evento.motivo_glosa == undefined || $scope.glosa_evento.motivo_glosa == null || $scope.glosa_evento.motivo_glosa == '') {
-    message = "CAMPO MOTIVO ES OBLIGATORIO";
-    defered.resolve({ status: false, message });
-    return promise;
-  }
-  if ($scope.glosa_evento.observacion == undefined || $scope.glosa_evento.observacion == null || $scope.glosa_evento.observacion == '') {
-    message = "CAMPO OBSERVACION ES OBLIGATORIO";
-    defered.resolve({ status: false, message });
-    return promise;
-  }
-  defered.resolve({ status: true, message: "" });
-  return promise;
-}
 
     $scope.remover_glosa_evolucion = function (glosa, scope) {
       if (scope == 'evolucion') {
@@ -1604,6 +1518,7 @@ $scope.Validar_glosa = function () {
                   type: "error",
                 });
               }
+              $scope.pertinencia = '';
             }).catch(swal.noop);
           }
         }
@@ -1762,8 +1677,8 @@ $scope.Validar_glosa = function () {
               $scope.listaFuncionarios = data;
             } else {
               $scope.listaPrestadores = data;
-              $scope.adminAuditores.auditores = data[0].AUDITORES != null ? data[0].AUDITORES : [];
-              $scope.adminAuditores.cantidad_auditor_temp = data[0].AUDITORES != null ? data[0].AUDITORES.length : 0;
+              $scope.adminAuditores.auditores = data[0].AUDITORES;
+              $scope.adminAuditores.cantidad_auditor_temp = data[0].AUDITORES.length;
               $scope.adminAuditores.nit = data[0].NIT;
               $scope.ips_selected = data[0];
             }
@@ -1966,7 +1881,6 @@ $scope.Validar_glosa = function () {
         }).then(function ({ data }) {
           if (data.Codigo == 0) {
             swal('Notificacíon', '¡Factura Actualizada!', 'success');
-            $scope.obtenerCensosCerrados();
           }
         });
       })
@@ -2009,11 +1923,59 @@ $scope.Validar_glosa = function () {
           }
         }).catch(swal.noop);
       } else {
-        $scope.voboAUT(aut, accion);
+        swal({
+          title: "OBSERVACION",
+          html: `
+                <div class="col">
+                  <div div class= "row" >
+                    <div class="col s12">
+                      <div class="form-group shadow-textarea">
+                        <label style="font-size: inherit;">OBSERVACION</label>
+                        <textarea class="form-control z-depth-1" rows="5" cols="15" id="observacio_pertinencia"
+                        style="margin: 0px;min-height: 200px ; text-transform:uppercase" maxlength="4000"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                `,
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          showCancelButton: false,
+          showLoaderOnConfirm: true,
+          width: '500px',
+          animation: "slide-from-top",
+          preConfirm: function () {
+            return new Promise(function (resolve) {
+              let observacion = $('#observacio_pertinencia').val()
+              if (observacion != '') {
+                resolve(
+                  { status: true, observacion: observacion }
+                )
+              } else {
+                resolve(
+                  { status: false, observacion: "" }
+                )
+              }
+            })
+          }
+        }).then(function (resultx) {
+          if (resultx.status) {
+            $scope.voboAUT(aut, accion, resultx.observacion);
+            } else {
+            
+            return swal({
+              title: "!NOTIFICACION¡",
+              text: "DEBE DILIGENCIAR UNA OBSERVACION",
+              type: "error",
+            });
+          }
+          $scope.pertinencia = '';
+        }).catch(swal.noop);
+        
       }
     }
 
-    $scope.voboAUT = function (aut, accion, fecha = '') {
+    $scope.voboAUT = function (aut, accion, fecha = '', observacion ="") {
       swal({
         html: '<div class="loading"><div class="default-background"></div><div class="default-background"></div><div class="default-background"></div></div><p style="font-weight: bold;">ENVIANDO RESPUESTA...</p>',
         width: 400,
@@ -2030,7 +1992,8 @@ $scope.Validar_glosa = function () {
           numero: aut.NUMERO,
           ubicacion: aut.UBICACION,
           accion: accion,
-          fecha: fecha
+          fecha: fecha,
+          observacion: observacion
         }
       }).then(function ({ data }) {
         swal({

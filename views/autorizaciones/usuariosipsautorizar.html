@@ -70,6 +70,7 @@
                                         <th class="center">CONTROL PQRDS<span class="sortorder2"></span></th>
                                         <th class="center">VALOR<span class="sortorder2"></span></th>
                                         <th class="center">ACCION<span class="sortorder2"></span></th>
+                                        <th class="center">AGREGAR IPS<span class="sortorder2"></span></th>
                                     </thead>
                                     <tbody>
                                         <tr 
@@ -93,6 +94,15 @@
                                                             color: darkblue;"></i></a>
                                                         <span class="tooltiptext">Agregar</span>
                                                       </div>
+                                                </center>
+                                            </td>
+                                            <td>
+                                                <center>
+                                                  <div class="tooltip">
+                                                    <a ng-click="verformulario(listadouser.documento,listadouser.nombre,listadouser.cargo,listadouser.municipio,2)"><i class="fo fontello-icon  icon-doc-add" style="cursor:pointer;font-size: 20px;
+                                                        color: darkblue;"></i></a>
+                                                    <span class="tooltiptext">Agregar IPS</span>
+                                                  </div>
                                                 </center>
                                             </td>
                                         </tr>
@@ -166,7 +176,7 @@
                                                                                 <td>
                                                                                     <center>
                                                                                       <div class="tooltip">
-                                                                                        <a ng-click="verformulario(x.Codigo,x.Nombre)"><i class="fo fontello-icon  icon-doc-new" style="cursor:pointer;font-size: 20px;
+                                                                                        <a ng-click="verformulario(x.Codigo,x.Nombre,x.Cargo,x.Direccion,1)"><i class="fo fontello-icon  icon-doc-new" style="cursor:pointer;font-size: 20px;
                                                                                             color: darkblue;"></i></a>
                                                                                         <span class="tooltiptext">Agregar</span>
                                                                                       </div>
@@ -177,7 +187,7 @@
                                                                     </table>
                                                                 </div>
                                                             </div>
-                                                            <div ng-hide="vertablaconusuarios" class="col s12">
+                                                            <div ng-show="verformulariollenar" class="col s12">
                                                                 <div class="row center">
                                                                     <h5>{{nombrefuncionario}}
                                                                     </h5>
@@ -194,37 +204,37 @@
                                                                           <option value="A">Activo</option>
                                                                           <option value="I">Inactivo</option>
                                                                       </select>
-                                                                        </div>
-                                                                  </div>
-                                                                    <div class="col l4 m4 s4">
-                                                                      <label style="font-size: inherit;">Valor</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col l4 m4 s4">
+                                                                    <label style="font-size: inherit;">Valor</label>
+                                                                    <div class="col s12 ">
+                                                                        <input  type="text" ng-model="valorsignar" id="valorsignar" name="valorsignar" ng-keyup="FormatPesoColombiano('valorsignar')">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col l4 m4 s4">
+                                                                    <label style="font-size: inherit;">Techo</label>
                                                                       <div class="col s12 ">
-                                                                          <input  type="text" ng-model="valorsignar" id="valorsignar" name="valorsignar" ng-keyup="FormatPesoColombiano('valorsignar')">
-                                                                      </div>
-                                                                  </div>
-                                                                    <div class="col l4 m4 s4">
-                                                                      <label style="font-size: inherit;">Techo</label>
-                                                                      <div class="col s12 ">
-                                                                        <select  ng-model="techoasignar" 
+                                                                          <select  ng-model="techoasignar" 
                                                                         style="display: flex;border: 1px solid #dee2e6; border-radius: 0.25rem;width: 350px;">
                                                                         <option value="" ng-disabled="true">Seleccionar</option>
                                                                         <option value="S">SI</option>
                                                                         <option value="N">NO</option>
                                                                     </select>
-                                                                      </div>
+                                                                </div>
                                                                   </div>
                                                                   </div>
                                                                   <div class="row center">
                                                                     <div class="col l4 m4 s4">
                                                                       <label style="font-size: inherit;">Control Pqr</label>
                                                                       <div class="col s12 ">
-                                                                        <select ng-model="controlpqr"
+                                                                          <select ng-model="controlpqr"
                                                                         style="display: flex;border: 1px solid #dee2e6; border-radius: 0.25rem;width: 350px;">
                                                                         <option value="" ng-disabled="true">Seleccionar</option>
                                                                         <option value="S">SI</option>
                                                                         <option value="N">NO</option>
                                                                     </select>
-                                                                      </div>
+                                                                </div>
                                                                   </div>
                                                                     <div class="col l4 m4 s4">
                                                                       <label  style="font-size: inherit;">Excepción</label>
@@ -240,40 +250,147 @@
                                                                     <div class="col l4 m4 s4">
                                                                       <label  style="font-size: inherit;">Caja Salud</label>
                                                                       <div class="col s12 ">
-                                                                        <select ng-model="controlanticipo"
+                                                                          <select ng-model="controlanticipo"
                                                                         style="display: flex;border: 1px solid #dee2e6; border-radius: 0.25rem;width: 350px;">
                                                                         <option value="" ng-disabled="true">Seleccionar</option>
                                                                         <option value="S">SI</option>
                                                                         <option value="N">NO</option>
                                                                     </select>
-                                                                      </div>
-                                                                  </div>
+                                                                </div>
+                                                            </div>
                                                                   </div>
                                                                   <div ng-show="botonatras" class="align-items" style="padding-bottom: 35px;">
                                                                     <div class="input-field">
                                                                         <a class="btn btn-primary"
                                                                         style="border-radius:5px;"
-                                                                           ng-click="vertablaconusuarios='true'" >Atras</a>
+                                                                        ng-click="iratras()" >Atras</a>
                                                                     </div>
                                                                     <div class="input-field">
                                                                         <a class="btn btn-primary"
                                                                         style="border-radius:5px;"
                                                                            ng-click="Guardarfuncionario('I')" >Agregar</a>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                  <div ng-hide="botonatras" class="align-items" style="padding-bottom: 35px;">
-                                                                    <div class="input-field">
+                                                                    <div ng-hide="botonatras" class="align-items" style="padding-bottom: 35px;">
+                                                                        <div class="input-field">
                                                                         <a class="btn btn-primary"
                                                                         style="border-radius:5px;"
                                                                            ng-click="Guardarfuncionario('U')" >Actualizar</a>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
+
+                                                                <div ng-show="vertablacenso" class="col s12">
+                                                                    <div class="row center">
+                                                                        <h5>{{nombrefuncionario}}
+                                                                        </h5>
+                                                                        <h6>{{cargofuncionario}}</h6>
+                                                                        <h6>{{seccionalfuncionario}}</h6>
+                                                                    </div>    
+                                                                    <div class="row">
+                                                                        <div class="row" style="padding-left: 22%;">
+                                                                            <div class="col l8 m8 s8">
+                                                                                <label style="padding-left: 35%;font-size: inherit;">Nombre o Nit IPS</label>
+                                                                                <div class="col s12 ">
+                                                                                    <input ng-model="nombreonitips" type="text" style="border: 1px solid #dee2e6;
+                                                                                    border-radius: 0.25rem;
+                                                                                    background-color: #fff;
+                                                                                    background-clip: padding-box;
+                                                                                    padding: 0 1em;">
+                                                                                </div>
+                                                                            </div>
+                                                                              <div class="col l4 m4 s4">
+                                                                                <div class="col s12" style="padding-top: 15px;">
+                                                                                    <button class="btn btn-primary"
+                                                                                    style="border-radius:5px;height: 45px;margin-top: 8px;"
+                                                                                       ng-click="BuscarIpsAsignar(nombreonitips)">Buscar</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col s6">
+                                                                            <div style="max-height: 48vh;overflow:auto;border: 2px solid;" class="default-color">
+                                                                                <table id="tableseguimiento" class=" highlight" style="width:100%;color: black;">
+                                                                                    <thead class="default-linear-gradient">
+                                                                                        <th class="center">#</th>
+                                                                                        <th class="center">NIT<span class="sortorder2"></span></th>
+                                                                                        <th class="center">NOMBRE<span class="sortorder2"></span></th>
+                                                                                        <th class="center">AGREGAR<span class="sortorder2"></span></th>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr 
+                                                                                            ng-repeat="ip in listadoipst">
+                                                                                            <td class="center">{{$index + 1}}</td>
+                                                                                            <td class="center">{{ip.NIT}}</td>
+                                                                                            <td class="center">{{ip.NOMBRE}}</td>
+                                                                                            <td>
+                                                                                                <center>
+                                                                                                    <div class="tooltip">
+                                                                                                        <a ng-click="uploadIpsTemp(ip)"><i class="fo fontello-icon  icon-angle-circled-right" style="cursor:pointer;font-size: 24px;
+                                                                                                            color: darkblue;"></i></a>
+                                                                                                        <span class="tooltiptext">Agregar</span>
+                                                                                                      </div>
+                                                                                                </center>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr ng-if="listadoipst.length==0">
+                                                                                            <th class="center-align" colspan="5">No hay Resultados</th>
+                                                                                          </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col s6">
+                                                                            <div style="max-height: 48vh;overflow:auto;border: 2px solid;" class="default-color">
+                                                                                <table id="tableseguimiento" class=" highlight" style="width:100%;color: black;">
+                                                                                    <thead class="default-linear-gradient">
+                                                                                        <th class="center">#</th>
+                                                                                        <th class="center">NIT<span class="sortorder2"></span></th>
+                                                                                        <th class="center">NOMBRE<span class="sortorder2"></span></th>
+                                                                                        <th class="center">QUITAR<span class="sortorder2"></span></th>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr 
+                                                                                            ng-repeat="lt in listaipstemp">
+                                                                                            <td class="center">{{$index + 1}}</td>
+                                                                                            <td class="center">{{lt.NIT}}</td>
+                                                                                            <td class="center">{{lt.NOMBRE}}</td>
+                                                                                            <td>
+                                                                                                <center>
+                                                                                                    <div class="tooltip">
+                                                                                                        <i ng-click="eliminaripstemp(lt);"
+                                                                                                        title="Borrar soporte Cargar" class="icon-trash-empty red-text" style="font-size: 16px;"></i>
+                                                                                                        <span class="tooltiptext">quitar</span>
+                                                                                                      </div>
+                                                                                                </center>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr ng-if="listaipstemp.length==0">
+                                                                                            <th class="center-align" colspan="5">No hay Resultados</th>
+                                                                                          </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="align-items" style="padding-bottom: 35px;">
+                                                                        <div class="input-field">
+                                                                            <a class="btn btn-primary"
+                                                                            style="border-radius:5px;"
+                                                                            ng-click="cerrarmodalcenso()" >cerrar</a>
+                                                                        </div>
+                                                                        <div class="input-field">
+                                                                            <a class="btn btn-primary"
+                                                                            style="border-radius:5px;"
+                                                                               ng-click="GuardarListaIpsFuncionario()" >Guardar</a>
+                                                                            </div>
+                                                                        </div>
+                                                            </div>
+
                                                             </div>
                                                         </div>
+                                                        
                                                     </div>
-                                    
                                                 </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <!-- ---------------------------------------------------------------------------------- -->

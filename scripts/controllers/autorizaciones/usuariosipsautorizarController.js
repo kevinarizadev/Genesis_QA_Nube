@@ -50,6 +50,8 @@ angular.module('GenesisApp')
             $scope.codigoips = "";
             $scope.listadoipsblanca = "";
             $scope.vertablaconusuarios = true;
+            $scope.verformulariollenar = false;
+            $scope.vertablacenso = false;
             $scope.documentousuario = "";
             $scope.valorsignar = "";
             $scope.techoasignar = "";
@@ -66,8 +68,12 @@ angular.module('GenesisApp')
             $scope.abrirmodallistadoips = function () {
                 $('#modallistadoipscontratada').modal("open");
                 $scope.vertablaconusuarios = true;
+                $scope.verformulariollenar = false;
+                $scope.vertablacenso = false;
                 $scope.listadoipsblanca = "";
                 $scope.codigoips = "";
+                $scope.listadoipst = [];
+                $scope.listaipstemp = [];
             }
             $scope.cerrarmodal = function () {
                 $("#modalterceros").modal("close");
@@ -187,6 +193,37 @@ angular.module('GenesisApp')
             }
           
 
+            $scope.verformulario = function(datousuario,nombre,cargo,municipio,accion) {
+                $scope.botonatras = true;
+                $scope.nombrefuncionario = nombre;
+                $scope.documentousuario = datousuario;
+                $scope.cargofuncionario = cargo;
+                $scope.seccionalfuncionario = municipio;
+                $scope.vertablaconusuarios = false;
+                if(accion == 1){
+                    $scope.verformulariollenar = true;
+                    $scope.vertablacenso = false;
+                    $scope.valorsignar = "";
+                    $scope.techoasignar = "";
+                    $scope.controlpqr = "";
+                    $scope.estadoasignar = "A";
+                    $scope.excepcionasignar = "";
+                    $scope.controlanticipo = "";
+                    $scope.deshabilitarcampo = true;
+            }else{
+                    $scope.vertablacenso = true;
+                    $scope.verformulariollenar = false;
+                    $('#modallistadoipscontratada').modal("open");
+                }
+            }
+            $scope.iratras = function() {
+                $scope.vertablaconusuarios = true;
+                    $scope.vertablacenso = false;
+                    $scope.verformulariollenar = false;
+            }
+
+
+            
             $scope.Obtener_Listadobusqueda = function (codigobusqueda,tipo) {
                 $http({
                     method: 'POST',
@@ -208,20 +245,57 @@ angular.module('GenesisApp')
                     }
                 });
             }
-
-            $scope.verformulario = function(datousuario,nombre) {
-                $scope.botonatras = true;
-                $scope.nombrefuncionario = nombre;
-                $scope.documentousuario = datousuario;
-                $scope.vertablaconusuarios = false;
-                $scope.valorsignar = "";
-                $scope.techoasignar = "";
-                $scope.controlpqr = "";
-                $scope.estadoasignar = "A";
-                $scope.excepcionasignar = "";
-                $scope.controlanticipo = "";
-                $scope.deshabilitarcampo = true;
+            $scope.BuscarIpsAsignar = function (concidencia) {
+                $http({
+                    method: 'POST',
+                    url: "php/autorizaciones/usuariosipsautorizar.php",
+                    data: {
+                        function: 'OBTENER_PRESTADOR_AUDITOR',
+                        documento: concidencia,
+                        tipo: 'I',
+                    }
+                }).then(function (response) {
+                    if (response.data && response.data.toString().substr(0, 3) != '<br') {
+                        $scope.listadoipst = response.data;
+                    } else {
+                        swal({
+                            title: "¡Ocurrio un error!",
+                            text: response.data,
+                            type: "warning"
+                        }).catch(swal.noop);
+                    }
+                });
             }
+
+
+            $scope.listaipstemp = [];
+            $scope.uploadIpsTemp = function (datosips) {
+                for (let i = 0; i < $scope.listaipstemp.length; i++) {
+                    if ($scope.listaipstemp[i].NIT === datosips.NIT) {
+                        swal({
+                          title: "Advertencia!",
+                          text: "El prestador ya se encuentra en la lista.",
+                          type: "warning"
+                        }).catch(swal.noop);
+                        return;
+                    }
+                  }
+                var fileObject = {
+                  NIT: datosips.NIT,
+                  NOMBRE: datosips.NOMBRE,
+                  ESTADO: 'A'
+                };
+                $scope.listaipstemp.push(fileObject);
+            };
+            $scope.eliminaripstemp = function (datosips) {
+                for (let i = 0; i < $scope.listaipstemp.length; i++) {
+                  if ($scope.listaipstemp[i].NIT === datosips.NIT) {
+                    $scope.listaipstemp.splice(i, 1);
+                    i--;
+                  }
+                }
+              }
+
             $scope.actualizarfuncionario = function(datousuario) {
                 $scope.botonatras = false;
                 $scope.abrirmodallistadoips();
@@ -236,6 +310,7 @@ angular.module('GenesisApp')
                 $scope.excepcionasignar = datousuario.excepcion  == 'SI'?'S':'N';
                 $scope.controlanticipo = datousuario.anticipo  == 'SI'?'S':'N';
                 $scope.vertablaconusuarios = false;
+                $scope.verformulariollenar = true;
                 $scope.deshabilitarcampo = false;
             }
 
@@ -339,6 +414,57 @@ angular.module('GenesisApp')
             }
 
 
+            $scope.GuardarListaIpsFuncionario = function () {
+                if($scope.listaipstemp.length <= 0 ) {
+                    swal("Importante", "Debe seleccionar una ips al menos", "info");
+                } else {
+                swal({
+                    title: 'Confirmar',
+                    text: '¿Esta seguro De Guardar ?',
+                    type: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Confirmar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    $http({
+                        method: 'POST',
+                        url: "php/autorizaciones/usuariosipsautorizar.php",
+                        data: {
+                            function: 'GuardarListaIpsUsuario',
+                            nit:$scope.documentousuario,
+                            cantidad_auditor:$scope.listaipstemp.length,
+                            json_auditor: JSON.stringify($scope.listaipstemp),
+                            tipo:2,
+                        }
+                    }).then(function (response) {
+                        if (response.data && response.data.toString().substr(0, 3) != '<br') {
+
+                            $scope.cerrarmodalcenso();
+                            swal("Exito", "Actualizado Correctamente", "success");
+                        } else {
+                            swal({
+                                title: "¡Ocurrio un error!",
+                                text: response.data,
+                                type: "warning"
+                            }).catch(swal.noop);
+                        }
+                    });
+                })
+            }
+            }
+            
+            $scope.cerrarmodalcenso = function() {
+                $scope.closemodals();
+                $scope.documentousuario='';
+                $scope.nombrefuncionario = "";
+                $scope.listaipstemp = [];
+                $scope.listadoipst =[];
+                $scope.vertablaconusuarios = true;
+                $scope.vertablacenso = false;
+                $scope.verformulariollenar = false;
+            }
 
         }])
 
